@@ -80,8 +80,6 @@ async function main(){
     // console.log(await getTokenPrice("So11111111111111111111111111111111111111112", "20240901"));
 }
 main();
-
-
 function fromUnixTimeToYYYYMMDD(unixTime:number) {
     const date = new Date(unixTime * 1000);
     return date.getFullYear() +
@@ -126,19 +124,16 @@ export async function getTrades(address: string, token: string="", maxTrades: nu
     let response;
     let trades: Trade[] = [];
     try {
-        let PAGE_SIZE = 40;
         while (trades.length < maxTrades) {
             console.log("currentPage: " + currentPage);
             console.log("trades.length: " + trades.length);
-            console.log("Page size: " + PAGE_SIZE);
             if (token == "") {
-                response = await fetch(`https://pro-api.solscan.io/v2.0/account/defi/activities?address=${address}&page=${currentPage}&page_size=${PAGE_SIZE}&sort_by=block_time&sort_order=desc`, requestOptions);
+                response = await fetch(`https://pro-api.solscan.io/v2.0/account/defi/activities?address=${address}&page=${currentPage}&page_size=40&sort_by=block_time&sort_order=desc`, requestOptions);
             } else {
-                response = await fetch(`https://pro-api.solscan.io/v2.0/account/defi/activities?address=${address}&token=${token}&page=${currentPage}&page_size=${PAGE_SIZE}&sort_by=block_time&sort_order=desc`, requestOptions);
+                response = await fetch(`https://pro-api.solscan.io/v2.0/account/defi/activities?address=${address}&token=${token}&page=${currentPage}&page_size=40&sort_by=block_time&sort_order=desc`, requestOptions);
             }
             const data = await response.json() as ApiResponse;
             const tokens = data.metadata.tokens;
-            
             if (!data.data || data.data.length === 0) {
                 break;
             }
