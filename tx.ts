@@ -137,72 +137,61 @@ export async function getTrades(address: string, token: string="", maxTrades: nu
             if (!data.data || data.data.length === 0) {
                 break;
             }
-            data.data.map(async (data) => {
-                let amount1 = data.routers.amount1/10**data.routers.token1_decimals;
-                let amount2 = data.routers.amount2/10**data.routers.token2_decimals;
-                let token1Symbol = tokens[data.routers.token1].token_symbol;
-                let token2Symbol = tokens[data.routers.token2].token_symbol;
-                let side: number = token === data.routers.token1 ? -1 : 1;
-                let token1Price=1;
-                let token2Price=1;
-                if (!(token1Symbol == "USDC" || token1Symbol == "USDT" || token1Symbol == "USDCe")) {
-                    token1Price = await getTokenPrice(data.routers.token1, fromUnixTimeToYYYYMMDD(data.block_time));
-                }
-                if (!(token2Symbol == "USDC" || token2Symbol == "USDT" || token2Symbol == "USDCe")) {
-                    token2Price = await getTokenPrice(data.routers.token2, fromUnixTimeToYYYYMMDD(data.block_time));
-                } 
-                totalCost += side == 1 ? amount1*token1Price : 0;
-                totalCost -= side == -1 ? amount2*token2Price : 0;
-                purchased += side == 1 ? amount1 : 0;
-                sold += side == -1 ? amount2 : 0;
-                lowestBuyPrice = Math.min(lowestBuyPrice, side == 1 ? token1Price : lowestBuyPrice);
-                highestSellPrice = Math.max(highestSellPrice, side == -1 ? token2Price : highestSellPrice);
-                
-                if (data.activity_type === "ACTIVITY_AGG_TOKEN_SWAP" || data.activity_type === "ACTIVITY_TOKEN_SWAP") {
-                    //console.log(data);
-                    
+            for (const trade of data.data as ApiResponse['data']) {
+               
+
+                if (trade.activity_type === "ACTIVITY_AGG_TOKEN_SWAP" || trade.activity_type === "ACTIVITY_TOKEN_SWAP") {
+                    let amount1 = trade.routers.amount1 / 10 ** trade.routers.token1_decimals;
+                    let amount2 = trade.routers.amount2 / 10 ** trade.routers.token2_decimals;
+                    let token1Symbol = tokens[trade.routers.token1].token_symbol;
+                    let token2Symbol = tokens[trade.routers.token2].token_symbol;
+                    let side: number = token === trade.routers.token1 ? -1 : 1;
+                    let token1Price = 1;
+                    let token2Price = 1;
+                    if (!(token1Symbol == "USDC" || token1Symbol == "USDT" || token1Symbol == "USDCe")) {
+                        token1Price = await getTokenPrice(trade.routers.token1, fromUnixTimeToYYYYMMDD(trade.block_time));
+                    }
+                    if (!(token2Symbol == "USDC" || token2Symbol == "USDT" || token2Symbol == "USDCe")) {
+                        token2Price = await getTokenPrice(trade.routers.token2, fromUnixTimeToYYYYMMDD(trade.block_time));
+                    }
+                    totalCost += side == 1 ? amount1 * token1Price : 0;
+                    totalCost -= side == -1 ? amount2 * token2Price : 0;
+                    purchased += side == 1 ? amount1 : 0;
+                    console.log(`Adding sold from ${sold} to sold + ${amount1}`);
+                    sold += side == -1 ? amount1 : 0;
+                    lowestBuyPrice = Math.min(lowestBuyPrice, side == 1 ? token1Price : lowestBuyPrice);
+                    highestSellPrice = Math.max(highestSellPrice, side == -1 ? token2Price : highestSellPrice);
                     trades.push({
-                        activityType: data.activity_type,
-                        transId: data.trans_id,
-                        blockTime: data.block_time,
-                        token1: data.routers.token1,
-                        token1Decimals: data.routers.token1_decimals,
+                        activityType: trade.activity_type,
+                        transId: trade.trans_id,
+                        blockTime: trade.block_time,
+                        token1: trade.routers.token1,
+                        token1Decimals: trade.routers.token1_decimals,
                         token1Symbol: token1Symbol,
                         amount1: amount1,
-                        token2: data.routers.token2,
-                        token2Decimals: data.routers.token2_decimals,
+                        token2: trade.routers.token2,
+                        token2Decimals: trade.routers.token2_decimals,
                         token2Symbol: token2Symbol,
                         side: side,
                         amount2: amount2,
-                        time: data.time,
-                        avgPriceNative: side == 1 ? amount1/amount2 : amount2/amount1,
-                        avgPairNative: token1Symbol+"/"+token2Symbol,
-                        avgPriceUSD: (side == 1 && token1Price > 0 && token2Price > 0) ? token1Price/token2Price : (side == -1 && token1Price > 0 && token2Price > 0) ? token2Price/token1Price : 0,
+                        time: trade.time,
+                        avgPriceNative: side == 1 ? amount1 / amount2 : amount2 / amount1,
+                        avgPairNative: token1Symbol + "/" + token2Symbol,
+                        avgPriceUSD: (side == 1 && token1Price > 0 && token2Price > 0) ? token1Price / token2Price : (side == -1 && token1Price > 0 && token2Price > 0) ? token2Price / token1Price : 0,
                     });
-                    //console.log(trades[trades.length-1]);
-              
                 }
-                //console.log(trades);
-            });
-            console.log(trades);
+            }
+            //console.log(trades);
+            console.log(purchased);
+            console.log(sold);
             currentPage++;
             
             if (trades.length > maxTrades) {
-             
-
                 console.log("Trades length is greater than maxTrades, slicing trades");
                 trades = trades.slice(0, maxTrades);
             }
-            
-
         }
-
-        // console.log("lowestBuyPrice: " + lowestBuyPrice);
-        // console.log("highestSellPrice: " + highestSellPrice);
-        // console.log("purchased: " + purchased);
-        // console.log("sold: " + sold);
-        // console.log("totalCost: " + totalCost);
-        console.log(trades);
+       // console.log(trades);
         return trades;
     } catch(e) {
         console.log(e);
