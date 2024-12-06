@@ -12,7 +12,11 @@ bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    log_entry(message)
+    command = message.text.split()[0]
+    content = message.text.split()[1:]
+    print(command)
+    print(content)
+    log_entry(command=command[1:],entry=message, content=content)
     # Get everything after the command by splitting and joining remaining words
     command_text = ' '.join(message.text.split()[1:])
     print(message)
