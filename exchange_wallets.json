@@ -1,0 +1,26 @@
+{
+    "binance": [
+        "3gd3dqgtJ4jWfBfLYTX67DALFetjc5iS72sCgRhCkW2u",
+        "HXsKP7wrBWaQ8T2Vtjry3Nj3oUgwYcqq9vrHDM12G664",
+        "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+        "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9",
+        "3yFwqXBfZY4jBVUafQ1YEXw189y2dN3V5KQq9uzBDy1E",
+        "6QJzieMYfp7yr3EdrePaQoG3Ghxs2wM98xSLRu8Xh56U",
+        "2ojv9BAiHUrvsm9gxDe7fJSzbNZSJcxZvf8dqmWGHG8S"
+    ],
+    "bybit": [],
+    "coinbase": [],
+    "okx": [],
+    "upbit": [],
+    "bitget": [
+        "A77HErqtfN1hLLpvZ9pCtu66FEtM8BveoaKbbMoZ4RiR"
+    ],
+    "kraken": [],
+    "kucoin": [
+        "EkUy8BB574iEVAQE9dywEiMhp9f2mFBuFu6TBKAkQxFY",
+        "HVh6wHNBAsG3pq1Bj5oCzRjoWKVogEDHwUHkRz3ekFgt",
+        "EEnu7YoRDnZ1EHHggnnQoFk7fUjNQrXQw33vgFWwMJn"
+    ],
+    "htx": [],
+    "mexc": []
+}

@@ -1,1 +1,0 @@
-DELETE FROM telegram_logs;
