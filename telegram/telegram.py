@@ -735,7 +735,41 @@ def getNoteWorthyHolders(token:str=None, limit:int=50):
     result = []
     return result
 if __name__ == "__main__":
-
+    #print(getPrice("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 1733364671))
+    #print(asyncio.run(getTopHolders("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 10)))
+    #print(getTotalSupply("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump"))
+    #print(getWalletAge("FQRsxivsWpiRAw1uegTKshwjf8vaco2QgLKbz3vbepii"))
+    #print(getBalance("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs", "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"))
+    #print(getWalletPortfolio("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF"))
+    #print(getTopHoldersInfo("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 50))
+    #print(getWalletAgeReadable("FQRsxivsWpiRAw1uegTKshwjf8vaco2QgLKbz3vbepii"))
+    #print(getWalletAge("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF"))
+    #print(getWalletPortfolio("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"))
+    #print(getWalletAge("5PAhQiYdLBd6SVdjzBQDxUAEFyDdF5ExNPQfcscnPRj5"))
+    #print(getAvgTopHoldersAge("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 50))
+    #print(getWalletAge("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs"))
+    #print(getWalletPortfolioExcluding("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs", "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"))
+    #print((getFundingSource("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs")))
+    # print(getTopHolders("BUXyVrRMvBU6EUY9rnqNv3JqUwsSxG9gpnRFVzMbpump"))
+    # tx = getTransactionData("PRpQD6GcMirjnA6vVuWDGGJLV3hZSferwWEF44FZfeJhUbicud2kSec5oF4KUQ3AhWZdnNWmteYaRXkFik1qQYY")
+    # print(tx['result']['transaction']['message']['accountKeys'])
+    #print(getHoldersFreshWallets("BUXyVrRMvBU6EUY9rnqNv3JqUwsSxG9gpnRFVzMbpump", 50))
+    # print(getTokenOverview("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump"))
+    # print (0.0195 * getTotalSupply("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump"))
+    # top holders of a token displaying top 3 holdings of other tokens in the portfolio
+    # fresh
+    timeNowInUnixMiliseconds = int(time.time() * 1000)
+    # print(getWalletAge("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs"))
+    #print(asyncio.run(getHoldersFreshWalletsReady("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump")))
+    #print(getTokenOverview("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump"))
+    # print(asyncio.run(get_top_holders_ready("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump", 5)))
+   # print(asyncio.run(getHoldingDistribution("9QZc9WPD2VctdscCxdotsKB4KaNQK6sozDq6kbJwpump")))
+    print(asyncio.run(getTopHoldersWithConstraint("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 300000, 0.02)))
+    print(((int(time.time() * 1000) - timeNowInUnixMiliseconds))/1000)
+    #print(getTransactionData(getLastSignature("FQRsxivsWpiRAw1uegTKshwjf8vaco2QgLKbz3vbepii")['signature']))
+    #print(getTransactionData("2734DGsm5wDYFU9w6ojYFrKJVehbE5nP56hLTokifU1qt6nftVASLp2d9i4UGTigErvLjFeySZdn294V5NCV6aWe"))
+    #print((getAllSignatures("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs", 5000)))
+    #print(getTransactionDataBySolscan("isQu5fMeaiQ2eN3fqrvDaTpPNjcTTcuiQkMEtowZvtNQj26zgycE3ofwHkPjowqUNgUUyuqdWZpQAgUd2nLiNzy"))
     print(asyncio.run(getTopHolders("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 5)))
 
  
