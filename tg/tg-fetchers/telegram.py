@@ -144,7 +144,7 @@ def getWalletAge(wallet:str=None,  maxSignatures:int=MAX_SIGNATURES, botFilter:b
         return all_signatures[-1].get('blockTime')
     return None
 
-async def fetch_wallet_portfolio(session, wallet: str):
+async def fetchWalletPortfolio(session, wallet: str):
     """
     Asynchronously fetch the wallet portfolio with rate limiting.
     """
@@ -163,7 +163,7 @@ async def fetch_wallet_portfolio(session, wallet: str):
             return {"error": f"Failed to fetch portfolio for wallet {wallet}"}
         return data
 
-async def process_holder(count, holder, session, total_supply, token):
+async def processHolder(count, holder, session, total_supply, token):
     """
     Process a single holder with adaptive pacing.
     """
@@ -172,7 +172,7 @@ async def process_holder(count, holder, session, total_supply, token):
     share_in_percent = float(amount) / total_supply * 100
 
     print(f"Processing holder {wallet}")
-    portfolio = await fetch_wallet_portfolio(session, wallet)
+    portfolio = await fetchWalletPortfolio(session, wallet)
     if "error" in portfolio:
         return {f'wallet {count}': portfolio}
     net_worth = round(portfolio['data']['totalUsd'], 0)
@@ -196,7 +196,7 @@ async def process_holder(count, holder, session, total_supply, token):
             }
         }
 
-async def get_top_holders_ready(token: str = None, limit: int = 50):
+async def getTopHoldersReady(token: str = None, limit: int = 50):
     """
     Get the info of the top holders of a token with adaptive pacing for API requests.
     """
@@ -237,7 +237,7 @@ async def get_top_holders_ready(token: str = None, limit: int = 50):
             # Process holders in batches
             batch = top_holders[i:i + BATCH_SIZE]
             tasks = [
-                process_holder(count, holder, session, total_supply, token)
+                processHolder(count, holder, session, total_supply, token)
                 for count, holder in enumerate(batch, start=i + 1)
             ]
             results.extend(await asyncio.gather(*tasks))
@@ -263,7 +263,7 @@ async def getWalletPortfolio(count, holder, session, total_supply, token):
     wallet = holder['owner']
     amount = holder['ui_amount']
     share_in_percent = float(amount) / total_supply * 100
-    portfolio = await fetch_wallet_portfolio(session, wallet)
+    portfolio = await fetchWalletPortfolio(session, wallet)
     if "error" in portfolio:
         return {f'wallet {count}': portfolio}
 
@@ -344,25 +344,6 @@ async def getTopHoldersWithConstraint(token:str=None, min_value_usd:float=None, 
         offset += batch_size
         
     return all_holders
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -762,14 +743,14 @@ if __name__ == "__main__":
     # print(getWalletAge("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs"))
     #print(asyncio.run(getHoldersFreshWalletsReady("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump")))
     #print(getTokenOverview("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump"))
-    # print(asyncio.run(get_top_holders_ready("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump", 5)))
+    print(asyncio.run(getTopHoldersReady("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump", 35)))
    # print(asyncio.run(getHoldingDistribution("9QZc9WPD2VctdscCxdotsKB4KaNQK6sozDq6kbJwpump")))
-    print(asyncio.run(getTopHoldersWithConstraint("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 300000, 0.02)))
+    #print(asyncio.run(getTopHoldersWithConstraint("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 300000, 0.02)))
     print(((int(time.time() * 1000) - timeNowInUnixMiliseconds))/1000)
     #print(getTransactionData(getLastSignature("FQRsxivsWpiRAw1uegTKshwjf8vaco2QgLKbz3vbepii")['signature']))
     #print(getTransactionData("2734DGsm5wDYFU9w6ojYFrKJVehbE5nP56hLTokifU1qt6nftVASLp2d9i4UGTigErvLjFeySZdn294V5NCV6aWe"))
     #print((getAllSignatures("7BB5A9XagbYTZkWXeusmeVgdBwa18P8UTGHQcVhiygs", 5000)))
     #print(getTransactionDataBySolscan("isQu5fMeaiQ2eN3fqrvDaTpPNjcTTcuiQkMEtowZvtNQj26zgycE3ofwHkPjowqUNgUUyuqdWZpQAgUd2nLiNzy"))
-    print(asyncio.run(getTopHolders("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 5)))
+    #print(asyncio.run(getTopHolders("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 5)))
 
  

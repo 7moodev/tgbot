@@ -1,0 +1,169 @@
+import os
+import requests
+import time
+from utils import getRpc
+birdeyeapi = os.environ.get('birdeyeapi')
+heliusrpc = os.environ.get('heliusrpc')
+quicknoderpc = os.environ.get('solrpc')
+solscanapi = os.environ.get('solscan')
+
+
+async def getTokenOverview(token:str=None):
+    print("Getting token overview for", token)
+    """
+    Get the overview of a token
+    Costs 20 credits per requestww
+    """
+    if token is None:
+        return None
+    url = f"https://public-api.birdeye.so/defi/token_overview?address={token}"
+    headers = {
+        "accept": "application/json",
+        "chain": "solana",
+        "X-API-KEY": birdeyeapi
+    }
+    response = requests.get(url, headers=headers)
+    print("Returning token overview for", token)
+    return response.json()
+
+
+async def getTokenTotalSupply(token:str=None):
+    print("Getting total supply for", token)
+    """
+    Get the total supply of a token
+    Costs 0 credits per request
+    """
+    headers = {"Content-Type": "application/json"}
+    data = {
+        "jsonrpc": "2.0",
+        "method": "getTokenSupply",
+        "params": [token],
+        "id": 1
+    }
+    response = requests.post(getRpc(), headers=headers, json=data)
+    if response.status_code != 200:
+        return None
+    print("Returning total supply for", token)
+    return float(response.json()['result']['value']['uiAmount'])
+
+
+async def getTopHoldersWithConstraint(token:str=None, min_value_usd:float=None, price:float=None):
+    """
+    Get the top holders of a token that hold at least min_value_usd worth of tokens
+    
+    Args:
+        token (str): Token address
+        min_value_usd (float): Minimum USD value of tokens that a holder must have
+        price (float): Current price of token in USD
+    
+    Returns:
+        list: List of holders that meet the minimum value constraint
+    """
+    if token is None:
+        return None
+
+    if min_value_usd is None or price is None:
+        return None
+        
+    all_holders = []
+    offset = 0
+    batch_size = 100
+
+    while True:
+        url = f"https://public-api.birdeye.so/defi/v3/token/holder?address={token}&offset={offset}&limit={batch_size}"
+        headers = {
+            "accept": "application/json", 
+            "chain": "solana",
+            "X-API-KEY": birdeyeapi
+        }
+        
+        response = requests.get(url, headers=headers)
+        if response.status_code != 200:
+            if not response.json()['success']:
+                return None
+                
+        batch = response.json()['data']['items']
+        
+        # Stop if we hit empty batch or zero amounts
+        if not batch or batch[0]['amount'] == '0' or batch[-1]['amount'] == '0':
+            break
+            
+        # Filter holders that meet minimum value
+        for holder in batch:
+            value_usd = float(holder['ui_amount']) * price
+            if value_usd >= min_value_usd:
+                all_holders.append(holder)
+            else:
+                # Since holders are ordered by amount, we can stop once we hit one below threshold
+                return all_holders
+                
+        offset += batch_size
+        
+    return all_holders
+
+def getPrice(token:str=None, unixTime:int = None):
+    print("Getting price for", token, "at", unixTime)
+    """
+    Get the price of a token at a given unix time, costs 5 credits per request
+    """		
+    if unixTime is None:
+        unixTime = int(time.time())
+    if token is None:
+        token = "So11111111111111111111111111111111111111112"
+    url = f"https://public-api.birdeye.so/defi/historical_price_unix?address={token}&unixtime={unixTime}"
+    headers = {
+        "accept": "application/json",
+        "chain": "solana",
+        "X-API-KEY": birdeyeapi
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        if response.json()['success'] == False:
+            return None
+    return response.json()['data']['value']
+
+async def getTopHolders(token:str=None, limit = None):
+    print("Getting top holders for", token, "with limit", limit)
+    """
+    Get the top holders of a token, costs 50 credits per request
+    Iterates through all holders using offset pagination
+    """	
+    all_holders = []
+    if token is None:
+        return True
+
+    offset = 0
+    batch_size = 100 if limit is None or limit > 100 else limit
+    while True:
+        url = f"https://public-api.birdeye.so/defi/v3/token/holder?address={token}&offset={offset}&limit={batch_size}"
+        headers = {
+            "accept": "application/json",
+            "chain": "solana",
+            "X-API-KEY": birdeyeapi
+        }
+        response = requests.get(url, headers=headers)
+        if response.status_code != 200:
+            if response.json()['success'] == False:
+                return None
+        batch = response.json()['data']['items']
+        if not batch or batch[0]['amount'] == '0' or batch[len(batch)-1]['amount'] == '0':
+            if len(all_holders) == 0:
+                all_holders.extend(batch)
+            break
+        #print(len(batch))
+        all_holders.extend(batch)
+        # If we have a limit and reached/exceeded it, trim and break
+        if limit is not None and len(all_holders) >= limit:
+            all_holders = all_holders[:limit]
+            break
+        # If this batch was smaller than requested, we've got all holders
+        if len(batch) < batch_size:
+            break
+        # Only continue if we need all holders
+        if limit is None:
+            offset += batch_size
+        else:
+            break
+    print("Returning top holders for", token)
+    print("Returned", len(all_holders), "holders")
+    return all_holders
