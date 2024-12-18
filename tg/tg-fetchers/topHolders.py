@@ -70,9 +70,6 @@ async def getTopHoldersReady(token: str = None, limit: int = 50):
     """
     if token is None:
         return None
-
-
-
     # Fetch and cache total supply
     total_supply = await getTokenTotalSupply(token)
     if total_supply == 0:
@@ -151,7 +148,6 @@ async def getWalletPortfolio(wallet: str, session: httpx.AsyncClient):
         "chain": "solana",
         "X-API-KEY": birdeyeapi  # Assumes birdeyeapi is defined elsewhere
     }
-    
     async with REQUEST_SEMAPHORE:
         try:
             response = await session.get(url, headers=headers)
@@ -287,7 +283,7 @@ async def getTopHoldersReady1(
 
 if __name__ == "__main__":
     timenow = float(time.time())
-    print(asyncio.run(getTopHoldersReady1("7FhLDYhLagEYx8mvheyWMo25ChQcM9F54TiM15Ydpump",50)))
+    print(asyncio.run(getTopHoldersReady1("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump",50)))
     #print(asyncio.run(getWalletPortfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
     print(float(time.time()) - timenow)
 

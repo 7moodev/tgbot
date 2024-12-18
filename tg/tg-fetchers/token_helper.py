@@ -2,6 +2,7 @@ import os
 import requests
 import time
 from utils import getRpc
+import asyncio
 birdeyeapi = os.environ.get('birdeyeapi')
 heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
@@ -101,7 +102,7 @@ async def getTopHoldersWithConstraint(token:str=None, min_value_usd:float=None, 
         
     return all_holders
 
-def getPrice(token:str=None, unixTime:int = None):
+async def getPrice(token:str=None, unixTime:int = None):
     print("Getting price for", token, "at", unixTime)
     """
     Get the price of a token at a given unix time, costs 5 credits per request
@@ -116,11 +117,41 @@ def getPrice(token:str=None, unixTime:int = None):
         "chain": "solana",
         "X-API-KEY": birdeyeapi
     }
-    response = requests.get(url, headers=headers)
+    try:
+        response = requests.get(url, headers=headers)
+    except:
+        print("Error getting price for", token, "at", unixTime, ":Birdeye")
+        return None
     if response.status_code != 200:
         if response.json()['success'] == False:
             return None
     return response.json()['data']['value']
+async def getPriceHistorical(token:str=None, type:str=None, start:int=None, end:int=None):
+    print("Getting price historical for", token, "from", start, "to", end)
+    """
+    Get the price of a token at a given unix time, costs 5 credits per request
+    """
+    type = "1m"
+    url = f"https://public-api.birdeye.so/defi/history_price?address={token}&address_type=token&type={type}&time_from={start}&time_to={end}"
+    headers = {
+        "accept": "application/json",
+        "chain": "solana",
+        "X-API-KEY": birdeyeapi
+    }
+    try:
+        response = requests.get(url, headers=headers)
+    except:
+        print("Error getting price historical for", token, "from", start, "to", end, ":Birdeye")
+        return None
+    if response.status_code != 200:
+        if response.json()['success'] == False:
+            return None
+    return response.json()['data']['items']
+
+
+
+
+
 
 async def getTopHolders(token:str=None, limit = None):
     print("Getting top holders for", token, "with limit", limit)
@@ -134,6 +165,7 @@ async def getTopHolders(token:str=None, limit = None):
 
     offset = 0
     batch_size = 100 if limit is None or limit > 100 else limit
+    res = []
     while True:
         url = f"https://public-api.birdeye.so/defi/v3/token/holder?address={token}&offset={offset}&limit={batch_size}"
         headers = {
@@ -164,6 +196,16 @@ async def getTopHolders(token:str=None, limit = None):
             offset += batch_size
         else:
             break
+    for holder in all_holders:
+        res.append(holder['owner'])
+
+    print(res)
     print("Returning top holders for", token)
     print("Returned", len(all_holders), "holders")
     return all_holders
+
+
+
+if __name__ == "__main__":
+   # print(asyncio.run(getPriceHistorical("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "1m", 1733885544, 1733886592)))
+   print(asyncio.run(getTopHolders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 20)))
