@@ -32,6 +32,7 @@ async def getHolderAvgBuyPrice(token: str, limit: int):
     results = [token_info]
     # holders = await getTopHolders(token, limit)
     async with httpx.AsyncClient() as client:
+        # uncomment to actually fetch updated data, commented to save credits only
         # Fetch average buy prices concurrently
         # tasks = [
         #     fetchHolderAvgPrice(holder['owner'], token, client)
