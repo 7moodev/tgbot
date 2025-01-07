@@ -1,13 +1,13 @@
 import os
 import requests
 import time
-from munk.backend.utils.general_utils import get_rpc
+from .general_utils import get_rpc
 import asyncio
+import json
 birdeyeapi = os.environ.get('birdeyeapi')
 heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
 solscanapi = os.environ.get('solscan')
-
 
 async def get_token_overview(token:str=None):
     print("Getting token overview for", token)
@@ -166,6 +166,7 @@ async def get_top_holders(token:str=None, limit = None):
     offset = 0
     batch_size = 100 if limit is None or limit > 100 else limit
     res = []
+    
     while True:
         url = f"https://public-api.birdeye.so/defi/v3/token/holder?address={token}&offset={offset}&limit={batch_size}"
         headers = {
@@ -192,14 +193,13 @@ async def get_top_holders(token:str=None, limit = None):
         if len(batch) < batch_size:
             break
         # Only continue if we need all holders
-        if limit is None:
+        if limit is None or len(all_holders) < limit:
             offset += batch_size
         else:
             break
     for holder in all_holders:
         res.append(holder['owner'])
 
-    print(res)
     print("Returning top holders for", token)
     print("Returned", len(all_holders), "holders")
     return all_holders
@@ -207,5 +207,18 @@ async def get_top_holders(token:str=None, limit = None):
 
 
 if __name__ == "__main__":
-   # print(asyncio.run(get_price_historical("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "1m", 1733885544, 1733886592)))
-   print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 20)))
+     print(asyncio.run(get_price_historical("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "1m", 1733885544, 1733886592)))
+    # holders = asyncio.run(get_top_holders("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 500))
+    # holders1 = asyncio.run(get_top_holders("So11111111111111111111111111111111111111112", 750))
+    # save_to_path = "backend\commands\db\whales.json"
+    # temp = []
+    # for holder in holders:
+    #     temp.append(holder['owner'])
+
+    # for holder in holders1:
+    #     temp.append(holder['owner'])
+    # temp = list(set(temp))
+    # with open(save_to_path, 'w') as f:
+    #      json.dump(temp, f)
+    # print(holders1)
+

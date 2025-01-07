@@ -4,11 +4,11 @@ import asyncio
 import requests
 import time
 from concurrent.futures import ThreadPoolExecutor
-from munk.backend.utils.token_utils import get_price, get_price_historical
-from munk.backend.utils.general_utils import get_rpc, get_wallet_age
+from .token_utils import get_price, get_price_historical
+from .general_utils import get_rpc
 from bisect import bisect_left
 from aiohttp import ClientSession, ClientError
-import aiohttp
+import aiohttp 
 MAX_SIGNATURES = 5000
 birdeyeapi = os.environ.get('birdeyeapi')
 heliusrpc = os.environ.get('heliusrpc')
@@ -183,7 +183,7 @@ def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filt
     while True:
         time_nowin_unix = int(time.time())
         if all_signatures:
-            bot_check = bot_filter and time_nowin_unix - all_signatures[-1].get('block_time') < 36000
+            bot_check = bot_filter and time_nowin_unix - all_signatures[-1].get('blockTime') < 36000
         else:
             bot_check = False
         if len(all_signatures) > max_signatures or bot_check:
@@ -193,12 +193,13 @@ def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filt
             params[1]["before"] = before
         data = {
             "jsonrpc": "2.0",
-            "method": "get_signatures_for_address", 
+            "method": "getSignaturesForAddress", 
             "params": params,
             "id": 1
         }
         response = requests.post(get_rpc(), headers=headers, json=data)
         if response.status_code != 200:
+            print("Error fetching signatures for", wallet)
             return None
         result = response.json().get('result', [])
         if not result:
@@ -209,7 +210,7 @@ def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filt
         before = result[-1]['signature']
     # Return the blocktime of the last signature (oldest transaction)
     if all_signatures:
-        return all_signatures[-1].get('block_time')
+        return all_signatures[-1].get('blockTime')
     return None
 
 def get_wallet_age_readable(wallet:str=None, time_in_unix=None):
@@ -347,6 +348,7 @@ if __name__ == "__main__":
     # start_time = time.time()
     # asyncio.run(main())
     # print(f"Execution time: {time.time() - start_time} seconds")
-    print(asyncio.run(get_wallet_trade_history("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", ["ACTIVITY_TOKEN_SWAP", "ACTIVITY_AGG_TOKEN_SWAP"],
-                                             httpx.AsyncClient())))
+    print(get_wallet_age("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"))
+    #print(asyncio.run(get_wallet_trade_history("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", ["ACTIVITY_TOKEN_SWAP", "ACTIVITY_AGG_TOKEN_SWAP"],
+                                            #  httpx.AsyncClient())))
     #print(asyncio.run(get_wallet_avg_price("7tco85pE38UHUmaSNZRnsvcw2GXJv5TowP1tSw3GAL6M", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "buy", httpx.AsyncClient())))

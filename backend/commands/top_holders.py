@@ -1,7 +1,7 @@
 import os
 import asyncio
 import httpx
-from munk.backend.utils.token_utils import get_token_total_supply, get_token_overview, get_top_holders
+from utils.token_utils import get_token_total_supply, get_token_overview, get_top_holders
 import time
 from aiohttp import ClientSession, ClientError
 # Fetch API key from environment variables

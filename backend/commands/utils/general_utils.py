@@ -10,6 +10,7 @@ from aiohttp import ClientSession, ClientError
 import math
 import aiohttp
 
+
 heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
 def timing_decorator(func):
