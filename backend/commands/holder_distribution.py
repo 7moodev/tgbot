@@ -7,6 +7,17 @@ from aiohttp import ClientSession
 import math
 import os
 from utils.token_utils import get_token_overview, get_top_holders
+
+
+'''
+TODO: Ready to integrate functions: get_holding_distribution(token)
+Inputs: token
+Outputs: an array of dictionaries containing:
+    - dictionary of the percentage of holders with different net worth ranges
+    - dictionary of total holder count as well as total holders retrieved and processed
+'''
+
+
 api_key = os.environ.get('birdeyeapi')
 # Example API rate limit: 900 requests per minute or 15 per second
 API_RATE_LIMIT_PER_SECOND = 15
