@@ -14,7 +14,7 @@ async def get_holder_avg_buy_price(token: str, limit: int):
         token_data = token_overview.get('data', {})
         symbol = token_data.get('symbol', '')
         name = token_data.get('name', '')
-        logo_url = token_data.get('logo_uri', '')
+        logo_url = token_data.get('logoURI', '')
         liquidity = token_data.get('liquidity', 0)
         market_cap = token_data.get('mc', 0)
     else:

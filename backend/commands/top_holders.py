@@ -1,9 +1,47 @@
 import os
 import asyncio
 import httpx
-from utils.token_utils import get_token_total_supply, get_token_overview, get_top_holders
+from utils.token_utils import get_token_supply, get_token_overview, get_top_holders
 import time
 from aiohttp import ClientSession, ClientError
+
+
+
+'''
+
+TODO: Ready to integrate functions: getTopHoldersReady(token, limit)
+Inputs: 
+    - str: token address
+    - int: limit of top holders to retrieve
+Outputs: an array of dictionaries containing:
+    - dict: of the quered token info:
+    {'symbol': 'OBOT', 'name': 'OBOT', 'logoURI': 'https://ipfs.io/ipfs/QmeeSqjjrpQ5ht5uc21uG3j3PdVM46CkfTXUCyt23vs462', 'liquidity': 1012943.0935280464, 'market_cap': 8515447.962210068}
+    
+    - array: dicts of total holders with their respective top holdings: 
+    [{'count': 1, 'wallet': 'GczJXQD9Bap8EypqDn6RCoUqQruKZVs2pkQL3fUHeuZS', 'amount': 64679621.584084, 'share_in_percent':
+    8.828, 'net_worth': 751769.4571355829, 'net_worth_excluding': 0.597090429160744,
+    'first_top_holding': {'address': '7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump',
+    'decimals': 6, 'balance': 64679621584084, 'uiAmount': 64679621.584084, 'chainId': 'solana',
+    'name': 'OBOT', 'symbol': 'OBOT', 'icon': 'https://ipfs.io/ipfs/QmeeSqjjrpQ5ht5uc21uG3j3PdVM46CkfTXUCyt23vs462',
+    'logoURI': 'https://ipfs.io/ipfs/QmeeSqjjrpQ5ht5uc21uG3j3PdVM46CkfTXUCyt23vs462', 'priceUsd': 0.011622963178098508,
+    'valueUsd': 751768.8600451538}, 'second_top_holding': {'address': 'So11111111111111111111111111111111111111111',
+    'decimals': 9, 'balance': 2951040, 'uiAmount': 0.00295104, 'chainId': 'solana', 'name': 'SOL', 'symbol': 'SOL',
+    'logoURI': 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png',
+      'priceUsd': 202.33220464636622,
+      'valueUsd': 0.5970904291996125}, 'third_top_holding': 0}, {'count': 2...}]
+'''
+
+
+
+
+
+
+
+
+
+
+
+
 # Fetch API key from environment variables
 birdeyeapi = os.environ.get('birdeyeapi')
 API_RATE_LIMIT = 15  # Max API calls per second
@@ -71,7 +109,7 @@ async def get_top_holders_ready(token: str = None, limit: int = 50):
     if token is None:
         return None
     # Fetch and cache total supply
-    total_supply = await get_token_total_supply(token)
+    total_supply = await get_token_supply(token)
     if total_supply == 0:
         raise ValueError("Total supply is zero. Cannot calculate percentages.")
 
@@ -83,7 +121,7 @@ async def get_top_holders_ready(token: str = None, limit: int = 50):
         token_overview = token_overview['data']
         symbol = token_overview['symbol']
         name = token_overview['name']
-        logo_url = token_overview['logo_uri']
+        logo_url = token_overview['logoURI']
         liquidity = token_overview['liquidity']
         market_cap = token_overview['mc']
         #more info about the token
@@ -92,7 +130,7 @@ async def get_top_holders_ready(token: str = None, limit: int = 50):
     token_info = {
         'symbol': symbol,
         'name': name,
-        'logo_url': logo_url,
+        'logoURI': logo_url,
         'liquidity': liquidity,
         'market_cap': market_cap,
     }
@@ -174,7 +212,7 @@ def extract_holding_excluding(portfolio: Dict[str, Any], token: str) -> float:
     """
     for holding in portfolio['items']:
         if holding['address'] == token:
-            return portfolio['total_usd'] - holding['value_usd']
+            return portfolio['totalUsd'] - holding['valueUsd']
     return 0
 
 async def process_holder(
@@ -208,7 +246,7 @@ async def process_holder(
         }
     
     # Process portfolio details
-    net_worth = portfolio.get('total_usd', 0)
+    net_worth = portfolio.get('totalUsd', 0)
     
     # Safely extract top holdings
     try:
@@ -236,7 +274,7 @@ async def process_holder(
         'third_top_holding': third_top_holding,
     }
 
-async def getTopHoldersReady1(
+async def getTopHoldersReady(
     token: str = None, 
     limit: int = 50
 ) -> List[Dict[str, Any]]:
@@ -248,7 +286,7 @@ async def getTopHoldersReady1(
     :return: List of processed holder information
     """
     # These functions are assumed to be defined elsewhere in your code
-    total_supply = await get_token_total_supply(token)
+    total_supply = await get_token_supply(token)
     top_holders = await get_top_holders(token, limit)
     
     # Fetch token overview
@@ -258,7 +296,7 @@ async def getTopHoldersReady1(
         token_info = {
             'symbol': token_overview['symbol'],
             'name': token_overview['name'],
-            'logo_url': token_overview['logo_uri'],
+            'logoURI': token_overview['logoURI'],
             'liquidity': token_overview['liquidity'],
             'market_cap': token_overview['mc'],
         }
@@ -277,13 +315,12 @@ async def getTopHoldersReady1(
         processed_holders = await asyncio.gather(*holder_tasks)
     
     # Combine results
-    results = [token_info] + processed_holders
     
-    return results
+    return token_info, processed_holders
 
 if __name__ == "__main__":
     timenow = float(time.time())
-    print(asyncio.run(getTopHoldersReady1("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump",30)))
+    print(asyncio.run(getTopHoldersReady("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump",30)))
     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
     print(float(time.time()) - timenow)
 

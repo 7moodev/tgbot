@@ -42,7 +42,7 @@ async def get_balance(wallet: str, token: str = None, client: httpx.AsyncClient 
         # Get SOL balance
         data = {
             "jsonrpc": "2.0",
-            "method": "get_balance",
+            "method": "getBalance",
             "params": [wallet],
             "id": 1
         }
@@ -59,8 +59,8 @@ async def get_balance(wallet: str, token: str = None, client: httpx.AsyncClient 
         result = response.json().get('result', {}).get('value', [])
         if not result:
             return 0
-        token_amount = float(result[0]['account']['data']['parsed']['info']['token_amount']['amount'])
-        decimals = result[0]['account']['data']['parsed']['info']['token_amount']['decimals']
+        token_amount = float(result[0]['account']['data']['parsed']['info']['tokenAmount']['amount'])
+        decimals = result[0]['account']['data']['parsed']['info']['tokenAmount']['decimals']
         return token_amount / (10 ** decimals)
     else:
         balance = response.json().get('result', {}).get('value', 0)
@@ -117,7 +117,7 @@ async def get_wallet_avg_price(wallet: str, token: str = None, side: str = None,
     if token is None:
         token = "So11111111111111111111111111111111111111112"
     if len(wallet_trade_history) > 6:
-        prices = await get_price_historical(token, "1m", wallet_trade_history[-1]['block_time'], wallet_trade_history[0]['block_time'])
+        prices = await get_price_historical(token, "1m", wallet_trade_history[-1]['blockTime'], wallet_trade_history[0]['blockTime'])
     else:
         prices = None
     counter = 0
@@ -132,7 +132,7 @@ async def get_wallet_avg_price(wallet: str, token: str = None, side: str = None,
                 if balance:
                     if sofar >= balance:
                         break
-                block_time = activity['block_time']
+                block_time = activity['blockTime']
                 if prices: 
                     price = get_price_historical_helper(prices, block_time)
                 else:
@@ -143,7 +143,7 @@ async def get_wallet_avg_price(wallet: str, token: str = None, side: str = None,
                     print("Summing up")
                     routers = activity['routers']
                     if side == "buy" and routers['token2'] == token:
-                        amount = routers['amount2'] / 10 ** routers['token2_decimals']
+                        amount = routers['amount2'] / 10 ** routers['token2_ecimals']
                         sofar += amount
                         trade_size_x_price_sum += price * amount
                         trade_size_sum += amount
@@ -299,7 +299,7 @@ async def get_all_signatures(wallet: str = None, limit: int = None):
 def get_price_historical_helper(data, target_unix_time):
     print("Searching for price historical for", target_unix_time)
     # Extract the unix_time values into a sorted list
-    unix_times = [entry['unix_time'] for entry in data]
+    unix_times = [entry['unixTime'] for entry in data]
     
     # Use binary search to find the closest index
     pos = bisect_left(unix_times, target_unix_time)
@@ -316,7 +316,7 @@ def get_price_historical_helper(data, target_unix_time):
 
     # Find the corresponding entry in the data
     for entry in data:
-        if entry['unix_time'] == closest:
+        if entry['unixTime'] == closest:
             print("Found price historical for", target_unix_time, ":", entry['value'])
             return entry['value']
 async def process_wallet(wallet: str, client: httpx.AsyncClient):

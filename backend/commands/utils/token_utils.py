@@ -37,7 +37,7 @@ async def get_token_supply(token:str=None):
     headers = {"Content-Type": "application/json"}
     data = {
         "jsonrpc": "2.0",
-        "method": "get_token_supply",
+        "method": "getTokenSupply",
         "params": [token],
         "id": 1
     }
@@ -45,7 +45,8 @@ async def get_token_supply(token:str=None):
     if response.status_code != 200:
         return None
     print("Returning total supply for", token)
-    return float(response.json()['result']['value']['ui_amount'])
+
+    return float(response.json()['result']['value']['uiAmount'])
 
 
 async def get_top_holders_with_constraint(token:str=None, min_value_usd:float=None, price:float=None):
@@ -91,7 +92,7 @@ async def get_top_holders_with_constraint(token:str=None, min_value_usd:float=No
             
         # Filter holders that meet minimum value
         for holder in batch:
-            value_usd = float(holder['ui_amount']) * price
+            value_usd = float(holder['uiAmount']) * price
             if value_usd >= min_value_usd:
                 all_holders.append(holder)
             else:
@@ -207,7 +208,7 @@ async def get_top_holders(token:str=None, limit = None):
 
 
 if __name__ == "__main__":
-     print(asyncio.run(get_price_historical("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "1m", 1733885544, 1733886592)))
+    print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 200)))
     # holders = asyncio.run(get_top_holders("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 500))
     # holders1 = asyncio.run(get_top_holders("So11111111111111111111111111111111111111112", 750))
     # save_to_path = "backend\commands\db\whales.json"

@@ -11,7 +11,8 @@ from utils.token_utils import get_token_overview, get_top_holders
 
 '''
 TODO: Ready to integrate functions: get_holding_distribution(token)
-Inputs: token
+Inputs: 
+    - str: token address
 Outputs: an array of dictionaries containing:
     - dictionary of the percentage of holders with different net worth ranges
     - dictionary of total holder count as well as total holders retrieved and processed
