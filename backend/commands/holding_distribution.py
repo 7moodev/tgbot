@@ -6,7 +6,7 @@ from asyncio import Semaphore
 from aiohttp import ClientSession
 import math
 import os
-from utils.token_utils import get_token_overview, get_top_holders
+from .utils.token_utils import get_token_overview, get_top_holders
 
 
 '''

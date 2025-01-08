@@ -198,6 +198,7 @@ def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filt
             "id": 1
         }
         response = requests.post(get_rpc(), headers=headers, json=data)
+        print("Response", response)
         if response.status_code != 200:
             print("Error fetching signatures for", wallet)
             return None

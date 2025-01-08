@@ -208,7 +208,7 @@ async def get_top_holders(token:str=None, limit = None):
 
 
 if __name__ == "__main__":
-    print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 200)))
+    print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
     # holders = asyncio.run(get_top_holders("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 500))
     # holders1 = asyncio.run(get_top_holders("So11111111111111111111111111111111111111112", 750))
     # save_to_path = "backend\commands\db\whales.json"

@@ -75,10 +75,7 @@ def log_entry(entry=None,command=None,content=None):
     conn.commit()
     conn.close()
 
-def specific_log(command,entry,content):
-    print(command)
-    print(content)
-    
+def specific_log(command,entry,content):    
     conn = sqlite3.connect('db/user_logs.db')
     cursor = conn.cursor()
     try:

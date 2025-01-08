@@ -1,15 +1,15 @@
 import os
 import asyncio
 import httpx
-from utils.token_utils import get_token_supply, get_token_overview, get_top_holders
+from .utils.token_utils import get_token_supply, get_token_overview, get_top_holders
+from .utils.wallet_utils import get_wallet_age
 import time
 from aiohttp import ClientSession, ClientError
 
 
 
 '''
-
-TODO: Ready to integrate functions: getTopHoldersReady(token, limit)
+TODO: Ready to integrate functions: get_top_holders_holdings(token, limit)
 Inputs: 
     - str: token address
     - int: limit of top holders to retrieve
@@ -30,18 +30,6 @@ Outputs: an array of dictionaries containing:
       'priceUsd': 202.33220464636622,
       'valueUsd': 0.5970904291996125}, 'third_top_holding': 0}, {'count': 2...}]
 '''
-
-
-
-
-
-
-
-
-
-
-
-
 # Fetch API key from environment variables
 birdeyeapi = os.environ.get('birdeyeapi')
 API_RATE_LIMIT = 15  # Max API calls per second
@@ -60,14 +48,16 @@ async def fetch_wallet_portfolio(session, wallet: str):
     }
     async with session.get(url, headers=headers) as response:
         if response.status != 200:
+
             return {"error": f"Failed to fetch portfolio for wallet {wallet}"}
         data = await response.json()
         if not data.get('success', True):
+            
             return {"error": f"Failed to fetch portfolio for wallet {wallet}"}
         print(f"Fetched portfolio for wallet {wallet}")
         return data
 
-async def process_holder(count, holder, session, total_supply, token):
+async def process_holder1(count, holder, session, total_supply, token):
     print(f"Processing holder {count} with wallet {holder['owner']}")
     """
     Process a single holder with adaptive pacing.
@@ -80,11 +70,11 @@ async def process_holder(count, holder, session, total_supply, token):
     portfolio = await fetch_wallet_portfolio(session, wallet)
     if "error" in portfolio:
         return {f'wallet {count}': portfolio}
-    net_worth = round(portfolio['data']['total_usd'], 0)
+    net_worth = round(portfolio['data']['totalUsd'], 0)
     # Extract holdings
     holdings = portfolio['data']['items']
     token_item = next((item for item in holdings if item['address'] == token), None)
-    net_worth_excluding = net_worth - (token_item['value_usd'] if token_item else 0)
+    net_worth_excluding = net_worth - (token_item['valueUsd'] if token_item else 0)
     # Get top holdings efficiently
     top_holdings = holdings[:3]
     print(f"Processed holder {count} with wallet {wallet}")
@@ -101,7 +91,7 @@ async def process_holder(count, holder, session, total_supply, token):
             }
         }
 
-async def get_top_holders_ready(token: str = None, limit: int = 50):
+async def get_top_holders_unready(token: str = None, limit: int = 50):
     print(f"Getting top holders info for {token} with limit {limit}")
     """
     Get the info of the top holders of a token with adaptive pacing for API requests.
@@ -116,7 +106,7 @@ async def get_top_holders_ready(token: str = None, limit: int = 50):
     # Fetch top holders
     top_holders =await get_top_holders(token, limit)
     print(f"Retrieved {len(top_holders)} holders for token {token}")
-    token_overview = get_token_overview(token)
+    token_overview = await get_token_overview(token)
     if token_overview:
         token_overview = token_overview['data']
         symbol = token_overview['symbol']
@@ -140,7 +130,7 @@ async def get_top_holders_ready(token: str = None, limit: int = 50):
             # Process holders in batches
             batch = top_holders[i:i + BATCH_SIZE]
             tasks = [
-                process_holder(count, holder, session, total_supply, token)
+                process_holder1(count, holder, session, total_supply, token)
                 for count, holder in enumerate(batch, start=i + 1)
             ]
             results.extend(await asyncio.gather(*tasks))
@@ -222,6 +212,7 @@ async def process_holder(
     total_supply: float, 
     session: httpx.AsyncClient
 ) -> Dict[str, Any]:
+
     """
     Process a single token holder's information
     
@@ -272,9 +263,10 @@ async def process_holder(
         'first_top_holding': first_top_holding,
         'second_top_holding': second_top_holding,
         'third_top_holding': third_top_holding,
+        #potential to add wallet age
     }
 
-async def getTopHoldersReady(
+async def get_top_holders_holdings(
     token: str = None, 
     limit: int = 50
 ) -> List[Dict[str, Any]]:
@@ -318,9 +310,51 @@ async def getTopHoldersReady(
     
     return token_info, processed_holders
 
+
+
+
+
+def format_message(token_info, top_holders):
+
+    # Token information part
+    message = f"**Token Info**: {token_info['symbol']} ({token_info['name']})\n"
+    message += f"├── MC: ${token_info['market_cap'] / 1e6:.2f}M\n"
+    message += f"├── Liquidity: ${token_info['liquidity']:.2f}\n\n"
+    # message += f"├── Holders count: {token_info['holders']}\n"
+    message += f"**Holdings of the top {len(top_holders)}:**\n\n"
+    # Top holders part
+    for holder in top_holders:
+        if "error" in holder:
+            continue
+        message += f"#{holder['count']}- ({shorten_address(holder['wallet'])}) (💰NW_Excl:{holder["net_worth"]} |"
+        top1 = holder["first_top_holding"]
+        top2 = holder["second_top_holding"]
+        top3 = holder["third_top_holding"]
+        if top1:
+            message += f"🥇{top1['symbol']}({top1['valueUsd']})"
+        if top2:
+            message += f"🥈{top2['symbol']}({top2['valueUsd']})"
+        if top3:
+            message += f"🥉{top3['symbol']}({top3['valueUsd']})"
+    return message
+
+
+def shorten_address(address: str, length: int = 4) -> str:
+    """
+    Shorten the address to the given length.
+    """
+    return f"{address[:length]}...{address[-length:]}"
+# # Convert to the readable format
+# if __name__ == "__main__":
+#     token_info, top_holders = asyncio.run(get_top_holders_holdings("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 5))
+#     formatted_message = format_message(token_info=token_info, top_holders=top_holders)
+#     print(formatted_message)
+#     #print(shorten_address("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"))
 if __name__ == "__main__":
     timenow = float(time.time())
-    print(asyncio.run(getTopHoldersReady("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump",30)))
+    holders = asyncio.run(get_top_holders_holdings("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump",30))
+    print(holders)
+    #print(format_message(holders[0], holders[1]))
     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
     print(float(time.time()) - timenow)
 

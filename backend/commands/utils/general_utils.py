@@ -13,6 +13,7 @@ import aiohttp
 
 heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
+heliusrpc1 = os.environ.get('heliusrpc1')
 def timing_decorator(func):
     # Track recursion depth to create indented output for nested calls
     timing_decorator.level = getattr(timing_decorator, 'level', 0)
@@ -34,12 +35,16 @@ def timing_decorator(func):
     return wrapper
 
 def get_rpc():
-    Random = random.randint(0, 1)
+    Random = random.randint(0, 2)
     if Random == 0:
         print("Using heliusrpc")
         return heliusrpc
+    elif Random == 1:  
+        print("Using heliusrpc1")
+        return heliusrpc1
     else:
         print("Using quicknoderpc")
         return quicknoderpc
+        
 
 
