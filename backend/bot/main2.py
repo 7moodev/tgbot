@@ -3,7 +3,7 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboard
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .tg_commands import *
 import os 
-from .parser import top_holders_holdings_parsed
+from .parser import top_holders_holdings_parsed, holder_distribution_parsed
 
 TOKEN= os.environ.get('tgTOKEN')
 BOT_USERNAME= "@VNFlybot"
@@ -58,21 +58,29 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(response)
 
 async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        context.user_data['awaiting_token_address'] = False
-        token_address = update.message.text.strip()
+    context.user_data['awaiting_token_address'] = False
+    token_address = update.message.text.strip()
 
-        # Validate token address
-        if len(token_address) < 43:  # Adjust this check for Solana addresses
-            await update.message.reply_text("Invalid token address. Please provide a valid address.")
-            return
+    # Validate token address
+    if len(token_address) < 43:  # Adjust this check for Solana addresses
+        await update.message.reply_text("Invalid token address. Please provide a valid address.")
+        return
 
-        # Store the token address in user data
-        holder_message = top_holders_holdings_parsed(token_address, limit = 20)
+    # Store the token address in user_data
+    holder_message = None
 
-        print (holder_message) 
+    # Check if 'top_holders_started' exists and is set, otherwise default to False
+    if context.user_data.get('top_holders_started', False):
+        context.user_data['top_holders_started'] = False
+        holder_message = await top_holders_holdings_parsed(token_address, limit=20)
+    
+    # Check if 'token_distribution_started' exists and is set, otherwise default to False
+    elif context.user_data.get('token_distribution_started', False):
+        context.user_data['token_distribution_started'] = False
+        holder_message = await holder_distribution_parsed(token_address)
 
-
-        await update.message.reply_text(holder_message , parse_mode='MarkdownV2',  disable_web_page_preview=True)
+    print(holder_message)
+    await update.message.reply_text(holder_message, parse_mode='MarkdownV2', disable_web_page_preview=True)
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
@@ -82,6 +90,7 @@ if __name__ == "__main__":
     app = Application.builder().token(TOKEN).build()
 
     #Commands
+    app.add_handler(CommandHandler('distro', token_distribution_command))
     app.add_handler(CommandHandler('top', topholders_command))
     app.add_handler(CommandHandler('userid', userid_command))
     app.add_handler(CommandHandler('renew', renew_command))

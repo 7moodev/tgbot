@@ -136,13 +136,14 @@ async def get_holding_distribution(token):
         print("Token not provided.")
         return None
     
-    token_overview = await get_token_overview(token)  # Fetch token overview
-    if not token_overview or not token_overview.get('data'):
-        print("Failed to fetch token overview.")
-        return None
+    token_overview = await get_token_overview(token) 
 
     holder_count = token_overview['data'].get('holder', 0)
     total_supply = token_overview['data'].get('mc', 0)
+    symbol = token_overview['data'].get('symbol', 0)
+    name = token_overview['data'].get('name', 0)
+
+
     
     top_holders = await get_top_holders(token, TOP_HOLDERS_TO_CONSIDER)  # Fetch top holders *****************************************************************
     if not top_holders:
@@ -153,7 +154,7 @@ async def get_holding_distribution(token):
     
     # Convert ranges to percentage
     actually_retrieved_holders = sum(ranges.values())
-    results = [{k: (round((v / actually_retrieved_holders * 100),2)) for k, v in ranges.items()}, {"holder_count": holder_count, 'retreived_holders': actually_retrieved_holders}]
+    results = [{k: (round((v / actually_retrieved_holders * 100),2)) for k, v in ranges.items()}, {"holder_count": holder_count, 'retrieved_holders': actually_retrieved_holders, "Symbol": symbol, "Name": name}]  
     
     return results
 

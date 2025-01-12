@@ -1,7 +1,7 @@
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
-from .parser import top_holders_holdings_parsed
+from .parser import top_holders_holdings_parsed, holder_distribution_parsed
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     user_id = update.message.chat.id 
@@ -29,8 +29,9 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
     user_id = update.message.chat.id 
     if check_access(user_id):
         if len(context.args) != 1:
-            await update.message.reply_text("Please reply with token address.")
+            await update.message.reply_text("Please send me a token address.")
             context.user_data['awaiting_token_address'] = True
+            context.user_data['top_holders_started'] = True 
             return
 
         else:
@@ -39,9 +40,30 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
             print (holder_message)
 
 
-            await update.message.reply_text(holder_message , parse_mode='MarkdownV2')
+            await update.message.reply_text(holder_message , parse_mode='MarkdownV2', disable_web_page_preview=True)
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+
+async def token_distribution_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id 
+    if check_access(user_id):
+        if len(context.args) != 1:
+            await update.message.reply_text("Please send me a token address.")
+            context.user_data['awaiting_token_address'] = True
+            context.user_data['token_distribution_started'] = True 
+            return
+
+        else:
+            token_address = context.args[0]
+            holder_message = await holder_distribution_parsed(token_address)
+            print (holder_message)
+
+
+            await update.message.reply_text(holder_message , parse_mode='MarkdownV2', disable_web_page_preview=True)
+    else:
+        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+
+
 
 
 async def userid_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -62,7 +84,7 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else: 
         public_key = info["public_key"]
         keyboard = [
-            [ InlineKeyboardButton("Check", callback_data='/check') ]
+        [ InlineKeyboardButton("Check", callback_data='/check') ]
         ]
         # Create the reply markup with the above keyboard layout
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -107,5 +129,6 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     /renew - renew your subscription
     /referal - get referal link
     /sub - get subscription status
+    /distro - [contract adress] get distribution of token holders
     '''
     await update.message.reply_text(f'{response}')

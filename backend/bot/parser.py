@@ -1,6 +1,7 @@
 
-from commands.top_holders_holdings import get_top_holders_holdings
-from commands.fresh_wallets import fresh_wallets
+from ..commands.top_holders_holdings import get_top_holders_holdings
+from ..commands.holding_distribution import get_holding_distribution 
+from ..commands.fresh_wallets import fresh_wallets
 import time
 import asyncio
 import json
@@ -94,7 +95,50 @@ async def top_holders_holdings_parsed(token, limit):
     return message
 
 
+async def holder_distribution_parsed(token):
+    '''
+    TODO: Add Error handling
+    '''
+    data = await get_holding_distribution(token)
+    # Distribution
+    data_pc = data[0]
+    data_meta = data[1]
+    distribution = [
+        ("🫧", "0-500", data_pc['0-500']),
+        ("🦐", "500-1000", data_pc['500-1000']),
+        ("🐟", "1000-5000", data_pc['1000-5000']),
+        ("🐬", "5000-25000", data_pc['5000-25000']),
+        ("🦈", "25000+", data_pc['25000+'])
+    ]
+    
+    # Create the bar visualization
+    bars = []
+    for emoji, range_str, percentage in distribution:
+        bar_length = int(percentage / 10) if percentage > 0 else 0
+        bar = "🟩" * bar_length
+        bars.append(f"{emoji} |{bar} {percentage}%")
 
+    # Convert percentages to holder counts (assuming all holders are represented by '25000+')
+    total_holders = data_meta['holder_count']
+    holder_counts = {
+        "🫧 holding (0-500)": int(total_holders * data_pc['0-500'] / 100),
+        "🦐 holding (500-1000)": int(total_holders * data_pc['500-1000'] / 100),
+        "🐟 holding (1000-5000)": int(total_holders * data_pc['1000-5000'] / 100),
+        "🐬 holding (5000-25000)": int(total_holders * data_pc['5000-25000'] / 100),
+        "🦈 holding (25000+)": int(total_holders * data_pc['25000+'] / 100)
+    }
+
+    # Generate the Markdown message
+    markdown = """📊 Holding Distributions for {symbol}:
+- by @munki_bot🦧
+{bars}
+    """.format(symbol=data_meta['Symbol'], bars='\n'.join(bars))
+    
+    for emoji, count in holder_counts.items():
+        markdown += f"{emoji}:  {count}\n"
+
+    markdown += f"\nTotal Holders: {total_holders}"
+    return escape_markdown(markdown)  
 
 
 def shorten_address(address: str, length: int = 4) -> str:
