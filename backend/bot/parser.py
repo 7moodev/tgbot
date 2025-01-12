@@ -1,15 +1,16 @@
 
-from backend.commands.top_holders_holdings import get_top_holders_holdings
-from backend.commands.fresh_wallets import fresh_wallets
+from commands.top_holders_holdings import get_top_holders_holdings
+from commands.fresh_wallets import fresh_wallets
 import time
 import asyncio
 import json
 import ast
+import re
 
 
-
-
-
+'''
+TODO: Use splitfunction and send messages in chunks if exeeds 4096 characters
+'''
 MAX_MESSAGE_LENGTH = 4096
 def split_message(text):
     return [text[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(text), MAX_MESSAGE_LENGTH)]
@@ -41,14 +42,21 @@ def format_number(amount, with_dollar_sign=True):
     if formatted_amount.endswith(".0"):
         formatted_amount = formatted_amount[:-2]
 
-    return f"{prefix}{formatted_amount}"
+    return escape_markdown(f"{prefix}{formatted_amount}")
 
-def top_holders_holdings_parsed(token, limit):
-    token_info, top_holders =token, limit# asyncio.run(get_top_holders_holdings(token, limit)) 
+def escape_markdown(text):
+    # List of characters that need to be escaped in Markdown
+    special_chars = r'\`*_{}[]()#+-.!|'
+    
+    # Use a regular expression to replace each special character with a backslash and the character
+    return re.sub(r'([{}])'.format(re.escape(special_chars)), r'\\\1', text)
+
+async def top_holders_holdings_parsed(token, limit):
+    token_info, top_holders = await get_top_holders_holdings(token, limit)
     print(token_info)
     print(top_holders)
     # Token information part=
-    message = f"**Token Info**: {token_info['symbol']} ({token_info['name']})\n"
+    message = f"**Token Info**: {token_info['symbol']} \\({token_info['name']}\\)\n"
     message += f"├── MC: {format_number(token_info['market_cap'])}\n"
     message += f"├── Liquidity: {format_number(token_info['liquidity'])}\n\n"
     # message += f"├── Holders count: {token_info['holders']}\n"
@@ -56,26 +64,27 @@ def top_holders_holdings_parsed(token, limit):
     # Top holders part
     for holder in top_holders:
         wallet = holder['wallet']
-        addy = f"[{shorten_address(wallet)}](https://solscan.io/account/{wallet})"
+        short_wallet = escape_markdown( shorten_address(wallet) ) 
+        addy = f"[{short_wallet}](https://solscan.io/account/{wallet})"
         try:
             if "error" in holder:
-                message += f"#{holder['count']}-({addy})(💰 NW_Excl: $1M+) 🏦LP/Bot |\n"
+                message += f"\\#{holder['count']}\\-\\({addy}\\)\\(💰 NW\\_Excl: $1M+\\) 🏦LP/Bot \\|\n"
                 continue
 
-            addy = f"[{shorten_address(wallet)}](https://solscan.io/account/{wallet})"
-            message += f"#{holder['count']}-({addy})(💰 NW_Excl: {format_number(holder['net_worth_excluding'])} |\n"
+            #addy = f"[{shorten_address(wallet)}](https://solscan.io/account/{wallet})"
+            message += f"\\#{holder['count']}\\-\\({addy}\\)\\(💰 NW\\_Excl: {format_number(holder['net_worth_excluding'])}\\)  \\|\n"
             top1 = holder['first_top_holding']
             top2 = holder['second_top_holding']
             top3 = holder['third_top_holding']
             if top1:
                 symbol = f"🥇[{top1['symbol']}](https://dexscreener.com/solana/{top1['address']})"
-                message += f"{symbol}: {format_number(top1['valueUsd'])} |\n"
+                message += f"{symbol}: {format_number(top1['valueUsd'])} \\|\n"
             if top2:
                 symbol = f"🥈[{top2['symbol']}](https://dexscreener.com/solana/{top2['address']})"
-                message += f" {symbol}: {format_number(top2['valueUsd'])} |\n"
+                message += f" {symbol}: {format_number(top2['valueUsd'])} \\|\n"
             if top3:
                 symbol = f"🥉[{top3['symbol']}](https://dexscreener.com/solana/{top3['address']})"
-                message += f" {symbol}: {format_number(top3['valueUsd'])} |\n"
+                message += f" {symbol}: {format_number(top3['valueUsd'])} \\|\n"
             message += "\n"
         except Exception as e:
             print(f" holder: {holder}")
@@ -151,22 +160,24 @@ if __name__ == "__main__":
 
     
     holders = top_holders_holdings_parsed(token_info, array_of_objects)
-    import telegram
-    import os
-    import telebot
-    token = os.environ.get('tgbot')
-   
-    if not token:
-        raise ValueError("Bot token not found in environment variables")
-    
-    bot = telebot.TeleBot(token)
-    chat_id = os.environ.get('tgchat')
-    if len(holders) > 4096:
-        for text in split_message(holders):
-            bot.send_message(chat_id=chat_id, text=text, parse_mode=telegram.constants.ParseMode.MARKDOWN)
-    else:
-        bot.send_message(chat_id=chat_id, text=holders)
-    
+
+    print (holders)
+   #  import telegram
+   #  import os
+   #  import telebot
+   #  token = os.environ.get('tgbot')
+   # 
+   #  if not token:
+   #      raise ValueError("Bot token not found in environment variables")
+   #  
+   #  bot = telebot.TeleBot(token)
+   #  chat_id = os.environ.get('tgchat')
+   #  if len(holders) > 4096:
+   #      for text in split_message(holders):
+   #          bot.send_message(chat_id=chat_id, text=text, parse_mode=telegram.constants.ParseMode.MARKDOWN)
+   #  else:
+   #      bot.send_message(chat_id=chat_id, text=holders)
+   #  
     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
     # fresh_wallets = asyncio.run(fresh_wallets("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 50))
     # print((fresh_wallets[1]))

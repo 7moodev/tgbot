@@ -326,7 +326,7 @@ def format_message(token_info, top_holders):
     for holder in top_holders:
         if "error" in holder:
             continue
-        message += f"#{holder['count']}- ({shorten_address(holder['wallet'])}) (💰NW_Excl:{holder["net_worth"]} |"
+        message += f"#{holder['count']}- ({shorten_address(holder['wallet'])}) (💰NW_Excl:{holder['net_worth']} |"
         top1 = holder["first_top_holding"]
         top2 = holder["second_top_holding"]
         top3 = holder["third_top_holding"]

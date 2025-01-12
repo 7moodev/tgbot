@@ -1,8 +1,8 @@
 import httpx
 import os
 import asyncio
-from backend.commands.utils.token_utils import get_rpc, get_top_holders, get_token_overview
-from backend.commands.utils.wallet_utils import get_wallet_avg_price
+from .utils.token_utils import get_rpc, get_top_holders, get_token_overview
+from .utils.wallet_utils import get_wallet_avg_price
 import time
 
 async def get_holder_avg_buy_price(token: str, limit: int):

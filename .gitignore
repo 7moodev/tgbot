@@ -5,3 +5,4 @@ vscode/
 /backend/commands/utils/__pycache__/
 misc/
 .env
+.DS_Store
