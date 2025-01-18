@@ -1,22 +1,33 @@
 import psycopg2
 from psycopg2 import sql
-from functools import wraps
 import pandas as pd
+import os
+from functools import wraps
+from urllib.parse import urlparse
 
-
-
-#needs to be modified for actual database
 def db_connection(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         conn = None
         try:
+            # Parse the DATABASE_URL environment variable
+            DATABASE_URL = os.getenv('DATABASE_URL')
+            if not DATABASE_URL:
+                raise EnvironmentError("DATABASE_URL environment variable not set")
+            
+            result = urlparse(DATABASE_URL)
+            username = result.username
+            password = result.password
+            database = result.path[1:]  # Remove leading slash
+            hostname = result.hostname
+            port = result.port
+
             conn = psycopg2.connect(
-            user="bruce",
-            password="",  # Add your password here if you've set one
-            host="localhost",  # or 127.0.0.1
-            port="5432",  # Default PostgreSQL port
-            database="Testing"
+                database=database,
+                user=username,
+                password=password,
+                host=hostname,
+                port=port
             )
             cursor = conn.cursor()
             result = func(cursor, *args, **kwargs)
