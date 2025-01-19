@@ -1,5 +1,5 @@
 from typing import Final
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup, Bot
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .tg_commands import *
 import os 
@@ -7,6 +7,8 @@ from .parser import top_holders_holdings_parsed, holder_distribution_parsed
 
 TOKEN= os.environ.get('tgTOKEN')
 BOT_USERNAME= "@VNFlybot"
+PORT = int(os.environ.get('PORT', 5000))
+HEROKU_APP_NAME = os.environ.get('munki-tg-bot')
 
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
@@ -85,6 +87,10 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
 
+
+
+# webhook 
+
 if __name__ == "__main__":
     print ('start_command')
     app = Application.builder().token(TOKEN).build()
@@ -101,10 +107,22 @@ if __name__ == "__main__":
     app.add_handler(CallbackQueryHandler(handle_buttons))
     #Messages
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
-    #Errpr
+    #Error
     app.add_error_handler(error)
 
-    print ('polling')
-    app.run_polling(poll_interval=3)
+
+    #Set Webhook
+    webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
+    bot = Bot(TOKEN)
+    bot.set_webhook(webhook_url)
+    
+    application.run_webhook(
+        listen="0.0.0.0",
+        port=PORT,
+        webhook_url=webhook_url,
+    )
+
+    #print ('polling')
+    #app.run_polling(poll_interval=3)
 
 

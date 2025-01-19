@@ -1,1 +1,1 @@
-bot: python3 -m backend.bot.main2
+web: python3 -m backend.bot.main2
