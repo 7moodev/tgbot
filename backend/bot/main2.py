@@ -1,5 +1,5 @@
 from typing import Final
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup, Bot
+from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .tg_commands import *
 import os 
@@ -111,9 +111,7 @@ def main():
     webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
     print (webhook_url)
     print (PORT)
-    bot = Bot(TOKEN)
-    bot.set_webhook(webhook_url)
-    
+    print(f"Webhook set to: {webhook_url}")
     app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
