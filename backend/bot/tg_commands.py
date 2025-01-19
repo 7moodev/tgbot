@@ -3,6 +3,8 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboard
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .parser import top_holders_holdings_parsed, holder_distribution_parsed
 
+BOT_USERNAME= os.environ.get('tgNAME')  
+
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     user_id = update.message.chat.id 
     args = context.args
