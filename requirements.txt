@@ -47,3 +47,4 @@ python-telegram-bot==21.10
 Requests==2.32.3
 solana==0.36.2
 solders==0.23.0
+python-telegram-bot[webhooks]
