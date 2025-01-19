@@ -87,11 +87,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
 
-
-
-# webhook 
-
-if __name__ == "__main__":
+def main():
     print ('start_command')
     app = Application.builder().token(TOKEN).build()
 
@@ -116,7 +112,7 @@ if __name__ == "__main__":
     print (webhook_url)
     print (PORT)
     bot = Bot(TOKEN)
-    bot.set_webhook(webhook_url)
+    await bot.set_webhook(webhook_url)
     
     app.run_webhook(
         listen="0.0.0.0",
@@ -127,4 +123,10 @@ if __name__ == "__main__":
     #print ('polling')
     #app.run_polling(poll_interval=3)
 
+
+
+# webhook 
+
+if __name__ == "__main__":
+    main()
 
