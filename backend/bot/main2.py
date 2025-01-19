@@ -115,7 +115,7 @@ if __name__ == "__main__":
     webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
     print (webhook_url)
     bot = Bot(TOKEN)
-    await bot.set_webhook(webhook_url)
+    bot.set_webhook(webhook_url)
     
     app.run_webhook(
         listen="0.0.0.0",
