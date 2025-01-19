@@ -8,7 +8,7 @@ from .parser import top_holders_holdings_parsed, holder_distribution_parsed
 TOKEN= os.environ.get('tgTOKEN')
 BOT_USERNAME= "@VNFlybot"
 PORT = int(os.environ.get('PORT', 8443))
-HEROKU_APP_NAME = os.environ.get('munki-tg-bot')
+HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
 
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
@@ -114,6 +114,7 @@ if __name__ == "__main__":
     #Set Webhook
     webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
     print (webhook_url)
+    print (PORT)
     bot = Bot(TOKEN)
     bot.set_webhook(webhook_url)
     
