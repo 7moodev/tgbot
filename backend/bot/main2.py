@@ -116,7 +116,7 @@ if __name__ == "__main__":
     bot = Bot(TOKEN)
     bot.set_webhook(webhook_url)
     
-    application.run_webhook(
+    app.run_webhook(
         listen="0.0.0.0",
         port=PORT,
         webhook_url=webhook_url,
