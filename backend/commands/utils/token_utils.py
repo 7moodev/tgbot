@@ -9,6 +9,7 @@ heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
 solscanapi = os.environ.get('solscan')
 
+
 async def get_token_overview(token:str=None):
     print("Getting token overview for", token)
     """
@@ -45,7 +46,6 @@ async def get_token_supply(token:str=None):
     if response.status_code != 200:
         return None
     print("Returning total supply for", token)
-
     return float(response.json()['result']['value']['uiAmount'])
 
 
@@ -152,6 +152,33 @@ async def get_price_historical(token:str=None, type:str=None, start:int=None, en
 
 
 
+async def get_token_creation_info(token:str=None):
+    """{
+  "data": {
+    "txHash": "4ePtuFmo3uYX5m2mqMYEVqUpJzCoRHymmrTnCk1q1KiyvhpmCABVQ1sq1CFLMWHZAwbicC8V1Ao664WumAqxWQ86",
+    "slot": 306705009,
+    "tokenAddress": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
+    "decimals": 6,
+    "owner": "TSLvdd1pWpHVjahSpsvCXUbgwsL3JAcvokwaKt1eokM",
+    "blockUnixTime": 1733878974,
+    "blockHumanTime": "2024-12-11T01:02:54.000Z"
+  },"success": true}
+"""
+    print("Getting token creation info for", token)
+
+    url = "https://public-api.birdeye.so/defi/token_creation_info?address={}".format(token)
+
+    headers = {
+        "accept": "application/json",
+        "x-chain": "solana",
+        "X-API-KEY":birdeyeapi
+    }
+    try:
+        response = requests.get(url, headers=headers)
+        return response.json()['data']
+    except Exception as e:
+        print("Error getting token creation info for", token, ":Birdeye")
+        return None
 
 
 async def get_top_holders(token:str=None, limit = None):
@@ -160,10 +187,15 @@ async def get_top_holders(token:str=None, limit = None):
     Get the top holders of a token, costs 50 credits per request
     Iterates through all holders using offset pagination
     """	
+    if(limit == 0):
+        if os.path.exists('top_holders.json'):
+            with open('top_holders.json', 'r') as file:
+                print("Returning cached data from 'top_holders.json'")
+                return json.load(file)
     all_holders = []
     if token is None:
         return True
-
+    
     offset = 0
     batch_size = 100 if limit is None or limit > 100 else limit
     res = []
@@ -200,7 +232,12 @@ async def get_top_holders(token:str=None, limit = None):
             break
     for holder in all_holders:
         res.append(holder['owner'])
-
+    try:
+        with open('top_holders.json', 'w') as file:
+            json.dump(all_holders, file, indent=4)
+        print(f"Saved top {len(res)} holders for {type} to 'top_holders.json'.")
+    except Exception as e:
+        print(f"Error saving to 'top_holders.json': {e}")
     print("Returning top holders for", token)
     print("Returned", len(all_holders), "holders")
     return all_holders
@@ -208,7 +245,9 @@ async def get_top_holders(token:str=None, limit = None):
 
 
 if __name__ == "__main__":
-    print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
+    #print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
+   # print(asyncio.run(get_token_supply("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))
+    print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 0)))
     # holders = asyncio.run(get_top_holders("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 500))
     # holders1 = asyncio.run(get_top_holders("So11111111111111111111111111111111111111112", 750))
     # save_to_path = "backend\commands\db\whales.json"

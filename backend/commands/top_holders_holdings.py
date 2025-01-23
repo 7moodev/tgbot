@@ -100,7 +100,7 @@ async def get_top_holders_unready(token: str = None, limit: int = 50):
         return None
     # Fetch and cache total supply
     total_supply = await get_token_supply(token)
-    if total_supply == 0:
+    if total_supply == 0 or total_supply is None:
         raise ValueError("Total supply is zero. Cannot calculate percentages.")
 
     # Fetch top holders

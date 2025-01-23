@@ -4,8 +4,13 @@ import telebot
 from .log import log_entry
 from backend.commands.holding_distribution import get_holding_distribution
 from backend.commands.top_holders_holdings import get_top_holders_holdings
-from .parser import top_holders_holdings_parsed, fresh_wallets_parsed
+from .parser import top_holders_holdings_parsed, fresh_wallets_parsed, holder_distribution_parsed
 from telegram.constants import ParseMode
+import asyncio
+from PIL import Image, UnidentifiedImageError
+import requests
+from io import BytesIO
+import time
 TOP_HOLDERS_LIMIT=20
 # Add error handling for missing token
 token = os.environ.get('tgbot')
@@ -25,6 +30,57 @@ MAX_MESSAGE_LENGTH = 4096
 def split_message(text):
     return [text[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(text), MAX_MESSAGE_LENGTH)]
 
+
+
+def fetch_image_as_sticker(url):
+    try:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+
+        # Retry mechanism for handling rate-limiting (HTTP 429)
+        retries = 5
+        while retries > 0:
+            response = requests.get(url, headers=headers, stream=True)
+            
+            if response.status_code == 429:  # Too many requests
+                print("Rate limited. Retrying...")
+                retries -= 1
+                time.sleep(1)  # Wait before retrying
+            else:
+                response.raise_for_status()  # Raise for other HTTP errors
+                break
+        else:
+            raise Exception("Failed to fetch the image after multiple retries due to rate-limiting.")
+
+        # Load the image
+        image_data = BytesIO(response.content)
+        try:
+            image = Image.open(image_data)
+        except UnidentifiedImageError:
+            raise ValueError("The URL does not contain a valid image.")
+
+        # Resize the image to 50% of its original size
+        width, height = image.size
+        new_size = (int(width * 0.5), int(height * 0.5))
+        image = image.resize(new_size, Image.Resampling.LANCZOS)  # Resize with anti-aliasing for better quality
+
+        # Handle animated images (GIFs)
+        if getattr(image, "is_animated", False):
+            sticker_data = BytesIO()
+            image.save(sticker_data, format="WEBP", save_all=True)
+            sticker_data.seek(0)
+        else:
+            # Non-animated image handling
+            sticker_data = BytesIO()
+            image.convert("RGBA").save(sticker_data, format="WEBP")
+            sticker_data.seek(0)
+
+        return sticker_data
+
+    except Exception as e:
+        print(f"An error occurred: {e}") 
+        return None
 #/start
 def handle_start(message):
     """
@@ -128,7 +184,11 @@ def handle_token_response(message):
             if 32>len(token_address)>44:
                 bot.reply_to(message, "Invalid token address. Please provide a valid Solana token address.")
             else:
-                bot.reply_to(message, "still in development")
+                reply, url = asyncio.run (holder_distribution_parsed(token_address))
+                bot.reply_to(message,reply,parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+                sticker = fetch_image_as_sticker(url)
+                if sticker:
+                    bot.send_sticker(message.chat.id, sticker)
                 user_states.pop(message.chat.id, None)
         case _:
             bot.reply_to(message, "still in development")

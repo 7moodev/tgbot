@@ -16,6 +16,8 @@ Inputs:
 Outputs: an array of dictionaries containing:
     - dictionary of the percentage of holders with different net worth ranges
     - dictionary of total holder count as well as total holders retrieved and processed
+Example output:
+[{'0-500': 72.0, '500-1000': 2.0, '1000-5000': 6.0, '5000-25000': 2.0, '25000+': 18.0}, {'holder_count': 7199, 'retrieved_holders': 50, 'Symbol': 'Mizuki', 'Name': 'Mizuki'}, {'symbol': 'Mizuki', 'name': 'Mizuki', 'logo_url': 'https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR', 'liquidity': 828098.4949007538, 'market_cap': 18011571.94138404}]
 '''
 
 
@@ -137,11 +139,25 @@ async def get_holding_distribution(token):
         return None
     
     token_overview = await get_token_overview(token) 
-
-    holder_count = token_overview['data'].get('holder', 0)
-    total_supply = token_overview['data'].get('mc', 0)
-    symbol = token_overview['data'].get('symbol', 0)
-    name = token_overview['data'].get('name', 0)
+ 
+    if token_overview:
+        token_data = token_overview.get('data', {})
+        holder_count = token_data.get('holder', 0)
+        total_supply = token_data.get('mc', 0)
+        symbol = token_data.get('symbol', '')
+        name = token_data.get('name', '')
+        logo_url = token_data.get('logoURI', '')
+        liquidity = token_data.get('liquidity', 0)
+        market_cap = token_data.get('mc', 0)
+    else:
+        print("Failed to fetch token overview.")
+    token_info = {
+        'symbol': symbol,
+        'name': name,
+        'logo_url': logo_url,
+        'liquidity': liquidity,
+        'market_cap': market_cap,
+    }
 
 
     
@@ -154,7 +170,7 @@ async def get_holding_distribution(token):
     
     # Convert ranges to percentage
     actually_retrieved_holders = sum(ranges.values())
-    results = [{k: (round((v / actually_retrieved_holders * 100),2)) for k, v in ranges.items()}, {"holder_count": holder_count, 'retrieved_holders': actually_retrieved_holders, "Symbol": symbol, "Name": name}]  
+    results = [{k: (round((v / actually_retrieved_holders * 100),2)) for k, v in ranges.items()}, {"holder_count": holder_count, 'retrieved_holders': actually_retrieved_holders, "Symbol": symbol, "Name": name}, token_info]  
     
     return results
 

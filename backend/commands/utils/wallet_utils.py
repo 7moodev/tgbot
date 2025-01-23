@@ -3,13 +3,14 @@ import os
 import asyncio
 import requests
 import time
+import json
 from concurrent.futures import ThreadPoolExecutor
 from .token_utils import get_price, get_price_historical
 from .general_utils import get_rpc
 from bisect import bisect_left
 from aiohttp import ClientSession, ClientError
 import aiohttp 
-MAX_SIGNATURES = 5000
+MAX_SIGNATURES = 2500
 birdeyeapi = os.environ.get('birdeyeapi')
 heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
@@ -30,11 +31,11 @@ async def get_balance(wallet: str, token: str = None, client: httpx.AsyncClient 
         # Get token balance
         data = {
             "jsonrpc": "2.0",
-            "method": "get_token_accounts_by_owner",
+            "method": "getTokenAccountsByOwner",
             "params": [
                 wallet,
                 {"mint": token},
-                {"encoding": "json_parsed"}
+                {"encoding": "jsonParsed"}
             ],
             "id": 1
         }
@@ -46,8 +47,12 @@ async def get_balance(wallet: str, token: str = None, client: httpx.AsyncClient 
             "params": [wallet],
             "id": 1
         }
+    
     try:
-        response = await client.post(get_rpc(), headers=headers, json=data)
+        if client is None:
+            response = requests.post(get_rpc(), headers=headers, json=data)
+        else:
+            response = await client.post(get_rpc(), headers=headers, json=data)
     except:
         print("Error getting balance for", wallet, "in", token, ":Solana RPC")
         return None
@@ -65,8 +70,197 @@ async def get_balance(wallet: str, token: str = None, client: httpx.AsyncClient 
     else:
         balance = response.json().get('result', {}).get('value', 0)
         return balance / (10 ** 9)  # Convert lamports to SOL
+async def get_wallet_trade_history(wallet:str, limit:int=100, before_time:int=0, after_time:int=0):
 
-async def get_wallet_trade_history(wallet: str, token: str = None, activity_type: list[str] = None, client: httpx.AsyncClient = None):
+    if (limit == 0):
+        if os.path.exists('trade_history.json'):
+            with open('trade_history.json', 'r') as file:
+                data = json.load(file)
+                print("Returning cached data from 'trade_history.json'.")
+                return data
+    print("Getting trade history for", wallet)
+    res = []
+    while(len(res) < limit):
+        url = f"https://public-api.birdeye.so/trader/txs/seek_by_time?address={wallet}&offset={len(res)}&limit=100&tx_type=swap&before_time={before_time}&after_time={after_time}"
+        headers = {
+            "accept": "application/json",
+            "x-chain": "solana",
+            "X-API-KEY": birdeyeapi
+        }
+        response = requests.get(url, headers=headers)
+        if (response.status_code != 200):
+            print("Error getting trade_history: ", response.json())
+            return res
+        res += response.json()['data']['items']
+        if len(response.json()['data']['items']) < 100:
+            break
+    # try:
+    #     with open('trade_history.json', 'w') as file:
+    #         json.dump(res, file, indent=4)
+    #     print(f"Saved trade history for {wallet} to 'trade_history.json'.")
+    # except Exception as e:
+    #     print(f"Error saving to 'top_holders.json': {e}")
+    print("Returning trade history for", wallet)
+    return res
+def calculate_avg_exit(token_address, data):
+    print("Calculating average exit price for", token_address)
+    total_revenue = 0
+    total_amount_sold = 0
+    oldest_trade_time = int(time.time())
+    oldest_tx_hash = ""
+
+    for trade in data:
+        base = trade["base"]
+        quote = trade["quote"]
+        price = trade['base_price'] if trade.get('base_price') else trade['quote_price']
+        quote_address = quote["address"]
+        base_address = base["address"]
+        quote_type_swap = quote["type_swap"]
+        base_type_swap = base["type_swap"]
+        trade_time = trade['block_unix_time']
+
+        # Check if the token is in "from" direction
+        if quote_address == token_address and quote_type_swap == "from":
+            price = quote.get('price', 0) if quote.get('price') else quote.get('nearest_price', 0)
+            amount = quote["ui_amount"]
+            total_revenue += amount * price
+            total_amount_sold += amount
+        elif base_address == token_address and base_type_swap == "from":
+            price = base.get('price', 0) if base.get('price') else base.get('nearest_price', 0)
+            amount = base["ui_amount"]
+            total_revenue += amount * price
+            total_amount_sold += amount
+        
+        if ((quote_address == token_address and quote_type_swap == "from") or 
+            (base_address == token_address and base_type_swap == "from")):
+                if trade_time < oldest_trade_time:
+                    oldest_trade_time = trade_time
+                    oldest_tx_hash = trade['tx_hash']
+    
+    # Calculate average sell price
+    if total_amount_sold > 0:
+        avg_exit_price = total_revenue / total_amount_sold
+    else:
+        avg_exit_price = 0  # No exits for the token
+    print("Returning average exit price for", token_address)
+    return {
+            "avg_exit_price": avg_exit_price,
+            'total_amount':total_amount_sold,
+            "oldest_trade_time": oldest_trade_time,
+            "oldest_tx_hash": oldest_tx_hash
+        }
+
+
+def calculate_avg_entry(token_address, data ):
+    print("Calculating average entry price for", token_address)
+    total_cost = 0
+    total_amount = 0
+    sniped_pfun=False
+    sniper_pfun_price=0
+    sniper_pfun_unix_time=0 
+    sniper_pfun_hash=""
+    oldest_trade_time=int(time.time())
+    oldest_tx_hash=""
+    for trade in data:
+        base = trade["base"]
+        quote = trade["quote"]
+        price = trade['base_price'] if trade.get('base_price') else trade['quote_price']    
+        quote_address = quote["address"]
+        base_address = base["address"]
+        quote_type_swap = quote["type_swap"]
+        base_type_swap = base["type_swap"]
+        trade_time = trade['block_unix_time']
+        # Check if the token is in "to" direction
+        if quote_address == token_address and quote_type_swap == "to":
+            price = quote.get('price',0) if quote.get('price') else quote.get('nearest_price', 0)
+            amount = quote["ui_amount"]
+            if not price:
+                continue
+            total_cost += amount * price
+            total_amount += amount
+        elif base_address == token_address and base_type_swap == "to":
+            price = base.get('price',0) if base.get('price') else base.get('nearest_price', 0)
+            if not price:
+                continue
+            amount = base["ui_amount"]
+            
+            total_cost += amount * price
+            total_amount += amount
+        if((quote_address == token_address and quote_type_swap=="to") or (base_address == token_address and base_type_swap=="to")):
+            if(trade['source']=='pump_dot_fun'):
+                sniped_pfun=True
+                sniper_pfun_price=price
+                sniper_pfun_unix_time=trade_time
+                sniper_pfun_hash=trade['tx_hash']
+            if trade_time<oldest_trade_time:
+                oldest_trade_time=trade_time
+                oldest_tx_hash=trade['tx_hash']
+    
+    # Calculate average price
+    if total_amount > 0:
+        avg_entry_price = total_cost / total_amount
+    else:
+        avg_entry_price = 0  # No entries for the toke
+    print("Returning average entry price for", token_address)
+    if sniped_pfun:
+        return {"avg_entry_price":avg_entry_price, 'total_amount':total_amount, "sniped_pfun":sniped_pfun,
+                 "sniper_pfun_price":sniper_pfun_price, "sniper_pfun_unix_time":sniper_pfun_unix_time,
+                 "sniper_pfun_hash":sniper_pfun_hash,
+                   "oldest_trade_time":oldest_trade_time, "oldest_tx_hash":oldest_tx_hash}
+    else:
+        return {"avg_entry_price":avg_entry_price,'total_amount':total_amount, "sniped_pfun":sniped_pfun, "oldest_trade_time":oldest_trade_time, "oldest_tx_hash":oldest_tx_hash}
+
+def calculate_avg_holding(entry_data, exit_data):
+    print("Calculating average holding price out of entry and exit data")
+    """
+    Calculate the average price of the current holding.
+
+    Parameters:
+    - entry_data: dict containing results from calculate_avg_entry function, 
+                  including 'avg_entry_price' and 'total_amount' (total buy amount).
+    - exit_data: dict containing results from calculate_avg_exit function, 
+                 including 'avg_exit_price' and 'total_amount' (total sell amount).
+    Returns:
+    - dict: {
+        "avg_holding_price": float,  # Average price of the current holding, if 0 meaning wallet got funded
+        "current_holding_amount": float,  # Current amount of the token held, if negative then it's funded amount
+        "rebuy_detected": bool  # Whether a rebuy after selling has occurred
+      }
+    """
+    # Extract values from input data
+    avg_entry_price = entry_data.get("avg_entry_price", 0)
+    total_buy_amount = entry_data.get("total_amount", 0)
+    avg_exit_price = exit_data.get("avg_exit_price", 0)
+    total_sell_amount = exit_data.get("total_amount", 0)
+
+    # Calculate current holdings
+    current_holding_amount = total_buy_amount - total_sell_amount
+
+    # Handle cases where there's no holding left
+    if current_holding_amount <= 0:
+        return {
+            "avg_holding_price": 0,  # No holdings, average price is zero
+            "current_holding_amount": current_holding_amount,
+            "rebuy_detected": False
+        }
+
+    # Detect rebuy: true if sold some tokens and then bought again
+    rebuy_detected = total_sell_amount > 0 and total_buy_amount > total_sell_amount
+
+    # Calculate the total cost of current holdings
+    total_cost_of_holdings = (avg_entry_price * total_buy_amount) - (avg_exit_price * total_sell_amount)
+
+    # Calculate average price of the current holding
+    avg_holding_price = total_cost_of_holdings / current_holding_amount
+    print("Returning average holding price out of entry and exit data")
+    return {
+        "avg_holding_price": avg_holding_price,
+        "current_holding_amount": current_holding_amount,
+        "rebuy_detected": rebuy_detected
+    }
+
+
+async def get_wallet_trade_history_deprecated(wallet: str, token: str = None, activity_type: list[str] = None, client: httpx.AsyncClient = None):
     """
     Get the trade history of a wallet
     """
@@ -102,13 +296,13 @@ async def get_wallet_trade_history(wallet: str, token: str = None, activity_type
 
     return results
 
-async def get_wallet_avg_price(wallet: str, token: str = None, side: str = None, client: httpx.AsyncClient = None):
+async def get_wallet_avg_price_deprecated(wallet: str, token: str = None, side: str = None, client: httpx.AsyncClient = None):
     print("Getting average price for", wallet, "in", token)
     """
     Get the average buy price of a token for a given wallet
     """
     defi_activity_types = ["ACTIVITY_TOKEN_SWAP", "ACTIVITY_AGG_TOKEN_SWAP"]
-    wallet_trade_history = await get_wallet_trade_history(wallet, token, defi_activity_types, client)
+    wallet_trade_history = await get_wallet_trade_history_deprecated(wallet, token, defi_activity_types, client)
     if not wallet_trade_history:
         return None
     balance = await get_balance(wallet, token, client)
@@ -166,7 +360,7 @@ async def get_wallet_avg_price(wallet: str, token: str = None, side: str = None,
 
 
 
-def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filter:bool=True):
+async def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filter:bool=True):
     print("Getting wallet age for", wallet)
     """
     Get the blocktime of the oldest transaction of a wallet in unix time. 
@@ -183,7 +377,7 @@ def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filt
     while True:
         time_nowin_unix = int(time.time())
         if all_signatures:
-            bot_check = bot_filter and time_nowin_unix - all_signatures[-1].get('blockTime') < 36000
+            bot_check = bot_filter and time_nowin_unix - all_signatures[-1].get('blockTime') < 72000
         else:
             bot_check = False
         if len(all_signatures) > max_signatures or bot_check:
@@ -198,7 +392,6 @@ def get_wallet_age(wallet:str=None,  max_signatures:int=MAX_SIGNATURES, bot_filt
             "id": 1
         }
         response = requests.post(get_rpc(), headers=headers, json=data)
-        print("Response", response)
         if response.status_code != 200:
             print("Error fetching signatures for", wallet)
             return None
@@ -320,9 +513,9 @@ def get_price_historical_helper(data, target_unix_time):
         if entry['unixTime'] == closest:
             print("Found price historical for", target_unix_time, ":", entry['value'])
             return entry['value']
-async def process_wallet(wallet: str, client: httpx.AsyncClient):
+async def process_wallet_deprecated(wallet: str, client: httpx.AsyncClient):
     try:
-        avg_price = await get_wallet_avg_price(wallet, "63EWLHRLxdjoa7VLMNHV9JvJTRNVMkELhUkZHPRhpump", "buy", client)
+        avg_price = await get_wallet_avg_price_deprecated(wallet, "63EWLHRLxdjoa7VLMNHV9JvJTRNVMkELhUkZHPRhpump", "buy", client)
         print(f"Average price for wallet {wallet}: {avg_price}")
     except Exception as e:
         print(f"Error processing wallet {wallet}: {e}")
@@ -342,14 +535,28 @@ async def main():
                 '6RKmvL7HBbZDAxX6JFCeLJ4apYaRwCwWBQR69qBSw4YG', 'JA6zU59PjKxYdTfWedyAK2DD9FHQbyu8coF68UM9je2c', 'EqhcpxYPJev46n6vDKgN7WFxv2iJC8CgDELiayaq19A4']
 
     async with httpx.AsyncClient() as client:
-        tasks = [process_wallet(wallet, client) for wallet in wallets]
+        tasks = [process_wallet_deprecated(wallet, client) for wallet in wallets]
         await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
     # start_time = time.time()
     # asyncio.run(main())
     # print(f"Execution time: {time.time() - start_time} seconds")
-    print(get_wallet_age("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"))
+    #print(get_wallet_age("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"))
     #print(asyncio.run(get_wallet_trade_history("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", ["ACTIVITY_TOKEN_SWAP", "ACTIVITY_AGG_TOKEN_SWAP"],
                                             #  httpx.AsyncClient())))
     #print(asyncio.run(get_wallet_avg_price("7tco85pE38UHUmaSNZRnsvcw2GXJv5TowP1tSw3GAL6M", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "buy", httpx.AsyncClient())))
+    #print(asyncio.run(get_all_signatures('UeXfwweGMBV8JkTQ7pFF6shPR9EiKEg8VnTNF4qKjhh')))
+    #print(asyncio.run(get_balance('5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVh', '9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump')))
+    # hist = asyncio.run(get_wallet_trade_history('713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF', 100, 0, 0))
+    # entry = calculate_avg_entry(hist, "7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump")
+    # exit = calculate_avg_exit(hist, "7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump")
+    # print(entry)
+    # print(exit)
+    # holding = calculate_avg_holding(entry_data=entry, exit_data=exit)
+    # print(holding)
+    #print(asyncio.run(get_wallet_age("Hq2nUyT8VxgNcrgQM7eBA69iPp2jQvNCT7iycDqL3RJg")))
+    wtf = asyncio.run(get_wallet_trade_history("", limit=1000, after_time=1737332294))
+    print(len(wtf))
+    with open("wtf1.json", 'w') as f:  
+        json.dump(wtf, f, indent=4)

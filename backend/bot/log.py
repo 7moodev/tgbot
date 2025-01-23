@@ -111,8 +111,5 @@ def specific_log(command,entry,content):
     cursor.execute(insert_sql, list(flat_data.values()))
     conn.commit()
     conn.close()
-
-
-
 if __name__ == "__main__":
     log_entry("wtf", "wtff", "s")
