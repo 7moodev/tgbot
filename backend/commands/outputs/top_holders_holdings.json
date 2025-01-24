@@ -1,10 +1,23 @@
 {
     "token_info": {
+        "price": 0.18735829743147694,
         "symbol": "VINE",
         "name": "Vine Coin",
         "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-        "liquidity": 16847023.686403025,
-        "market_cap": 186646799.0010964
+        "liquidity": 16981343.506577663,
+        "market_cap": 187356928.89524075,
+        "supply": 999992695.61981,
+        "circulatingSupply": 999992696.868774,
+        "realMc": 187356929.12924454,
+        "holder": 103574,
+        "extensions": {
+            "description": "Do it for the Vine.",
+            "coingeckoId": "vine",
+            "twitter": "https://twitter.com/rus",
+            "website": "https://www.vineco.in"
+        },
+        "priceChange1hPercent": -0.6801328921764213,
+        "creationTime": 1737591431
     },
     "items": [
         {
@@ -12,8 +25,8 @@
             "wallet": "CvAN3FYtSDQ6vrnJBmNJWWCzoeCzQs2BX85NVuoFcg87",
             "amount": 49999999.999999,
             "share_in_percent": 5.0,
-            "net_worth": 9332434.354289042,
-            "net_worth_excluding": 26.35071227326989,
+            "net_worth": 9367948.025140632,
+            "net_worth_excluding": 33.15356697142124,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -24,8 +37,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 9332408.003576769
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 9367914.87157366
             },
             "second_top_holding": {
                 "address": "4PAGoWa23phEs3qHo2LoiFpsY6EnXZnHPuRdmeoTpump",
@@ -37,8 +50,8 @@
                 "symbol": "3",
                 "icon": "https://ipfs.io/ipfs/QmctGRn7sd68RqnaUmzHMMe7KEeqeD6SJH4C7hRNYkRxj6",
                 "logoURI": "https://ipfs.io/ipfs/QmctGRn7sd68RqnaUmzHMMe7KEeqeD6SJH4C7hRNYkRxj6",
-                "priceUsd": 2.4230242611654013e-05,
-                "valueUsd": 17.439547508039695
+                "priceUsd": 2.419372191381409e-05,
+                "valueUsd": 17.413261991414295
             },
             "third_top_holding": {
                 "address": "3xqwPRTbbrTA83Uy45YDQoieZ7PCfqUSqhKbgKSBDrf6",
@@ -50,8 +63,8 @@
                 "symbol": "JMilei",
                 "icon": "https://gateway.irys.xyz/SQ0Ue8NSSbhLMYy1qlvZ4OPpC0DSv1cC1B2-VSNYP9M",
                 "logoURI": "https://gateway.irys.xyz/SQ0Ue8NSSbhLMYy1qlvZ4OPpC0DSv1cC1B2-VSNYP9M",
-                "priceUsd": 7.174292908980047e-05,
-                "valueUsd": 3.587074711560934
+                "priceUsd": 0.00020702263511549344,
+                "valueUsd": 10.350924733139557
             }
         },
         {
@@ -59,8 +72,8 @@
             "wallet": "6EAaPqnwT54YnYfCRyupN8rK25i2hbguBFcbfVQ8hGWj",
             "amount": 26031144.360784,
             "share_in_percent": 2.603,
-            "net_worth": 5478089.692914766,
-            "net_worth_excluding": 619424.4934178116,
+            "net_worth": 5503458.063411822,
+            "net_worth_excluding": 626307.1757823387,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -71,8 +84,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 4858665.199496955
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 4877150.887629483
             },
             "second_top_holding": {
                 "address": "8CzPPqenpfRXvjE5DHfE3kMDgJhHwWZ1WXRzs44KsamW",
@@ -84,8 +97,8 @@
                 "symbol": "YAPSTER",
                 "icon": "https://yap-prod-app.s3.us-east-1.amazonaws.com/a5b4ef69-4de0-4a8b-a1b0-c8f34ddb52e0.png",
                 "logoURI": "https://yap-prod-app.s3.us-east-1.amazonaws.com/a5b4ef69-4de0-4a8b-a1b0-c8f34ddb52e0.png",
-                "priceUsd": 0.032119183942137024,
-                "valueUsd": 249949.16770996532
+                "priceUsd": 0.034673853420938476,
+                "valueUsd": 269829.4209303088
             },
             "third_top_holding": {
                 "address": "9UYAYvVS2cZ3BndbsoG1ScJbjfwyEPGxjE79hh5ipump",
@@ -97,17 +110,17 @@
                 "symbol": "DOGEAI",
                 "icon": "https://ipfs.io/ipfs/QmZYw9kKFfRUfgmA78tNfnHhKHbfRzYEgF4tDgk2FwCpgr",
                 "logoURI": "https://ipfs.io/ipfs/QmZYw9kKFfRUfgmA78tNfnHhKHbfRzYEgF4tDgk2FwCpgr",
-                "priceUsd": 0.08080925118958797,
-                "valueUsd": 235400.52521113437
+                "priceUsd": 0.06371765541944763,
+                "valueUsd": 185612.03488657807
             }
         },
         {
             "count": 3,
             "wallet": "ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ",
-            "amount": 24949751.079312,
-            "share_in_percent": 2.495,
-            "net_worth": 4250237696.552291,
-            "net_worth_excluding": 4245580871.4190946,
+            "amount": 25663385.002803,
+            "share_in_percent": 2.566,
+            "net_worth": 3603492822.7731795,
+            "net_worth_excluding": 3598684574.6527257,
             "first_top_holding": {
                 "address": "EVkLgtFuVEzqk2ZmJ7pc4TDBi5CGVAsVGqqjuAxGMpSh",
                 "decimals": 5,
@@ -122,30 +135,30 @@
                 "valueUsd": 3318866384.8058424
             },
             "second_top_holding": {
-                "address": "G8n8qUoDwKQgiHigt8dzeTiBgonUJ1h7CftQU8BktTF",
-                "decimals": 9,
-                "balance": 3000000000000000,
-                "uiAmount": 3000000,
+                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
+                "decimals": 6,
+                "balance": 2330024319721,
+                "uiAmount": 2330024.319721,
                 "chainId": "solana",
-                "name": "Vladimir Putin",
-                "symbol": "Putin",
-                "icon": "https://gateway.irys.xyz/i7XniUIw7kDdjXt9kUu1d4oJKA0tnModlOlkX4GwNPY",
-                "logoURI": "https://gateway.irys.xyz/i7XniUIw7kDdjXt9kUu1d4oJKA0tnModlOlkX4GwNPY",
-                "priceUsd": 130.72707354152476,
-                "valueUsd": 392181220.6245743
+                "name": "OFFICIAL TRUMP",
+                "symbol": "TRUMP",
+                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                "priceUsd": 33.528547777974836,
+                "valueUsd": 78122331.72760886
             },
             "third_top_holding": {
-                "address": "DBqE5JUMpPbLZxnnS1nYgXwwXEHpp8ZppZ8hyRB1CjhS",
+                "address": "7fiWCsouQMEwAgfarmqaXj4XgZBcKHWRhrdS23f8vRQG",
                 "decimals": 9,
-                "balance": 1000000000000000,
-                "uiAmount": 1000000,
+                "balance": 10100000000000000,
+                "uiAmount": 10100000,
                 "chainId": "solana",
-                "name": "Timothy Donald Cook",
-                "symbol": "Cook",
-                "icon": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "logoURI": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "priceUsd": 256.1724109366234,
-                "valueUsd": 256172410.9366234
+                "name": "W OFFICLAL TRUMP",
+                "symbol": "WTRUMP",
+                "icon": "https://gateway.irys.xyz/DFPP4x12rmfTA0CGJxMi_AZ5v9dsTJ66bGfsRcyYgx4",
+                "logoURI": "https://gateway.irys.xyz/DFPP4x12rmfTA0CGJxMi_AZ5v9dsTJ66bGfsRcyYgx4",
+                "priceUsd": 3.7297917322317335,
+                "valueUsd": 37670896.49554051
             }
         },
         {
@@ -153,8 +166,8 @@
             "wallet": "Fnz5CaHjX8SBuJAL6cKwLVY6QnAT7o5HNxz47qbYzMMW",
             "amount": 20532385.241316,
             "share_in_percent": 2.053,
-            "net_worth": 3850280.162641331,
-            "net_worth_excluding": 17948.235469675157,
+            "net_worth": 3865487.0243708403,
+            "net_worth_excluding": 18574.283350689337,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -165,8 +178,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 3832331.927171656
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 3846912.741020151
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -177,30 +190,30 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 17739.846533428325
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 18050.173217485324
             },
             "third_top_holding": {
-                "address": "Euyqfjyn6duniReteMwqzQww6GQZ1VeHc1kMCaujjkNi",
-                "decimals": 2,
-                "balance": 2000000,
-                "uiAmount": 20000,
+                "address": "Ho4cAzid7UvnHryhUH148GqTwzuWE7k9gJHU9rAsWYiZ",
+                "decimals": 9,
+                "balance": 2000000000000000,
+                "uiAmount": 2000000,
                 "chainId": "solana",
-                "name": "Banance Coin",
-                "symbol": "BANANCE",
-                "icon": "https://bafybeihjepq5omo6h36pjsrxcatprv3lvzdilhbzic3gz727yojwqx3tdi.ipfs.nftstorage.link",
-                "logoURI": "https://bafybeihjepq5omo6h36pjsrxcatprv3lvzdilhbzic3gz727yojwqx3tdi.ipfs.nftstorage.link",
-                "priceUsd": 0.005588615234098197,
-                "valueUsd": 111.77230468196394
+                "name": "VINE2.0",
+                "symbol": "VINE2.0",
+                "icon": "https://gateway.irys.xyz/yAKaZIEb1W-Uk0alNJBpR5T1dY25scSpV_YayYk50o4",
+                "logoURI": "https://gateway.irys.xyz/yAKaZIEb1W-Uk0alNJBpR5T1dY25scSpV_YayYk50o4",
+                "priceUsd": 0.0012197934650021545,
+                "valueUsd": 329.52251457834313
             }
         },
         {
             "count": 5,
             "wallet": "u6PJ8DtQuPFnfmwHbGFULQ4u4EgjDiyYKjVEsynXq2w",
-            "amount": 20427278.161617,
-            "share_in_percent": 2.043,
-            "net_worth": 4516639718.985916,
-            "net_worth_excluding": 4512827005.101781,
+            "amount": 19565389.690181,
+            "share_in_percent": 1.957,
+            "net_worth": 4501123204.492134,
+            "net_worth_excluding": 4497457466.391198,
             "first_top_holding": {
                 "address": "EVkLgtFuVEzqk2ZmJ7pc4TDBi5CGVAsVGqqjuAxGMpSh",
                 "decimals": 5,
@@ -230,15 +243,15 @@
             "third_top_holding": {
                 "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
                 "decimals": 6,
-                "balance": 3276816035084,
-                "uiAmount": 3276816.035084,
+                "balance": 3252813265881,
+                "uiAmount": 3252813.265881,
                 "chainId": "solana",
                 "name": "OFFICIAL TRUMP",
                 "symbol": "TRUMP",
                 "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
                 "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 34.55130175384528,
-                "valueUsd": 113218259.62002614
+                "priceUsd": 33.528547777974836,
+                "valueUsd": 109062104.99792148
             }
         },
         {
@@ -250,8 +263,8 @@
             "wallet": "AfGiE2ewhDARAaJZgGfoPUfXsG93KPYavjEDbe5vBhrk",
             "amount": 14786203.44797,
             "share_in_percent": 1.479,
-            "net_worth": 3057267.9680870767,
-            "net_worth_excluding": 297450.3000800293,
+            "net_worth": 3073268.9600289487,
+            "net_worth_excluding": 302951.0565418559,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -262,8 +275,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 2759817.6680070474
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 2770317.903487093
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -274,77 +287,76 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 297284.0500290299
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 302484.49938436685
             },
             "third_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
+                "address": "Ho4cAzid7UvnHryhUH148GqTwzuWE7k9gJHU9rAsWYiZ",
+                "decimals": 9,
+                "balance": 2000000000000000,
+                "uiAmount": 2000000,
                 "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
+                "name": "VINE2.0",
+                "symbol": "VINE2.0",
+                "icon": "https://gateway.irys.xyz/yAKaZIEb1W-Uk0alNJBpR5T1dY25scSpV_YayYk50o4",
+                "logoURI": "https://gateway.irys.xyz/yAKaZIEb1W-Uk0alNJBpR5T1dY25scSpV_YayYk50o4",
+                "priceUsd": 0.0012197934650021545,
+                "valueUsd": 329.52251457834313
             }
         },
         {
             "count": 8,
             "wallet": "A77HErqtfN1hLLpvZ9pCtu66FEtM8BveoaKbbMoZ4RiR",
-            "amount": 13503866.425841,
-            "share_in_percent": 1.35,
-            "net_worth": 80460764577.3385,
-            "net_worth_excluding": 80458244105.51627,
+            "amount": 14125561.424645,
+            "share_in_percent": 1.413,
+            "net_worth": 457040254.49487793,
+            "net_worth_excluding": 454393713.3560927,
             "first_top_holding": {
-                "address": "84Q6nw5KAwkdcgCpNwBSgCqUVBNFvVkiwnosmSuFcPrK",
-                "decimals": 9,
-                "balance": 1000000000000000000,
-                "uiAmount": 1000000000,
+                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
+                "decimals": 6,
+                "balance": 2524092289929,
+                "uiAmount": 2524092.289929,
                 "chainId": "solana",
-                "name": "Lana Rhoades Memes",
-                "symbol": "LANA",
-                "icon": "https://ipfs.io/ipfs/QmW9s6fhHWws7JDvYiF1E29THL2J2D3jvxuFN1jzm7voVe",
-                "logoURI": "https://ipfs.io/ipfs/QmW9s6fhHWws7JDvYiF1E29THL2J2D3jvxuFN1jzm7voVe",
-                "priceUsd": 79.35693139187862,
-                "valueUsd": 79356931391.87862
+                "name": "OFFICIAL TRUMP",
+                "symbol": "TRUMP",
+                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                "priceUsd": 33.528547777974836,
+                "valueUsd": 84629148.9389024
             },
             "second_top_holding": {
-                "address": "G8n8qUoDwKQgiHigt8dzeTiBgonUJ1h7CftQU8BktTF",
+                "address": "So11111111111111111111111111111111111111111",
                 "decimals": 9,
-                "balance": 3000000000000000,
-                "uiAmount": 3000000,
+                "balance": 216665428307590,
+                "uiAmount": 216665.42830759,
                 "chainId": "solana",
-                "name": "Vladimir Putin",
-                "symbol": "Putin",
-                "icon": "https://gateway.irys.xyz/i7XniUIw7kDdjXt9kUu1d4oJKA0tnModlOlkX4GwNPY",
-                "logoURI": "https://gateway.irys.xyz/i7XniUIw7kDdjXt9kUu1d4oJKA0tnModlOlkX4GwNPY",
-                "priceUsd": 130.72707354152476,
-                "valueUsd": 392181220.6245743
+                "name": "SOL",
+                "symbol": "SOL",
+                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 58227781.624541774
             },
             "third_top_holding": {
-                "address": "DBqE5JUMpPbLZxnnS1nYgXwwXEHpp8ZppZ8hyRB1CjhS",
-                "decimals": 9,
-                "balance": 1000000000000000,
-                "uiAmount": 1000000,
+                "address": "rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBof",
+                "decimals": 8,
+                "balance": 350711993445678,
+                "uiAmount": 3507119.93445678,
                 "chainId": "solana",
-                "name": "Timothy Donald Cook",
-                "symbol": "Cook",
-                "icon": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "logoURI": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "priceUsd": 256.1724109366234,
-                "valueUsd": 256172410.9366234
+                "name": "Render Token",
+                "symbol": "RENDER",
+                "icon": "https://shdw-drive.genesysgo.net/5zseP54TGrcz9C8HdjZwJJsZ6f3VbP11p1abwKWGykZH/rndr.png",
+                "logoURI": "https://shdw-drive.genesysgo.net/5zseP54TGrcz9C8HdjZwJJsZ6f3VbP11p1abwKWGykZH/rndr.png",
+                "priceUsd": 7.181690713046614,
+                "valueUsd": 25187050.662828907
             }
         },
         {
             "count": 9,
             "wallet": "6eBx4MP9f9VbjrZrDYJitR6QfYhZ1NVg3c7wkZiwCowS",
-            "amount": 11946449.675864,
-            "share_in_percent": 1.195,
-            "net_worth": 48808077.26761241,
-            "net_worth_excluding": 46578252.844480455,
+            "amount": 12043043.025783,
+            "share_in_percent": 1.204,
+            "net_worth": 48756799.64207478,
+            "net_worth_excluding": 46500435.60487005,
             "first_top_holding": {
                 "address": "5Ge3B1BDtcPJnaVD1vXHktFXUgnWgnRAjhCrveunHq5u",
                 "decimals": 9,
@@ -361,28 +373,28 @@
             "second_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
-                "balance": 11946672403721,
-                "uiAmount": 11946672.403721,
+                "balance": 12043043025783,
+                "uiAmount": 12043043.025783,
                 "chainId": "solana",
                 "name": "Vine Coin",
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 2229824.423131956
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 2256364.0372047257
             },
             "third_top_holding": {
                 "address": "So11111111111111111111111111111111111111112",
                 "decimals": 9,
-                "balance": 4230909618597,
-                "uiAmount": 4230.909618597,
+                "balance": 3868602484065,
+                "uiAmount": 3868.602484065,
                 "chainId": "solana",
                 "name": "Wrapped SOL",
                 "symbol": "SOL",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 1117487.9720002452
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 1039668.1297696704
             }
         },
         {
@@ -390,8 +402,8 @@
             "wallet": "J9HqxT4U39B45YcXxL4B1GZzdhSrXFr2N2Lam4bXrQeB",
             "amount": 11926805.938977,
             "share_in_percent": 1.193,
-            "net_worth": 9921010.930212716,
-            "net_worth_excluding": 7694894.546172353,
+            "net_worth": 10195303.943997396,
+            "net_worth_excluding": 7960717.889475038,
             "first_top_holding": {
                 "address": "5Ge3B1BDtcPJnaVD1vXHktFXUgnWgnRAjhCrveunHq5u",
                 "decimals": 9,
@@ -415,8 +427,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 2226116.384040362
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 2234586.0545223583
             },
             "third_top_holding": {
                 "address": "69kdRLyP5DTRkpHraaSZAQbWmAwzF9guKjZfzMXzcbAs",
@@ -428,8 +440,8 @@
                 "symbol": "USA",
                 "icon": "https://bafkreib3qfqu5wpwltn5vnr7asnu6vnvvxqm2mrppntqfntoxtqjmypawu.ipfs.nftstorage.link",
                 "logoURI": "https://bafkreib3qfqu5wpwltn5vnr7asnu6vnvvxqm2mrppntqfntoxtqjmypawu.ipfs.nftstorage.link",
-                "priceUsd": 4.324568210206593e-06,
-                "valueUsd": 847741.1967841294
+                "priceUsd": 3.837087489070206e-06,
+                "valueUsd": 752180.7917083106
             }
         },
         {
@@ -437,8 +449,8 @@
             "wallet": "FAYfNAK7e56rv34ZkxPn9xAptWS1YECrA6zNh97aMAGY",
             "amount": 11670492.077601,
             "share_in_percent": 1.167,
-            "net_worth": 2340956.219477156,
-            "net_worth_excluding": 162680.34606345603,
+            "net_worth": 2349469.5340542346,
+            "net_worth_excluding": 162906.008207371,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -449,8 +461,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 2178275.8734137
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 2186563.5258468636
             },
             "second_top_holding": {
                 "address": "ALHFgnXSenUv17GMdf3dL9gtFW2KKQTz9avpM2Wypump",
@@ -462,8 +474,8 @@
                 "symbol": "mcs",
                 "icon": "https://ipfs.io/ipfs/QmbAtqM3FaLRkMbCoWY89kU4e61tZSJMH34pSbWtQKT8UM",
                 "logoURI": "https://ipfs.io/ipfs/QmbAtqM3FaLRkMbCoWY89kU4e61tZSJMH34pSbWtQKT8UM",
-                "priceUsd": 0.005518144052479978,
-                "valueUsd": 65094.0355116933
+                "priceUsd": 0.005520410357852258,
+                "valueUsd": 65120.76967466196
             },
             "third_top_holding": {
                 "address": "92crE7qiX5T7VtiXhCeagfo1E81UtyguiXM7qCi7pump",
@@ -475,8 +487,8 @@
                 "symbol": "create",
                 "icon": "https://ipfs.io/ipfs/QmfEZiuJk8qbkz2uhY3FnsfBuVtDe2F3F6YpjFefskKzcM",
                 "logoURI": "https://ipfs.io/ipfs/QmfEZiuJk8qbkz2uhY3FnsfBuVtDe2F3F6YpjFefskKzcM",
-                "priceUsd": 0.001999034354736349,
-                "valueUsd": 60895.160392863
+                "priceUsd": 0.0019904575172250446,
+                "valueUsd": 60633.89029779087
             }
         },
         {
@@ -484,8 +496,8 @@
             "wallet": "GpNbukV5nggkJfsEEbKrJaZkdgYcNWCAaD91Mi4MmGQi",
             "amount": 11545358.786033,
             "share_in_percent": 1.155,
-            "net_worth": 2175462.0766418995,
-            "net_worth_excluding": 20542.10186306201,
+            "net_worth": 2165008.8354229787,
+            "net_worth_excluding": 1890.070036292076,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -496,34 +508,33 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 2154919.9747788375
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 2163118.7653866867
             },
             "second_top_holding": {
-                "address": "HyXPGsyMnQv1gPVmAnnJc5MVLFbbhtyMZF8ax3YBBLaY",
+                "address": "So11111111111111111111111111111111111111111",
+                "decimals": 9,
+                "balance": 3807116384,
+                "uiAmount": 3.807116384,
+                "chainId": "solana",
+                "name": "SOL",
+                "symbol": "SOL",
+                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 1023.1440389837287
+            },
+            "third_top_holding": {
+                "address": "HPcAUoHU6hZ5SNFK97XJe91W5Y4PG3bKEjTggCXfSgVE",
                 "decimals": 9,
                 "balance": 5000000000000000,
                 "uiAmount": 5000000,
                 "chainId": "solana",
-                "name": "Ai Donald Trump",
-                "symbol": "Ai Trump",
-                "icon": "https://gateway.irys.xyz/nGILIIvU-zpr8z8hu0m5gFbNBVG8MzBcdpUlt84Tcbg",
-                "logoURI": "https://gateway.irys.xyz/nGILIIvU-zpr8z8hu0m5gFbNBVG8MzBcdpUlt84Tcbg",
-                "priceUsd": 0.18236959447111536,
-                "valueUsd": 17697.708004094195
-            },
-            "third_top_holding": {
-                "address": "CFcWFjNpWNyv2g5xohXbCkK7Bf9DaiFCEBkJk7qKVLUQ",
-                "decimals": 9,
-                "balance": 1000000000000000,
-                "uiAmount": 1000000,
-                "chainId": "solana",
-                "name": "Warren Buffett",
-                "symbol": "Buffett",
-                "icon": "https://gateway.irys.xyz/aX6KY-hEP4CTa34QVFjaElJLXFl9crsoSFbXkNZXguU",
-                "logoURI": "https://gateway.irys.xyz/aX6KY-hEP4CTa34QVFjaElJLXFl9crsoSFbXkNZXguU",
-                "priceUsd": 0.030250208726629053,
-                "valueUsd": 1150.9169974161218
+                "name": "Trump's family",
+                "symbol": "TF",
+                "icon": "https://gateway.irys.xyz/Ee9gcYIYGNE35JGKWo_cwHAmK6ujHBHMFwTmOkTJk94",
+                "logoURI": "https://gateway.irys.xyz/Ee9gcYIYGNE35JGKWo_cwHAmK6ujHBHMFwTmOkTJk94",
+                "priceUsd": 0.00013614910405115548,
+                "valueUsd": 262.17867568740996
             }
         },
         {
@@ -531,8 +542,8 @@
             "wallet": "6rg2rfZ6Sim6j63LXvaLgbWicVGWhJUYHkCxgSHZBCqs",
             "amount": 10583555.436346,
             "share_in_percent": 1.058,
-            "net_worth": 5375320.987132839,
-            "net_worth_excluding": 3399919.8379237233,
+            "net_worth": 5901893.863236209,
+            "net_worth_excluding": 3918976.9359107707,
             "first_top_holding": {
                 "address": "Cy1GS2FqefgaMbi45UunrUzin1rfEmTUYnomddzBpump",
                 "decimals": 6,
@@ -543,8 +554,8 @@
                 "symbol": "MOBY",
                 "icon": "https://ipfs.io/ipfs/QmdyG2c35DTLen5Etr77cmgYQ8qH8yXZSzDQY6koymp8Ux",
                 "logoURI": "https://ipfs.io/ipfs/QmdyG2c35DTLen5Etr77cmgYQ8qH8yXZSzDQY6koymp8Ux",
-                "priceUsd": 0.14786188370864578,
-                "valueUsd": 2577011.4455319294
+                "priceUsd": 0.16343818934323903,
+                "valueUsd": 2848483.1520505934
             },
             "second_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
@@ -556,8 +567,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 1975401.149209116
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 1982916.9273254387
             },
             "third_top_holding": {
                 "address": "FSTRgYfDaudjDwFg5A9LQpDMq5vxqhskHq4rkjUMwERE",
@@ -569,8 +580,8 @@
                 "symbol": "FSTR",
                 "icon": "https://elasticbeanstalk-us-west-1-767828742319.s3.us-west-1.amazonaws.com/webclip.png",
                 "logoURI": "https://elasticbeanstalk-us-west-1-767828742319.s3.us-west-1.amazonaws.com/webclip.png",
-                "priceUsd": 0.032692692652159856,
-                "valueUsd": 425819.0989406417
+                "priceUsd": 0.04308994422414067,
+                "valueUsd": 561242.2757020561
             }
         },
         {
@@ -578,8 +589,8 @@
             "wallet": "2BocdyQGg3apZetbQNdPqGDESRMxBsYmTCUCmEcgrejv",
             "amount": 9935882.215477,
             "share_in_percent": 0.994,
-            "net_worth": 1956054.9095054572,
-            "net_worth_excluding": 101540.77529914747,
+            "net_worth": 1965192.0089361146,
+            "net_worth_excluding": 103622.03356465255,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -590,33 +601,33 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 1854514.1342063097
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 1861569.975371462
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
                 "decimals": 9,
-                "balance": 384126922149,
-                "uiAmount": 384.126922149,
+                "balance": 384126932149,
+                "uiAmount": 384.126932149,
                 "chainId": "solana",
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 101457.42970641071
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 103232.24750708241
             },
             "third_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
+                "address": "Ho4cAzid7UvnHryhUH148GqTwzuWE7k9gJHU9rAsWYiZ",
+                "decimals": 9,
+                "balance": 2000000000000000,
+                "uiAmount": 2000000,
                 "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
+                "name": "VINE2.0",
+                "symbol": "VINE2.0",
+                "icon": "https://gateway.irys.xyz/yAKaZIEb1W-Uk0alNJBpR5T1dY25scSpV_YayYk50o4",
+                "logoURI": "https://gateway.irys.xyz/yAKaZIEb1W-Uk0alNJBpR5T1dY25scSpV_YayYk50o4",
+                "priceUsd": 0.0012197934650021545,
+                "valueUsd": 329.52251457834313
             }
         },
         {
@@ -624,8 +635,8 @@
             "wallet": "8quVxKzc21GybehhMKwhiuuVks9eg1carGoBUuqpZJ1a",
             "amount": 9158028.673066,
             "share_in_percent": 0.916,
-            "net_worth": 3019951.7179900445,
-            "net_worth_excluding": 1310622.5162798772,
+            "net_worth": 3048897.589153913,
+            "net_worth_excluding": 1333064.9291396192,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -636,8 +647,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 1709329.2017101673
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 1715832.6600142936
             },
             "second_top_holding": {
                 "address": "2kGfWRgNp1QaxUMFCX9CMN78E1iCbgjBAZuQNUjWpump",
@@ -649,8 +660,8 @@
                 "symbol": "SAFEMOON",
                 "icon": "https://ipfs.io/ipfs/QmTwRFgSTQiTsTPbsrX6XZe9p6ShnX7CSwe8hZxQHqKLHW",
                 "logoURI": "https://ipfs.io/ipfs/QmTwRFgSTQiTsTPbsrX6XZe9p6ShnX7CSwe8hZxQHqKLHW",
-                "priceUsd": 0.04151386319988334,
-                "valueUsd": 681338.6954177148
+                "priceUsd": 0.041018509015364725,
+                "valueUsd": 673208.7853627391
             },
             "third_top_holding": {
                 "address": "H1NPJkh3KUJGbpjkyQD5qG1nrpFW7tHiqek5SAbMpump",
@@ -662,8 +673,8 @@
                 "symbol": "SCHIZO",
                 "icon": "https://ipfs.io/ipfs/Qmc6iz9qibtUEATVuAr3LRbkF7iyzCVPrEvXGAAzzooWrc",
                 "logoURI": "https://ipfs.io/ipfs/Qmc6iz9qibtUEATVuAr3LRbkF7iyzCVPrEvXGAAzzooWrc",
-                "priceUsd": 0.025008214744674847,
-                "valueUsd": 624490.7398358362
+                "priceUsd": 0.02622383209524589,
+                "valueUsd": 654846.436408581
             }
         },
         {
@@ -671,8 +682,8 @@
             "wallet": "3EqUQwk7wuZWJA1LahJqzZajGKbQwcvQAkLydkHxrU3s",
             "amount": 8473817.235674,
             "share_in_percent": 0.847,
-            "net_worth": 1649649.2600109715,
-            "net_worth_excluding": 68026.86418992397,
+            "net_worth": 1655690.689609503,
+            "net_worth_excluding": 68050.7195881179,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -683,8 +694,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 1581622.3958210475
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 1587639.970021385
             },
             "second_top_holding": {
                 "address": "ALHFgnXSenUv17GMdf3dL9gtFW2KKQTz9avpM2Wypump",
@@ -696,8 +707,8 @@
                 "symbol": "mcs",
                 "icon": "https://ipfs.io/ipfs/QmbAtqM3FaLRkMbCoWY89kU4e61tZSJMH34pSbWtQKT8UM",
                 "logoURI": "https://ipfs.io/ipfs/QmbAtqM3FaLRkMbCoWY89kU4e61tZSJMH34pSbWtQKT8UM",
-                "priceUsd": 0.005518144052479978,
-                "valueUsd": 58341.386775836836
+                "priceUsd": 0.005520410357852258,
+                "valueUsd": 58365.34762155216
             },
             "third_top_holding": {
                 "address": "CWEwNJQR3iN7SgpL6nVR8GESdBn3cV2h5f11xnMtoKDJ",
@@ -718,8 +729,8 @@
             "wallet": "CCMJ8aCwkDwDyZXV3KVANxpZiwBgg9u4UCeCX1hTTdrM",
             "amount": 6778032.4148,
             "share_in_percent": 0.678,
-            "net_worth": 8665967.148455063,
-            "net_worth_excluding": 7400859.8693273915,
+            "net_worth": 8793495.880323607,
+            "net_worth_excluding": 7523575.267151317,
             "first_top_holding": {
                 "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
                 "decimals": 6,
@@ -730,8 +741,8 @@
                 "symbol": "TRUMP",
                 "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
                 "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 34.55130175384528,
-                "valueUsd": 1835191.2011193
+                "priceUsd": 33.528547777974836,
+                "valueUsd": 1780867.6589616349
             },
             "second_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
@@ -743,8 +754,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 1265107.2791276712
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 1269920.6131722904
             },
             "third_top_holding": {
                 "address": "5UAMZkfNmuVcKzr2wo8Jqw4R1k8vfdAVJNN6h3bVpump",
@@ -756,8 +767,8 @@
                 "symbol": "LIMBO",
                 "icon": "https://ipfs.io/ipfs/QmbrCWP6d1CY8WMiFG5JZwsJWihW7yQsRBaDTt9RLZjUJL",
                 "logoURI": "https://ipfs.io/ipfs/QmbrCWP6d1CY8WMiFG5JZwsJWihW7yQsRBaDTt9RLZjUJL",
-                "priceUsd": 0.023962332796738067,
-                "valueUsd": 725148.1150948874
+                "priceUsd": 0.025229750910013105,
+                "valueUsd": 763502.7220388165
             }
         },
         {
@@ -765,8 +776,8 @@
             "wallet": "9YGd2uCJj9XuLtrFmyi4jVJb7zqhya7Vbk4KGHpZrYNJ",
             "amount": 6330799.339283,
             "share_in_percent": 0.633,
-            "net_worth": 1220289.2647812627,
-            "net_worth_excluding": 38657.21632197546,
+            "net_worth": 1225312.3422641486,
+            "net_worth_excluding": 39184.556675766595,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -777,8 +788,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 1181632.0484592873
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 1186127.785588382
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -789,8 +800,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 29495.277276473098
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 30011.2440620539
             },
             "third_top_holding": {
                 "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
@@ -802,8 +813,8 @@
                 "symbol": "USDC",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "priceUsd": 1.00001415,
-                "valueUsd": 8980.177981720431
+                "priceUsd": 1.00003051,
+                "valueUsd": 8980.324895353386
             }
         },
         {
@@ -811,8 +822,8 @@
             "wallet": "2SrC4FhX3kZCwA9G9RUDZ826zZKLQfFECB4TawRas74V",
             "amount": 5090064.754479,
             "share_in_percent": 0.509,
-            "net_worth": 950062.401489132,
-            "net_worth_excluding": 11.180420636199415,
+            "net_worth": 953677.7544619715,
+            "net_worth_excluding": 11.88824681728147,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
@@ -823,8 +834,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 950051.2210684958
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 953665.8662151542
             },
             "second_top_holding": {
                 "address": "Euyqfjyn6duniReteMwqzQww6GQZ1VeHc1kMCaujjkNi",
@@ -836,195 +847,55 @@
                 "symbol": "BANANCE",
                 "icon": "https://bafybeihjepq5omo6h36pjsrxcatprv3lvzdilhbzic3gz727yojwqx3tdi.ipfs.nftstorage.link",
                 "logoURI": "https://bafybeihjepq5omo6h36pjsrxcatprv3lvzdilhbzic3gz727yojwqx3tdi.ipfs.nftstorage.link",
-                "priceUsd": 0.005588615234098197,
-                "valueUsd": 11.177230468196395
+                "priceUsd": 0.005662410079432875,
+                "valueUsd": 11.32482015886575
             },
             "third_top_holding": {
-                "address": "REALPDBepzv6GbcNvFzAB1UxV8P9bkA38vapAWUqFGM",
+                "address": "EovfxuA6xc5Fn6Cx7r2WgJS5PgcEWWJqmPkpNFZdpump",
                 "decimals": 6,
-                "balance": 6282192037699,
-                "uiAmount": 6282192.037699,
+                "balance": 1000000000,
+                "uiAmount": 1000,
                 "chainId": "solana",
-                "name": "The Real World",
-                "symbol": "TRW",
-                "icon": "https://gateway.irys.xyz/CfAL902p6v6YJfIUYA_aMf-8x5xQevnZcxnoGZccTUg",
-                "logoURI": "https://gateway.irys.xyz/CfAL902p6v6YJfIUYA_aMf-8x5xQevnZcxnoGZccTUg",
-                "priceUsd": 5.078112912480839e-10,
-                "valueUsd": 0.0031901680505323606
+                "name": "BetDuel.ai ",
+                "symbol": "DUEL",
+                "icon": "https://ipfs.io/ipfs/QmQAaFB8B6AvZwVrDfN5FuCL1UPEQNAWoc6JFDveXAz8U8",
+                "logoURI": "https://ipfs.io/ipfs/QmQAaFB8B6AvZwVrDfN5FuCL1UPEQNAWoc6JFDveXAz8U8",
+                "priceUsd": 0.00033160778948049626,
+                "valueUsd": 0.33160778948049624
             }
         },
         {
             "count": 20,
-            "wallet": "HpJ6bsNhW4ftV1E1KtSwvr9yQ55ZbHaxMVvgney6gpoY",
-            "amount": 4675883.158116,
-            "share_in_percent": 0.468,
-            "net_worth": 261294711.04158387,
-            "net_worth_excluding": 260421966.05341202,
-            "first_top_holding": {
-                "address": "DBqE5JUMpPbLZxnnS1nYgXwwXEHpp8ZppZ8hyRB1CjhS",
-                "decimals": 9,
-                "balance": 1000000000000000,
-                "uiAmount": 1000000,
-                "chainId": "solana",
-                "name": "Timothy Donald Cook",
-                "symbol": "Cook",
-                "icon": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "logoURI": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "priceUsd": 256.1724109366234,
-                "valueUsd": 256172410.9366234
-            },
-            "second_top_holding": {
-                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
-                "decimals": 6,
-                "balance": 37704073503,
-                "uiAmount": 37704.073503,
-                "chainId": "solana",
-                "name": "OFFICIAL TRUMP",
-                "symbol": "TRUMP",
-                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 34.55130175384528,
-                "valueUsd": 1302724.8209513153
-            },
-            "third_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 4675883158116,
-                "uiAmount": 4675883.158116,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 872744.9881718488
-            }
-        },
-        {
-            "count": 21,
-            "wallet": "GGeEroxtu3xWZGsbqqpNBtVRhkMDQh9WwYAGWbgAeQt7",
-            "amount": 4610706.750988,
-            "share_in_percent": 0.461,
-            "net_worth": 1689275.0466239112,
-            "net_worth_excluding": 828695.114922577,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 4610706750988,
-                "uiAmount": 4610706.750988,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 860579.9317013342
-            },
-            "second_top_holding": {
-                "address": "43VWkd99HjqkhFTZbWBpMpRhjG469nWa7x7uEsgSH7We",
-                "decimals": 9,
-                "balance": 6945827538714,
-                "uiAmount": 6945.827538714,
-                "chainId": "solana",
-                "name": "Stonks",
-                "symbol": "STNK",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/43VWkd99HjqkhFTZbWBpMpRhjG469nWa7x7uEsgSH7We/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/43VWkd99HjqkhFTZbWBpMpRhjG469nWa7x7uEsgSH7We/logo.png",
-                "priceUsd": 119.2611972234733,
-                "valueUsd": 828367.7079748025
-            },
-            "third_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 873858175,
-                "uiAmount": 0.873858175,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 230.807577525234
-            }
-        },
-        {
-            "count": 22,
-            "wallet": "GdsGUHWuKf3gFNjDY8FNJvf6jU5yJ6icyLpxsZFHGJre",
-            "amount": 4043626.92766,
-            "share_in_percent": 0.404,
-            "net_worth": 1096744.1462617924,
-            "net_worth_excluding": 342008.6201983229,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 4043626927660,
-                "uiAmount": 4043626.92766,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 754735.5260634695
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111112",
-                "decimals": 9,
-                "balance": 1294550091105,
-                "uiAmount": 1294.550091105,
-                "chainId": "solana",
-                "name": "Wrapped SOL",
-                "symbol": "SOL",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 341922.7273499113
-            },
-            "third_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
-            }
-        },
-        {
-            "count": 23,
             "wallet": "7UC3r5sZfxNWJjhKa6RWupSajELV2SNqUE5UxKYKE1qk",
-            "amount": 3949235.419975,
-            "share_in_percent": 0.395,
-            "net_worth": 971944.9805804834,
-            "net_worth_excluding": 234987.0141501883,
+            "amount": 4685064.940487,
+            "share_in_percent": 0.469,
+            "net_worth": 1222668.0985900154,
+            "net_worth_excluding": 344882.30798446725,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
-                "balance": 3948380558093,
-                "uiAmount": 3948380.558093,
+                "balance": 4685064940487,
+                "uiAmount": 4685064.940487,
                 "chainId": "solana",
                 "name": "Vine Coin",
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 736957.9664302951
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 877785.7906055482
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111112",
                 "decimals": 9,
-                "balance": 889471110563,
-                "uiAmount": 889.471110563,
+                "balance": 1283098833570,
+                "uiAmount": 1283.09883357,
                 "chainId": "solana",
                 "name": "Wrapped SOL",
                 "symbol": "SOL",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 234931.34032616403
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 344826.58016743226
             },
             "third_top_holding": {
                 "address": "GopFvYooju11ys3CNdUiu5NF6V4Cf1BGD6NVPp8HNAjj",
@@ -1041,83 +912,130 @@
             }
         },
         {
-            "count": 24,
-            "wallet": "6YAQWy6ocnvi1ExgrGmD4DXT8ti65SLs7ngSFV9o5uVN",
-            "amount": 3898116.942741,
-            "share_in_percent": 0.39,
-            "net_worth": 728434.8039146508,
-            "net_worth_excluding": 858.4488083500182,
+            "count": 21,
+            "wallet": "HpJ6bsNhW4ftV1E1KtSwvr9yQ55ZbHaxMVvgney6gpoY",
+            "amount": 4675883.158116,
+            "share_in_percent": 0.468,
+            "net_worth": 5197126.552909437,
+            "net_worth_excluding": 4321061.045416306,
             "first_top_holding": {
+                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
+                "decimals": 6,
+                "balance": 37704073503,
+                "uiAmount": 37704.073503,
+                "chainId": "solana",
+                "name": "OFFICIAL TRUMP",
+                "symbol": "TRUMP",
+                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                "priceUsd": 33.528547777974836,
+                "valueUsd": 1264162.8298696105
+            },
+            "second_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
-                "balance": 3898116942741,
-                "uiAmount": 3898116.942741,
+                "balance": 4675883158116,
+                "uiAmount": 4675883.158116,
                 "chainId": "solana",
                 "name": "Vine Coin",
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 727576.3551063008
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 876065.5074931312
+            },
+            "third_top_holding": {
+                "address": "HNg5PYJmtqcmzXrv6S9zP1CDKk5BgDuyFBxbvNApump",
+                "decimals": 6,
+                "balance": 12199680196105,
+                "uiAmount": 12199680.196105,
+                "chainId": "solana",
+                "name": "Alchemist AI",
+                "symbol": "ALCH",
+                "icon": "https://ipfs.io/ipfs/QmYqwkPV1p4DraqN5TfLZVhyrAusSkHfvFDZMJAWALZJxj",
+                "logoURI": "https://ipfs.io/ipfs/QmYqwkPV1p4DraqN5TfLZVhyrAusSkHfvFDZMJAWALZJxj",
+                "priceUsd": 0.07025840124367096,
+                "valueUsd": 857130.0262624115
+            }
+        },
+        {
+            "count": 22,
+            "wallet": "GGeEroxtu3xWZGsbqqpNBtVRhkMDQh9WwYAGWbgAeQt7",
+            "amount": 4610706.750988,
+            "share_in_percent": 0.461,
+            "net_worth": 1736387.7619846074,
+            "net_worth_excluding": 872533.595163679,
+            "first_top_holding": {
+                "address": "43VWkd99HjqkhFTZbWBpMpRhjG469nWa7x7uEsgSH7We",
+                "decimals": 9,
+                "balance": 6945827538714,
+                "uiAmount": 6945.827538714,
+                "chainId": "solana",
+                "name": "Stonks",
+                "symbol": "STNK",
+                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/43VWkd99HjqkhFTZbWBpMpRhjG469nWa7x7uEsgSH7We/logo.png",
+                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/43VWkd99HjqkhFTZbWBpMpRhjG469nWa7x7uEsgSH7We/logo.png",
+                "priceUsd": 125.57196021493046,
+                "valueUsd": 872201.1793511627
             },
             "second_top_holding": {
+                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
+                "decimals": 6,
+                "balance": 4610706750988,
+                "uiAmount": 4610706.750988,
+                "chainId": "solana",
+                "name": "Vine Coin",
+                "symbol": "VINE",
+                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 863854.1668209285
+            },
+            "third_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
                 "decimals": 9,
-                "balance": 3096323552,
-                "uiAmount": 3.096323552,
+                "balance": 873858176,
+                "uiAmount": 0.873858176,
                 "chainId": "solana",
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 817.8157036425824
-            },
-            "third_top_holding": {
-                "address": "DuWryQqPsRmCB6XnQwm9rD83B4mbX6PoXrBN8MN2cKiN",
-                "decimals": 6,
-                "balance": 99000000,
-                "uiAmount": 99,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1999486553318934,
-                "valueUsd": 19.794916877857446
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 234.84514091797047
             }
         },
         {
-            "count": 25,
+            "count": 23,
             "wallet": "65qGwfc7kw5pTvBzSqm1Cvgh7FYNkXVpDrxJzHNJmEC5",
-            "amount": 3894553.28397,
-            "share_in_percent": 0.389,
-            "net_worth": 2963350.6291568917,
-            "net_worth_excluding": 2236439.424403321,
+            "amount": 4435249.40379,
+            "share_in_percent": 0.444,
+            "net_worth": 2958450.0394955496,
+            "net_worth_excluding": 2127469.262517482,
             "first_top_holding": {
                 "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                 "decimals": 6,
-                "balance": 2201615424982,
-                "uiAmount": 2201615.424982,
+                "balance": 2101615424982,
+                "uiAmount": 2101615.424982,
                 "chainId": "solana",
                 "name": "USD Coin",
                 "symbol": "USDC",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "priceUsd": 1.00001415,
-                "valueUsd": 2201646.5778402635
+                "priceUsd": 1.00003051,
+                "valueUsd": 2101679.545268616
             },
             "second_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
-                "balance": 3894553283970,
-                "uiAmount": 3894553.28397,
+                "balance": 4435249403790,
+                "uiAmount": 4435249.40379,
                 "chainId": "solana",
                 "name": "Vine Coin",
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 726911.2047535708
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 830980.7769780676
             },
             "third_top_holding": {
                 "address": "6NcdiK8B5KK2DzKvzvCfqi8EHaEqu48fyEzC8Mm9pump",
@@ -1129,462 +1047,88 @@
                 "symbol": "STONKS",
                 "icon": "https://ipfs.io/ipfs/QmSHW37vAK1F4Y6uUD76ZFzerih8DcV7KNMT2tQh5SP8fP",
                 "logoURI": "https://ipfs.io/ipfs/QmSHW37vAK1F4Y6uUD76ZFzerih8DcV7KNMT2tQh5SP8fP",
-                "priceUsd": 0.0028459895392652073,
-                "valueUsd": 26459.64315049435
+                "priceUsd": 0.0018962320125708752,
+                "valueUsd": 17629.58777287817
             }
         },
         {
-            "count": 26,
-            "wallet": "7WUzqEfQqK2sRbweM7h2BHJVyam3q487MTUj1AxNc6fZ",
-            "amount": 3843364.304692,
-            "share_in_percent": 0.384,
-            "net_worth": 3583541.413765906,
-            "net_worth_excluding": 2866184.5378105137,
+            "count": 24,
+            "wallet": "3MnDSRjsYbYJFASJyzWNCNTnZ9JyibGyeH2JTcExtzB8",
+            "amount": 3904542,
+            "share_in_percent": 0.39,
+            "net_worth": 2042873.9910728724,
+            "net_worth_excluding": 1311325.6497031786,
             "first_top_holding": {
-                "address": "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC",
-                "decimals": 9,
-                "balance": 1508164730754602,
-                "uiAmount": 1508164.730754602,
+                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
+                "decimals": 6,
+                "balance": 3904542000000,
+                "uiAmount": 3904542,
                 "chainId": "solana",
-                "name": "ai16z",
-                "symbol": "ai16z",
-                "icon": "https://ipfs.io/ipfs/QmcNTVAoyJ7zDbPnN9jwiMoB8uCoJBUP9RGmmiGGHv44yX",
-                "logoURI": "https://ipfs.io/ipfs/QmcNTVAoyJ7zDbPnN9jwiMoB8uCoJBUP9RGmmiGGHv44yX",
-                "priceUsd": 0.8722808115049766,
-                "valueUsd": 1315543.1552258087
+                "name": "Vine Coin",
+                "symbol": "VINE",
+                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 731548.3413696939
             },
             "second_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
+                "address": "74SBV4zDXxTRgv1pEMoECskKBkZHc2yGPnc7GYVepump",
                 "decimals": 6,
-                "balance": 3843364304692,
-                "uiAmount": 3843364.304692,
+                "balance": 3899934000000,
+                "uiAmount": 3899934,
                 "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 717356.875955392
+                "name": "swarms",
+                "symbol": "swarms",
+                "icon": "https://ipfs.io/ipfs/QmYhYx1r94b8apSJpRjUujCE5xXhzLXzXaR3ZmdGfUkvGb",
+                "logoURI": "https://ipfs.io/ipfs/QmYhYx1r94b8apSJpRjUujCE5xXhzLXzXaR3ZmdGfUkvGb",
+                "priceUsd": 0.12684272635019475,
+                "valueUsd": 494678.26114582043
             },
             "third_top_holding": {
-                "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+                "address": "9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump",
                 "decimals": 6,
-                "balance": 668825873436,
-                "uiAmount": 668825.873436,
+                "balance": 2652435000000,
+                "uiAmount": 2652435,
                 "chainId": "solana",
-                "name": "USDT",
-                "symbol": "USDT",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "priceUsd": 1.0000131526796745,
-                "valueUsd": 668834.6702884713
+                "name": "Hive AI",
+                "symbol": "BUZZ",
+                "icon": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
+                "logoURI": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
+                "priceUsd": 0.14591486152555236,
+                "valueUsd": 387029.6857305285
             }
         },
         {
-            "count": 27,
-            "wallet": "6KZabGui9A7Wi1HGAEye4bTTcQfh11gj6thpmvmvkCt4",
-            "amount": 3813933.986461,
-            "share_in_percent": 0.381,
-            "net_worth": 759406.451426785,
-            "net_worth_excluding": 47542.69021952909,
+            "count": 25,
+            "wallet": "6YAQWy6ocnvi1ExgrGmD4DXT8ti65SLs7ngSFV9o5uVN",
+            "amount": 3898116.942741,
+            "share_in_percent": 0.39,
+            "net_worth": 731217.3739476164,
+            "net_worth_excluding": 872.8203668685164,
             "first_top_holding": {
                 "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
                 "decimals": 6,
-                "balance": 3813933986461,
-                "uiAmount": 3813933.986461,
+                "balance": 3898116942741,
+                "uiAmount": 3898116.942741,
                 "chainId": "solana",
                 "name": "Vine Coin",
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 711863.7612072559
-            },
-            "second_top_holding": {
-                "address": "Ey59PH7Z4BFU4HjyKnyMdWt5GGN76KazTAwQihoUXRnk",
-                "decimals": 9,
-                "balance": 1099239531604357,
-                "uiAmount": 1099239.531604357,
-                "chainId": "solana",
-                "name": "Ben Pasternak (clout.me)",
-                "symbol": "PASTERNAK",
-                "icon": "https://ipfs.io/ipfs/bafkreiaeanpnjbua4uuwy4zcrnq6yn4eegu3didqw7t6xmkcxta4zz7yku",
-                "logoURI": "https://ipfs.io/ipfs/bafkreiaeanpnjbua4uuwy4zcrnq6yn4eegu3didqw7t6xmkcxta4zz7yku",
-                "priceUsd": 0.03896912214217462,
-                "valueUsd": 42836.39957059701
-            },
-            "third_top_holding": {
-                "address": "6HgJHzGpq3fSLmkepsaC8F3VtpUWfXcG4hmUaf4Vpump",
-                "decimals": 6,
-                "balance": 276524181059,
-                "uiAmount": 276524.181059,
-                "chainId": "solana",
-                "name": "REGENT of the North Winds",
-                "symbol": "REGENT",
-                "icon": "https://ipfs.io/ipfs/Qmcuyx6zorvLEpK9U8K1SPutqoBdmQeL3uPr11fzjscjSn",
-                "logoURI": "https://ipfs.io/ipfs/Qmcuyx6zorvLEpK9U8K1SPutqoBdmQeL3uPr11fzjscjSn",
-                "priceUsd": 0.015972017787099637,
-                "valueUsd": 4416.649138437509
-            }
-        },
-        {
-            "count": 28,
-            "wallet": "3cBB2ZyoNy8YEquSSzR2Rpggp9vcrfz4NcbCKHp7BzvT",
-            "amount": 3773501.699891,
-            "share_in_percent": 0.377,
-            "net_worth": 5420433.591997634,
-            "net_worth_excluding": 4716116.442686154,
-            "first_top_holding": {
-                "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
-                "decimals": 6,
-                "balance": 3315238880592,
-                "uiAmount": 3315238.880592,
-                "chainId": "solana",
-                "name": "USDT",
-                "symbol": "USDT",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "priceUsd": 1.0000131526796745,
-                "valueUsd": 3315282.484867041
-            },
-            "second_top_holding": {
-                "address": "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump",
-                "decimals": 6,
-                "balance": 6711764409550,
-                "uiAmount": 6711764.40955,
-                "chainId": "solana",
-                "name": "Pippin",
-                "symbol": "pippin",
-                "icon": "https://ipfs.io/ipfs/QmdcvSSBg7gWD4tvfXv3PuLtAiPyDZ5Z9w4LQVeRJKL3Lz",
-                "logoURI": "https://ipfs.io/ipfs/QmdcvSSBg7gWD4tvfXv3PuLtAiPyDZ5Z9w4LQVeRJKL3Lz",
-                "priceUsd": 0.1292036614499705,
-                "valueUsd": 867184.5365034593
-            },
-            "third_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 3773501699891,
-                "uiAmount": 3773501.699891,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 704317.1493114802
-            }
-        },
-        {
-            "count": 29,
-            "wallet": "2ovj9YxBE4NGyZEFBLyHAb7wxJHgHo1rtjdGLeG3JGDT",
-            "amount": 3765315.731587,
-            "share_in_percent": 0.377,
-            "net_worth": 705601.5324803226,
-            "net_worth_excluding": 2812.279091187869,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 3765315731587,
-                "uiAmount": 3765315.731587,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866481600715391,
-                "valueUsd": 702789.2533891348
-            },
-            "second_top_holding": {
-                "address": "4fL23JnwRjFeErV2SPY6s5PmmmeC9yTrknjemNEGpump",
-                "decimals": 6,
-                "balance": 176250123000000,
-                "uiAmount": 176250123,
-                "chainId": "solana",
-                "name": "DNGERNDL",
-                "symbol": "DNGR",
-                "icon": "https://ipfs.io/ipfs/QmdLpQrJDfutuyLjvG28AndtQanxzudjzqeQXsZ8GzLEum",
-                "logoURI": "https://ipfs.io/ipfs/QmdLpQrJDfutuyLjvG28AndtQanxzudjzqeQXsZ8GzLEum",
-                "priceUsd": 1.5271398611951718e-05,
-                "valueUsd": 2691.5858837385194
-            },
-            "third_top_holding": {
-                "address": "SCHEvu47HruoNsRSUpBim58UDRFmeGRBAEvRzYLaAKE",
-                "decimals": 9,
-                "balance": 4033229885000,
-                "uiAmount": 4033.229885,
-                "chainId": "solana",
-                "name": "Solana Cash",
-                "symbol": "SCH",
-                "icon": "https://solana-cash.s3.amazonaws.com/SolanaCash.png",
-                "logoURI": "https://solana-cash.s3.amazonaws.com/SolanaCash.png",
-                "priceUsd": 0.02790334858429058,
-                "valueUsd": 112.54061940173321
-            }
-        },
-        {
-            "count": 30,
-            "wallet": "gym82UCitT9YxGSHokQZtSNALC61CDQHKycRBTgZM8t",
-            "amount": 3678231.041193,
-            "share_in_percent": 0.368,
-            "net_worth": 691304.991650694,
-            "net_worth_excluding": 4761.2295053738635,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 3678231041193,
-                "uiAmount": 3678231.041193,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 686543.7621453202
+                "priceUsd": 0.18735829743147694,
+                "valueUsd": 730344.5535807479
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
                 "decimals": 9,
-                "balance": 15081354509,
-                "uiAmount": 15.081354509,
+                "balance": 3096333553,
+                "uiAmount": 3.096333553,
                 "chainId": "solana",
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 3983.3590845809217
-            },
-            "third_top_holding": {
-                "address": "CBdCxKo9QavR9hfShgpEBG3zekorAeD7W1jfq2o3pump",
-                "decimals": 6,
-                "balance": 56552395630,
-                "uiAmount": 56552.39563,
-                "chainId": "solana",
-                "name": "Official Mascot of the Holy Year",
-                "symbol": "LUCE",
-                "icon": "https://ipfs.io/ipfs/QmfVR3qRiUJVe6vydvfEjfMj5o1CJ8cbisp8gC2yonzNst",
-                "logoURI": "https://ipfs.io/ipfs/QmfVR3qRiUJVe6vydvfEjfMj5o1CJ8cbisp8gC2yonzNst",
-                "priceUsd": 0.012632849842474491,
-                "valueUsd": 714.4179222260005
-            }
-        },
-        {
-            "count": 31,
-            "wallet": "3y1jvCpZ4HbHYNvuPcJ4vRHub9TBSYXc3yrBFRjKmgrH",
-            "amount": 3511770.892283,
-            "share_in_percent": 0.351,
-            "net_worth": 269902435.1882406,
-            "net_worth_excluding": 269246969.6126032,
-            "first_top_holding": {
-                "address": "DBqE5JUMpPbLZxnnS1nYgXwwXEHpp8ZppZ8hyRB1CjhS",
-                "decimals": 9,
-                "balance": 1000000000000000,
-                "uiAmount": 1000000,
-                "chainId": "solana",
-                "name": "Timothy Donald Cook",
-                "symbol": "Cook",
-                "icon": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "logoURI": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
-                "priceUsd": 256.1724109366234,
-                "valueUsd": 256172410.9366234
-            },
-            "second_top_holding": {
-                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
-                "decimals": 6,
-                "balance": 243442094677,
-                "uiAmount": 243442.094677,
-                "chainId": "solana",
-                "name": "OFFICIAL TRUMP",
-                "symbol": "TRUMP",
-                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 34.55130175384528,
-                "valueUsd": 8411241.272773199
-            },
-            "third_top_holding": {
-                "address": "eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump",
-                "decimals": 6,
-                "balance": 5190905102382,
-                "uiAmount": 5190905.102382,
-                "chainId": "solana",
-                "name": "Unicorn Fart Dust",
-                "symbol": "UFD",
-                "icon": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "logoURI": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "priceUsd": 0.1862405800874529,
-                "valueUsd": 966757.1774465427
-            }
-        },
-        {
-            "count": 32,
-            "wallet": "9W263tnZPFb2JEp8QUiAmpypEVZRUuhBodUM9bQTCfU5",
-            "amount": 3459736.136882,
-            "share_in_percent": 0.346,
-            "net_worth": 660684.0736569688,
-            "net_worth_excluding": 14922.50054091704,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 3459736136882,
-                "uiAmount": 3459736.136882,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 645761.5731160517
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 38397732910,
-                "uiAmount": 38.39773291,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 10141.791847879726
-            },
-            "third_top_holding": {
-                "address": "AjygqEUdE8LLYbnAq2VsS3D39iCpmdHyhGEeg5Hwpump",
-                "decimals": 6,
-                "balance": 640424463308,
-                "uiAmount": 640424.463308,
-                "chainId": "solana",
-                "name": "BTCAI",
-                "symbol": "BTCAI",
-                "icon": "https://ipfs.io/ipfs/QmUgRo2nZApPAjCcmcE1JaLvBN4xUPAh187gMmiXXKqyCb",
-                "logoURI": "https://ipfs.io/ipfs/QmUgRo2nZApPAjCcmcE1JaLvBN4xUPAh187gMmiXXKqyCb",
-                "priceUsd": 0.007354224130979571,
-                "valueUsd": 4709.825042129335
-            }
-        },
-        {
-            "count": 33,
-            "wallet": "3ZvDVJLq3yoCWMMjBU7dDdPySNPi8FJbWiiDy3bAPtKF",
-            "amount": 3244338.919414,
-            "share_in_percent": 0.324,
-            "net_worth": 605698.0939113202,
-            "net_worth_excluding": 140.52494291192852,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 3244338919414,
-                "uiAmount": 3244338.919414,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 605557.5689684083
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 198568341,
-                "uiAmount": 0.198568341,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 52.446814678382566
-            },
-            "third_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
-            }
-        },
-        {
-            "count": 34,
-            "wallet": "6KVyzB7Sxx2Rnk7J8ZEhBZPbKyiRq3tPY9YNhtCjcems",
-            "amount": 3028099.864181,
-            "share_in_percent": 0.303,
-            "net_worth": 2550607.8312707776,
-            "net_worth_excluding": 1985411.395912471,
-            "first_top_holding": {
-                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
-                "decimals": 6,
-                "balance": 41190815258,
-                "uiAmount": 41190.815258,
-                "chainId": "solana",
-                "name": "OFFICIAL TRUMP",
-                "symbol": "TRUMP",
-                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 34.55130175384528,
-                "valueUsd": 1423196.2874660525
-            },
-            "second_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 3028099864181,
-                "uiAmount": 3028099.864181,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 565196.4353583066
-            },
-            "third_top_holding": {
-                "address": "Df6yfrKC8kZE3KNkrHERKzAetSxbrWeniQfyJY4Jpump",
-                "decimals": 6,
-                "balance": 3832102421389,
-                "uiAmount": 3832102.421389,
-                "chainId": "solana",
-                "name": "Just a chill guy",
-                "symbol": "CHILLGUY",
-                "icon": "https://ipfs.io/ipfs/QmaFy59TMnLb4jGgL6LpquyXSxTRXKR4mEfSobUSsPoR46",
-                "logoURI": "https://ipfs.io/ipfs/QmaFy59TMnLb4jGgL6LpquyXSxTRXKR4mEfSobUSsPoR46",
-                "priceUsd": 0.0807598970716676,
-                "valueUsd": 309480.1971194638
-            }
-        },
-        {
-            "count": 35,
-            "wallet": "8ai8kRH3zrtG3N6dXSsUdb4WD1iCMnjRQXpmYCVvUoZE",
-            "amount": 3001000,
-            "share_in_percent": 0.3,
-            "net_worth": 745870.4812474675,
-            "net_worth_excluding": 185732.24981928046,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 3001000000000,
-                "uiAmount": 3001000,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 560138.231428187
-            },
-            "second_top_holding": {
-                "address": "eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump",
-                "decimals": 6,
-                "balance": 997034959775,
-                "uiAmount": 997034.959775,
-                "chainId": "solana",
-                "name": "Unicorn Fart Dust",
-                "symbol": "UFD",
-                "icon": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "logoURI": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "priceUsd": 0.1862405800874529,
-                "valueUsd": 185688.36927596625
+                "priceUsd": 268.7451435116749,
+                "valueUsd": 832.1246050609992
             },
             "third_top_holding": {
                 "address": "DuWryQqPsRmCB6XnQwm9rD83B4mbX6PoXrBN8MN2cKiN",
@@ -1598,1797 +1142,6 @@
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "priceUsd": 0.1999486553318934,
                 "valueUsd": 19.794916877857446
-            }
-        },
-        {
-            "count": 36,
-            "wallet": "CdFjn99C4VUjpqayV4fnf2w5JUiF254LJTamkhdwEqqT",
-            "amount": 2967337.443301,
-            "share_in_percent": 0.297,
-            "net_worth": 1115354.161757926,
-            "net_worth_excluding": 561499.0642766664,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2967337443301,
-                "uiAmount": 2967337.443301,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 553855.0974812596
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 2002139775352,
-                "uiAmount": 2002.139775352,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 528814.6802722437
-            },
-            "third_top_holding": {
-                "address": "6NcdiK8B5KK2DzKvzvCfqi8EHaEqu48fyEzC8Mm9pump",
-                "decimals": 6,
-                "balance": 9632651232165,
-                "uiAmount": 9632651.232165,
-                "chainId": "solana",
-                "name": "STONKS",
-                "symbol": "STONKS",
-                "icon": "https://ipfs.io/ipfs/QmSHW37vAK1F4Y6uUD76ZFzerih8DcV7KNMT2tQh5SP8fP",
-                "logoURI": "https://ipfs.io/ipfs/QmSHW37vAK1F4Y6uUD76ZFzerih8DcV7KNMT2tQh5SP8fP",
-                "priceUsd": 0.0028459895392652073,
-                "valueUsd": 27414.424642131697
-            }
-        },
-        {
-            "count": 37,
-            "wallet": "31cQSKeQ86Rr2Apf4xNpFPNQwwGQrUtPJHx7cZJ4cnKk",
-            "amount": 2880074.786297,
-            "share_in_percent": 0.288,
-            "net_worth": 542937.175107611,
-            "net_worth_excluding": 5369.698540694895,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2880074786297,
-                "uiAmount": 2880074.786297,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 537567.4765669161
-            },
-            "second_top_holding": {
-                "address": "mctUEY5amJAYxtQ8CyyJ4W9dBQ9SVPn5czaHoSSHgaj",
-                "decimals": 6,
-                "balance": 10000000000000000,
-                "uiAmount": 10000000000,
-                "chainId": "solana",
-                "name": "TRUMP IS COMPRESSED, PUMP X100 NOW",
-                "symbol": "COMPRESSTRUMP",
-                "icon": "https://raw.githubusercontent.com/0xd0neme/fon/refs/heads/main/image.png",
-                "logoURI": "https://raw.githubusercontent.com/0xd0neme/fon/refs/heads/main/image.png",
-                "priceUsd": 0.0012375829590512868,
-                "valueUsd": 5136.491292118728
-            },
-            "third_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 619187332,
-                "uiAmount": 0.619187332,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 163.54270317747248
-            }
-        },
-        {
-            "count": 38,
-            "wallet": "4E2zbwMuheneS3FniPhPwhJyauwvnuHx6SZR9ag8LmW3",
-            "amount": 2870407.841963,
-            "share_in_percent": 0.287,
-            "net_worth": 4353256.443630465,
-            "net_worth_excluding": 3817493.307317652,
-            "first_top_holding": {
-                "address": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
-                "decimals": 6,
-                "balance": 1810022019345,
-                "uiAmount": 1810022.019345,
-                "chainId": "solana",
-                "name": "Fartcoin ",
-                "symbol": "Fartcoin ",
-                "icon": "https://ipfs.io/ipfs/QmQr3Fz4h1etNsF7oLGMRHiCzhB5y9a7GjyodnF7zLHK1g",
-                "logoURI": "https://ipfs.io/ipfs/QmQr3Fz4h1etNsF7oLGMRHiCzhB5y9a7GjyodnF7zLHK1g",
-                "priceUsd": 1.4517398320371049,
-                "valueUsd": 2627681.0623473716
-            },
-            "second_top_holding": {
-                "address": "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC",
-                "decimals": 9,
-                "balance": 996362115335405,
-                "uiAmount": 996362.115335405,
-                "chainId": "solana",
-                "name": "ai16z",
-                "symbol": "ai16z",
-                "icon": "https://ipfs.io/ipfs/QmcNTVAoyJ7zDbPnN9jwiMoB8uCoJBUP9RGmmiGGHv44yX",
-                "logoURI": "https://ipfs.io/ipfs/QmcNTVAoyJ7zDbPnN9jwiMoB8uCoJBUP9RGmmiGGHv44yX",
-                "priceUsd": 0.8722808115049766,
-                "valueUsd": 869107.5545175822
-            },
-            "third_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2870407841963,
-                "uiAmount": 2870407.841963,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 535763.1363128136
-            }
-        },
-        {
-            "count": 39,
-            "wallet": "2h7s3FpSvc6v2oHke6Uqg191B5fPCeFTmMGnh5oPWhX7",
-            "amount": 2860980.341336,
-            "share_in_percent": 0.286,
-            "net_worth": 1268871.1300274553,
-            "net_worth_excluding": 734867.6416746537,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2860980341336,
-                "uiAmount": 2860980.341336,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 534003.4883528015
-            },
-            "second_top_holding": {
-                "address": "9sbrLLnk4vxJajnZWXP9h5qk1NDFw7dz2eHjgemcpump",
-                "decimals": 6,
-                "balance": 27166576074815,
-                "uiAmount": 27166576.074815,
-                "chainId": "solana",
-                "name": "Beenz",
-                "symbol": "Beenz",
-                "icon": "https://pump.mypinata.cloud/ipfs/QmVzFTXUfXgQmnMZngYccgTXju9RyjG3sSVWvPcgkVKrPg",
-                "logoURI": "https://pump.mypinata.cloud/ipfs/QmVzFTXUfXgQmnMZngYccgTXju9RyjG3sSVWvPcgkVKrPg",
-                "priceUsd": 0.012895051837941962,
-                "valueUsd": 350314.40674413333
-            },
-            "third_top_holding": {
-                "address": "2kGfWRgNp1QaxUMFCX9CMN78E1iCbgjBAZuQNUjWpump",
-                "decimals": 6,
-                "balance": 4440522704079,
-                "uiAmount": 4440522.704079,
-                "chainId": "solana",
-                "name": "SafeMoon",
-                "symbol": "SAFEMOON",
-                "icon": "https://ipfs.io/ipfs/QmTwRFgSTQiTsTPbsrX6XZe9p6ShnX7CSwe8hZxQHqKLHW",
-                "logoURI": "https://ipfs.io/ipfs/QmTwRFgSTQiTsTPbsrX6XZe9p6ShnX7CSwe8hZxQHqKLHW",
-                "priceUsd": 0.04151386319988334,
-                "valueUsd": 184343.25207311165
-            }
-        },
-        {
-            "count": 40,
-            "wallet": "7oHRwzieLygsc8iDo2KvizCf8ezMqNNpAg2muKstdBUc",
-            "amount": 2810454.544378,
-            "share_in_percent": 0.281,
-            "net_worth": 524602.8312759746,
-            "net_worth_excluding": 30.00955081509892,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2810454544378,
-                "uiAmount": 2810454.544378,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 524572.8217251595
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 51056821,
-                "uiAmount": 0.051056821,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 13.485370404813683
-            },
-            "third_top_holding": {
-                "address": "4arBHiSyjazosbeDx8YsZRoenXXu8DLTMjbGnzPGfgkE",
-                "decimals": 6,
-                "balance": 20755000,
-                "uiAmount": 20.755,
-                "chainId": "solana",
-                "name": "test griffain.com",
-                "symbol": "GRIFFAIN",
-                "icon": "https://griffain.com/logo.png",
-                "logoURI": "https://griffain.com/logo.png",
-                "priceUsd": 0.16595841864350003,
-                "valueUsd": 3.444466978945843
-            }
-        },
-        {
-            "count": 41,
-            "wallet": "FRqj7Vav9twL2m5sB4WWfdhYcuGUGYYJnxKucNnsgaMQ",
-            "amount": 2776318.493536,
-            "share_in_percent": 0.278,
-            "net_worth": 520943.5094560775,
-            "net_worth_excluding": 2742.199609151983,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2776318493536,
-                "uiAmount": 2776318.493536,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 518201.3098469255
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 6436643784,
-                "uiAmount": 6.436643784,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 1700.076970931691
-            },
-            "third_top_holding": {
-                "address": "8CoJkMhxaN3HJLSiR3QZpYxDqAH3RbGrSWnfzfNkpump",
-                "decimals": 6,
-                "balance": 2874650887040,
-                "uiAmount": 2874650.88704,
-                "chainId": "solana",
-                "name": "CipherNX AI",
-                "symbol": "CNX",
-                "icon": "https://ipfs.io/ipfs/QmeCSpR3BjyjMTLkgG8E8FVW2zPpHafUv5R4GVmHEU7fSH",
-                "logoURI": "https://ipfs.io/ipfs/QmeCSpR3BjyjMTLkgG8E8FVW2zPpHafUv5R4GVmHEU7fSH",
-                "priceUsd": 0.0002793593865258125,
-                "valueUsd": 803.0607082793772
-            }
-        },
-        {
-            "count": 42,
-            "wallet": "3MnDSRjsYbYJFASJyzWNCNTnZ9JyibGyeH2JTcExtzB8",
-            "amount": 2693355,
-            "share_in_percent": 0.269,
-            "net_worth": 1294718.4806872704,
-            "net_worth_excluding": 792002.3506278687,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2693355000000,
-                "uiAmount": 2693355,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 502716.1300594017
-            },
-            "second_top_holding": {
-                "address": "74SBV4zDXxTRgv1pEMoECskKBkZHc2yGPnc7GYVepump",
-                "decimals": 6,
-                "balance": 2476266000000,
-                "uiAmount": 2476266,
-                "chainId": "solana",
-                "name": "swarms",
-                "symbol": "swarms",
-                "icon": "https://ipfs.io/ipfs/QmYhYx1r94b8apSJpRjUujCE5xXhzLXzXaR3ZmdGfUkvGb",
-                "logoURI": "https://ipfs.io/ipfs/QmYhYx1r94b8apSJpRjUujCE5xXhzLXzXaR3ZmdGfUkvGb",
-                "priceUsd": 0.1294833115600859,
-                "valueUsd": 320635.1219836477
-            },
-            "third_top_holding": {
-                "address": "9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump",
-                "decimals": 6,
-                "balance": 1931778000000,
-                "uiAmount": 1931778,
-                "chainId": "solana",
-                "name": "Hive AI",
-                "symbol": "BUZZ",
-                "icon": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
-                "logoURI": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
-                "priceUsd": 0.13903943420772277,
-                "valueUsd": 268593.3201349263
-            }
-        },
-        {
-            "count": 43,
-            "wallet": "4WrdjxxJ13AbxuY6JJwGWfoxD2tUE1X4TBSRfTAGdTTA",
-            "amount": 2575000,
-            "share_in_percent": 0.258,
-            "net_worth": 540535.6458284005,
-            "net_worth_excluding": 59910.5388881868,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2575000000000,
-                "uiAmount": 2575000,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 480625.1069402137
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 224354116708,
-                "uiAmount": 224.354116708,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 59257.47640363622
-            },
-            "third_top_holding": {
-                "address": "HqkJgGoT8TV7Ej1ddyTeTsz3jgbSHYr4u4ip8gQk55sB",
-                "decimals": 6,
-                "balance": 2643510618458,
-                "uiAmount": 2643510.618458,
-                "chainId": "solana",
-                "name": "WHY YOU ALWAYS LYING",
-                "symbol": "LYING",
-                "icon": "https://ipfs.io/ipfs/QmVMniShaYoguJDyeibNPgPFZsCw4RmnnYt41mr1v1y4yr",
-                "logoURI": "https://ipfs.io/ipfs/QmVMniShaYoguJDyeibNPgPFZsCw4RmnnYt41mr1v1y4yr",
-                "priceUsd": 0.00018740631450356643,
-                "valueUsd": 495.41058235625735
-            }
-        },
-        {
-            "count": 44,
-            "wallet": "9DYbNzkjgZzZh7vN6j8oHBwt37JMeHsDRHCWAM2nqqJJ",
-            "amount": 2505133.139615,
-            "share_in_percent": 0.251,
-            "net_worth": 543185.7196407357,
-            "net_worth_excluding": 75601.29900891706,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2505133139615,
-                "uiAmount": 2505133.139615,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 467584.4206318186
-            },
-            "second_top_holding": {
-                "address": "DWDnYfhVMnNBbWz4uEVvLVZLdYQoSuBosSU2vmHSpump",
-                "decimals": 6,
-                "balance": 12702034460666,
-                "uiAmount": 12702034.460666,
-                "chainId": "solana",
-                "name": "BIOS",
-                "symbol": "BIOS",
-                "icon": "https://ipfs.io/ipfs/QmW2Xys4mTt3h1NYevZmRmtmD799d1gtndoxVY1iNMSd9Y",
-                "logoURI": "https://ipfs.io/ipfs/QmW2Xys4mTt3h1NYevZmRmtmD799d1gtndoxVY1iNMSd9Y",
-                "priceUsd": 0.004078868870862369,
-                "valueUsd": 51809.93295823163
-            },
-            "third_top_holding": {
-                "address": "26KwTqB1m1XFMsFp4d9sRJ9ZzQah78xF69n59rFjpump",
-                "decimals": 6,
-                "balance": 9962295623079,
-                "uiAmount": 9962295.623079,
-                "chainId": "solana",
-                "name": "Interdimensional Television",
-                "symbol": "TV",
-                "icon": "https://ipfs.io/ipfs/QmeQAvttcXLiJVDDBBHKC53Emq86GQoVdRWTVxPMBUPBwf",
-                "logoURI": "https://ipfs.io/ipfs/QmeQAvttcXLiJVDDBBHKC53Emq86GQoVdRWTVxPMBUPBwf",
-                "priceUsd": 0.0019758144565867803,
-                "valueUsd": 19683.647712870694
-            }
-        },
-        {
-            "count": 45,
-            "wallet": "4ZoQFpvFYQmi3Pm3Ne81WMtMS7dUdRrM8MJ9dJCB4USB",
-            "amount": 2500329.164069,
-            "share_in_percent": 0.25,
-            "net_worth": 1458927.3900251314,
-            "net_worth_excluding": 992239.6339605106,
-            "first_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 2604167187267,
-                "uiAmount": 2604.167187267,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 687825.0237388907
-            },
-            "second_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2500329164069,
-                "uiAmount": 2500329.164069,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 466687.75606462074
-            },
-            "third_top_holding": {
-                "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-                "decimals": 6,
-                "balance": 150000155940,
-                "uiAmount": 150000.15594,
-                "chainId": "solana",
-                "name": "USD Coin",
-                "symbol": "USDC",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "priceUsd": 1.00001415,
-                "valueUsd": 150002.27844220653
-            }
-        },
-        {
-            "count": 46,
-            "wallet": "7BqxS73oFpGGfjTHikqM149qG3d4etueYVKWTmq4g2AY",
-            "amount": 2472732.850362,
-            "share_in_percent": 0.247,
-            "net_worth": 603006.1116489981,
-            "net_worth_excluding": 141469.22208013758,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2472732850362,
-                "uiAmount": 2472732.850362,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 461536.8895688605
-            },
-            "second_top_holding": {
-                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
-                "decimals": 6,
-                "balance": 2795474203,
-                "uiAmount": 2795.474203,
-                "chainId": "solana",
-                "name": "OFFICIAL TRUMP",
-                "symbol": "TRUMP",
-                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 34.55130175384528,
-                "valueUsd": 96587.27273294315
-            },
-            "third_top_holding": {
-                "address": "BppoUefwVqJ6kwo5zwKXu8wGPm4ABAeKfLPVutPg7ayh",
-                "decimals": 6,
-                "balance": 1333270000,
-                "uiAmount": 1333.27,
-                "chainId": "solana",
-                "name": "Pippin\u200b",
-                "symbol": "pippin\u200b",
-                "icon": "https://gateway.irys.xyz/MwCfY-b5BVVqECB5MuiOXf_idMNUq8JXxgIoPcAJYeM",
-                "logoURI": "https://gateway.irys.xyz/MwCfY-b5BVVqECB5MuiOXf_idMNUq8JXxgIoPcAJYeM",
-                "priceUsd": 37.2432900288465,
-                "valueUsd": 44690.14964858644
-            }
-        },
-        {
-            "count": 47,
-            "wallet": "9KojyjpTxnDFmjSoxAzEiCBpLMqXKx1Ji7MY6Q3fGTw7",
-            "amount": 2391706.356183,
-            "share_in_percent": 0.239,
-            "net_worth": 524469.7499890466,
-            "net_worth_excluding": 78056.49825699098,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2391706356183,
-                "uiAmount": 2391706.356183,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 446413.2517320556
-            },
-            "second_top_holding": {
-                "address": "E4wg8YF472u8oiLvSNKB84Y23gZhkSQ3PSCJaUj4pump",
-                "decimals": 6,
-                "balance": 11389281855635,
-                "uiAmount": 11389281.855635,
-                "chainId": "solana",
-                "name": "Lexicon",
-                "symbol": "LEXICON",
-                "icon": "https://ipfs.io/ipfs/QmUEUiw55x4ianjTPC2nWgb43SdJWuvhx55RbxL1GpqSoY",
-                "logoURI": "https://ipfs.io/ipfs/QmUEUiw55x4ianjTPC2nWgb43SdJWuvhx55RbxL1GpqSoY",
-                "priceUsd": 0.0047520605713835895,
-                "valueUsd": 54122.55724253761
-            },
-            "third_top_holding": {
-                "address": "6uVJY332tiYwo58g3B8p9FJRGmGZ2fUuXR8cpiaDpump",
-                "decimals": 6,
-                "balance": 1154469850261,
-                "uiAmount": 1154469.850261,
-                "chainId": "solana",
-                "name": "Kolwaii",
-                "symbol": "KWAII",
-                "icon": "https://ipfs.io/ipfs/QmaEfNSGX7NpXy5DMmnYxqQByErPmVgjL2MGFshzL9eA8N",
-                "logoURI": "https://ipfs.io/ipfs/QmaEfNSGX7NpXy5DMmnYxqQByErPmVgjL2MGFshzL9eA8N",
-                "priceUsd": 0.019392180701119584,
-                "valueUsd": 22387.68795025578
-            }
-        },
-        {
-            "count": 48,
-            "wallet": "EVZWT6SkCyPXG6yn2JTzYTCbfL9paXJZh4ZLvxpqAiSS",
-            "amount": 2311776.05984,
-            "share_in_percent": 0.231,
-            "net_worth": 758014.2064368388,
-            "net_worth_excluding": 326562.4985176164,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2311548297934,
-                "uiAmount": 2311548.297934,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 431451.7079192224
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111112",
-                "decimals": 9,
-                "balance": 1236199964092,
-                "uiAmount": 1236.199964092,
-                "chainId": "solana",
-                "name": "Wrapped SOL",
-                "symbol": "SOL",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 326511.0142716875
-            },
-            "third_top_holding": {
-                "address": "GopFvYooju11ys3CNdUiu5NF6V4Cf1BGD6NVPp8HNAjj",
-                "decimals": 6,
-                "balance": 88888646,
-                "uiAmount": 88.888646,
-                "chainId": "solana",
-                "name": "VINE",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "logoURI": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "priceUsd": 0.3004684601525441,
-                "valueUsd": 26.708234588664595
-            }
-        },
-        {
-            "count": 49,
-            "wallet": "3tYQYxLB1vb8oo4Azrs1MGXJcgWKH3KmZ6p51HbU7X6i",
-            "amount": 2307580.2268,
-            "share_in_percent": 0.231,
-            "net_worth": 661482.5405132012,
-            "net_worth_excluding": 230771.4751621827,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2307580226800,
-                "uiAmount": 2307580.2268,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 430711.06535101845
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111112",
-                "decimals": 9,
-                "balance": 873522487796,
-                "uiAmount": 873.522487796,
-                "chainId": "solana",
-                "name": "Wrapped SOL",
-                "symbol": "SOL",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 230718.91422427964
-            },
-            "third_top_holding": {
-                "address": "GopFvYooju11ys3CNdUiu5NF6V4Cf1BGD6NVPp8HNAjj",
-                "decimals": 6,
-                "balance": 93956530,
-                "uiAmount": 93.95653,
-                "chainId": "solana",
-                "name": "VINE",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "logoURI": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "priceUsd": 0.3004684601525441,
-                "valueUsd": 28.230973890376312
-            }
-        },
-        {
-            "count": 50,
-            "wallet": "73sWxVfZD5fWcMLgBN7L7ppx197qbGS5Si1fEajzE5AL",
-            "amount": 2291861.258438,
-            "share_in_percent": 0.229,
-            "net_worth": 650179.3669007386,
-            "net_worth_excluding": 222402.2552778661,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2291861258438,
-                "uiAmount": 2291861.258438,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 427777.1116228725
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111112",
-                "decimals": 9,
-                "balance": 841827768825,
-                "uiAmount": 841.827768825,
-                "chainId": "solana",
-                "name": "Wrapped SOL",
-                "symbol": "SOL",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 222347.5542996104
-            },
-            "third_top_holding": {
-                "address": "GopFvYooju11ys3CNdUiu5NF6V4Cf1BGD6NVPp8HNAjj",
-                "decimals": 6,
-                "balance": 99523602,
-                "uiAmount": 99.523602,
-                "chainId": "solana",
-                "name": "VINE",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "logoURI": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "priceUsd": 0.3004684601525441,
-                "valueUsd": 29.903703441774656
-            }
-        },
-        {
-            "count": 51,
-            "wallet": "52AYS4VdJkMtLMpr6vTAaa18qZmHEBPg8EHnxbYvi5uZ",
-            "amount": 2175236.339449,
-            "share_in_percent": 0.218,
-            "net_worth": 720350.9480183388,
-            "net_worth_excluding": 314341.93898225535,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2175236339449,
-                "uiAmount": 2175236.339449,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 406009.0090360834
-            },
-            "second_top_holding": {
-                "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
-                "decimals": 6,
-                "balance": 8475473171,
-                "uiAmount": 8475.473171,
-                "chainId": "solana",
-                "name": "OFFICIAL TRUMP",
-                "symbol": "TRUMP",
-                "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 34.55130175384528,
-                "valueUsd": 292838.6310378409
-            },
-            "third_top_holding": {
-                "address": "4Hcm1TfA1MvVhCQHvJCcKL7ymUhJZAV7P439H5ZHnKRh",
-                "decimals": 6,
-                "balance": 3367194461439,
-                "uiAmount": 3367194.461439,
-                "chainId": "solana",
-                "name": "test",
-                "symbol": "test",
-                "icon": null,
-                "logoURI": null,
-                "priceUsd": 0.005263472169039084,
-                "valueUsd": 17723.134335526724
-            }
-        },
-        {
-            "wallet": "BCjpgg9U8kYAQX9h2CyoV155dZZ34ntvgiJSUarvkYx3",
-            "error": "Failed to fetch portfolio for wallet BCjpgg9U8kYAQX9h2CyoV155dZZ34ntvgiJSUarvkYx3"
-        },
-        {
-            "count": 53,
-            "wallet": "G8AJCLJGpSe7GH4NCFrcUBe6ycE65ueKHhXVC2AZvtFA",
-            "amount": 2020035.24181,
-            "share_in_percent": 0.202,
-            "net_worth": 377212.35844643787,
-            "net_worth_excluding": 171.71607054205379,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 2020035241810,
-                "uiAmount": 2020035.24181,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1866505269670733,
-                "valueUsd": 377040.6423758958
-            },
-            "second_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
-            },
-            "third_top_holding": {
-                "address": "GopFvYooju11ys3CNdUiu5NF6V4Cf1BGD6NVPp8HNAjj",
-                "decimals": 6,
-                "balance": 105580000,
-                "uiAmount": 105.58,
-                "chainId": "solana",
-                "name": "VINE",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "logoURI": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "priceUsd": 0.3004684601525441,
-                "valueUsd": 31.723460022905602
-            }
-        },
-        {
-            "wallet": "32QeW9Ej8X5Z1Ka1CMcz1u2FHom9C35vdJHJTwnukwqN",
-            "error": "Failed to fetch portfolio for wallet 32QeW9Ej8X5Z1Ka1CMcz1u2FHom9C35vdJHJTwnukwqN"
-        },
-        {
-            "wallet": "AnBV2q4tYrArcWX1Qf76bJrGFxhB7hDi6CtmkqEdZ26c",
-            "error": "Failed to fetch portfolio for wallet AnBV2q4tYrArcWX1Qf76bJrGFxhB7hDi6CtmkqEdZ26c"
-        },
-        {
-            "wallet": "7JJjwVewyw9PPNw9soxdgj8UJGiB1h7kYSHp1aHsKaQb",
-            "error": "Failed to fetch portfolio for wallet 7JJjwVewyw9PPNw9soxdgj8UJGiB1h7kYSHp1aHsKaQb"
-        },
-        {
-            "wallet": "HSrcCZngVUKneGs5g4gmEdWh6KRwWimHfAtbWeoEUkRM",
-            "error": "Failed to fetch portfolio for wallet HSrcCZngVUKneGs5g4gmEdWh6KRwWimHfAtbWeoEUkRM"
-        },
-        {
-            "wallet": "7J11n62qD942o321FBtwPgK7ReHtH8iN4ig52H74sn9Z",
-            "error": "Failed to fetch portfolio for wallet 7J11n62qD942o321FBtwPgK7ReHtH8iN4ig52H74sn9Z"
-        },
-        {
-            "wallet": "6LUxxZS195TB5JGbv8PH3mb18NiqnhaGu7sKtVDa1Ubr",
-            "error": "Failed to fetch portfolio for wallet 6LUxxZS195TB5JGbv8PH3mb18NiqnhaGu7sKtVDa1Ubr"
-        },
-        {
-            "wallet": "FyUt5jSALMbEnNFKZjni4GDruEvhu2p3KM8KXCtitw4u",
-            "error": "Failed to fetch portfolio for wallet FyUt5jSALMbEnNFKZjni4GDruEvhu2p3KM8KXCtitw4u"
-        },
-        {
-            "wallet": "C9FeRk5rDcMtniPn1URWrToD75LgiAfKVo3cT6qgj9tw",
-            "error": "Failed to fetch portfolio for wallet C9FeRk5rDcMtniPn1URWrToD75LgiAfKVo3cT6qgj9tw"
-        },
-        {
-            "wallet": "EZnZQcQZ2ZE7PZo2k6ncLnBRPW6FtKKb9qFiBFeGAQGw",
-            "error": "Failed to fetch portfolio for wallet EZnZQcQZ2ZE7PZo2k6ncLnBRPW6FtKKb9qFiBFeGAQGw"
-        },
-        {
-            "wallet": "8XfJv8Pt4q3YZEuCgX4vMZ4VYGjhcWEcmN99P2A53cF9",
-            "error": "Failed to fetch portfolio for wallet 8XfJv8Pt4q3YZEuCgX4vMZ4VYGjhcWEcmN99P2A53cF9"
-        },
-        {
-            "wallet": "D2nwnMmQhvhQp4RyZwwhQ6onkCj9pikgf7yncJ6nPN2u",
-            "error": "Failed to fetch portfolio for wallet D2nwnMmQhvhQp4RyZwwhQ6onkCj9pikgf7yncJ6nPN2u"
-        },
-        {
-            "wallet": "BjvpBPyAF56G53Q1QYJKHtB4DZ9UKzsTU4Q7c4miXPy2",
-            "error": "Failed to fetch portfolio for wallet BjvpBPyAF56G53Q1QYJKHtB4DZ9UKzsTU4Q7c4miXPy2"
-        },
-        {
-            "wallet": "FpEjCb9CXKKoNQ4kWCBC95xpdYbyGrrbpSUM7neWb1xS",
-            "error": "Failed to fetch portfolio for wallet FpEjCb9CXKKoNQ4kWCBC95xpdYbyGrrbpSUM7neWb1xS"
-        },
-        {
-            "wallet": "3fZTvPuYYFVFgY3vQzqQaYWydhavcR1mbs9cerFKEAKY",
-            "error": "Failed to fetch portfolio for wallet 3fZTvPuYYFVFgY3vQzqQaYWydhavcR1mbs9cerFKEAKY"
-        },
-        {
-            "wallet": "6CCkb1Pv5QPp8wHvRow7KPuaACruyefy3V3CEQkXMPds",
-            "error": "Failed to fetch portfolio for wallet 6CCkb1Pv5QPp8wHvRow7KPuaACruyefy3V3CEQkXMPds"
-        },
-        {
-            "wallet": "5TbLYqUF4aAXYQeMDdfLuTZTKHy6EySMdJzXpDu81TVn",
-            "error": "Failed to fetch portfolio for wallet 5TbLYqUF4aAXYQeMDdfLuTZTKHy6EySMdJzXpDu81TVn"
-        },
-        {
-            "wallet": "CbE7gFibze7hWcwVKniffWGcct6JRcJMArtMJjTNBCrr",
-            "error": "Failed to fetch portfolio for wallet CbE7gFibze7hWcwVKniffWGcct6JRcJMArtMJjTNBCrr"
-        },
-        {
-            "wallet": "9zR6kRdRin7CMVif7w3cdRTdCiWDVAUG5mx1tzCiewvV",
-            "error": "Failed to fetch portfolio for wallet 9zR6kRdRin7CMVif7w3cdRTdCiWDVAUG5mx1tzCiewvV"
-        },
-        {
-            "wallet": "D5jx4wmxuPz18hqmgpCMLGVq3uSksCafCp5xjVe1nw8p",
-            "error": "Failed to fetch portfolio for wallet D5jx4wmxuPz18hqmgpCMLGVq3uSksCafCp5xjVe1nw8p"
-        },
-        {
-            "wallet": "HJ8YtiyRAKXgKhe4kLRp6rqkxU9ZYHQ5F4mywzBULLE8",
-            "error": "Failed to fetch portfolio for wallet HJ8YtiyRAKXgKhe4kLRp6rqkxU9ZYHQ5F4mywzBULLE8"
-        },
-        {
-            "wallet": "Eyqhu2GVWPR4VsiwbMttJLwK6SvvzUTm4XSeFJ5Rt8Eu",
-            "error": "Failed to fetch portfolio for wallet Eyqhu2GVWPR4VsiwbMttJLwK6SvvzUTm4XSeFJ5Rt8Eu"
-        },
-        {
-            "wallet": "pDR9u4jC1xPquZLaZBypdCVHd171aXM7jNKUceSdDMx",
-            "error": "Failed to fetch portfolio for wallet pDR9u4jC1xPquZLaZBypdCVHd171aXM7jNKUceSdDMx"
-        },
-        {
-            "wallet": "9zckZP4aqjo8kqLJu2uaig8pZ7yDNmfTBKmjc86F4wfq",
-            "error": "Failed to fetch portfolio for wallet 9zckZP4aqjo8kqLJu2uaig8pZ7yDNmfTBKmjc86F4wfq"
-        },
-        {
-            "wallet": "6mNLSbzoQHmeHvX5xJ5s6bW76mCxn5ogjnep4co487Di",
-            "error": "Failed to fetch portfolio for wallet 6mNLSbzoQHmeHvX5xJ5s6bW76mCxn5ogjnep4co487Di"
-        },
-        {
-            "wallet": "oZemowZ32YbZJexMmogW2GSqBgnguYuGrqaFmM85w2N",
-            "error": "Failed to fetch portfolio for wallet oZemowZ32YbZJexMmogW2GSqBgnguYuGrqaFmM85w2N"
-        },
-        {
-            "count": 79,
-            "wallet": "DEG7uQzCqkANziozgQGSMU86b7Haou5G91ZtNVtJq5Xc",
-            "amount": 1494350.488429,
-            "share_in_percent": 0.149,
-            "net_worth": 1666096.6805914056,
-            "net_worth_excluding": 1386625.9229414635,
-            "first_top_holding": {
-                "address": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
-                "decimals": 6,
-                "balance": 401605256144,
-                "uiAmount": 401605.256144,
-                "chainId": "solana",
-                "name": "dogwifhat",
-                "symbol": "$WIF",
-                "icon": "https://bafkreibk3covs5ltyqxa272uodhculbr6kea6betidfwy3ajsav2vjzyum.ipfs.nftstorage.link",
-                "logoURI": "https://bafkreibk3covs5ltyqxa272uodhculbr6kea6betidfwy3ajsav2vjzyum.ipfs.nftstorage.link",
-                "priceUsd": 1.4541834769675512,
-                "valueUsd": 584007.7277479259
-            },
-            "second_top_holding": {
-                "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-                "decimals": 6,
-                "balance": 416058614348,
-                "uiAmount": 416058.614348,
-                "chainId": "solana",
-                "name": "USD Coin",
-                "symbol": "USDC",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "priceUsd": 1.00001415,
-                "valueUsd": 416064.501577393
-            },
-            "third_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1494350488429,
-                "uiAmount": 1494350.488429,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 279470.75764994195
-            }
-        },
-        {
-            "count": 80,
-            "wallet": "HUddtYB3iJKW57AaRqZa4JpJ15Tm7rbYqJJwGttneDWz",
-            "amount": 1491725.666776,
-            "share_in_percent": 0.149,
-            "net_worth": 1495674.727452161,
-            "net_worth_excluding": 1216694.8592566943,
-            "first_top_holding": {
-                "address": "8XmNVTQv5mApkVhVcxn9Bm7wwVQi6xKdL263zQJQpump",
-                "decimals": 6,
-                "balance": 554284805000,
-                "uiAmount": 554284.805,
-                "chainId": "solana",
-                "name": "alon",
-                "symbol": "ALON",
-                "icon": "https://cf-ipfs.com/ipfs/QmavnBN2FbwW8o43KYBEQSnjYyGrRZKXbEN6N598dkFCLz",
-                "logoURI": "https://cf-ipfs.com/ipfs/QmavnBN2FbwW8o43KYBEQSnjYyGrRZKXbEN6N598dkFCLz",
-                "priceUsd": 0.5382490288925986,
-                "valueUsd": 298343.2580211734
-            },
-            "second_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1491725666776,
-                "uiAmount": 1491725.666776,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 278979.86819546664
-            },
-            "third_top_holding": {
-                "address": "76PsEyML7UV9uiBDWMdG3itRRuupDuRs6nNpjNBpump",
-                "decimals": 6,
-                "balance": 13377813602534,
-                "uiAmount": 13377813.602534,
-                "chainId": "solana",
-                "name": "Project Plutus",
-                "symbol": "PPCOIN",
-                "icon": "https://ipfs.io/ipfs/QmQihk7SmyppuWD8DvD183dzre4FNe1es8ECGUAR6BcZws",
-                "logoURI": "https://ipfs.io/ipfs/QmQihk7SmyppuWD8DvD183dzre4FNe1es8ECGUAR6BcZws",
-                "priceUsd": 0.017780641471600397,
-                "valueUsd": 237866.10734055596
-            }
-        },
-        {
-            "count": 81,
-            "wallet": "HR5SJeaRLUXHye3AjynUKsJcJ134u1hSgEP53NY3n3Nb",
-            "amount": 1455514.210668,
-            "share_in_percent": 0.146,
-            "net_worth": 273729.1054902368,
-            "net_worth_excluding": 1521.439099147101,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1455514210668,
-                "uiAmount": 1455514.210668,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 272207.6663910897
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 5608131987,
-                "uiAmount": 5.608131987,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 1481.2464944454484
-            },
-            "third_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
-            }
-        },
-        {
-            "wallet": "BL9nXqAgT7zTuukpXhYGi16qKqXVBVQ1SAEbEDaMb3uh",
-            "error": "Failed to fetch portfolio for wallet BL9nXqAgT7zTuukpXhYGi16qKqXVBVQ1SAEbEDaMb3uh"
-        },
-        {
-            "wallet": "954TSh1y87WpiGiAstcTMo8JZWe21UjF2xF9jwhWkQ8C",
-            "error": "Failed to fetch portfolio for wallet 954TSh1y87WpiGiAstcTMo8JZWe21UjF2xF9jwhWkQ8C"
-        },
-        {
-            "wallet": "6FEVkH17P9y8Q9aCkDdPcMDjvj7SVxrTETaYEm8f51Jy",
-            "error": "Failed to fetch portfolio for wallet 6FEVkH17P9y8Q9aCkDdPcMDjvj7SVxrTETaYEm8f51Jy"
-        },
-        {
-            "count": 85,
-            "wallet": "5TtfoRhfW8jSqUQkxwUiPgjcHJHGvTF16umhYcRgf37n",
-            "amount": 1396225.950098,
-            "share_in_percent": 0.14,
-            "net_worth": 261226.11866749576,
-            "net_worth_excluding": 106.43680851155659,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1396225950098,
-                "uiAmount": 1396225.950098,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 261119.6818589842
-            },
-            "second_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
-            },
-            "third_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 120926124,
-                "uiAmount": 0.120926124,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 31.939583033546672
-            }
-        },
-        {
-            "count": 86,
-            "wallet": "3aHb2NzpvuafrRtNkeHcDrh56JeTGX4VAAyRUUmSdMBN",
-            "amount": 1386210.669758,
-            "share_in_percent": 0.139,
-            "net_worth": 287267.13492591825,
-            "net_worth_excluding": 28020.49289685971,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1386210669758,
-                "uiAmount": 1386210.669758,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 259246.64202905854
-            },
-            "second_top_holding": {
-                "address": "BYZ9CcZGKAXmN2uDsKcQMM9UnZacija4vWcns9Th69xb",
-                "decimals": 6,
-                "balance": 805544010406,
-                "uiAmount": 805544.010406,
-                "chainId": "solana",
-                "name": "BOTIFY",
-                "symbol": "BOTIFY",
-                "icon": "https://gateway.irys.xyz/WIeESPRzUcJYQH66GPjPkYwDNDj-mMvQfzrSSR77pHU",
-                "logoURI": "https://gateway.irys.xyz/WIeESPRzUcJYQH66GPjPkYwDNDj-mMvQfzrSSR77pHU",
-                "priceUsd": 0.0338084362899745,
-                "valueUsd": 27234.183354581804
-            },
-            "third_top_holding": {
-                "address": "3NYTgHnJCqe1EEBiU8k4srfDiRg9Yv2z3hf9tFa3MBAm",
-                "decimals": 9,
-                "balance": 3450000000000000,
-                "uiAmount": 3450000,
-                "chainId": "solana",
-                "name": "BERNIE SENDERS",
-                "symbol": "BERNIE",
-                "icon": "https://gateway.pinata.cloud/ipfs/QmZaToXJXpncfHuKbpMpTo76eEdmDyJHCpmNN8s6RikQwj",
-                "logoURI": "https://gateway.pinata.cloud/ipfs/QmZaToXJXpncfHuKbpMpTo76eEdmDyJHCpmNN8s6RikQwj",
-                "priceUsd": 4.1938457333122114e-05,
-                "valueUsd": 144.68767779927128
-            }
-        },
-        {
-            "count": 87,
-            "wallet": "6rFNFt5wMwqefQm8xnwY7zDRhL7jAtwgUFR1NrwSYX57",
-            "amount": 1347741.264286,
-            "share_in_percent": 0.135,
-            "net_worth": 922584.3199583844,
-            "net_worth_excluding": 670532.1573883616,
-            "first_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 2331469376978,
-                "uiAmount": 2331.469376978,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 615798.7810488341
-            },
-            "second_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1347741264286,
-                "uiAmount": 1347741.264286,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 252052.1625700227
-            },
-            "third_top_holding": {
-                "address": "69kdRLyP5DTRkpHraaSZAQbWmAwzF9guKjZfzMXzcbAs",
-                "decimals": 6,
-                "balance": 12633025818469262,
-                "uiAmount": 12633025818.469261,
-                "chainId": "solana",
-                "name": "American Coin",
-                "symbol": "USA",
-                "icon": "https://bafkreib3qfqu5wpwltn5vnr7asnu6vnvvxqm2mrppntqfntoxtqjmypawu.ipfs.nftstorage.link",
-                "logoURI": "https://bafkreib3qfqu5wpwltn5vnr7asnu6vnvvxqm2mrppntqfntoxtqjmypawu.ipfs.nftstorage.link",
-                "priceUsd": 4.326198504846283e-06,
-                "valueUsd": 54652.97740754621
-            }
-        },
-        {
-            "count": 88,
-            "wallet": "5eh3ovhPWoo6JFzbfNGzQeBZh6FXfovEFCyFbrcdR6BW",
-            "amount": 1344951.881328,
-            "share_in_percent": 0.134,
-            "net_worth": 251936.84806437592,
-            "net_worth_excluding": 406.3509099865332,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1344951881328,
-                "uiAmount": 1344951.881328,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 251530.4971543894
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 1029615564,
-                "uiAmount": 1.029615564,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 271.9469599390285
-            },
-            "third_top_holding": {
-                "address": "FEpUaZVQAegxuApYReBGGd3sXeYzwpbzbm8BnZw8LCoF",
-                "decimals": 6,
-                "balance": 8560000,
-                "uiAmount": 8.56,
-                "chainId": "solana",
-                "name": "OFFICIAL TRUMP\u200b",
-                "symbol": "TRUMP\u200b",
-                "icon": "https://gateway.irys.xyz/XVbFlZbM4qy_qrlTCbtIAVopbJI82J9XXfgabiOl3pE",
-                "logoURI": "https://gateway.irys.xyz/XVbFlZbM4qy_qrlTCbtIAVopbJI82J9XXfgabiOl3pE",
-                "priceUsd": 3.890101417587764,
-                "valueUsd": 33.29926813455126
-            }
-        },
-        {
-            "count": 89,
-            "wallet": "Bmi9zf27MNN5pjCtyv2Y15TDQoYgcbcmPTxvEoQ6UwWs",
-            "amount": 1338484.695255,
-            "share_in_percent": 0.134,
-            "net_worth": 437986.2749462615,
-            "net_worth_excluding": 187665.25937312053,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1338484695255,
-                "uiAmount": 1338484.695255,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 250321.01557314096
-            },
-            "second_top_holding": {
-                "address": "Fxm6tJ2khHbLVcSgnYUqg9FiBduVRLEvdQR67dvQ3eGp",
-                "decimals": 6,
-                "balance": 4889387814595,
-                "uiAmount": 4889387.814595,
-                "chainId": "solana",
-                "name": "Naitzsche",
-                "symbol": "NAI",
-                "icon": "https://arweave.net/mpbwNqWiQsUhzIBCU9uvjetv-8XAI7ZaOrJvfGBq3FQ",
-                "logoURI": "https://arweave.net/mpbwNqWiQsUhzIBCU9uvjetv-8XAI7ZaOrJvfGBq3FQ",
-                "priceUsd": 0.0034827999780705785,
-                "valueUsd": 17028.75977345002
-            },
-            "third_top_holding": {
-                "address": "KENJSUYLASHUMfHyy5o4Hp2FdNqZg1AsUPhfH2kYvEP",
-                "decimals": 6,
-                "balance": 30000000000,
-                "uiAmount": 30000,
-                "chainId": "solana",
-                "name": "test griffain.com",
-                "symbol": "GRIFFAIN",
-                "icon": "https://griffain.com/logo.png",
-                "logoURI": "https://griffain.com/logo.png",
-                "priceUsd": 0.49271804963566757,
-                "valueUsd": 14781.541489070027
-            }
-        },
-        {
-            "count": 90,
-            "wallet": "8cLAbsDxJNYGsR3F3cLKyPTizBjFeBqLLApDrYFvYhwk",
-            "amount": 1335893.938991,
-            "share_in_percent": 0.134,
-            "net_worth": 520715.3734692727,
-            "net_worth_excluding": 270878.8765024378,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1335893938991,
-                "uiAmount": 1335893.938991,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 249836.49696683488
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 464381177764,
-                "uiAmount": 464.381177764,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 122654.56541391731
-            },
-            "third_top_holding": {
-                "address": "4q3Z58YxrZEAVMLtMwnm7eHtodSD3LSpSNt3pDnqpump",
-                "decimals": 6,
-                "balance": 1138424577849,
-                "uiAmount": 1138424.577849,
-                "chainId": "solana",
-                "name": "Kolin",
-                "symbol": "KOLIN",
-                "icon": "https://ipfs.io/ipfs/QmRy7h8JGCzkf7VKzY65LeDVieNHr1QrfTK7N7fffcw2DY",
-                "logoURI": "https://ipfs.io/ipfs/QmRy7h8JGCzkf7VKzY65LeDVieNHr1QrfTK7N7fffcw2DY",
-                "priceUsd": 0.023034441154242198,
-                "valueUsd": 26222.973947005805
-            }
-        },
-        {
-            "count": 91,
-            "wallet": "G1pRtSyKuWSjTqRDcazzKBDzqEF96i1xSURpiXj3yFcc",
-            "amount": 1335258.737055,
-            "share_in_percent": 0.134,
-            "net_worth": 720147.628224524,
-            "net_worth_excluding": 470429.9255885299,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1335258737055,
-                "uiAmount": 1335258.737055,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 249717.70263599404
-            },
-            "second_top_holding": {
-                "address": "Ey59PH7Z4BFU4HjyKnyMdWt5GGN76KazTAwQihoUXRnk",
-                "decimals": 9,
-                "balance": 3852784638079431,
-                "uiAmount": 3852784.638079431,
-                "chainId": "solana",
-                "name": "Ben Pasternak (clout.me)",
-                "symbol": "PASTERNAK",
-                "icon": "https://ipfs.io/ipfs/bafkreiaeanpnjbua4uuwy4zcrnq6yn4eegu3didqw7t6xmkcxta4zz7yku",
-                "logoURI": "https://ipfs.io/ipfs/bafkreiaeanpnjbua4uuwy4zcrnq6yn4eegu3didqw7t6xmkcxta4zz7yku",
-                "priceUsd": 0.03894776806855661,
-                "valueUsd": 150057.36250201552
-            },
-            "third_top_holding": {
-                "address": "5QS7RcHfGUa2ZtrovPvEJMB9coqroiT7H48dPSwFpump",
-                "decimals": 6,
-                "balance": 1998133535253,
-                "uiAmount": 1998133.535253,
-                "chainId": "solana",
-                "name": "Real AIOS Foundation",
-                "symbol": "AIOS",
-                "icon": "https://ipfs.io/ipfs/QmX1Ed8oxjL2DxUxAqU3mM7iHa1xGmFwkKCZgWBQZ6LUwr",
-                "logoURI": "https://ipfs.io/ipfs/QmX1Ed8oxjL2DxUxAqU3mM7iHa1xGmFwkKCZgWBQZ6LUwr",
-                "priceUsd": 0.06952817555665801,
-                "valueUsd": 138926.5792247163
-            }
-        },
-        {
-            "count": 92,
-            "wallet": "77DAgCSxhw6TuUnJGZKgiKtCeJMg8qxMd38hWvPV48VM",
-            "amount": 1320028.012238,
-            "share_in_percent": 0.132,
-            "net_worth": 247549.91255577086,
-            "net_worth_excluding": 680.6328547735466,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1320028012238,
-                "uiAmount": 1320028.012238,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 246869.27970099731
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 2416493978,
-                "uiAmount": 2.416493978,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 638.2558830745002
-            },
-            "third_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
-            }
-        },
-        {
-            "count": 93,
-            "wallet": "DWvAGkfeHTNd2SWkQh6LsaxEmR3TLn1VuxCZiyb1r98Z",
-            "amount": 1310629.808719,
-            "share_in_percent": 0.131,
-            "net_worth": 365605.99382711144,
-            "net_worth_excluding": 120494.34935181311,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1310629808719,
-                "uiAmount": 1310629.808719,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 245111.64447529832
-            },
-            "second_top_holding": {
-                "address": "FSTRgYfDaudjDwFg5A9LQpDMq5vxqhskHq4rkjUMwERE",
-                "decimals": 9,
-                "balance": 2232208680679306,
-                "uiAmount": 2232208.680679306,
-                "chainId": "solana",
-                "name": "FartStrategy",
-                "symbol": "FSTR",
-                "icon": "https://elasticbeanstalk-us-west-1-767828742319.s3.us-west-1.amazonaws.com/webclip.png",
-                "logoURI": "https://elasticbeanstalk-us-west-1-767828742319.s3.us-west-1.amazonaws.com/webclip.png",
-                "priceUsd": 0.032692692652159856,
-                "valueUsd": 72976.9123329318
-            },
-            "third_top_holding": {
-                "address": "2kGfWRgNp1QaxUMFCX9CMN78E1iCbgjBAZuQNUjWpump",
-                "decimals": 6,
-                "balance": 962834211414,
-                "uiAmount": 962834.211414,
-                "chainId": "solana",
-                "name": "SafeMoon",
-                "symbol": "SAFEMOON",
-                "icon": "https://ipfs.io/ipfs/QmTwRFgSTQiTsTPbsrX6XZe9p6ShnX7CSwe8hZxQHqKLHW",
-                "logoURI": "https://ipfs.io/ipfs/QmTwRFgSTQiTsTPbsrX6XZe9p6ShnX7CSwe8hZxQHqKLHW",
-                "priceUsd": 0.04148893517565949,
-                "valueUsd": 39946.96618226267
-            }
-        },
-        {
-            "count": 94,
-            "wallet": "86Z62CQXpzymrsTztHsvE9tHssroaF5CdvN3ArSSmes8",
-            "amount": 1298226.366547,
-            "share_in_percent": 0.13,
-            "net_worth": 256072.21261562323,
-            "net_worth_excluding": 13280.237727959815,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1298226366547,
-                "uiAmount": 1298226.366547,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 242791.9748876634
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 50007951756,
-                "uiAmount": 50.007951756,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 13208.338071336497
-            },
-            "third_top_holding": {
-                "address": "GopFvYooju11ys3CNdUiu5NF6V4Cf1BGD6NVPp8HNAjj",
-                "decimals": 6,
-                "balance": 108481147,
-                "uiAmount": 108.481147,
-                "chainId": "solana",
-                "name": "VINE",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "logoURI": "https://gateway.irys.xyz/rjmsBwWHcANXU2PcOKM6RNB7sON897UBEJ2I0hgOqxQ",
-                "priceUsd": 0.3004684601525441,
-                "valueUsd": 32.59516319467178
-            }
-        },
-        {
-            "count": 95,
-            "wallet": "G2j9xPk5wfuotEKPjidzGYn3GQDqSAcu3mWkRouzECVu",
-            "amount": 1263314.490688,
-            "share_in_percent": 0.126,
-            "net_worth": 1069642.2727798757,
-            "net_worth_excluding": 833379.4545210247,
-            "first_top_holding": {
-                "address": "eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump",
-                "decimals": 6,
-                "balance": 3002720261170,
-                "uiAmount": 3002720.26117,
-                "chainId": "solana",
-                "name": "Unicorn Fart Dust",
-                "symbol": "UFD",
-                "icon": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "logoURI": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "priceUsd": 0.1862405800874529,
-                "valueUsd": 559228.3632806488
-            },
-            "second_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1263314490688,
-                "uiAmount": 1263314.490688,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 236262.81825885092
-            },
-            "third_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 610805465957,
-                "uiAmount": 610.805465957,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 161328.84485140504
-            }
-        },
-        {
-            "count": 96,
-            "wallet": "BENwZLhv5fxBmKR13RGoTgbKWTRk64quYn9WQtxKLfBv",
-            "amount": 1235828.61446,
-            "share_in_percent": 0.124,
-            "net_worth": 259475.3824237765,
-            "net_worth_excluding": 28352.92361445952,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1235828614460,
-                "uiAmount": 1235828.61446,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 231122.45880931697
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 59247781641,
-                "uiAmount": 59.247781641,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 15648.805888098768
-            },
-            "third_top_holding": {
-                "address": "89q6aHpZ1fXhuwpnrBgqmCvuAX4GaCrRPQNp5xVHpump",
-                "decimals": 6,
-                "balance": 4643394136872,
-                "uiAmount": 4643394.136872,
-                "chainId": "solana",
-                "name": "hispanic pepe",
-                "symbol": "CONCHO",
-                "icon": "https://ipfs.io/ipfs/QmXUUwfsa8xusoybFRuiPssPhEsRRwjbbTdF4qKMuQrL3u",
-                "logoURI": "https://ipfs.io/ipfs/QmXUUwfsa8xusoybFRuiPssPhEsRRwjbbTdF4qKMuQrL3u",
-                "priceUsd": 0.0015323492406354143,
-                "valueUsd": 7115.301479606745
-            }
-        },
-        {
-            "count": 97,
-            "wallet": "8HKXHhDCq328ho1R1hGp64AhGvoqipHhoKbWnDrW4nwA",
-            "amount": 1231270.011807,
-            "share_in_percent": 0.123,
-            "net_worth": 230350.4181766471,
-            "net_worth_excluding": 80.50108838133747,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1231270011807,
-                "uiAmount": 1231270.011807,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 230269.91708826576
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 111423819,
-                "uiAmount": 0.111423819,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 29.42978904099643
-            },
-            "third_top_holding": {
-                "address": "AB3edFFEYXFTCJL5eUDANEiqJwKvSa9MvnXu1PwKqMDX",
-                "decimals": 6,
-                "balance": 5088000000,
-                "uiAmount": 5088,
-                "chainId": "solana",
-                "name": "Official Barron Meme",
-                "symbol": "BARRON",
-                "icon": "https://ipfs.io/ipfs/QmcufMnTwyAbFAjFhafDMp8f46ZQG3nEy3ic3XxP8xpNb1",
-                "logoURI": "https://ipfs.io/ipfs/QmcufMnTwyAbFAjFhafDMp8f46ZQG3nEy3ic3XxP8xpNb1",
-                "priceUsd": 0.06667997247488033,
-                "valueUsd": 29.389748454950755
-            }
-        },
-        {
-            "count": 98,
-            "wallet": "5biXpCfgxfUC9eHMhjUZoArCqRDuCvSiou3fMFonrrW9",
-            "amount": 1213220.766931,
-            "share_in_percent": 0.121,
-            "net_worth": 227008.9393775191,
-            "net_worth_excluding": 114.55980843870202,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1213220766931,
-                "uiAmount": 1213220.766931,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 226894.3795690804
-            },
-            "second_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 295910093,
-                "uiAmount": 0.295910093,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 264.1247563144145,
-                "valueUsd": 78.15718120460073
-            },
-            "third_top_holding": {
-                "address": "CtrHnS8rRxA6gYVbki5viHBARC2fkhx1SyXtS7nBbZu",
-                "decimals": 6,
-                "balance": 1399000000,
-                "uiAmount": 1399,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "logoURI": "https://gateway.irys.xyz/egQnkPVYtTl0ueS50LNk0WrEXWzOlMiJCssyRLDJ420",
-                "priceUsd": 0.2479739309490667,
-                "valueUsd": 33.48531550794141
-            }
-        },
-        {
-            "count": 99,
-            "wallet": "FBamVPK8VnFLYXsAuGJhk3FNS29bidn7RAc9mFCm9cRy",
-            "amount": 1196519.59473,
-            "share_in_percent": 0.12,
-            "net_worth": 239825.65749148157,
-            "net_worth_excluding": 16054.701299177075,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1196519594730,
-                "uiAmount": 1196519.59473,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 223770.9561923045
-            },
-            "second_top_holding": {
-                "address": "KENJSUYLASHUMfHyy5o4Hp2FdNqZg1AsUPhfH2kYvEP",
-                "decimals": 6,
-                "balance": 18700295325,
-                "uiAmount": 18700.295325,
-                "chainId": "solana",
-                "name": "test griffain.com",
-                "symbol": "GRIFFAIN",
-                "icon": "https://griffain.com/logo.png",
-                "logoURI": "https://griffain.com/logo.png",
-                "priceUsd": 0.49271804963566757,
-                "valueUsd": 9213.973040144992
-            },
-            "third_top_holding": {
-                "address": "EmBBhcqgm2acaXv9dXQFyDZDkhL4YMoWnGdHaMQJpump",
-                "decimals": 6,
-                "balance": 652626786909,
-                "uiAmount": 652626.786909,
-                "chainId": "solana",
-                "name": "Barron William Trump",
-                "symbol": "BWT",
-                "icon": "https://ipfs.io/ipfs/QmWXR1svYyS56aipCw54GG1absvkzqoQaGYVx2S9tuiXbs",
-                "logoURI": "https://ipfs.io/ipfs/QmWXR1svYyS56aipCw54GG1absvkzqoQaGYVx2S9tuiXbs",
-                "priceUsd": 0.008866186289948877,
-                "valueUsd": 5786.310670545963
-            }
-        },
-        {
-            "count": 100,
-            "wallet": "8HXnPf4gkM9QZ8WF2h8fvjag17vW2wx6pPTq8gaP5aJB",
-            "amount": 1190244.74,
-            "share_in_percent": 0.119,
-            "net_worth": 406987.2438879174,
-            "net_worth_excluding": 184389.79981282708,
-            "first_top_holding": {
-                "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
-                "decimals": 6,
-                "balance": 1190244740000,
-                "uiAmount": 1190244.74,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1870182128047802,
-                "valueUsd": 222597.4440750903
-            },
-            "second_top_holding": {
-                "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
-                "decimals": 6,
-                "balance": 184319715462,
-                "uiAmount": 184319.715462,
-                "chainId": "solana",
-                "name": "USDT",
-                "symbol": "USDT",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "priceUsd": 1.0000131526796745,
-                "valueUsd": 184322.13976017517
-            },
-            "third_top_holding": {
-                "address": "DuWryQqPsRmCB6XnQwm9rD83B4mbX6PoXrBN8MN2cKiN",
-                "decimals": 6,
-                "balance": 199000000,
-                "uiAmount": 199,
-                "chainId": "solana",
-                "name": "Vine Coin",
-                "symbol": "VINE",
-                "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.1999486553318934,
-                "valueUsd": 27.46412802403424
             }
         }
     ]

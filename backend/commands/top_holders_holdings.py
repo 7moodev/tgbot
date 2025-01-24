@@ -153,7 +153,7 @@ async def get_top_holders_holdings(
             'circulatingSupply': token_overview['circulatingSupply'],
             'realMc': token_overview['realMc'],
             'holder': token_overview['holder'],
-            'extentions': token_overview['extentions'],
+            'extensions': token_overview['extensions'],
             'priceChange1hPercent': token_overview['priceChange1hPercent'],
             'creationTime': token_creation_info['blockUnixTime'],
         }
@@ -172,7 +172,8 @@ async def get_top_holders_holdings(
         processed_holders = await asyncio.gather(*holder_tasks)
     
     # Combine results
-    
+    with open("backend/commands/outputs/top_holders_holdings.json", 'w') as f:
+        json.dump({"token_info": token_info, "items": processed_holders}, f, indent=4)
     return {"token_info": token_info,"items": processed_holders}
 
 

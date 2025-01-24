@@ -32,7 +32,7 @@ TOP_HOLDERS_TO_CONSIDER = 50
 semaphore = Semaphore(API_RATE_LIMIT_PER_SECOND)
 
 # Simulate whale data loading
-whales_file_path = "backend/commands/db/whales.json"
+whales_file_path = "backend/commands/constants/whales.json"
 with open(whales_file_path, 'r') as f:  
     whales = json.load(f)
     whales = set(whales)

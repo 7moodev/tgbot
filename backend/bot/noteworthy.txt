@@ -1,0 +1,26 @@
+Token: VINE (Vine Coin)
+├──💰 MC: $187\.4m
+├──💦 Liquidity: $17\.0m
+├──👥 Holders count: $103\.6k
+├──🔴 1H Change: -0.6801328921764213%
+
+18/0 Noteworthy Addresses:
+
+#2🐋 6EAa\.\.\.hGWj | 🔝Trader🥇 VINE: $4\.9m, 🥈 YAPSTER: $269\.8k, 🥉 DOGEAI: $185\.6k 
+#3🐋 ASTy\.\.\.iaJZ | 🥇 BAZAAR: $3318\.9m, 🥈 TRUMP: $78\.1m, 🥉 WTRUMP: $37\.7m 
+#5🐋 u6PJ\.\.\.Xq2w | 🥇 BAZAAR: $3352\.5m, 🥈 RUMPAI: $454\.6m, 🥉 TRUMP: $109\.1m 
+#7🐋 AfGi\.\.\.Bhrk | 🥇 VINE: $2\.8m, 🥈 SOL: $302\.5k, 🥉 VINE2\.0: $330 
+#8🐋 A77H\.\.\.4RiR | 🥇 TRUMP: $84\.6m, 🥈 SOL: $58\.2m, 🥉 RENDER: $25\.2m 
+#9🐋 6eBx\.\.\.CowS | 🥇 RUMPAI: $45\.5m, 🥈 VINE: $2\.3m, 🥉 SOL: $1\.0m 
+#10🐋 J9Hq\.\.\.rQeB | 🔝Trader🥇 RUMPAI: $4\.5m, 🥈 VINE: $2\.2m, 🥉 USA: $752\.2k 
+#11🐋 FAYf\.\.\.MAGY | 🥇 VINE: $2\.2m, 🥈 mcs: $65\.1k, 🥉 create: $60\.6k 
+#13🐋 6rg2\.\.\.BCqs | 🔝Trader🥇 MOBY: $2\.8m, 🥈 VINE: $2\.0m, 🥉 FSTR: $561\.2k 
+#14🐋 2Boc\.\.\.rejv | 🥇 VINE: $1\.9m, 🥈 SOL: $103\.2k, 🥉 VINE2\.0: $330 
+#15🐋 8quV\.\.\.ZJ1a | 🔝Trader🥇 VINE: $1\.7m, 🥈 SAFEMOON: $673\.2k, 🥉 SCHIZO: $654\.8k 
+#16🐋 3EqU\.\.\.rU3s | 🥇 VINE: $1\.6m, 🥈 mcs: $58\.4k, 🥉 50TRUMP: $9\.6k 
+#17🐋 CCMJ\.\.\.TdrM | 🥇 TRUMP: $1\.8m, 🥈 VINE: $1\.3m, 🥉 LIMBO: $763\.5k
+#20🐋 7UC3\.\.\.E1qk | 🥇 VINE: $877\.8k, 🥈 SOL: $344\.8k, 🥉 VINE: $30 
+#21🐋 HpJ6\.\.\.gpoY | 🔝Trader🥇 TRUMP: $1\.3m, 🥈 VINE: $876\.1k, 🥉 ALCH: $857\.1k 
+#22🐋 GGeE\.\.\.eQt7 | 🔝Trader🥇 STNK: $872\.2k, 🥈 VINE: $863\.9k, 🥉 SOL: $235 
+#23🐋 65qG\.\.\.mEC5 | 🔝Trader🥇 USDC: $2\.1m, 🥈 VINE: $831\.0k, 🥉 STONKS: $17\.6k 
+#24🐋 3MnD\.\.\.tzB8 | 🥇 VINE: $731\.5k, 🥈 swarms: $494\.7k, 🥉 BUZZ: $387\.0k

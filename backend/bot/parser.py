@@ -1,7 +1,8 @@
-from .tg_format_test import send_message
+# from .tg_format_test import send_message
 from ..commands.top_holders_holdings import get_top_holders_holdings
 from ..commands.holding_distribution import get_holding_distribution 
 from ..commands.fresh_wallets import fresh_wallets
+from ..commands.noteworthy_addresses import get_noteworthy_addresses
 import time
 import asyncio
 import json
@@ -212,6 +213,92 @@ def fresh_wallets_parsed(token, limit):
     
     # Combine the message parts into a single string
     msg =  ''.join(message_parts)
+
+def noteworthy_addresses_parsed(token, limit):
+    """
+    Parses and formats the data for MarkdownV2 compatibility, returning an array of strings with each
+    string having a maximum of 4096 characters.
+    """
+    data = asyncio.run(get_noteworthy_addresses(token, limit))
+    token_info = data['token_info']
+    items = data['items']
+
+    # Escape token info for MarkdownV2
+    token_symbol = escape_markdown(token_info['symbol'])
+    token_name = escape_markdown(token_info['name'])
+    market_cap = format_number(token_info['market_cap'])
+    liquidity = format_number(token_info['liquidity'])
+    holder = format_number(token_info['holder'])
+    priceChange1hPercent = (token_info['priceChange1hPercent'])
+    if priceChange1hPercent > 0:
+        change = f"├──🟢 1H Change: {priceChange1hPercent}%\n\n"
+    else:
+        change = f"├──🔴 1H Change: {priceChange1hPercent}%\n\n"
+    # Create the message header
+    message_parts = [
+        f"**Token**: {token_symbol} ({token_name})\n",
+        f"├──💰 MC: {market_cap}\n",
+        f"├──💦 Liquidity: {liquidity}\n",
+        f"├──👥 Holders count: {holder}\n",
+        change,
+        f"**{data['valid_results']}/{limit} Noteworthy Addresses**:\n\n"
+    ]
+
+    chunks = []  # To store the resulting chunks
+    current_chunk = "".join(message_parts)  # Start with the header
+
+    for item in items:
+        if 'error' in item:
+            continue
+
+        wallet = item['wallet']
+        short_wallet = escape_markdown(shorten_address(wallet))
+        addy = escape_markdown(f"https://solscan.io/account/{wallet}")
+        networth_excl = format_number(item['net_worth_excluding'])
+
+        # Build the individual message for the wallet
+        message = f"#{item['count']}🐋 [{short_wallet}]({addy}) | "
+
+        top_trader = item.get('top_trader', {})
+        if top_trader:
+            message += f"🔝Trader"
+
+        # Add holdings information
+        if 'first_top_holding' in item:
+            top1 = item['first_top_holding']
+            top1_symbol = escape_markdown(top1['symbol'])
+            top1_address = escape_markdown(top1['address'])
+            top1_value = format_number(top1['valueUsd'])
+            message += f"🥇 [{top1_symbol}]({top1_address}): {top1_value}, "
+
+        if 'second_top_holding' in item:
+            top2 = item['second_top_holding']
+            top2_symbol = escape_markdown(top2['symbol'])
+            top2_address = escape_markdown(top2['address'])
+            top2_value = format_number(top2['valueUsd'])
+            message += f"🥈 [{top2_symbol}]({top2_address}): {top2_value}, "
+
+        if 'third_top_holding' in item:
+            top3 = item['third_top_holding']
+            top3_symbol = escape_markdown(top3['symbol'])
+            top3_address = escape_markdown(top3['address'])
+            top3_value = format_number(top3['valueUsd'])
+            message += f"🥉 [{top3_symbol}]({top3_address}): {top3_value}"
+
+        # Add the wallet message to the chunk or create a new chunk if needed
+        if len(current_chunk) + len(message) + 2 > 4096:  # +2 for the newline
+            chunks.append(current_chunk)
+            current_chunk = message + " \n"
+        else:
+            current_chunk += message + " \n"
+
+    # Append the last chunk if it contains data
+    if current_chunk:
+        chunks.append(current_chunk)
+
+    return chunks
+
+
 if __name__ == "__main__":
     # print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))
     token_info = '{"symbol": "OBOT", "name": "OBOT", "logoURI": "https://ipfs.io/ipfs/QmeeSqjjrpQ5ht5uc21uG3j3PdVM46CkfTXUCyt23vs462", "liquidity": 1042030.2735918732, "market_cap": 8623704.06309531}'
@@ -340,7 +427,7 @@ if __name__ == "__main__":
 
 # Initialize the bot
     message = asyncio.run(top_holders_holdings_parsed('www',20))
-    asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
+    #asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
 
 # Send a message to the user
      #array_of_objects = ast.literal_eval(toparse)

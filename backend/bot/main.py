@@ -4,7 +4,9 @@ import telebot
 from .log import log_entry
 from backend.commands.holding_distribution import get_holding_distribution
 from backend.commands.top_holders_holdings import get_top_holders_holdings
-from .parser import top_holders_holdings_parsed, fresh_wallets_parsed, holder_distribution_parsed
+from backend.commands.noteworthy_addresses import get_noteworthy_addresses
+
+from .parser import top_holders_holdings_parsed, fresh_wallets_parsed, holder_distribution_parsed, noteworthy_addresses_parsed
 from telegram.constants import ParseMode
 import asyncio
 from PIL import Image, UnidentifiedImageError
@@ -101,7 +103,9 @@ def handle_help(message):
                           "/top_holders_avg\n" +
                           "/top_traders\n" +
                           "/whales_or_kols\n" +
-                          "/token_dist")
+                          "/token_dist\n" +
+                          "/holders_age\n" +
+                          "/noteworthy_addresses\n") 
 #/top_holders
 def handle_top_holders(message):
     """
@@ -144,6 +148,13 @@ def handle_holders_age(message):
     """
     bot.reply_to(message, "Please provide the token address to analyze holder wallet ages:")
     user_states[message.chat.id] = {"state": STATE_WAITING_FOR_TOKEN, "command": "holders_age"}
+#/noteworthy_addresses
+def handle_noteworthy_addresses(message):
+    """
+    Handle the /noteworthy_addresses command.
+    """
+    bot.reply_to(message, "Please provide the token address to fetch noteworthy addresses:")
+    user_states[message.chat.id] = {"state": STATE_WAITING_FOR_TOKEN, "command": "noteworthy_addresses"}
 
 # Handle token response
 def handle_token_response(message):
@@ -190,6 +201,15 @@ def handle_token_response(message):
                 if sticker:
                     bot.send_sticker(message.chat.id, sticker)
                 user_states.pop(message.chat.id, None)
+        case "noteworthy_addresses":
+            # Get noteworthy addresses
+            if 32>len(token_address)>44:
+                bot.reply_to(message, "Invalid token address. Please provide a valid Solana token address.")
+            else:
+                replies = noteworthy_addresses_parsed(token_address, 0)
+                for reply in replies:
+                    bot.reply_to(message, reply, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+                user_states.pop(message.chat.id, None)
         case _:
             bot.reply_to(message, "still in development")
             user_states.pop(message.chat.id, None)
@@ -208,6 +228,7 @@ command_handlers = {
     "whales_or_kols": handle_whales_or_kols,
     "token_dist": handle_token_dist,
     "holders_age": handle_holders_age,
+    "noteworthy_addresses": handle_noteworthy_addresses,
 }
 
 @bot.message_handler(commands=list(command_handlers.keys()))

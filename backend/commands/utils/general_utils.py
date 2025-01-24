@@ -71,7 +71,7 @@ def timing_decorator(func):
 
 
 
-async def get_top_traders(type:str = '1W', limit:int = 20):
+async def get_top_traders(type:str = '1W', limit:int = 10000):
     # Costs 30 per call
     print(f"Getting top {limit} for {type}")
     # if(limit == 0): #for testing

@@ -18,6 +18,9 @@ from typing import List, Dict, Any
 
 
 async def get_noteworthy_addresses(token: str, limit: int=None):
+    if limit == 0:
+        with open ("backend/commands/outputs/noteworthy_addresses.json", 'r') as f:
+            return json.load(f)
     top_traders = await get_top_traders(type='1W', limit = limit) #to change to 10k
     res = []
     if limit == 0:
@@ -42,6 +45,12 @@ async def get_noteworthy_addresses(token: str, limit: int=None):
                         appended['top_trader'] = stats
                         break
     #         
+    with open("backend/commands/outputs/noteworthy_addresses.json", 'w') as f:  
+        json.dump({
+            'token_info': top_holders_holdings['token_info'],
+            'valid_results': len(res),
+            'items': res
+        }, f, indent=4)
     return {
         'token_info': top_holders_holdings['token_info'],
         'valid_results': len(res),
