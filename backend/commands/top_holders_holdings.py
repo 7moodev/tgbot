@@ -1,7 +1,7 @@
 import os
 import asyncio
 import httpx
-from .utils.token_utils import get_token_supply, get_token_overview, get_top_holders
+from .utils.token_utils import get_token_supply, get_token_overview, get_top_holders, get_token_creation_info
 from .utils.wallet_utils import get_wallet_age
 import time
 from aiohttp import ClientSession, ClientError
@@ -137,17 +137,25 @@ async def get_top_holders_holdings(
     # These functions are assumed to be defined elsewhere in your code
     total_supply = await get_token_supply(token)
     top_holders = await get_top_holders(token, limit)
-    
+    token_creation_info = await get_token_creation_info(token)
     # Fetch token overview
     token_overview = await get_token_overview(token)
     if token_overview:
         token_overview = token_overview['data']
         token_info = {
+            'price': token_overview['price'],
             'symbol': token_overview['symbol'],
             'name': token_overview['name'],
             'logoURI': token_overview['logoURI'],
             'liquidity': token_overview['liquidity'],
             'market_cap': token_overview['mc'],
+            'supply': token_overview['supply'],
+            'circulatingSupply': token_overview['circulatingSupply'],
+            'realMc': token_overview['realMc'],
+            'holder': token_overview['holder'],
+            'extentions': token_overview['extentions'],
+            'priceChange1hPercent': token_overview['priceChange1hPercent'],
+            'creationTime': token_creation_info['blockUnixTime'],
         }
     else:
         token_info = {}
@@ -209,7 +217,7 @@ def shorten_address(address: str, length: int = 4) -> str:
 #     #print(shorten_address("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"))
 if __name__ == "__main__":
     timenow = float(time.time())
-    holders = asyncio.run(get_top_holders_holdings("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",30))
+    holders = asyncio.run(get_top_holders_holdings("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",100))
     print(holders)
     #print(format_message(holders[0], holders[1]))
     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
