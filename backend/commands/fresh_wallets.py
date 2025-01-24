@@ -1,77 +1,68 @@
 import json
-import requests
 import time
-from .utils.wallet_utils import get_wallet_age, get_wallet_age_readable
-from .utils.token_utils import get_top_holders, get_token_overview
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+from .utils.wallet_utils import get_wallet_age, get_wallet_age_readable
+from .utils.token_utils import get_top_holders, get_token_overview
+executor = ThreadPoolExecutor(max_workers=50)
 
-# Set up the ThreadPoolExecutor
-executor = ThreadPoolExecutor(max_workers=10)
-
-# Helper function to run blocking functions in threads
 async def run_blocking_fn(func, *args):
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(executor, func, *args)
 
 
 async def fresh_wallets(token: str, limit: int):
-    count = 0
     """
-    Fetch info regarding top holders of a token, in regards to the age of each wallet.
+    Fetch info regarding top holders of a token, including the age of each wallet.
     """
-    holders = await get_top_holders(token, limit)
-    res = []
+    top_holders_task = asyncio.create_task(get_top_holders(token, limit))
+    token_overview_task = asyncio.create_task(get_token_overview(token))
+    holders, token_overview = await asyncio.gather(top_holders_task, token_overview_task)
 
-    # Creating a list of tasks for fetching wallet data concurrently
-    tasks = []
-    for holder in holders:
-        count += 1
-        wallet = holder['owner']
-        tasks.append(
-             fetch_wallet_info(count,wallet)
-        )
-    # Await all tasks and collect results
-    res = await asyncio.gather(*tasks)
-    token_overview = await get_token_overview(token)
+
+    tasks = [
+        asyncio.create_task(fetch_wallet_info(index + 1, holder['owner']))
+        for index, holder in enumerate(holders)
+    ]
+    wallet_results = await asyncio.gather(*tasks)
+
+
     if token_overview:
         token_overview = token_overview['data']
-        symbol = token_overview['symbol']
-        name = token_overview['name']
-        logo_url = token_overview['logoURI']
-        liquidity = token_overview['liquidity']
-        market_cap = token_overview['mc']
-        #more info about the token
+        token_info = {
+            'symbol': token_overview['symbol'],
+            'name': token_overview['name'],
+            'logoURI': token_overview['logoURI'],
+            'liquidity': token_overview['liquidity'],
+            'market_cap': token_overview['mc'],
+        }
     else:
-        token_overview = None
-    token_info = {
-        'symbol': symbol,
-        'name': name,
-        'logoURI': logo_url,
-        'liquidity': liquidity,
-        'market_cap': market_cap,
-    }
-    return token_info, res
+        token_info = None
 
-async def fetch_wallet_info(count,wallet: str):
+    return {"token_info": token_info, "items": wallet_results}
+
+
+async def fetch_wallet_info(count: int, wallet: str):
     """
     Fetches wallet age and returns the data.
-    This function will run in a separate thread for each wallet to avoid blocking.
     """
+    age = await get_wallet_age(wallet)
+    age_readable = await run_blocking_fn(get_wallet_age_readable, wallet, age)
 
-    age = await run_blocking_fn(get_wallet_age, wallet)
-    age_readable = (get_wallet_age_readable(wallet,age))
-    
     return {
         'count': count,
         'wallet': wallet,
         'age': age,
-        'age_readable': age_readable
+        'age_readable': age_readable,
     }
+
 
 if __name__ == "__main__":
     start_time = time.time()
     token = "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"
-    limit = 100
-    print(asyncio.run(fresh_wallets(token, limit)))
+    limit = 50
+    result = asyncio.run(fresh_wallets(token, limit))
+    with open("backend/commands/outputs/fresh_wallets.json", "w") as f:
+        f.write(json.dumps(result, indent=4))
+    print(json.dumps(result, indent=4))
     print("Execution time:", time.time() - start_time)

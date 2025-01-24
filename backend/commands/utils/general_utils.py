@@ -7,16 +7,48 @@ import random
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from aiohttp import ClientSession, ClientError
+from .token_utils import get_top_holders
+from .wallet_utils import get_balance
 import math
 import aiohttp
 import json
 import ast
 
-
 heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
-heliusrpc1 = os.environ.get('heliusrpc')
+heliusrpc1 = os.environ.get('heliusrpc1')
 birdeyeapi = os.environ.get('birdeyeapi')
+
+# List of available RPCs
+rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
+
+# Variable to store the last used RPC
+last_rpc = None
+
+def get_rpc():
+    global last_rpc
+
+    # Filter out the last used RPC
+    available_rpcs = [rpc for rpc in rpc_list if rpc != last_rpc]
+
+    # Randomly select from available RPCs
+    selected_rpc = random.choice(available_rpcs)
+    
+    # Update the last used RPC
+    last_rpc = selected_rpc
+
+    # Identify which RPC was selected
+    if selected_rpc == heliusrpc:
+        print("Using heliusrpc")
+    elif selected_rpc == heliusrpc1:
+        print("Using heliusrpc1")
+    else:
+        print("Using quicknoderpc")
+
+    return selected_rpc
+
+
+
 def timing_decorator(func):
     # Track recursion depth to create indented output for nested calls
     timing_decorator.level = getattr(timing_decorator, 'level', 0)
@@ -37,18 +69,6 @@ def timing_decorator(func):
         return result
     return wrapper
 
-def get_rpc():
-    Random = random.randint(0, 2)
-    if Random == 0:
-        print("Using heliusrpc")
-        return heliusrpc
-    elif Random == 1:  
-        print("Using heliusrpc1")
-        return heliusrpc1
-    else:
-        print("Using quicknoderpc")
-        return quicknoderpc
-        
 
 
 async def get_top_traders(type:str = '1W', limit:int = 20):
@@ -108,28 +128,55 @@ async def get_top_traders(type:str = '1W', limit:int = 20):
 
 
 
-async def get_token_largest_accounts(token_mint_address):
-    url = "https://api.mainnet-beta.solana.com"
-    headers = {"Content-Type": "application/json"}
-    data = {
-        "jsonrpc": "2.0",
-        "id": 1,
-        "method": "getTokenAccountsByOwner",
-        "params": [
-            token_mint_address
-        ]
-    }
-
-    response = requests.post(url, headers=headers, data=json.dumps(data))
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Error: Failed to fetch data with status code {response.status_code}")
-        return None
 
 
+async def get_whales():
+    """
+    function that gets updated every x hours / days to fetch the top holders of sol, msol, usdc or usdt (whales)
+    """
+    with open('backend/constants/whales.json', 'r') as f:
+        whales = json.load(f)
+        if ('timestamp' in whales and int(time.time()) - whales['timestamp'] < 7 * 24 * 60 * 60):
+            if 'items' in whales:
+                print("Returning cached data from 'whales.json'.")
+                return set(whales['items'])
+        else:
+            print("Fetching new data for 'whales.json'.")
+    whales = set()
+    sol = "So11111111111111111111111111111111111111112"
+    usdc = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+    usdt = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"
+    msol = "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So"
+    tokens = [sol, usdc, usdt, msol]
+    sol_last_holder_balance = 0
+    msol_last_holder_balance = 0
+    usdc_last_holder_balance = 0
+    usdt_last_holder_balance = 0
+    for token in tokens:
+        holders = await get_top_holders(token, 50)
+        for index, holder in enumerate(holders):
+            if index == len(holders) - 1:
+                if token == sol:
+                    print("ticker is sol, getting balance")
+                    sol_last_holder_balance = await get_balance(holder['owner'], token)
+                    print("sol_last_holder_balance", sol_last_holder_balance)
+                elif token == msol:
+                    msol_last_holder_balance = await get_balance(holder['owner'], token)
+                elif token == usdc:
+                    usdc_last_holder_balance = await get_balance(holder['owner'], token)
+                elif token == usdt:
+                    usdt_last_holder_balance = await get_balance(holder['owner'], token,)
+            whales.add(holder['owner'])
+    try:
+        with open('backend/constants/whales.json', 'w') as f:
+            json.dump({'timestamp': int(time.time()), sol: sol_last_holder_balance, msol: msol_last_holder_balance, usdc: usdc_last_holder_balance, usdt: usdt_last_holder_balance,
+                       'items': list(whales)}, f, indent=4)
+        print("Saved top holders to 'whales.json'.")
+    except Exception as e:
+        print(f"Error saving to 'whales.json': {e}")
+    return whales
+        
 
 if __name__ == '__main__':
     # Test the timing_decorator
-    #print(asyncio.run(get_top_traders(limit = 1000)))
-    print(asyncio.run(get_token_largest_accounts("8ghZ1x6QCMzabdvze7ycXU83Jg13PFopSTii3vZEpump")))
+   asyncio.run(get_whales())

@@ -1,11 +1,11 @@
 [
     {
-        "amount": "36387393523558",
+        "amount": "29137153549240",
         "decimals": 6,
         "mint": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
         "owner": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",
         "token_account": "6q65PT9hy9mrzWak9s7Vk5GXbRKx7ZDAj9GZyCTbyQnn",
-        "ui_amount": 36387393.523558
+        "ui_amount": 29137153.54924
     },
     {
         "amount": "16753474798214",
@@ -128,6 +128,14 @@
         "ui_amount": 9421547
     },
     {
+        "amount": "9296407397073",
+        "decimals": 6,
+        "mint": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
+        "owner": "ENWE4HcjzWfQXvb2vfsyqcqW9YvaXqfcEYQQyB6oG28b",
+        "token_account": "Bxkthp6GJbtty2gVVTq8Kard94rofA2PxtEJ76oN7aQo",
+        "ui_amount": 9296407.397073
+    },
+    {
         "amount": "9245120000000",
         "decimals": 6,
         "mint": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
@@ -174,14 +182,6 @@
         "owner": "5gUk3RHdW6pbJaVRh3JQfZ2bqvT9bnnM5cHEfbaxYzKd",
         "token_account": "A29ZYwYwrqECJ4pxecnQoHore3SuGCXfmrKAsJVWAWoh",
         "ui_amount": 8794545
-    },
-    {
-        "amount": "8768717496428",
-        "decimals": 6,
-        "mint": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
-        "owner": "ENWE4HcjzWfQXvb2vfsyqcqW9YvaXqfcEYQQyB6oG28b",
-        "token_account": "Bxkthp6GJbtty2gVVTq8Kard94rofA2PxtEJ76oN7aQo",
-        "ui_amount": 8768717.496428
     },
     {
         "amount": "8678987000000",
@@ -312,6 +312,14 @@
         "ui_amount": 7387391.986515
     },
     {
+        "amount": "7238278715108",
+        "decimals": 6,
+        "mint": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
+        "owner": "HUddtYB3iJKW57AaRqZa4JpJ15Tm7rbYqJJwGttneDWz",
+        "token_account": "5LLGthJFUyjK83j5hDTT5vDei9sg3PBRaUPZhfUR5QTw",
+        "ui_amount": 7238278.715108
+    },
+    {
         "amount": "7137620672771",
         "decimals": 6,
         "mint": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
@@ -390,13 +398,5 @@
         "owner": "EhfSrnJ8Bg2rxve3Jy7kMAnoCnL5jwMUTSjBiNwbfuEM",
         "token_account": "3cTT8pQLjZhdvKirvS39EAkKH5Vqeb71wKG2RN5PkVPP",
         "ui_amount": 6457854
-    },
-    {
-        "amount": "6200000000000",
-        "decimals": 6,
-        "mint": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
-        "owner": "8VaymtBZtrgT9cqtwQLh6c2rAksxntHQ6T5APWGPAY3Z",
-        "token_account": "8yjY1hZ79FwRiyFTnoDg5M3n4i52TT4UFt2oRKnSk5vS",
-        "ui_amount": 6200000
     }
 ]

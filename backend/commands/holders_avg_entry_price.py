@@ -64,12 +64,12 @@ async def get_holders_avg_entry_price(token: str, limit:int):
             else:
                 res.append({'holder': holder_address,'label': 'Funded', 'avg_raw_entry_price': avg_raw_entry_price, 'avg_raw_exit_price': avg_raw_exit_price, 'avg_actual_holding_price': avg_actual_holding_price})
     print(f"Returning {counted} holders with valid avg entry prices")
-    return [token_info,(agg_avg_price/counted), res]
+    return {"token_info": token_info,"agg_avg": (agg_avg_price/counted), "items": res}
 
 if __name__ == "__main__":
     start_time = time.time()
-    res = asyncio.run(get_holders_avg_entry_price("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 50))
+    res = asyncio.run(get_holders_avg_entry_price("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump", 50))
     #Execution time: 9.242473602294922 seconds for 50 holders
     print(f"Execution time: {time.time() - start_time} seconds")
-    with open("wtf1.json", 'w') as f:  
+    with open("backend/commands/outputs/holders_avg_entry_price.json", 'w') as f:  
         json.dump(res, f, indent=4)

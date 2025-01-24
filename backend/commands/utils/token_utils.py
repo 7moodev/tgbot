@@ -1,15 +1,43 @@
 import os
 import requests
 import time
-from .general_utils import get_rpc
 import asyncio
 import json
-birdeyeapi = os.environ.get('birdeyeapi')
+import random
+
 heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
-solscanapi = os.environ.get('solscan')
+heliusrpc1 = os.environ.get('heliusrpc1')
+birdeyeapi = os.environ.get('birdeyeapi')
 
+# List of available RPCs
+rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
 
+# Variable to store the last used RPC
+last_rpc = None
+
+def get_rpc():
+    global last_rpc
+
+    # Filter out the last used RPC
+    available_rpcs = [rpc for rpc in rpc_list if rpc != last_rpc]
+
+    # Randomly select from available RPCs
+    selected_rpc = random.choice(available_rpcs)
+    
+    # Update the last used RPC
+    last_rpc = selected_rpc
+
+    # Identify which RPC was selected
+    if selected_rpc == heliusrpc:
+        print("Using heliusrpc")
+    elif selected_rpc == heliusrpc1:
+        print("Using heliusrpc1")
+    else:
+        print("Using quicknoderpc")
+
+    return selected_rpc
+        
 async def get_token_overview(token:str=None):
     print("Getting token overview for", token)
     """
@@ -42,6 +70,7 @@ async def get_token_supply(token:str=None):
         "params": [token],
         "id": 1
     }
+
     response = requests.post(get_rpc(), headers=headers, json=data)
     if response.status_code != 200:
         return None

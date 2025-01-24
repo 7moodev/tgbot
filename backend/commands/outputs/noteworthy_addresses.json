@@ -1,0 +1,133 @@
+{
+    "token_info": {
+        "symbol": "VINE",
+        "name": "Vine Coin",
+        "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+        "liquidity": 15640427.764018541,
+        "market_cap": 176153914.16173473,
+        "supply": 999993091.959449,
+        "circulatingSupply": 999993091.959449,
+        "realMc": 176153914.16173473,
+        "holder": 102629,
+        "creationTime": 1737591431
+    },
+    "valid_results": 2,
+    "items": [
+        {
+            "holderIdx": 2,
+            "type": 0,
+            "address": {
+                "amount": "26131144360784",
+                "decimals": 6,
+                "mint": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
+                "owner": "6EAaPqnwT54YnYfCRyupN8rK25i2hbguBFcbfVQ8hGWj",
+                "token_account": "C2vKAVRgWMb88b9KRqXoEajmLomf5XE4XswexgujvEGq",
+                "ui_amount": 26131144.360784
+            },
+            "portfolio": {
+                "wallet": "6EAaPqnwT54YnYfCRyupN8rK25i2hbguBFcbfVQ8hGWj",
+                "net_worth": 5155728.756393504,
+                "net_worth_excluding": 532895.1974836811,
+                "first_top_holding": {
+                    "address": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
+                    "decimals": 6,
+                    "balance": 26131144360784,
+                    "uiAmount": 26131144.360784,
+                    "chainId": "solana",
+                    "name": "Vine Coin",
+                    "symbol": "VINE",
+                    "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+                    "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+                    "priceUsd": 0.1769089594808364,
+                    "valueUsd": 4622833.558909823
+                },
+                "second_top_holding": {
+                    "address": "8CzPPqenpfRXvjE5DHfE3kMDgJhHwWZ1WXRzs44KsamW",
+                    "decimals": 9,
+                    "balance": 7781927715232455,
+                    "uiAmount": 7781927.715232455,
+                    "chainId": "solana",
+                    "name": "YAPSTER",
+                    "symbol": "YAPSTER",
+                    "icon": "https://yap-prod-app.s3.us-east-1.amazonaws.com/a5b4ef69-4de0-4a8b-a1b0-c8f34ddb52e0.png",
+                    "logoURI": "https://yap-prod-app.s3.us-east-1.amazonaws.com/a5b4ef69-4de0-4a8b-a1b0-c8f34ddb52e0.png",
+                    "priceUsd": 0.030542105850714516,
+                    "valueUsd": 237676.46000123862
+                },
+                "third_top_holding": {
+                    "address": "9UYAYvVS2cZ3BndbsoG1ScJbjfwyEPGxjE79hh5ipump",
+                    "decimals": 6,
+                    "balance": 2759793027093,
+                    "uiAmount": 2759793.027093,
+                    "chainId": "solana",
+                    "name": "DOGE AI",
+                    "symbol": "DOGEAI",
+                    "icon": "https://ipfs.io/ipfs/QmZYw9kKFfRUfgmA78tNfnHhKHbfRzYEgF4tDgk2FwCpgr",
+                    "logoURI": "https://ipfs.io/ipfs/QmZYw9kKFfRUfgmA78tNfnHhKHbfRzYEgF4tDgk2FwCpgr",
+                    "priceUsd": 0.06104803673211256,
+                    "valueUsd": 168479.94609100156
+                },
+                "amount": 26131144.360784,
+                "share_in_percent": 2.61313248770359
+            }
+        },
+        {
+            "holderIdx": 3,
+            "type": 0,
+            "address": {
+                "amount": "23531026080356",
+                "decimals": 6,
+                "mint": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",
+                "owner": "ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ",
+                "token_account": "6kyCm1HTsUejhUAfEAqWtmxpu6Js4kpPZEmc2RWY9EPZ",
+                "ui_amount": 23531026.080356
+            },
+            "portfolio": {
+                "wallet": "ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ",
+                "net_worth": 3845548943.5414395,
+                "net_worth_excluding": 3841381996.395547,
+                "first_top_holding": {
+                    "address": "EVkLgtFuVEzqk2ZmJ7pc4TDBi5CGVAsVGqqjuAxGMpSh",
+                    "decimals": 5,
+                    "balance": 10457200000,
+                    "uiAmount": 104572,
+                    "chainId": "solana",
+                    "name": "Harper's Bazaar",
+                    "symbol": "BAZAAR",
+                    "icon": "https://gateway.irys.xyz/uqkpY0iyIYhgHb2zhev4siwEITVSo5T8RWVQ7LxAQ5I",
+                    "logoURI": "https://gateway.irys.xyz/uqkpY0iyIYhgHb2zhev4siwEITVSo5T8RWVQ7LxAQ5I",
+                    "priceUsd": 31737.619867706868,
+                    "valueUsd": 3318866384.8058424
+                },
+                "second_top_holding": {
+                    "address": "DBqE5JUMpPbLZxnnS1nYgXwwXEHpp8ZppZ8hyRB1CjhS",
+                    "decimals": 9,
+                    "balance": 1000000000000000,
+                    "uiAmount": 1000000,
+                    "chainId": "solana",
+                    "name": "Timothy Donald Cook",
+                    "symbol": "Cook",
+                    "icon": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
+                    "logoURI": "https://gateway.irys.xyz/l5XzBb2SlcLv_gflXUE6d7RLspY93tLoR4VMRL8bLwg",
+                    "priceUsd": 256.1724109366234,
+                    "valueUsd": 256172410.9366234
+                },
+                "third_top_holding": {
+                    "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
+                    "decimals": 6,
+                    "balance": 2436174965379,
+                    "uiAmount": 2436174.965379,
+                    "chainId": "solana",
+                    "name": "OFFICIAL TRUMP",
+                    "symbol": "TRUMP",
+                    "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                    "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
+                    "priceUsd": 32.220130678182784,
+                    "valueUsd": 78493875.7394288
+                },
+                "amount": 23531026.080356,
+                "share_in_percent": 2.3531188634761304
+            }
+        }
+    ]
+}
