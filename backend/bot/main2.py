@@ -3,7 +3,7 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboard
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .tg_commands import *
 import os 
-from .parser import top_holders_holdings_parsed, holder_distribution_parsed
+from .parser import top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
 
 TOKEN= os.environ.get('tgTOKEN')
 BOT_USERNAME= os.environ.get('tgNAME')  
@@ -90,7 +90,11 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
         holder_message = await holder_distribution_parsed(token_address)
 
     print(holder_message)
-    await update.message.reply_text(holder_message, parse_mode='MarkdownV2', disable_web_page_preview=True)
+    if type(holder_message) == list:
+        for parts in holder_message:
+            await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+    else:
+      await update.message.reply_text(holder_message, parse_mode='MarkdownV2', disable_web_page_preview=True)
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
