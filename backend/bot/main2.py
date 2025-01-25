@@ -94,7 +94,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
-    await update.message.reply_text("Something went wrong, please contact support.", parse_mode='MarkdownV2')
+    await update.message.reply_text("Something went wrong, please contact support.")
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:   
     response = '''/top - top [contract adress] to get list of topholders
