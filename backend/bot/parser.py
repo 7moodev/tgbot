@@ -359,6 +359,8 @@ async def noteworthy_addresses_parsed(token, limit):
    
     if running:
         data = await(get_noteworthy_addresses(token, limit))
+        token_info = data['token_info']
+        items = data['items']
 
     else:
         print ('parsing from json')

@@ -1,22 +1,22 @@
 {
     "token_info": {
-        "price": 0.012310894927868918,
+        "price": 0.012452782230777415,
         "symbol": "Mizuki",
         "name": "Mizuki",
         "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
         "liquidity": 803851.2610830205,
-        "market_cap": 12310810.602217594,
+        "market_cap": 12452696.933243925,
         "supply": 999993150.323204,
         "circulatingSupply": 999993150.323204,
-        "realMc": 12310810.602217594,
-        "holder": 6683,
+        "realMc": 12452696.933243925,
+        "holder": 6681,
         "extensions": {
             "coingeckoId": "mizuki",
             "description": "The AI agent revolves around the AI agent\u2019s role as a whistleblower in the Web3 space, exposing \"larp\" AI agents (those pretending to have advanced capabilities without delivering) and highlighting companies that fail to implement proper security protocols. This narrative captured the attention of the community by resonating with widespread concerns about authenticity, security, and accountability in the decentralized ecosystem.",
             "twitter": "https://twitter.com/_Mizuki_exe",
             "website": "https://terminal.mizuki-exe.xyz/"
         },
-        "priceChange1hPercent": 2.5809344145785262,
+        "priceChange1hPercent": 4.464397142988822,
         "creationTime": 1733878974
     },
     "items": [
@@ -29,8 +29,8 @@
             "wallet": "48ryuZZRgEEsjJ3UoQQiYCHJsHiqjf7SeuSucxfGvH3F",
             "amount": 16753474.798214,
             "share_in_percent": 1.675,
-            "net_worth": 206266.03532858987,
-            "net_worth_excluding": 15.767411077395082,
+            "net_worth": 208643.2355621427,
+            "net_worth_excluding": 15.862291166180512,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -41,8 +41,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 206250.26791751248
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 208627.37327097653
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -53,8 +53,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 257.5556618567286,
-                "valueUsd": 7.729245927431749
+                "priceUsd": 258.48267607382405,
+                "valueUsd": 7.757065625940812
             },
             "third_top_holding": {
                 "address": "8SHx3S4bwQkKhq5nUekG464zVrbxeJUVa4QSvvVDKAUz",
@@ -67,7 +67,7 @@
                 "icon": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "logoURI": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "priceUsd": 1340.9977874180424,
-                "valueUsd": 5.682229847643451
+                "valueUsd": 5.749284418435006
             }
         },
         {
@@ -75,8 +75,8 @@
             "wallet": "4A7kWzk5wGxXaJCQC8kw7B17hSqGK9YVCoc2yxSedfS3",
             "amount": 16394676.729968,
             "share_in_percent": 1.639,
-            "net_worth": 302575.54039395816,
-            "net_worth_excluding": 100742.39779494453,
+            "net_worth": 311969.92813562136,
+            "net_worth_excluding": 107810.58907333587,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -87,8 +87,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 201833.14259901363
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 204159.3390622855
             },
             "second_top_holding": {
                 "address": "EBGaJP7srpUUN8eRdta1MsojrNtweuHYsdP3P1TRpump",
@@ -100,8 +100,8 @@
                 "symbol": "REALIS",
                 "icon": "https://cdn.discordapp.com/attachments/1312386085216583720/1316121106029219840/realislogo.jpg?ex=6759e4cc&is=6758934c&hm=a94282b6cbf58ae45c38e13f691f9455b6321bfe0e7bb82207a9428eeb814546&",
                 "logoURI": "https://cdn.discordapp.com/attachments/1312386085216583720/1316121106029219840/realislogo.jpg?ex=6759e4cc&is=6758934c&hm=a94282b6cbf58ae45c38e13f691f9455b6321bfe0e7bb82207a9428eeb814546&",
-                "priceUsd": 0.012483439103287109,
-                "valueUsd": 99505.45021449699
+                "priceUsd": 0.013369216554888163,
+                "valueUsd": 106565.97923876275
             },
             "third_top_holding": {
                 "address": "GaZ6En5JWWR7u7dqnpvRr5tk56XRV3KRtZwdeuR3pump",
@@ -122,8 +122,8 @@
             "wallet": "GLYhYFAocMTQupx6VSj7TA28CsRTR5U2s3NAVatAAxDV",
             "amount": 12996911.79044,
             "share_in_percent": 1.3,
-            "net_worth": 171241.023845486,
-            "net_worth_excluding": 11237.408406598464,
+            "net_worth": 180657.03356948774,
+            "net_worth_excluding": 18809.321370515012,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -134,10 +134,23 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 160003.61543888753
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 161847.71219897273
             },
             "second_top_holding": {
+                "address": "J1uQ7AbpP9PUabrQC2SZpsZAMgaaLNpcUwYnLJsqpump",
+                "decimals": 6,
+                "balance": 255711536086,
+                "uiAmount": 255711.536086,
+                "chainId": "solana",
+                "name": "Showa American Story",
+                "symbol": "SHOWA",
+                "icon": "https://ipfs.io/ipfs/Qmd5otgwYuqu18hfDGiwYwrUV3zivYAbKTBmvMXxK6mVdK",
+                "logoURI": "https://ipfs.io/ipfs/Qmd5otgwYuqu18hfDGiwYwrUV3zivYAbKTBmvMXxK6mVdK",
+                "priceUsd": 0.029313724507127777,
+                "valueUsd": 7495.857522119467
+            },
+            "third_top_holding": {
                 "address": "HoCunqcWb8b3PtuX8aPvvF3R2nCmfjmTj32zSgSvpump",
                 "decimals": 6,
                 "balance": 30052086349882,
@@ -149,19 +162,6 @@
                 "logoURI": "https://pump.mypinata.cloud/ipfs/QmTdPC1vNTxGV42rfpbk1TdLYfwNaXeYE1gh6ptzRZ63f6",
                 "priceUsd": 0.00010276425497881066,
                 "valueUsd": 3088.280264304509
-            },
-            "third_top_holding": {
-                "address": "5XUUN5z1yBPEwoLztu4qMenmFe6GQnZptBFsnFnEpump",
-                "decimals": 6,
-                "balance": 250074671367,
-                "uiAmount": 250074.671367,
-                "chainId": "solana",
-                "name": "Waveform",
-                "symbol": "WAVE",
-                "icon": "https://ipfs.io/ipfs/QmTwQVB1NZUtBPJ1prQAPrUnirbSrPLTzvrwhEMe2YzHZt",
-                "logoURI": "https://ipfs.io/ipfs/QmTwQVB1NZUtBPJ1prQAPrUnirbSrPLTzvrwhEMe2YzHZt",
-                "priceUsd": 0.009103431281427331,
-                "valueUsd": 2276.5375860150075
             }
         },
         {
@@ -169,8 +169,8 @@
             "wallet": "6j5aeWbYaSTFz72BzfhwaCBiMjS9mjwKrS8B91n7bFgT",
             "amount": 12732873.207924,
             "share_in_percent": 1.273,
-            "net_worth": 157575.7046932252,
-            "net_worth_excluding": 822.6405005955894,
+            "net_worth": 159385.29864215708,
+            "net_worth_excluding": 825.6014117792656,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -181,8 +181,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 156753.06419262962
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 158559.69723037782
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -193,8 +193,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 257.5556618567286,
-                "valueUsd": 822.640500595576
+                "priceUsd": 258.48267607382405,
+                "valueUsd": 825.6014117792519
             },
             "third_top_holding": 0
         },
@@ -203,8 +203,8 @@
             "wallet": "2K8DNo6Ag8LwKvazLUjNqG8p9duqTaV4B1n5tHEiUKuh",
             "amount": 11750373.845517,
             "share_in_percent": 1.175,
-            "net_worth": 144665.6559404888,
-            "net_worth_excluding": 8.03816514997743,
+            "net_worth": 146332.95185398601,
+            "net_worth_excluding": 8.105225540231913,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -215,8 +215,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 144657.61777533882
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 146324.84662844578
             },
             "second_top_holding": {
                 "address": "8SHx3S4bwQkKhq5nUekG464zVrbxeJUVa4QSvvVDKAUz",
@@ -229,7 +229,7 @@
                 "icon": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "logoURI": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "priceUsd": 1340.9977874180424,
-                "valueUsd": 5.682229847643451
+                "valueUsd": 5.749284418435006
             },
             "third_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -242,7 +242,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             }
         },
         {
@@ -250,8 +250,8 @@
             "wallet": "EvVrwnrpHnmm8BXSs58YJcCAQo7L8mbWDTW47whdZZsp",
             "amount": 10854620,
             "share_in_percent": 1.085,
-            "net_worth": 133638.1244670945,
-            "net_worth_excluding": 8.03816514997743,
+            "net_worth": 135178.32428338137,
+            "net_worth_excluding": 8.105225540231913,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -262,8 +262,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 133630.0863019445
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 135170.21905784114
             },
             "second_top_holding": {
                 "address": "8SHx3S4bwQkKhq5nUekG464zVrbxeJUVa4QSvvVDKAUz",
@@ -276,7 +276,7 @@
                 "icon": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "logoURI": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "priceUsd": 1340.9977874180424,
-                "valueUsd": 5.682229847643451
+                "valueUsd": 5.749284418435006
             },
             "third_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -289,7 +289,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             }
         },
         {
@@ -297,8 +297,8 @@
             "wallet": "6BE7yFZyvQRyg2vveW5GHPgvgorb6f8BWVfJir7zRVXH",
             "amount": 10174963.424208,
             "share_in_percent": 1.018,
-            "net_worth": 2851174.978762136,
-            "net_worth_excluding": 2725912.0731518017,
+            "net_worth": 2925002.085168996,
+            "net_worth_excluding": 2798295.481441208,
             "first_top_holding": {
                 "address": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
                 "decimals": 9,
@@ -309,8 +309,8 @@
                 "symbol": "POPCAT",
                 "icon": "https://popcatsol.com/img/logo.png",
                 "logoURI": "https://popcatsol.com/img/logo.png",
-                "priceUsd": 0.44919712910920745,
-                "valueUsd": 1901416.052841588
+                "priceUsd": 0.4652374236618445,
+                "valueUsd": 1969313.3557811102
             },
             "second_top_holding": {
                 "address": "9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump",
@@ -322,8 +322,8 @@
                 "symbol": "BUZZ",
                 "icon": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
                 "logoURI": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
-                "priceUsd": 0.11578212180114467,
-                "valueUsd": 232285.4076777565
+                "priceUsd": 0.11372649739303395,
+                "valueUsd": 228161.35513629045
             },
             "third_top_holding": {
                 "address": "Bz4MhmVRQENiCou7ZpJ575wpjNFjBjVBSiVhuNg1pump",
@@ -335,8 +335,8 @@
                 "symbol": "Project89",
                 "icon": "https://ipfs.io/ipfs/QmexF55HQ1WvYwmhgxf3F7JA6EYKb3inidTAiaqj6kC8Lq",
                 "logoURI": "https://ipfs.io/ipfs/QmexF55HQ1WvYwmhgxf3F7JA6EYKb3inidTAiaqj6kC8Lq",
-                "priceUsd": 0.017248959265453515,
-                "valueUsd": 182730.9637271206
+                "priceUsd": 0.017688344189913784,
+                "valueUsd": 187385.69271442815
             }
         },
         {
@@ -344,8 +344,8 @@
             "wallet": "879G2oLedweGKYyb1EPg5Km8RvfZXfpJ22YxH3zXwiwd",
             "amount": 10047634.61766,
             "share_in_percent": 1.005,
-            "net_worth": 123697.72998693299,
-            "net_worth_excluding": 2.355935302330181,
+            "net_worth": 125123.36176926228,
+            "net_worth_excluding": 2.3559411217866,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -356,8 +356,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 123695.37405163066
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 125121.00582814049
             },
             "second_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -370,7 +370,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             },
             "third_top_holding": {
                 "address": "3G1earMvwcuxfihKNLoD3RWexqEB5s3sbfieqWm7pump",
@@ -391,8 +391,8 @@
             "wallet": "GK7CaLjBTME8r57Z52t8f8gHbp774rP83qNxPQL1UZDr",
             "amount": 10000000.010435,
             "share_in_percent": 1.0,
-            "net_worth": 123435.1585286961,
-            "net_worth_excluding": 326.2091215427354,
+            "net_worth": 124854.55323258125,
+            "net_worth_excluding": 326.7307948623202,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -403,8 +403,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 123108.94940715337
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 124527.82243771893
             },
             "second_top_holding": {
                 "address": "Ebdq5ccfQi9aAE6oJgjiLchy8VfZrPcXhA6reXVBpump",
@@ -438,8 +438,8 @@
             "wallet": "2UfXs6pXnWD6UGEU3GKZPyt2CCYZn5F2YZ5DZ11EkTqD",
             "amount": 10000000,
             "share_in_percent": 1.0,
-            "net_worth": 123131.15565805689,
-            "net_worth_excluding": 22.206379367707996,
+            "net_worth": 124550.10861405644,
+            "net_worth_excluding": 22.286306282287114,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -450,8 +450,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 123108.94927868918
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 124527.82230777416
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -462,8 +462,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 257.5556618567286,
-                "valueUsd": 22.206379367702773
+                "priceUsd": 258.48267607382405,
+                "valueUsd": 22.28630628227989
             },
             "third_top_holding": {
                 "address": "Ambf4sLQUsWjbYGV6DRumkatyFMV9PdbLmi5kfo8rosF",
@@ -478,8 +478,8 @@
             "wallet": "71SCsakuGkB2uwiXo5YTUBRnRzckFniuQ5xGF2FVToFr",
             "amount": 10000000,
             "share_in_percent": 1.0,
-            "net_worth": 123115.89242451216,
-            "net_worth_excluding": 6.943145822981023,
+            "net_worth": 124534.83697660905,
+            "net_worth_excluding": 7.014668834890472,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -490,8 +490,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 123108.94927868918
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 124527.82230777416
             },
             "second_top_holding": {
                 "address": "8SHx3S4bwQkKhq5nUekG464zVrbxeJUVa4QSvvVDKAUz",
@@ -504,7 +504,7 @@
                 "icon": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "logoURI": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "priceUsd": 1340.9977874180424,
-                "valueUsd": 5.682229847643451
+                "valueUsd": 5.749284418435006
             },
             "third_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -515,8 +515,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 257.5556618567286,
-                "valueUsd": 1.2416403031299523
+                "priceUsd": 258.48267607382405,
+                "valueUsd": 1.2461093107426078
             }
         },
         {
@@ -524,8 +524,8 @@
             "wallet": "BR9pXuu7PdoPFcUh9v6KLLm3L6o9DsMBmzMDoZUMA5de",
             "amount": 9863360.239264,
             "share_in_percent": 0.986,
-            "net_worth": 121440.67129504378,
-            "net_worth_excluding": 13.879753744637128,
+            "net_worth": 122840.19840837011,
+            "net_worth_excluding": 13.921285106887808,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -536,8 +536,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 121426.79154129914
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 122826.27712326322
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -548,8 +548,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 257.5556618567286,
-                "valueUsd": 11.53719222242208
+                "priceUsd": 258.48267607382405,
+                "valueUsd": 11.578717775145117
             },
             "third_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -562,7 +562,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             }
         },
         {
@@ -570,8 +570,8 @@
             "wallet": "B3LoxufLQvXUFNQYV9Z7jDQyy5M2LsGb7bTwDp55BDbQ",
             "amount": 9854645,
             "share_in_percent": 0.985,
-            "net_worth": 121327.53731159877,
-            "net_worth_excluding": 8.03816514997743,
+            "net_worth": 122725.85337215972,
+            "net_worth_excluding": 8.105225540217361,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -582,8 +582,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 121319.4991464488
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 122717.7481466195
             },
             "second_top_holding": {
                 "address": "8SHx3S4bwQkKhq5nUekG464zVrbxeJUVa4QSvvVDKAUz",
@@ -596,7 +596,7 @@
                 "icon": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "logoURI": "https://gateway.pinata.cloud/ipfs/QmXLNcGFwrfjHE7LgWgcfXHXpGionQ93V1K1etFKvYsNtf",
                 "priceUsd": 1340.9977874180424,
-                "valueUsd": 5.682229847643451
+                "valueUsd": 5.749284418435006
             },
             "third_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -609,7 +609,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             }
         },
         {
@@ -617,8 +617,8 @@
             "wallet": "CP8N3DrkohjjnCYLbegUo2tEGUkfmja1yqdD5NtBCkk1",
             "amount": 9624664.960439,
             "share_in_percent": 0.962,
-            "net_worth": 118490.5816060442,
-            "net_worth_excluding": 2.342562138015637,
+            "net_worth": 119856.19936449827,
+            "net_worth_excluding": 2.342567957472056,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -629,8 +629,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 118488.23904390619
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 119853.8567965408
             },
             "second_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -643,7 +643,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             },
             "third_top_holding": {
                 "address": "3o4JsWCsxUWbdGUPuexcVXVEgXWT542A5E3nQ6heXMH6",
@@ -655,8 +655,8 @@
                 "symbol": "VCCT",
                 "icon": "https://photos.pinksale.finance/file/pinksale-logo-upload/1731913765036-f046dafa9823feeb79bccd3661c25412.jpg",
                 "logoURI": "https://photos.pinksale.finance/file/pinksale-logo-upload/1731913765036-f046dafa9823feeb79bccd3661c25412.jpg",
-                "priceUsd": 6.15791780665934e-07,
-                "valueUsd": 6.15791780665934e-07
+                "priceUsd": 6.257334140264191e-07,
+                "valueUsd": 6.257334140264191e-07
             }
         },
         {
@@ -664,8 +664,8 @@
             "wallet": "5JKXc7RJ4zYdxEimJAomb8pa3vedTjHTp8q6HHD5GQGq",
             "amount": 9421547,
             "share_in_percent": 0.942,
-            "net_worth": 115994.72579316125,
-            "net_worth_excluding": 7.050618182634935,
+            "net_worth": 117331.54004034195,
+            "net_worth_excluding": 7.066972307686228,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -676,8 +676,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 115987.67517497862
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 117324.47306803426
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -688,8 +688,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 257.5556618567286,
-                "valueUsd": 4.694682880307228
+                "priceUsd": 258.452548563613,
+                "valueUsd": 4.7110311859046705
             },
             "third_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -702,7 +702,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             }
         },
         {
@@ -710,8 +710,8 @@
             "wallet": "ENWE4HcjzWfQXvb2vfsyqcqW9YvaXqfcEYQQyB6oG28b",
             "amount": 9296407.397073,
             "share_in_percent": 0.93,
-            "net_worth": 309407.4842346515,
-            "net_worth_excluding": 194960.3895626224,
+            "net_worth": 316804.94465210865,
+            "net_worth_excluding": 201038.80780777027,
             "first_top_holding": {
                 "address": "61V8vBaqAGMpgDQi4JcAwo1dmBGHsyhzodcPqnEVpump",
                 "decimals": 6,
@@ -722,8 +722,8 @@
                 "symbol": "arc",
                 "icon": "https://ipfs.io/ipfs/QmPDJuEobBcLZihjFCvkWA8c1FiW7UzM2ctFdiffSLxf1d",
                 "logoURI": "https://ipfs.io/ipfs/QmPDJuEobBcLZihjFCvkWA8c1FiW7UzM2ctFdiffSLxf1d",
-                "priceUsd": 0.35533394777689264,
-                "valueUsd": 126707.73867466756
+                "priceUsd": 0.3744561397648405,
+                "valueUsd": 133526.4783995222
             },
             "second_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
@@ -735,8 +735,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 114447.0946720291
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 115766.13684433838
             },
             "third_top_holding": {
                 "address": "MAtesZXcU38mgPuteRFo9ApCauYRRuwn3xf1cs5y7ZX",
@@ -748,8 +748,8 @@
                 "symbol": "MATES",
                 "icon": "https://ipfs.satsuma.xyz/ipfs/Qmd6oQqmyDt4tPTfUfZMfEhts99J4rCYxRdYKUqWNMPhyX",
                 "logoURI": "https://ipfs.satsuma.xyz/ipfs/Qmd6oQqmyDt4tPTfUfZMfEhts99J4rCYxRdYKUqWNMPhyX",
-                "priceUsd": 0.008916089069667277,
-                "valueUsd": 54549.74172925394
+                "priceUsd": 0.008804170844204368,
+                "valueUsd": 53865.01210776913
             }
         },
         {
@@ -757,8 +757,8 @@
             "wallet": "3E5VLcNAfvgKFmTHaRuay7G6sMFB6ffDasV6dLgsCt6m",
             "amount": 9245120,
             "share_in_percent": 0.925,
-            "net_worth": 113818.05685084182,
-            "net_worth_excluding": 2.355935302330181,
+            "net_worth": 115129.82199852669,
+            "net_worth_excluding": 2.3559411217866,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -769,8 +769,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 113815.70091553949
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 115127.4660574049
             },
             "second_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -783,7 +783,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             },
             "third_top_holding": {
                 "address": "3G1earMvwcuxfihKNLoD3RWexqEB5s3sbfieqWm7pump",
@@ -804,8 +804,8 @@
             "wallet": "HUddtYB3iJKW57AaRqZa4JpJ15Tm7rbYqJJwGttneDWz",
             "amount": 9195447.174675,
             "share_in_percent": 0.92,
-            "net_worth": 1392764.9768064688,
-            "net_worth_excluding": 1279560.7928242758,
+            "net_worth": 1397115.2456935116,
+            "net_worth_excluding": 1282606.3445126663,
             "first_top_holding": {
                 "address": "8XmNVTQv5mApkVhVcxn9Bm7wwVQi6xKdL263zQJQpump",
                 "decimals": 6,
@@ -829,8 +829,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.28326863590129175,
-                "valueUsd": 237689.49080606096
+                "priceUsd": 0.2781300908559369,
+                "valueUsd": 233377.75981816574
             },
             "third_top_holding": {
                 "address": "eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump",
@@ -842,8 +842,8 @@
                 "symbol": "UFD",
                 "icon": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
                 "logoURI": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "priceUsd": 0.22653449654504368,
-                "valueUsd": 170232.20521898672
+                "priceUsd": 0.21624420551144544,
+                "valueUsd": 162499.4362071542
             }
         },
         {
@@ -851,8 +851,8 @@
             "wallet": "6PYFiWbmRKD73CNHM7WNsiknqiZQr3KW9qbHkpDKP3C3",
             "amount": 9062009.295567,
             "share_in_percent": 0.906,
-            "net_worth": 111563.8002083991,
-            "net_worth_excluding": 2.355935302330181,
+            "net_worth": 112849.58427209829,
+            "net_worth_excluding": 2.3559411217866,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -863,8 +863,8 @@
                 "symbol": "Mizuki",
                 "icon": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
                 "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-                "priceUsd": 0.012310894927868918,
-                "valueUsd": 111561.44427309677
+                "priceUsd": 0.012452782230777415,
+                "valueUsd": 112847.2283309765
             },
             "second_top_holding": {
                 "address": "9M6Jy98spJx1adtSz64cjpVYWVgyX2aUCprjdQR7Xq6R",
@@ -877,7 +877,7 @@
                 "icon": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "logoURI": "https://gateway.irys.xyz/Ttly3DceC123-jr9m2LaKt9rM-CEKulk7qh1edYNvQE",
                 "priceUsd": 0.042492539880635116,
-                "valueUsd": 2.3425615222291203
+                "valueUsd": 2.3425673317382403
             },
             "third_top_holding": {
                 "address": "3G1earMvwcuxfihKNLoD3RWexqEB5s3sbfieqWm7pump",
