@@ -3,7 +3,7 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboard
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .tg_commands import *
 import os 
-from .parser import top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
+from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
 
 TOKEN= os.environ.get('tgTOKEN')
 BOT_USERNAME= os.environ.get('tgNAME')  
@@ -78,17 +78,21 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
 
     elif context.user_data.get('noteworthy_started', False):
         context.user_data['noteworthy_started'] = False
-        holder_message = await top_holders_holdings_parsed(token_address, limit)
+        holder_message = await noteworthy_addresses_parsed(token_address, limit)
 
     elif context.user_data.get('net_worth_map_started', False):
         context.user_data['net_worth_map_started'] = False
-        holder_message = await top_holders_holdings_parsed(token_address, limit)
+        holder_message = await top_holders_net_worth_map(token_address, limit)
 
     # Check if 'token_distribution_started' exists and is set, otherwise default to False
     elif context.user_data.get('token_distribution_started', False):
         context.user_data['token_distribution_started'] = False
         holder_message = await holder_distribution_parsed(token_address)
 
+    elif context.user_data.get('fresh_wallets_started', False): 
+        context.user_data['fresh_wallets_started'] = False
+        holder_message = await fresh_wallets_parsed(token_address, limit)
+        
     print(holder_message)
     if type(holder_message) == list:
         for parts in holder_message:

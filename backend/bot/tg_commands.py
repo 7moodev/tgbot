@@ -92,7 +92,7 @@ async def token_distribution_command(update: Update, context: ContextTypes.DEFAU
     if check_access(user_id):
         if len(context.args) != 1:
             await update.message.reply_text("Please send me a token address.")
-            context.user_data['awaiting_token_address'] = True
+        context.user_data['awaiting_token_address'] = True
             context.user_data['token_distribution_started'] = True 
             return
 
