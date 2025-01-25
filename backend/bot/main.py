@@ -202,13 +202,14 @@ def handle_token_response(message):
                     bot.send_sticker(message.chat.id, sticker)
                 user_states.pop(message.chat.id, None)
         case "noteworthy_addresses":
+            # bot.reply_to(message, f'<code>wtfff</code>', parse_mode=ParseMode.HTML)
             # Get noteworthy addresses
             if 32>len(token_address)>44:
                 bot.reply_to(message, "Invalid token address. Please provide a valid Solana token address.")
             else:
-                replies = noteworthy_addresses_parsed(token_address, 0)
+                replies = asyncio.run(noteworthy_addresses_parsed(token_address, 0))
                 for reply in replies:
-                    bot.reply_to(message, reply, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+                    bot.reply_to(message, reply, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True)
                 user_states.pop(message.chat.id, None)
         case _:
             bot.reply_to(message, "still in development")

@@ -7,6 +7,7 @@ from aiohttp import ClientSession
 import math
 import os
 from .utils.token_utils import get_token_overview, get_top_holders
+from .utils.general_utils import get_whales
 
 
 '''
@@ -30,12 +31,6 @@ TOP_HOLDERS_TO_CONSIDER = 50
 
 # Semaphore for limiting concurrent requests
 semaphore = Semaphore(API_RATE_LIMIT_PER_SECOND)
-
-# Simulate whale data loading
-whales_file_path = "backend/commands/constants/whales.json"
-with open(whales_file_path, 'r') as f:  
-    whales = json.load(f)
-    whales = set(whales)
 
 # Async function to simulate fetching wallet portfolio
 async def fetch_wallet_portfolio(session, wallet: str, api_key: str):
@@ -67,6 +62,7 @@ async def process_holder(session, count, holder, total_supply, token, ranges):
     share_in_percent = float(amount) / total_supply * 100
     
     # Respect API rate limit by using the semaphore
+    whales = 
     async with semaphore:
         if wallet in whales:  # Skip whales
             ranges["25000+"] += 1

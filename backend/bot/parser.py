@@ -1,4 +1,4 @@
-from .tg_format_test import send_message
+#from .tg_format_test import send_message
 from ..commands.top_holders_holdings import get_top_holders_holdings
 from ..commands.holding_distribution import get_holding_distribution 
 from ..commands.fresh_wallets import fresh_wallets
@@ -336,8 +336,8 @@ async def noteworthy_addresses_parsed(token, limit):
     Parses and formats the data for MarkdownV2 compatibility, returning an array of strings with each
     string having a maximum of 4096 characters.
     """
-    #data = await(get_noteworthy_addresses(token, limit))
-    data = json.loads(open("backend/commands/outputs/noteworthy_addresses.json", 'r').read())# for testing
+    data = await(get_noteworthy_addresses(token, limit))
+    #data = json.loads(open("backend/commands/outputs/noteworthy_addresses.json", 'r').read())# for testing
     token_info = data['token_info']
     items = data['items']
 
