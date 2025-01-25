@@ -12,24 +12,32 @@ solana_client = Client("https://api.mainnet-beta.solana.com")
 
 def check_user(user_id, referal_info):
     df = fetch_user_by_id(str(user_id))
+    if not df.empty:
 
-    if str(user_id) == str(df['user_id'][0]):
-        has_wallet = df['public_key'][0]
-        if pd.notna(has_wallet):  # pd.notna() checks if the value is not NaN
-            return has_wallet
-    else:
-        insert_user(str(user_id), 0, referal_info)
-        generate_wallet(str(user_id))
-        update_user('joined', psycopg2.extensions.AsIs('CURRENT_TIMESTAMP'), str(user_id))
-        
+        if str(user_id) == str(df['user_id'][0]):
+            has_wallet = df['public_key'][0]
+            if pd.notna(has_wallet):  # pd.notna() checks if the value is not NaN
+                return has_wallet
+            else:
+                generate_wallet(str(user_id))
+                update_user('joined', psycopg2.extensions.AsIs('CURRENT_TIMESTAMP'), str(user_id))
+                return 
+
+        else:
+            insert_user(str(user_id), 0, referal_info)
+            generate_wallet(str(user_id))
+            update_user('joined', psycopg2.extensions.AsIs('CURRENT_TIMESTAMP'), str(user_id))
+            
 
 def generate_wallet(user_id):
 
     public_key, private_key = create_keypair()
+
     update_user( "public_key", str(public_key), str(user_id))
 
 
     update_user( "private_key", str(private_key), str(user_id))
+    return public_key
 
     
 def check_balance(wallet_address):

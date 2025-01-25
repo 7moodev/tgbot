@@ -87,8 +87,12 @@ def fetch_user_by_id(cursor, user_id):
     # Fetch the records
     records = cursor.fetchall()
     
-    # Get column names
-    column_names = [desc[0] for desc in cursor.description]
+    # Safely get column names (if cursor.description is None when return empty)
+    column_names = (
+    [desc[0].lower() for desc in cursor.description] 
+    if cursor.description 
+    else []
+    )
     
     # Create a DataFrame with the data
     df = pd.DataFrame(records, columns=column_names)

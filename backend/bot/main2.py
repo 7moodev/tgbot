@@ -74,8 +74,16 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
     # Check if 'top_holders_started' exists and is set, otherwise default to False
     if context.user_data.get('top_holders_started', False):
         context.user_data['top_holders_started'] = False
-        holder_message = await top_holders_holdings_parsed(token_address, limit=20)
-    
+        holder_message = await top_holders_holdings_parsed(token_address, limit)
+
+    elif context.user_data.get('noteworthy_started', False):
+        context.user_data['noteworthy_started'] = False
+        holder_message = await top_holders_holdings_parsed(token_address, limit)
+
+    elif context.user_data.get('net_worth_map_started', False):
+        context.user_data['net_worth_map_started'] = False
+        holder_message = await top_holders_holdings_parsed(token_address, limit)
+
     # Check if 'token_distribution_started' exists and is set, otherwise default to False
     elif context.user_data.get('token_distribution_started', False):
         context.user_data['token_distribution_started'] = False
@@ -86,20 +94,44 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
+    await update.message.reply_text("Something went wrong, please contact support.", parse_mode='MarkdownV2')
+
+async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:   
+    response = '''/top - top [contract adress] to get list of topholders
+/userid - get your userid 
+/renew - renew your subscription
+/referal - get referal link
+/sub - get subscription status
+/distro - [contract adress] get distribution of token holders
+/top2 - [contract adress] get list of top holders
+/fresh - [contract adress] get list of fresh wallets among topholders_command
+/map - [contract adress] get map of net worth of top holders
+
+    '''
+    await update.message.reply_text(f'{response}')
 
 def main():
     print ('start_command')
     app = Application.builder().token(TOKEN).build()
 
     #Commands
+    #main functions
     app.add_handler(CommandHandler('distro', token_distribution_command))
     app.add_handler(CommandHandler('top', topholders_command))
+    app.add_handler(CommandHandler('top2', noteworthy_command))
+    app.add_handler(CommandHandler('fresh', fresh_wallets_command))
+    app.add_handler(CommandHandler('map', top_net_worth_map_command))
+
+    #user functions
     app.add_handler(CommandHandler('userid', userid_command))
     app.add_handler(CommandHandler('renew', renew_command))
     app.add_handler(CommandHandler('start', start_command))
     app.add_handler(CommandHandler('referal', referrallink_command))
     app.add_handler(CommandHandler('sub', check_subscription))
     app.add_handler(CommandHandler('help', help))
+
+    #Buttons
+
     app.add_handler(CallbackQueryHandler(handle_buttons))
     #Messages
     app.add_handler(MessageHandler(filters.TEXT, handle_message))

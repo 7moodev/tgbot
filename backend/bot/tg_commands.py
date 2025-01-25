@@ -4,7 +4,7 @@ from telegram.ext import Application, ApplicationBuilder, CommandHandler, Messag
 from .parser import top_holders_holdings_parsed, holder_distribution_parsed
 
 BOT_USERNAME= os.environ.get('tgNAME')  
-
+limit = 20
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     user_id = update.message.chat.id 
     args = context.args
@@ -38,11 +38,52 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
         else:
             token_address = context.args[0]
-            holder_message = await top_holders_holdings_parsed(token_address, limit = 20)
+            message = await top_holders_holdings_parsed(token_address, limit )
             print (holder_message)
 
+            for parts in holder_message:
+                await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
-            await update.message.reply_text(holder_message , parse_mode='MarkdownV2', disable_web_page_preview=True)
+    else:
+        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+
+async def noteworthy_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id 
+    if check_access(user_id):
+        if len(context.args) != 1:
+            await update.message.reply_text("Please send me a token address.")
+            context.user_data['awaiting_token_address'] = True
+            context.user_data['noteworthy_started'] = True 
+            return
+
+        else:
+            token_address = context.args[0]
+            message = await get_noteworthy_addresses(token_address, limit)
+            print (holder_message)
+
+            for parts in holder_message:
+                await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+
+    else:
+        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+
+
+async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id 
+    if check_access(user_id):
+        if len(context.args) != 1:
+            await update.message.reply_text("Please send me a token address.")
+            context.user_data['awaiting_token_address'] = True
+            context.user_data['net_worth_map_started'] = True 
+            return
+
+        else:
+            token_address = context.args[0]
+            message = await top_holders_net_worth_map(token_address, limit )
+            print (holder_message)
+
+            await update.message.reply_text(message , parse_mode='MarkdownV2', disable_web_page_preview=True)
+
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
@@ -65,13 +106,31 @@ async def token_distribution_command(update: Update, context: ContextTypes.DEFAU
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
+async def fresh_wallets_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id 
+    if check_access(user_id):
+        if len(context.args) != 1:
+            await update.message.reply_text("Please send me a token address.")
+            context.user_data['awaiting_token_address'] = True
+            context.user_data['fresh_wallets_started'] = True 
+            return
+
+        else:
+            token_address = context.args[0]
+            holder_message = await fresh_wallets_parsed(token_address, limit)
+            print (holder_message)
+
+
+            await update.message.reply_text(holder_message , parse_mode='MarkdownV2', disable_web_page_preview=True)
+    else:
+        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+
 
 
 
 async def userid_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f'{update.message.chat.id}')
 
-public_key = 'test'
 
 async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id
@@ -91,7 +150,7 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Create the reply markup with the above keyboard layout
         reply_markup = InlineKeyboardMarkup(keyboard)
         renew_message = f'''Thanks for deciding to renew your subscription!
-    Monthly subscriptions are 1 SOL a month. Please deposit 1 SOL to the following address:
+    Monthly subscriptions are 0.69 SOL a month. Please deposit 0.69 SOL to the following address:
     {public_key}
     After you have sent the funds, please click the Check button below.'''
 
@@ -124,13 +183,4 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
         #await update.message.reply_text(f'{response}')
         await update.callback_query.edit_message_text(text=response)
 
-async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:   
-    response = '''
-    /top - top [contract adress] to get list of topholders 
-    /userid - get your userid 
-    /renew - renew your subscription
-    /referal - get referal link
-    /sub - get subscription status
-    /distro - [contract adress] get distribution of token holders
-    '''
-    await update.message.reply_text(f'{response}')
+
