@@ -8,18 +8,17 @@ import os
 print (os.getcwd())
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-pem_file_path = os.path.join(current_dir, '../public_key.pem')
-print (pem_file_path)
+#pem_file_path = os.path.join(current_dir, '../public_key.pem')
+
+#with open(pem_file_path, 'r') as file:
+#    content = file.read()
 
 
-
-with open(pem_file_path, 'r') as file:
-    content = file.read()
-
-# with open("public_key.pem", "rb") as key_file:
-#     public_key = serialization.load_pem_public_key(
-#         key_file.read()
-#     )
+public_key_obj =os.environ.get("public_key")
+public_key = serialization.load_pem_public_key(
+    public_key_obj.encode(),
+    backend=default_backend()
+ )
 
 # Function to encrypt wallet private key
 def encrypt_private_key(wallet_private_key, public_key):
@@ -42,10 +41,11 @@ def create_keypair():
     assert keypair.pubkey() == public_key
     assert Pubkey.from_string(str(public_key)).is_on_curve()
     
-    with open("public_key.pem", "rb") as key_file:
-        encryption_key = serialization.load_pem_public_key(
-            key_file.read()
-        )
+    # with open("public_key.pem", "rb") as key_file:
+    encryption_key = serialization.load_pem_public_key(
+        public_key_obj.encode(),
+        backend=default_backend()
+    )
     
     private_key = encrypt_private_key(raw, encryption_key)
     

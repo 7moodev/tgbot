@@ -9,9 +9,11 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
     args = context.args
     referral_info = None
+    print (args)
 
     if len(args):
         referral_info = args[0]
+    print (referral_info)
 
     s = check_user(user_id, referral_info )
     # Define keyboard layout
