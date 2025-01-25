@@ -135,13 +135,15 @@ async def get_top_holders_holdings(
     :return: List of processed holder information
     """
     # These functions are assumed to be defined elsewhere in your code
-    total_supply = await get_token_supply(token)
+    
     top_holders = await get_top_holders(token, limit)
     token_creation_info = await get_token_creation_info(token)
     # Fetch token overview
     token_overview = await get_token_overview(token)
+    total_supply = 0
     if token_overview:
         token_overview = token_overview['data']
+        token_supply = token_overview['supply']
         token_info = {
             'price': token_overview['price'],
             'symbol': token_overview['symbol'],
@@ -149,7 +151,7 @@ async def get_top_holders_holdings(
             'logoURI': token_overview['logoURI'],
             'liquidity': token_overview['liquidity'],
             'market_cap': token_overview['mc'],
-            'supply': token_overview['supply'],
+            'supply': token_supply,
             'circulatingSupply': token_overview['circulatingSupply'],
             'realMc': token_overview['realMc'],
             'holder': token_overview['holder'],
@@ -159,6 +161,7 @@ async def get_top_holders_holdings(
         }
     else:
         token_info = {}
+        token_supply = await get_token_supply(token)
     
     # Create a single HTTP client session for all requests
     async with httpx.AsyncClient() as session:
@@ -218,7 +221,7 @@ def shorten_address(address: str, length: int = 4) -> str:
 #     #print(shorten_address("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"))
 if __name__ == "__main__":
     timenow = float(time.time())
-    holders = asyncio.run(get_top_holders_holdings("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",100))
+    holders = asyncio.run(get_top_holders_holdings("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",10))
     print(holders)
     #print(format_message(holders[0], holders[1]))
     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
