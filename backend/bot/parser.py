@@ -9,6 +9,7 @@ import json
 import ast
 import re, os
 
+running = 1 # switch to change between jsons and actual data for testing/parsing
 
 '''
 TODO: Use splitfunction and send messages in chunks if exeeds 4096 characters
@@ -74,13 +75,18 @@ def check_noteworthy(top_holders, cutoff=50_000):
     
 
 async def top_holders_holdings_parsed(token, limit):
-    #token_info, top_holders = await get_top_holders_holdings(token, limit)
-    #token_info, top_holders = token, limit
+    if running:
+        data = await get_top_holders_holdings(token, limit)
+        token_info =  data['token_info']
+        top_holders= data ['items']
 
-    toparse = json.load(open("backend/commands/outputs/top_holders_holdings.json", 'r'))
-    
-    token_info =  toparse['token_info']
-    top_holders= toparse ['items']
+    else:
+        print ('parsing from json')
+
+        data = json.load(open("backend/commands/outputs/top_holders_holdings.json", 'r'))
+        
+        token_info =  data['token_info']
+        top_holders= data ['items']
 
 
 
@@ -160,8 +166,12 @@ async def holder_distribution_parsed(token):
     '''
     TODO: Add Error handling
     '''
-    #data = await get_holding_distribution(token) #// uncomment for live data
-    data = [{'0-500': 72.0, '500-1000': 2.0, '1000-5000': 6.0, '5000-25000': 2.0, '25000+': 18.0}, {'holder_count': 7199, 'retrieved_holders': 50, 'Symbol': 'Mizuki', 'Name': 'Mizuki'}, {'symbol': 'Mizuki', 'name': 'Mizuki', 'logo_url': 'https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR', 'liquidity': 828098.4949007538, 'market_cap': 18011571.94138404}]
+    if running:
+        data = await get_holding_distribution(token)
+    else:
+        print ('parsing from json')
+
+        data = [{'0-500': 72.0, '500-1000': 2.0, '1000-5000': 6.0, '5000-25000': 2.0, '25000+': 18.0}, {'holder_count': 7199, 'retrieved_holders': 50, 'Symbol': 'Mizuki', 'Name': 'Mizuki'}, {'symbol': 'Mizuki', 'name': 'Mizuki', 'logo_url': 'https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR', 'liquidity': 828098.4949007538, 'market_cap': 18011571.94138404}]
     token_info = data[2]
     logo_url = token_info['logo_url']
     # Distribution
@@ -218,11 +228,14 @@ def shorten_address(address: str, length: int = 4) -> str:
 # Convert to the readable format
 async def fresh_wallets_parsed(token, limit):
 
-    #token_info, wallet_ages = await fresh_wallets(token, limit)
-    toparse = json.load(open("backend/commands/outputs/fresh_wallets.json", 'r'))
-    token_info = toparse ['token_info'] 
-    wallet_ages = toparse ['items']
-
+    if running:
+        token_info, wallet_ages = await fresh_wallets(token, limit)
+    
+    else:
+        print ('parsing from json')
+        data = json.load(open("backend/commands/outputs/fresh_wallets.json", 'r'))
+        token_info = data ['token_info'] 
+        wallet_ages = data ['items']
 
     message_parts = [
         f"*Token Info*: {token_info['symbol']} ({token_info['name']})\n",
@@ -268,12 +281,19 @@ async def fresh_wallets_parsed(token, limit):
 
 
 async def top_holders_net_worth_map(token, limit):
-    #token_info, top_holders = await get_top_holders_holdings(token, limit)
-    #token_info, top_holders = token, limit
-    toparse = json.load(open("backend/commands/outputs/top_holders_holdings.json", 'r'))
-    token_info = toparse.get('token_info', {})
-    top_holders = toparse.get('items', [])   
-    #print (type(top_holders))
+    if running:
+        data = await get_top_holders_holdings(token, limit)
+
+        token_info =  data['token_info']
+        top_holders= data ['items']
+
+    else:
+        print ('parsing from json')
+
+        data = json.load(open("backend/commands/outputs/top_holders_holdings.json", 'r'))
+        
+        token_info =  data['token_info']
+        top_holders= data ['items']
 
 
     #print(token_info)
@@ -336,10 +356,16 @@ async def noteworthy_addresses_parsed(token, limit):
     Parses and formats the data for MarkdownV2 compatibility, returning an array of strings with each
     string having a maximum of 4096 characters.
     """
-    #data = await(get_noteworthy_addresses(token, limit))
-    data = json.loads(open("backend/commands/outputs/noteworthy_addresses.json", 'r').read())# for testing
-    token_info = data['token_info']
-    items = data['items']
+   
+    if running:
+        data = await(get_noteworthy_addresses(token, limit))
+
+    else:
+        print ('parsing from json')
+
+        data = json.loads(open("backend/commands/outputs/noteworthy_addresses.json", 'r').read())# for testing
+        token_info = data['token_info']
+        items = data['items']
 
     # Escape token info for MarkdownV2
     token_symbol = escape_markdown(token_info['symbol'])
@@ -494,7 +520,7 @@ if __name__ == "__main__":
 
 
 # Send a message to the user
-     #array_of_objects = ast.literal_eval(toparse)
+     #array_of_objects = ast.literal_eval(data)
     #print(array_of_objects)
 
     # Convert each dictionary in the list to a JSON string

@@ -5,44 +5,75 @@ import os
 from functools import wraps
 from urllib.parse import urlparse
 
-def db_connection(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        conn = None
-        try:
-            # Parse the DATABASE_URL environment variable
-            DATABASE_URL = os.getenv('DATABASE_URL')
-            if not DATABASE_URL:
-                raise EnvironmentError("DATABASE_URL environment variable not set")
-            
-            result = urlparse(DATABASE_URL)
-            username = result.username
-            password = result.password
-            database = result.path[1:]  # Remove leading slash
-            hostname = result.hostname
-            port = result.port
+# datebase connection decorator
+if os.getenv('DATABASE_URL'):
 
-            conn = psycopg2.connect(
-                database=database,
-                user=username,
-                password=password,
-                host=hostname,
-                port=port
-            )
-            cursor = conn.cursor()
-            result = func(cursor, *args, **kwargs)
-            conn.commit()
-            return result
-        except (Exception, psycopg2.Error) as error:
-            print("Error:", error)
-            if conn:
-                conn.rollback()
-        finally:
-            if conn:
-                cursor.close()
-                conn.close()
-                print("PostgreSQL connection is closed")
-    return wrapper
+    def db_connection(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            conn = None
+            try:
+                # Parse the DATABASE_URL environment variable
+                DATABASE_URL = os.getenv('DATABASE_URL')
+                if not DATABASE_URL:
+                    raise EnvironmentError("DATABASE_URL environment variable not set")
+                
+                result = urlparse(DATABASE_URL)
+                username = result.username
+                password = result.password
+                database = result.path[1:]  # Remove leading slash
+                hostname = result.hostname
+                port = result.port
+
+                conn = psycopg2.connect(
+                    database=database,
+                    user=username,
+                    password=password,
+                    host=hostname,
+                    port=port
+                )
+                cursor = conn.cursor()
+                result = func(cursor, *args, **kwargs)
+                conn.commit()
+                return result
+            except (Exception, psycopg2.Error) as error:
+                print("Error:", error)
+                if conn:
+                    conn.rollback()
+            finally:
+                if conn:
+                    cursor.close()
+                    conn.close()
+                    print("PostgreSQL connection is closed")
+        return wrapper
+else: 
+
+    def db_connection(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            conn = None
+            try:
+                conn = psycopg2.connect(
+                user="bruce",
+                password="",  # Add your password here if you've set one
+                host="localhost",  # or 127.0.0.1
+                port="5432",  # Default PostgreSQL port
+                database="Testing"
+                )
+                cursor = conn.cursor()
+                result = func(cursor, *args, **kwargs)
+                conn.commit()
+                return result
+            except (Exception, psycopg2.Error) as error:
+                print("Error:", error)
+                if conn:
+                    conn.rollback()
+            finally:
+                if conn:
+                    cursor.close()
+                    conn.close()
+                    print("PostgreSQL connection is closed")
+        return wrapper
 
 @db_connection
 def insert_user(cursor, user_id, referral, reffered_by):

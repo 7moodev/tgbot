@@ -1,7 +1,7 @@
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
-from .parser import top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
+from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
 
 BOT_USERNAME= os.environ.get('tgNAME')  
 limit = 20
@@ -58,8 +58,8 @@ async def noteworthy_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
         else:
             token_address = context.args[0]
-            message = await get_noteworthy_addresses(token_address, limit)
-            print (holder_message)
+            message = await noteworthy_addresses_parsed(token_address, limit)
+            print (message)
 
             for parts in message:
                 await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
@@ -92,7 +92,7 @@ async def token_distribution_command(update: Update, context: ContextTypes.DEFAU
     if check_access(user_id):
         if len(context.args) != 1:
             await update.message.reply_text("Please send me a token address.")
-        context.user_data['awaiting_token_address'] = True
+            context.user_data['awaiting_token_address'] = True
             context.user_data['token_distribution_started'] = True 
             return
 
