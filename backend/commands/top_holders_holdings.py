@@ -140,7 +140,7 @@ async def get_top_holders_holdings(
     token_creation_info = await get_token_creation_info(token)
     # Fetch token overview
     token_overview = await get_token_overview(token)
-    total_supply = 0
+    total_supply = 1
     if token_overview:
         token_overview = token_overview['data']
         token_supply = token_overview['supply']
@@ -160,6 +160,8 @@ async def get_top_holders_holdings(
             'creationTime': token_creation_info['blockUnixTime'],
         }
     else:
+        print("Token overview not found")
+        print("Token Overview", token_overview)
         token_info = {}
         token_supply = await get_token_supply(token)
     
