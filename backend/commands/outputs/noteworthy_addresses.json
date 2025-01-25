@@ -26,8 +26,8 @@
             "wallet": "4A7kWzk5wGxXaJCQC8kw7B17hSqGK9YVCoc2yxSedfS3",
             "amount": 16394676.729968,
             "share_in_percent": 1.639,
-            "net_worth": 311969.92813562136,
-            "net_worth_excluding": 107810.58907333587,
+            "net_worth": 311534.91955717956,
+            "net_worth_excluding": 107375.58049489406,
             "first_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
                 "decimals": 6,
@@ -51,8 +51,8 @@
                 "symbol": "REALIS",
                 "icon": "https://cdn.discordapp.com/attachments/1312386085216583720/1316121106029219840/realislogo.jpg?ex=6759e4cc&is=6758934c&hm=a94282b6cbf58ae45c38e13f691f9455b6321bfe0e7bb82207a9428eeb814546&",
                 "logoURI": "https://cdn.discordapp.com/attachments/1312386085216583720/1316121106029219840/realislogo.jpg?ex=6759e4cc&is=6758934c&hm=a94282b6cbf58ae45c38e13f691f9455b6321bfe0e7bb82207a9428eeb814546&",
-                "priceUsd": 0.013369216554888163,
-                "valueUsd": 106565.97923876275
+                "priceUsd": 0.013314841523904932,
+                "valueUsd": 106132.55605356142
             },
             "third_top_holding": {
                 "address": "GaZ6En5JWWR7u7dqnpvRr5tk56XRV3KRtZwdeuR3pump",
@@ -73,8 +73,8 @@
             "wallet": "6BE7yFZyvQRyg2vveW5GHPgvgorb6f8BWVfJir7zRVXH",
             "amount": 10174963.424208,
             "share_in_percent": 1.018,
-            "net_worth": 2925002.085168996,
-            "net_worth_excluding": 2798295.481441208,
+            "net_worth": 2920143.9842389286,
+            "net_worth_excluding": 2793437.380511141,
             "first_top_holding": {
                 "address": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
                 "decimals": 9,
@@ -85,8 +85,8 @@
                 "symbol": "POPCAT",
                 "icon": "https://popcatsol.com/img/logo.png",
                 "logoURI": "https://popcatsol.com/img/logo.png",
-                "priceUsd": 0.4652374236618445,
-                "valueUsd": 1969313.3557811102
+                "priceUsd": 0.46443053489994035,
+                "valueUsd": 1965897.859231111
             },
             "second_top_holding": {
                 "address": "9DHe3pycTuymFk4H4bbPoAJ4hQrr2kaLDF6J6aAKpump",
@@ -98,8 +98,8 @@
                 "symbol": "BUZZ",
                 "icon": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
                 "logoURI": "https://ipfs.io/ipfs/Qme1AwRhgU8LVpLHzVGpKrRzUEUwMjMxS4GAbarmrFoiEJ",
-                "priceUsd": 0.11372649739303395,
-                "valueUsd": 228161.35513629045
+                "priceUsd": 0.11393965662148313,
+                "valueUsd": 228589.00128329778
             },
             "third_top_holding": {
                 "address": "Bz4MhmVRQENiCou7ZpJ575wpjNFjBjVBSiVhuNg1pump",
@@ -111,8 +111,8 @@
                 "symbol": "Project89",
                 "icon": "https://ipfs.io/ipfs/QmexF55HQ1WvYwmhgxf3F7JA6EYKb3inidTAiaqj6kC8Lq",
                 "logoURI": "https://ipfs.io/ipfs/QmexF55HQ1WvYwmhgxf3F7JA6EYKb3inidTAiaqj6kC8Lq",
-                "priceUsd": 0.017688344189913784,
-                "valueUsd": 187385.69271442815
+                "priceUsd": 0.01763341063677023,
+                "valueUsd": 186803.7410179579
             }
         },
         {
@@ -120,8 +120,8 @@
             "wallet": "ENWE4HcjzWfQXvb2vfsyqcqW9YvaXqfcEYQQyB6oG28b",
             "amount": 9296407.397073,
             "share_in_percent": 0.93,
-            "net_worth": 316804.94465210865,
-            "net_worth_excluding": 201038.80780777027,
+            "net_worth": 320135.66431992484,
+            "net_worth_excluding": 204369.52747558645,
             "first_top_holding": {
                 "address": "61V8vBaqAGMpgDQi4JcAwo1dmBGHsyhzodcPqnEVpump",
                 "decimals": 6,
@@ -132,8 +132,8 @@
                 "symbol": "arc",
                 "icon": "https://ipfs.io/ipfs/QmPDJuEobBcLZihjFCvkWA8c1FiW7UzM2ctFdiffSLxf1d",
                 "logoURI": "https://ipfs.io/ipfs/QmPDJuEobBcLZihjFCvkWA8c1FiW7UzM2ctFdiffSLxf1d",
-                "priceUsd": 0.3744561397648405,
-                "valueUsd": 133526.4783995222
+                "priceUsd": 0.38141680648508924,
+                "valueUsd": 136008.5669962034
             },
             "second_top_holding": {
                 "address": "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump",
@@ -158,8 +158,8 @@
                 "symbol": "MATES",
                 "icon": "https://ipfs.satsuma.xyz/ipfs/Qmd6oQqmyDt4tPTfUfZMfEhts99J4rCYxRdYKUqWNMPhyX",
                 "logoURI": "https://ipfs.satsuma.xyz/ipfs/Qmd6oQqmyDt4tPTfUfZMfEhts99J4rCYxRdYKUqWNMPhyX",
-                "priceUsd": 0.008804170844204368,
-                "valueUsd": 53865.01210776913
+                "priceUsd": 0.008941793273328674,
+                "valueUsd": 54707.00324381815
             }
         },
         {
@@ -167,8 +167,8 @@
             "wallet": "HUddtYB3iJKW57AaRqZa4JpJ15Tm7rbYqJJwGttneDWz",
             "amount": 9195447.174675,
             "share_in_percent": 0.92,
-            "net_worth": 1397115.2456935116,
-            "net_worth_excluding": 1282606.3445126663,
+            "net_worth": 1331697.804705201,
+            "net_worth_excluding": 1217188.9035243557,
             "first_top_holding": {
                 "address": "8XmNVTQv5mApkVhVcxn9Bm7wwVQi6xKdL263zQJQpump",
                 "decimals": 6,
@@ -192,8 +192,8 @@
                 "symbol": "VINE",
                 "icon": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
                 "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-                "priceUsd": 0.2781300908559369,
-                "valueUsd": 233377.75981816574
+                "priceUsd": 0.2746176290947047,
+                "valueUsd": 230430.46830159295
             },
             "third_top_holding": {
                 "address": "eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump",
@@ -205,8 +205,8 @@
                 "symbol": "UFD",
                 "icon": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
                 "logoURI": "https://ipfs.io/ipfs/QmSPYBXsBnoDuUctoaW8DFLmURpJZULMFWH5EEbS2Y5LQS",
-                "priceUsd": 0.21624420551144544,
-                "valueUsd": 162499.4362071542
+                "priceUsd": 0.21667829789721266,
+                "valueUsd": 162825.6404066247
             }
         }
     ]
