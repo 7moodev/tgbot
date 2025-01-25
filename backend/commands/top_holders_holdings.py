@@ -135,15 +135,13 @@ async def get_top_holders_holdings(
     :return: List of processed holder information
     """
     # These functions are assumed to be defined elsewhere in your code
-    
+    total_supply = await get_token_supply(token)
     top_holders = await get_top_holders(token, limit)
     token_creation_info = await get_token_creation_info(token)
     # Fetch token overview
     token_overview = await get_token_overview(token)
-    total_supply = 1
     if token_overview:
         token_overview = token_overview['data']
-        token_supply = token_overview['supply']
         token_info = {
             'price': token_overview['price'],
             'symbol': token_overview['symbol'],
@@ -151,7 +149,7 @@ async def get_top_holders_holdings(
             'logoURI': token_overview['logoURI'],
             'liquidity': token_overview['liquidity'],
             'market_cap': token_overview['mc'],
-            'supply': token_supply,
+            'supply': total_supply,
             'circulatingSupply': token_overview['circulatingSupply'],
             'realMc': token_overview['realMc'],
             'holder': token_overview['holder'],
@@ -160,10 +158,7 @@ async def get_top_holders_holdings(
             'creationTime': token_creation_info['blockUnixTime'],
         }
     else:
-        print("Token overview not found")
-        print("Token Overview", token_overview)
         token_info = {}
-        token_supply = await get_token_supply(token)
     
     # Create a single HTTP client session for all requests
     async with httpx.AsyncClient() as session:
