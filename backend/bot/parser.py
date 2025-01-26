@@ -560,7 +560,7 @@ if __name__ == "__main__":
 #    for i in range (len (message)) :
 #        unescaped_characters.append ((find_unescaped_periods(message[i])))
 #
-#
+
 #
 #
 #
