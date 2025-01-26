@@ -93,9 +93,10 @@ async def top_holders_holdings_parsed(token, limit):
     #print(token_info)
       # Token information part=
     message = f"*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
-    message += f"├── MC: {format_number(token_info['market_cap'])}\n"
-    message += f"├── Liquidity: {format_number(token_info['liquidity'])}\n"
-    message += f"├── Total Holder: {token_info['holder']:,}\n\n"
+    message += f"├──💰 MC: {format_number(token_info['market_cap'])}\n"
+    message += f"├──🫗 Liquidity: {format_number(token_info['liquidity'])}\n"
+    message += f"├──👥Total Holder: {token_info['holder']:,}\n"   
+    message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n\n"
 
     noteworthy = check_noteworthy(top_holders)  
     message += f"* 💰 There are {len(noteworthy)}/ {len(top_holders)} noteworthy top holders:*\n\n"
@@ -115,29 +116,57 @@ async def top_holders_holdings_parsed(token, limit):
         whale = ""
         if dollar_token_share > 100_000: 
             whale = "🐳 "
+        elif dollar_token_share > 10_000: 
+            whale = "🦈 "
+        elif dollar_token_share > 5_000: 
+            whale = "🐬 "
+        elif dollar_token_share > 1000: 
+            whale = "🐟 "
+        elif dollar_token_share > 100: 
+            whale = "🦐 "
+        elif dollar_token_share > 10: 
+            whale = "🫧 "
+
+
+
         try:
             if "error" in holder:
                 h_info += f"{whale}\\# {holder['count']}\\-\\({addy}\\)\\(💰 NW\\_Excl: $1M+\\) 🏦LP/Bot \\|\n"
                 continue
 
             #addy = f"[{shorten_address(wallet)}](https://solscan.io/account/{wallet})"
-            h_info = f"[{whale}\\#{holder['count']}\\({format_number(dollar_token_share)}\\)]{addy}  \\|\\+\\+ "
+            h_info = f"[{whale}\\#{holder['count']}\\({format_number(dollar_token_share)}\\)]{addy}  \\| "
             top1 = holder['first_top_holding']
             top2 = holder['second_top_holding']
             top3 = holder['third_top_holding']
-            if top1:
-                symbol =escape_markdown(top1['symbol'])
-                symbol = f"{symbol}"#(https://dexscreener.com/solana/{top1['address']})"
-                h_info += (f"`{symbol}`: {format_number(top1['valueUsd'])}, ")
-                
-            if top2:
-                symbol =escape_markdown(top2['symbol'])
-                symbol = f"{symbol}"#](https://dexscreener.com/solana/{top2['address']})"
-                h_info += (f"`{symbol}`: {format_number(top2['valueUsd'])}, ")
-            if top3:
-                symbol =escape_markdown(top3['symbol'])
-                symbol = f"{symbol}"#](https://dexscreener.com/solana/{top3['address']})"
-                h_info += (f"`{symbol}`: {format_number(top3['valueUsd'])} \n")
+            top_list = [top1, top2, top3]
+            processed = []
+            for top in top_list:
+                if top['symbol'] != token_info['symbol']:
+                    if top not in processed:
+                        processed.append(top)
+                        symbol =escape_markdown(top['symbol'])
+                        symbol = f"{symbol}" 
+                        h_info += (f"`{symbol}`: {format_number(top1['valueUsd'])}, ")
+            
+            h_info = h_info[:-2] + "\n" # Remove the trailing comma and add a newline
+#
+                    
+
+#            if top1['symbol'] != token_info['symbol']:
+#                symbol =escape_markdown(top1['symbol'])
+#                symbol = f"{symbol}"#(https://dexscreener.com/solana/{top1['address']})"
+#                h_info += (f"`{symbol}`: {format_number(top1['valueUsd'])}, ")
+#                top_list = [x for x in top_list if x != top1]
+#                
+#            if top2['symbol'] != token_info['symbol']:
+#                symbol =escape_markdown(top2['symbol'])
+#                symbol = f"{symbol}"#](https://dexscreener.com/solana/{top2['address']})"
+#                h_info += (f"`{symbol}`: {format_number(top2['valueUsd'])}, ")
+#            if top3['symbol'] != token_info['symbol']:
+#                symbol =escape_markdown(top3['symbol'])
+#                symbol = f"{symbol}"#](https://dexscreener.com/solana/{top3['address']})"
+#                h_info += (f"`{symbol}`: {format_number(top3['valueUsd'])} \n")
 
 
             if len(current_message) + len(h_info) > 4096:
@@ -233,6 +262,7 @@ async def fresh_wallets_parsed(token, limit):
         data = await fresh_wallets(token, limit)
         token_info = data ['token_info'] 
         wallet_ages = data ['items']
+        print(wallet_ages)
 
     
     else:
@@ -241,47 +271,50 @@ async def fresh_wallets_parsed(token, limit):
         token_info = data ['token_info'] 
         wallet_ages = data ['items']
 
-    message_parts = [
-        f"*Token Info*: {token_info['symbol']} ({token_info['name']})\n",
-        f"├── MC: {format_number(token_info['market_cap'])}\n",   
-        f"├── Liquidity: {format_number(token_info['liquidity'])}\n\n",
-        f"Ordered by holding --------->\n\n",
-        f"[🔴](http://example.com): <1 Week\n",
-        f"🟠: <1 Month\n",
-        f"🟡: <3 Months\n",
-        f"🟢: >3 Months\n",
-        f"🔵: LP/Bot \n\n"
-    ]
-    
-    # Precompute current time
-    current_time = int(time.time())
-    count=0
-    for wallet in wallet_ages:
-        if count %10 == 0:
-            message_parts.append("\n")
-        if wallet['age'] is not None:
-            wallet_age_unix = wallet['age']
-            if wallet_age_unix == 0:   
-                message_parts.append(f"🔵")#(https://solscan.io/account/{wallet['wallet']})")
-                count+=1
-                continue
-            # Calculate age in days only
-            age_seconds = current_time - wallet_age_unix
-            days = age_seconds // (24 * 60 * 60)
-            if days < 7:
-                message_parts.append(f"🔴")#(https://solscan.io/account/{wallet['wallet']})")
-            elif days < 30:
-                message_parts.append(f"🟠")#(https://solscan.io/account/{wallet['wallet']})")
-            elif days < 90: 
-                message_parts.append(f"🟡")#(https://solscan.io/account/{wallet['wallet']})")
-            else:
-                message_parts.append(f"🟢")#(https://solscan.io/account/{wallet['wallet']})")
-            count+=1
+    try:
 
-    
-    # Combine the message parts into a single string
-    msg =  ''.join(message_parts)
-    return escape_markdown(msg)
+        message_parts = [
+            f"*Token Info*: {token_info['symbol']} ({token_info['name']})\n",
+            f"├── MC: {format_number(token_info['market_cap'])}\n",   
+            f"├── Liquidity: {format_number(token_info['liquidity'])}\n\n",
+            f"Ordered by holding --------->\n\n",
+            f"[🔴](http://example.com): <1 Week\n",
+            f"🟠: <1 Month\n",
+            f"🟡: <3 Months\n",
+            f"🟢: >3 Months\n",
+            f"🔵: LP/Bot \n\n"
+        ]
+        
+        # Precompute current time
+        current_time = int(time.time())
+        count=0
+        for wallet in wallet_ages:
+            if count %10 == 0:
+                message_parts.append("\n")
+            if wallet.get('age') is not None:
+                wallet_age_unix = wallet['age']
+                if wallet_age_unix == 0:   
+                    message_parts.append(f"🔵")#(https://solscan.io/account/{wallet['wallet']})")
+                    count+=1
+                    continue
+                # Calculate age in days only
+                age_seconds = current_time - wallet_age_unix
+                days = age_seconds // (24 * 60 * 60)
+                if days < 7:
+                    message_parts.append(f"🔴")#(https://solscan.io/account/{wallet['wallet']})")
+                elif days < 30:
+                    message_parts.append(f"🟠")#(https://solscan.io/account/{wallet['wallet']})")
+                elif days < 90: 
+                    message_parts.append(f"🟡")#(https://solscan.io/account/{wallet['wallet']})")
+                else:
+                    message_parts.append(f"🟢")#(https://solscan.io/account/{wallet['wallet']})")
+                count+=1
+        # Combine the message parts into a single string
+        msg =  ''.join(message_parts)
+        return escape_markdown(msg)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return escape_markdown(f"An error occurred: {e}")
 
 
 async def top_holders_net_worth_map(token, limit):
@@ -304,15 +337,21 @@ async def top_holders_net_worth_map(token, limit):
     print(len(top_holders))
     # Token information part=
    # Token information part=
-    message = "Top Holders by Net Worth Map by Munki:\n\n"
+    message = "Top  by Net Worth Map by Munki:\n\n"
 
-    message += f"*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
-    message += f"├── MC: {format_number(token_info['market_cap'])}\n"
-    message += f"├── Liquidity: {format_number(token_info['liquidity'])}\n"
-    message += f"├── Holders count: {token_info['holder']:,}\n\n"
+    message += f"*Summary of Top {limit} Holders: {token_info['symbol']} \\({token_info['name']}\\)*\n"
+    message += f"├──💰MC: {format_number(token_info['market_cap'])}\n"
+    message += f"├──🫗Liquidity: {format_number(token_info['liquidity'])}\n"
+    message += f"├──👥Holders count: {token_info['holder']:,}\n"
+    message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n"
 
 
     c = 1
+    whale = 0
+    shark = 0
+    dolphin = 0
+    fish = 0
+    shrimp = 0
     for holder in top_holders:
         if 'error' in holder or 'net_worth_excluding' not in holder:
             print (holder)
@@ -321,25 +360,30 @@ async def top_holders_net_worth_map(token, limit):
         net_worth = holder['net_worth_excluding']
         if net_worth > 100_000:
             message += "🐳"
+            whale += 1
             if c%10 == 0:
                 message += "\n"
 
         elif net_worth > 10_000:
             message += "🦈"
+            shark += 1
             if c%10 == 0:
                 message += "\n"
 
         elif net_worth > 1_000:
             message += "🐬"
+            dolphin += 1
             if c%10 == 0:
                 message += "\n"
 
         elif net_worth > 100:
             message += "🐟"
+            fish += 1
             if c%10 == 0:
                 message += "\n"
         elif net_worth > 10:
             message += "🦐"
+            shrimp += 1
             if c%10 == 0:
                 message += "\n"
         else:
@@ -347,6 +391,21 @@ async def top_holders_net_worth_map(token, limit):
             if c%10 == 0:
                 message += "\n"
         c+=1    
+
+    holder_counts = {
+          "🦐 (<$100)": shrimp,
+        "🐟 ($100-$1k)": fish
+        "🐬 ($1k-$10k)": dolphin,
+        "🦈 ($10k-$100k)": shark,
+        "🐳 ($100k+)": whale
+            }
+
+    for emoji, count in holder_counts.items():
+        message += escape_markdown(f"{emoji}:  {count}\n")
+
+    
+
+    message += f"├──👥Holders count: {token_info['holder']:,}\n\n"
 
     return message
 
