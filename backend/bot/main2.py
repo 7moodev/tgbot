@@ -1,9 +1,13 @@
+import asyncio
 from typing import Final
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Bot, Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .tg_commands import *
 import os 
-from .parser import top_holders_holdings_parsed, holder_distribution_parsed
+from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, top_holders_net_worth_map, fresh_wallets_parsed
+import asyncio
+import traceback
+limit = 20
 
 TOKEN= os.environ.get('tgTOKEN')
 BOT_USERNAME= os.environ.get('tgNAME')  
@@ -78,23 +82,33 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
 
     elif context.user_data.get('noteworthy_started', False):
         context.user_data['noteworthy_started'] = False
-        holder_message = await top_holders_holdings_parsed(token_address, limit)
+        holder_message = await noteworthy_addresses_parsed(token_address, limit)
 
     elif context.user_data.get('net_worth_map_started', False):
         context.user_data['net_worth_map_started'] = False
-        holder_message = await top_holders_holdings_parsed(token_address, limit)
+        holder_message = await top_holders_net_worth_map(token_address, limit)
 
     # Check if 'token_distribution_started' exists and is set, otherwise default to False
     elif context.user_data.get('token_distribution_started', False):
         context.user_data['token_distribution_started'] = False
         holder_message = await holder_distribution_parsed(token_address)
 
+    elif context.user_data.get('fresh_wallets_started', False): 
+        context.user_data['fresh_wallets_started'] = False
+        holder_message = await fresh_wallets_parsed(token_address, limit)
+        
     print(holder_message)
-    await update.message.reply_text(holder_message, parse_mode='MarkdownV2', disable_web_page_preview=True)
+    if type(holder_message) == list:
+        for parts in holder_message:
+            await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+    else:
+      await update.message.reply_text(holder_message, parse_mode='MarkdownV2', disable_web_page_preview=True)
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
-    await update.message.reply_text("Something went wrong, please contact support.", parse_mode='MarkdownV2')
+    print("Traceback:")
+    traceback.print_exc()
+    await update.message.reply_text("Something went wrong, please contact support.")
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:   
     response = '''/top - top [contract adress] to get list of topholders
@@ -109,6 +123,10 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
 
     '''
     await update.message.reply_text(f'{response}')
+async def delete_webhook(TOKEN):
+    bot = Bot(TOKEN)
+    await bot.delete_webhook()
+
 
 def main():
     print ('start_command')
@@ -140,19 +158,24 @@ def main():
 
 
     #Set Webhook
-    webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
-    print (webhook_url)
-    print (PORT)
-    print(f"Webhook set to: {webhook_url}")
-    app.run_webhook(
-        listen="0.0.0.0",
-        port=PORT,
-        url_path=TOKEN,
-        webhook_url=webhook_url,
-    )
+    if HEROKU_APP_NAME:
+        webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
+        print (webhook_url)
+        print (PORT)
+        print(f"Webhook set to: {webhook_url}")
+        app.run_webhook(
+            listen="0.0.0.0",
+            port=PORT,
+            url_path=TOKEN,
+            webhook_url=webhook_url,
+        )
+    else:
+        print('Polling locally (webhook removed)')
+              # Remove any existing webhook explicitly
+        #asyncio.run(app.bot.delete_webhook()  )# Ensure this is awaited
+        delete_webhook(TOKEN)
 
-    #print ('polling')
-    #app.run_polling(poll_interval=3)
+        app.run_polling(poll_interval=3)
 
 
 

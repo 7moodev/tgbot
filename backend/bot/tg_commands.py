@@ -1,7 +1,7 @@
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
-from .parser import top_holders_holdings_parsed, holder_distribution_parsed
+from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
 
 BOT_USERNAME= os.environ.get('tgNAME')  
 limit = 20
@@ -39,9 +39,9 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
         else:
             token_address = context.args[0]
             message = await top_holders_holdings_parsed(token_address, limit )
-            print (holder_message)
+            print (message)
 
-            for parts in holder_message:
+            for parts in message:
                 await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
     else:
@@ -58,10 +58,10 @@ async def noteworthy_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
         else:
             token_address = context.args[0]
-            message = await get_noteworthy_addresses(token_address, limit)
-            print (holder_message)
+            message = await noteworthy_addresses_parsed(token_address, limit)
+            print (message)
 
-            for parts in holder_message:
+            for parts in message:
                 await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
     else:
@@ -80,7 +80,7 @@ async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAUL
         else:
             token_address = context.args[0]
             message = await top_holders_net_worth_map(token_address, limit )
-            print (holder_message)
+            print (message)
 
             await update.message.reply_text(message , parse_mode='MarkdownV2', disable_web_page_preview=True)
 

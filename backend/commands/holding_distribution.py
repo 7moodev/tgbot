@@ -62,7 +62,7 @@ async def process_holder(session, count, holder, total_supply, token, ranges):
     share_in_percent = float(amount) / total_supply * 100
     
     # Respect API rate limit by using the semaphore
-    whales = 
+    whales = await get_whales()
     async with semaphore:
         if wallet in whales:  # Skip whales
             ranges["25000+"] += 1
