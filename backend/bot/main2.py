@@ -7,7 +7,7 @@ import os
 from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, top_holders_net_worth_map, fresh_wallets_parsed
 import asyncio
 import traceback
-limit = 20
+limit = 50
 
 TOKEN= os.environ.get('tgTOKEN')
 BOT_USERNAME= os.environ.get('tgNAME')  
@@ -46,7 +46,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     print (f'User ({update.message.chat.id}) in {message_type}: "{text}"')
 
-    if context.user_data.get('awaiting_token_address', False):
+    if 1:#context.user_data.get('awaiting_token_address', False):
         # Let the token address handler process this message
         await handle_token_address(update, context)
         return
@@ -69,7 +69,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
 
     # Validate token address
     if len(token_address) < 43:  # Adjust this check for Solana addresses
-        await update.message.reply_text("Invalid token address. Please provide a valid address.")
+        await update.message.reply_text("Invalid token address. Please try again with a valid address.")
         return
 
     # Store the token address in user_data
@@ -78,31 +78,50 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
     # Check if 'top_holders_started' exists and is set, otherwise default to False
     if context.user_data.get('top_holders_started', False):
         context.user_data['top_holders_started'] = False
+        wait_message = await update.message.reply_text("Analyzing token please shill...")
         holder_message = await top_holders_holdings_parsed(token_address, limit)
 
-    elif context.user_data.get('noteworthy_started', False):
-        context.user_data['noteworthy_started'] = False
-        holder_message = await noteworthy_addresses_parsed(token_address, limit)
-
     elif context.user_data.get('net_worth_map_started', False):
+        wait_message = await update.message.reply_text("Checking for whales please shill...")
         context.user_data['net_worth_map_started'] = False
         holder_message = await top_holders_net_worth_map(token_address, limit)
 
     # Check if 'token_distribution_started' exists and is set, otherwise default to False
     elif context.user_data.get('token_distribution_started', False):
+        wait_message = await update.message.reply_text("Checking for holder distribution please shill...")
         context.user_data['token_distribution_started'] = False
         holder_message = await holder_distribution_parsed(token_address)
 
     elif context.user_data.get('fresh_wallets_started', False): 
+        wait_message = await update.message.reply_text("Checking for fresh wallets please shill...")
         context.user_data['fresh_wallets_started'] = False
         holder_message = await fresh_wallets_parsed(token_address, limit)
+    else: 
+        try: 
+            wait_message = await update.message.reply_text("Analyzing token getting top holders please shill...")
+            holder_message = await top_holders_holdings_parsed(token_address, limit)
+        except Exception as e:
+            print(e)
+            await update.message.reply_text("Something went wrong, please contact support.")
+
         
     print(holder_message)
     if type(holder_message) == list:
         for parts in holder_message:
-            await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            if parts == holder_message[0]:
+                await context.bot.edit_message_text(
+                chat_id=update.effective_chat.id,
+                message_id=wait_message.message_id,
+                text=parts
+                , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            else:
+                await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
     else:
-      await update.message.reply_text(holder_message, parse_mode='MarkdownV2', disable_web_page_preview=True)
+        await context.bot.edit_message_text(
+                chat_id=update.effective_chat.id,
+                message_id=wait_message.message_id,
+                text=holder_message
+                , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
@@ -115,10 +134,8 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
 /userid - get your userid 
 /renew - renew your subscription
 /referal - get referal link
+/fresh - [contract adress] to get a list of fresh wallets
 /sub - get subscription status
-/distro - [contract adress] get distribution of token holders
-/top2 - [contract adress] get list of top holders
-/fresh - [contract adress] get list of fresh wallets among topholders_command
 /map - [contract adress] get map of net worth of top holders
 
     '''
@@ -134,9 +151,8 @@ def main():
 
     #Commands
     #main functions
-    app.add_handler(CommandHandler('distro', token_distribution_command))
+    #app.add_handler(CommandHandler('distro', token_distribution_command))
     app.add_handler(CommandHandler('top', topholders_command))
-    app.add_handler(CommandHandler('top2', noteworthy_command))
     app.add_handler(CommandHandler('fresh', fresh_wallets_command))
     app.add_handler(CommandHandler('map', top_net_worth_map_command))
 

@@ -1,3 +1,4 @@
+from ctypes import memset
 from .tg_format_test import send_message
 from ..commands.top_holders_holdings import get_top_holders_holdings
 from ..commands.holding_distribution import get_holding_distribution 
@@ -281,13 +282,13 @@ async def fresh_wallets_parsed(token, limit):
         f"├──💰 MC: {market_cap}\n",
         f"├──💦 Liquidity: {liquidity}\n",
         f"├──👥 Holders count: {holder}\n",
-        f" Fresh Wallets Detector\n\n"
-        f"🔴: <1 Week\n",
-        f"🟠: <1 Month\n",
-        f"🟡: <3 Months\n",
-        f"🟢: >3 Months\n",
-        f"🔵: LP/Bot \n\n",
-        f"Ordered by holding --------->\n\n",
+        f"Fresh Wallets Detector\n\n",
+        escape_markdown(f"🔴: <1 Week\n"),
+        escape_markdown(f"🟠: <1 Month\n"),
+        escape_markdown(f"🟡: <3 Months\n"),
+        escape_markdown(f"🟢: >3 Months\n"),
+        escape_markdown(f"🔵: LP/Bot \n\n"),
+        escape_markdown(f"Ordered by holding --------->\n\n"),
     ]
     
     # Precompute current time
@@ -322,7 +323,7 @@ async def fresh_wallets_parsed(token, limit):
             count+=1
 
         msg =  ''.join(message_parts)
-        return escape_markdown(msg)
+        return msg
 
 
 async def top_holders_net_worth_map(token, limit):
@@ -345,8 +346,9 @@ async def top_holders_net_worth_map(token, limit):
     print(len(top_holders))
     # Token information part=
    # Token information part=
-    message = "Top Net Worth Map by Munki:\n\n"
-    message += f"*Summary of Top {limit} Holders: {token_info['symbol']} \\({token_info['name']}\\)*\n"
+    message = "Top Net Worth Map by EL MUNKI 🐵🌕:\n\n"
+
+    message += f"*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
     message += f"├──💰MC: {format_number(token_info['market_cap'])}\n"
     message += f"├──🫗Liquidity: {format_number(token_info['liquidity'])}\n"
     message += f"├──👥Holders count: {token_info['holder']:,}\n"
@@ -359,6 +361,7 @@ async def top_holders_net_worth_map(token, limit):
     dolphin = 0
     fish = 0
     shrimp = 0
+    foam = 0
     for holder in top_holders:
         if 'error' in holder or 'net_worth_excluding' not in holder:
             print (holder)
@@ -395,24 +398,24 @@ async def top_holders_net_worth_map(token, limit):
                 message += "\n"
         else:
             message += "🫧"
+            foam += 1
             if c%10 == 0:
                 message += "\n"
         c+=1    
 
     holder_counts = {
+        "🫧 (<$10)": foam,
           "🦐 (<$100)": shrimp,
         "🐟 ($100-$1k)": fish,
         "🐬 ($1k-$10k)": dolphin,
         "🦈 ($10k-$100k)": shark,
         "🐳 ($100k+)": whale
             }
+    message += "\n\n"
+    message += f"*Summary of Top {limit} Holders networth excluding {token_info['symbol']} \\({token_info['name']}\\)*\n"
 
     for emoji, count in holder_counts.items():
-        message += escape_markdown(f"{emoji}:  {count}\n")
-
-    
-
-    message += f"├──👥Holders count: {token_info['holder']:,}\n\n"
+        message += escape_markdown(f"{emoji}:  {count}\n") 
 
     return message
 
