@@ -394,7 +394,7 @@ async def top_holders_net_worth_map(token, limit):
 
     holder_counts = {
           "🦐 (<$100)": shrimp,
-        "🐟 ($100-$1k)": fish
+        "🐟 ($100-$1k)": fish,
         "🐬 ($1k-$10k)": dolphin,
         "🦈 ($10k-$100k)": shark,
         "🐳 ($100k+)": whale
