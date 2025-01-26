@@ -16,7 +16,7 @@ rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
 # Variable to store the last used RPC
 last_rpc = None
 
-def get_rpc():
+async def get_rpc():
     global last_rpc
 
     # Filter out the last used RPC
@@ -71,7 +71,7 @@ async def get_token_supply(token:str=None):
         "id": 1
     }
 
-    response = requests.post(get_rpc(), headers=headers, json=data)
+    response = requests.post(await get_rpc(), headers=headers, json=data)
     if response.status_code != 200:
         return None
     print("Returning total supply for", token)
@@ -209,6 +209,7 @@ async def get_token_creation_info(token:str=None):
     }
     try:
         response = requests.get(url, headers=headers)
+        print(response.json())
         return response.json()['data']
     except Exception as e:
         print("Error getting token creation info for", token, ":Birdeye")
@@ -280,8 +281,8 @@ async def get_top_holders(token:str=None, limit = None):
 
 if __name__ == "__main__":
     #print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
-   print(asyncio.run(get_token_supply("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))
-   # print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 0)))
+   #print(asyncio.run(get_token_supply("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))
+   print(asyncio.run(get_top_holders("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
     # holders = asyncio.run(get_top_holders("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", 500))
     # holders1 = asyncio.run(get_top_holders("So11111111111111111111111111111111111111112", 750))
     # save_to_path = "backend\commands\db\whales.json"

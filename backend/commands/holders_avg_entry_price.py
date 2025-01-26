@@ -13,9 +13,9 @@ async def get_holder_avg_entry_price(wallet:str ,token: str, token_creation_time
         return None, None, None
     if len(trade_history) == 0:
         return None, None, None
-    avg_raw_entry_price = calculate_avg_entry(token_address=token,data=trade_history)
-    avg_raw_exit_price = calculate_avg_exit(token_address=token, data=trade_history)
-    avg_actual_holding_price = calculate_avg_holding(avg_raw_entry_price, avg_raw_exit_price)
+    avg_raw_entry_price = await calculate_avg_entry(token_address=token,data=trade_history)
+    avg_raw_exit_price = await calculate_avg_exit(token_address=token, data=trade_history)
+    avg_actual_holding_price = await calculate_avg_holding(avg_raw_entry_price, avg_raw_exit_price)
     print(f"Returning avg entry price of holder {wallet} for token", token)
     return avg_raw_entry_price, avg_raw_exit_price, avg_actual_holding_price
 

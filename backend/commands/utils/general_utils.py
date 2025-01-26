@@ -25,7 +25,7 @@ rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
 # Variable to store the last used RPC
 last_rpc = None
 
-def get_rpc():
+async def get_rpc():
     global last_rpc
 
     # Filter out the last used RPC

@@ -8,6 +8,7 @@ import math
 import os
 from .utils.token_utils import get_token_overview, get_top_holders
 from .utils.general_utils import get_whales
+from .utils.wallet_utils import get_balance, get_balance_birdeye
 
 
 '''
@@ -154,9 +155,6 @@ async def get_holding_distribution(token):
         'liquidity': liquidity,
         'market_cap': market_cap,
     }
-
-
-    
     top_holders = await get_top_holders(token, TOP_HOLDERS_TO_CONSIDER)  # Fetch top holders *****************************************************************
     if not top_holders:
         print("Failed to fetch top holders.")
@@ -170,10 +168,9 @@ async def get_holding_distribution(token):
     
     return results
 
-# Main execution function
 if __name__ == "__main__":
     start_time = time.time()
     token = "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"  # Example token
-    result = asyncio.run(get_holding_distribution(token))
+    result = asyncio.run(test(token))
     print(result)
     print(f"Execution time: {time.time() - start_time} seconds")
