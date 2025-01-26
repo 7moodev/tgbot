@@ -1,4 +1,4 @@
-#from .tg_format_test import send_message
+from .tg_format_test import send_message
 from ..commands.top_holders_holdings import get_top_holders_holdings
 from ..commands.holding_distribution import get_holding_distribution 
 from ..commands.fresh_wallets import fresh_wallets
