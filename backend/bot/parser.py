@@ -148,7 +148,7 @@ async def top_holders_holdings_parsed(token, limit):
                         processed.append(top)
                         symbol =escape_markdown(top['symbol'])
                         symbol = f"{symbol}" 
-                        h_info += (f"`{symbol}`: {format_number(top1['valueUsd'])}, ")
+                        h_info += (f"`{symbol}`: {format_number(top['valueUsd'])}, ")
             
             h_info = h_info[:-2] + "\n" # Remove the trailing comma and add a newline
 #
