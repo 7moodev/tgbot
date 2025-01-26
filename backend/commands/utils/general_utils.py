@@ -25,7 +25,7 @@ rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
 # Variable to store the last used RPC
 last_rpc = None
 
-def get_rpc():
+async def get_rpc():
     global last_rpc
 
     # Filter out the last used RPC
@@ -134,9 +134,10 @@ async def get_whales():
     """
     function that gets updated every x hours / days to fetch the top holders of sol, msol, usdc or usdt (whales)
     """
-    with open('backend/constants/whales.json', 'r') as f:
+    days = 3
+    with open('backend/commands/constants/whales.json', 'r') as f:
         whales = json.load(f)
-        if ('timestamp' in whales and int(time.time()) - whales['timestamp'] < 7 * 24 * 60 * 60):
+        if ('timestamp' in whales and int(time.time()) - whales['timestamp'] < days * 24 * 60 * 60):
             if 'items' in whales:
                 print("Returning cached data from 'whales.json'.")
                 return set(whales['items'])

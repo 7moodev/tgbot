@@ -1,4 +1,4 @@
-from .tg_format_test import send_message
+#from .tg_format_test import send_message
 from ..commands.top_holders_holdings import get_top_holders_holdings
 from ..commands.holding_distribution import get_holding_distribution 
 from ..commands.fresh_wallets import fresh_wallets
@@ -271,50 +271,58 @@ async def fresh_wallets_parsed(token, limit):
         token_info = data ['token_info'] 
         wallet_ages = data ['items']
 
-    try:
+    token_symbol = token_info['symbol']
+    token_name = token_info['name']
+    market_cap = format_number(token_info['market_cap'])
+    liquidity = format_number(token_info['liquidity'])
+    holder = format_number(token_info['holder'])
+    message_parts = [
+        f"*Token*: {token_symbol} \\({token_name}\\)\n",
+        f"├──💰 MC: {market_cap}\n",
+        f"├──💦 Liquidity: {liquidity}\n",
+        f"├──👥 Holders count: {holder}\n",
+        f" Fresh Wallets Detector\n\n"
+        f"🔴: <1 Week\n",
+        f"🟠: <1 Month\n",
+        f"🟡: <3 Months\n",
+        f"🟢: >3 Months\n",
+        f"🔵: LP/Bot \n\n",
+        f"Ordered by holding --------->\n\n",
+    ]
+    
+    # Precompute current time
+    current_time = int(time.time())
+    count=0
 
-        message_parts = [
-            f"*Token Info*: {token_info['symbol']} ({token_info['name']})\n",
-            f"├── MC: {format_number(token_info['market_cap'])}\n",   
-            f"├── Liquidity: {format_number(token_info['liquidity'])}\n\n",
-            f"Ordered by holding --------->\n\n",
-            f"[🔴](http://example.com): <1 Week\n",
-            f"🟠: <1 Month\n",
-            f"🟡: <3 Months\n",
-            f"🟢: >3 Months\n",
-            f"🔵: LP/Bot \n\n"
-        ]
-        
-        # Precompute current time
-        current_time = int(time.time())
-        count=0
-        for wallet in wallet_ages:
-            if count %10 == 0:
-                message_parts.append("\n")
-            if wallet.get('age') is not None:
-                wallet_age_unix = wallet['age']
-                if wallet_age_unix == 0:   
-                    message_parts.append(f"🔵")#(https://solscan.io/account/{wallet['wallet']})")
-                    count+=1
-                    continue
-                # Calculate age in days only
-                age_seconds = current_time - wallet_age_unix
-                days = age_seconds // (24 * 60 * 60)
-                if days < 7:
-                    message_parts.append(f"🔴")#(https://solscan.io/account/{wallet['wallet']})")
-                elif days < 30:
-                    message_parts.append(f"🟠")#(https://solscan.io/account/{wallet['wallet']})")
-                elif days < 90: 
-                    message_parts.append(f"🟡")#(https://solscan.io/account/{wallet['wallet']})")
-                else:
-                    message_parts.append(f"🟢")#(https://solscan.io/account/{wallet['wallet']})")
+    for wallet in wallet_ages:
+        if count == 50:
+            break
+        if count %10 == 0:
+            message_parts.append("\n")
+        if 'error' in wallet:
+            print (f"Error processing wallet: {wallet}")
+            continue
+        if wallet.get('age') is not None:
+            wallet_age_unix = wallet['age']
+            if wallet_age_unix == 0:   
+                message_parts.append(f"🔵 ")#(https://solscan.io/account/{wallet['wallet']})")
                 count+=1
-        # Combine the message parts into a single string
+                continue
+            # Calculate age in days only
+            age_seconds = current_time - wallet_age_unix
+            days = age_seconds // (24 * 60 * 60)
+            if days < 7:
+                message_parts.append(f"🔴 ")#(https://solscan.io/account/{wallet['wallet']})")
+            elif days < 30:
+                message_parts.append(f"🟠 ")#(https://solscan.io/account/{wallet['wallet']})")
+            elif days < 90: 
+                message_parts.append(f"🟡 ")#(https://solscan.io/account/{wallet['wallet']})")
+            else:
+                message_parts.append(f"🟢 ")#(https://solscan.io/account/{wallet['wallet']})")
+            count+=1
+
         msg =  ''.join(message_parts)
         return escape_markdown(msg)
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return escape_markdown(f"An error occurred: {e}")
 
 
 async def top_holders_net_worth_map(token, limit):
