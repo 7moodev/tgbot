@@ -351,7 +351,7 @@ async def top_holders_net_worth_map(token, limit):
     message += f"*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
     message += f"├──💰MC: {format_number(token_info['market_cap'])}\n"
     message += f"├──🫗Liquidity: {format_number(token_info['liquidity'])}\n"
-    message += f"├──👥Holders count: {token_info['holder']:,}\n"
+    message += f"├──👥Holders count: {token_info['holder']:,}\n\n"
     #message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n"
 
 
@@ -412,7 +412,7 @@ async def top_holders_net_worth_map(token, limit):
         "🐳 ($100k+)": whale
             }
     message += "\n\n"
-    message += f"*Summary of Top {limit} Holders networth excluding {token_info['symbol']} \\({token_info['name']}\\)*\n"
+    message += f"*Summary of Top {limit} Holders net worth excluding {token_info['symbol']} \\({token_info['name']}\\)*\n"
 
     for emoji, count in holder_counts.items():
         message += escape_markdown(f"{emoji}:  {count}\n") 
