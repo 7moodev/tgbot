@@ -155,8 +155,9 @@ async def get_top_holders_holdings(
             'holder': token_overview['holder'],
             'extensions': token_overview['extensions'],
             'priceChange1hPercent': token_overview['priceChange1hPercent'],
-            'creationTime': token_creation_info['blockUnixTime'],
         }
+        if token_creation_info:
+            token_info['creationTime'] = token_creation_info['blockUnixTime']
     else:
         token_info = {}
     

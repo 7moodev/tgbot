@@ -209,7 +209,6 @@ async def get_token_creation_info(token:str=None):
     }
     try:
         response = requests.get(url, headers=headers)
-        print(response.json())
         return response.json()['data']
     except Exception as e:
         print("Error getting token creation info for", token, ":Birdeye")

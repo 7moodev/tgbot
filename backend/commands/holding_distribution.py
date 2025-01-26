@@ -171,6 +171,6 @@ async def get_holding_distribution(token):
 if __name__ == "__main__":
     start_time = time.time()
     token = "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"  # Example token
-    result = asyncio.run(test(token))
+    result = asyncio.run(get_holding_distribution(token))
     print(result)
     print(f"Execution time: {time.time() - start_time} seconds")

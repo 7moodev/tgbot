@@ -5,7 +5,7 @@ import requests
 import time
 import json
 from concurrent.futures import ThreadPoolExecutor
-from .token_utils import get_price, get_price_historical
+from .token_utils import get_price, get_price_historical, get_token_supply
 from bisect import bisect_left
 from aiohttp import ClientSession, ClientError
 import aiohttp 
@@ -193,6 +193,7 @@ async def get_wallet_trade_history(wallet:str, limit:int=100, before_time:int=0,
     print("Returning trade history for", wallet)
     return res
 async def calculate_avg_exit(token_address, data):
+    supply = await get_token_supply(token_address)
     print("Calculating average exit price for", token_address)
     total_revenue = 0
     total_amount_sold = 0
@@ -234,7 +235,7 @@ async def calculate_avg_exit(token_address, data):
         avg_exit_price = 0  # No exits for the token
     print("Returning average exit price for", token_address)
     return {
-            "avg_exit_price": avg_exit_price,
+            "avg_exit_price": avg_exit_price * supply,
             'total_amount':total_amount_sold,
             "oldest_trade_time": oldest_trade_time,
             "oldest_tx_hash": oldest_tx_hash
@@ -242,6 +243,7 @@ async def calculate_avg_exit(token_address, data):
 
 
 async def calculate_avg_entry(token_address, data ):
+    supply = await get_token_supply(token_address)
     print("Calculating average entry price for", token_address)
     total_cost = 0
     total_amount = 0
@@ -293,12 +295,12 @@ async def calculate_avg_entry(token_address, data ):
         avg_entry_price = 0  # No entries for the toke
     print("Returning average entry price for", token_address)
     if sniped_pfun:
-        return {"avg_entry_price":avg_entry_price, 'total_amount':total_amount, "sniped_pfun":sniped_pfun,
-                 "sniper_pfun_price":sniper_pfun_price, "sniper_pfun_unix_time":sniper_pfun_unix_time,
+        return {"avg_entry_price":avg_entry_price * supply, 'total_amount':total_amount, "sniped_pfun":sniped_pfun,
+                 "sniper_pfun_price":sniper_pfun_price * supply, "sniper_pfun_unix_time":sniper_pfun_unix_time,
                  "sniper_pfun_hash":sniper_pfun_hash,
                    "oldest_trade_time":oldest_trade_time, "oldest_tx_hash":oldest_tx_hash}
     else:
-        return {"avg_entry_price":avg_entry_price,'total_amount':total_amount, "sniped_pfun":sniped_pfun, "oldest_trade_time":oldest_trade_time, "oldest_tx_hash":oldest_tx_hash}
+        return {"avg_entry_price":avg_entry_price * supply,'total_amount':total_amount, "sniped_pfun":sniped_pfun, "oldest_trade_time":oldest_trade_time, "oldest_tx_hash":oldest_tx_hash}
 
 async def calculate_avg_holding(entry_data, exit_data):
     print("Calculating average holding price out of entry and exit data")
@@ -344,7 +346,7 @@ async def calculate_avg_holding(entry_data, exit_data):
     avg_holding_price = total_cost_of_holdings / current_holding_amount
     print("Returning average holding price out of entry and exit data")
     return {
-        "avg_holding_price": avg_holding_price,
+        "avg_holding_price": avg_holding_price ,
         "current_holding_amount": current_holding_amount,
         "rebuy_detected": rebuy_detected
     }
@@ -500,17 +502,20 @@ if __name__ == "__main__":
     #print(asyncio.run(get_wallet_avg_price("7tco85pE38UHUmaSNZRnsvcw2GXJv5TowP1tSw3GAL6M", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "buy", httpx.AsyncClient())))
     #print(asyncio.run(get_all_signatures('UeXfwweGMBV8JkTQ7pFF6shPR9EiKEg8VnTNF4qKjhh')))
     #print(asyncio.run(get_balance('5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVh', '9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump')))
-    # hist = asyncio.run(get_wallet_trade_history('713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF', 100, 0, 0))
+    hist = asyncio.run(get_wallet_trade_history('52AYS4VdJkMtLMpr6vTAaa18qZmHEBPg8EHnxbYvi5uZ', 100, 0, 0))
     # entry = calculate_avg_entry(hist, "7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump")
-    # exit = calculate_avg_exit(hist, "7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump")
+    exit = asyncio.run(calculate_avg_exit("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",hist))
+    with open("wtf11.json", 'w') as f:  
+        json.dump(hist, f, indent=4)
     # print(entry)
     # print(exit)
     # holding = calculate_avg_holding(entry_data=entry, exit_data=exit)
     # print(holding)
     #print(asyncio.run(get_wallet_age("Hq2nUyT8VxgNcrgQM7eBA69iPp2jQvNCT7iycDqL3RJg")))
-    # wtf = asyncio.run(get_wallet_trade_history("", limit=1000, after_time=1737332294))
-    # print(len(wtf))
+    wtf = asyncio.run(get_wallet_trade_history("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF", limit=1000, after_time=1737332294))
+
+    print(exit)
     # with open("wtf1.json", 'w') as f:  
     #     json.dump(wtf, f, indent=4)
     #print(asyncio.run(get_wallet_portfolio("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF")))
-    print(asyncio.run(get_balance("4A7kWzk5wGxXaJCQC8kw7B17hSqGK9YVCoc2yxSedfS3", "So11111111111111111111111111111111111111112")))
+    #print(asyncio.run(get_balance("4A7kWzk5wGxXaJCQC8kw7B17hSqGK9YVCoc2yxSedfS3", "So11111111111111111111111111111111111111112")))
