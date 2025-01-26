@@ -12,7 +12,10 @@ solana_client = Client("https://api.mainnet-beta.solana.com")
 
 def check_user(user_id, referal_info):
     df = fetch_user_by_id(str(user_id))
+    print (df)
     if not df.empty:
+        print ("df exists")
+        print (str(user_id) == str(df['user_id'][0]))
 
         if str(user_id) == str(df['user_id'][0]):
             has_wallet = df['public_key'][0]
@@ -23,10 +26,10 @@ def check_user(user_id, referal_info):
                 update_user('joined', psycopg2.extensions.AsIs('CURRENT_TIMESTAMP'), str(user_id))
                 return 
 
-        else:
-            insert_user(str(user_id), 0, referal_info)
-            generate_wallet(str(user_id))
-            update_user('joined', psycopg2.extensions.AsIs('CURRENT_TIMESTAMP'), str(user_id))
+    else:
+        insert_user(str(user_id), 0, referal_info)
+        generate_wallet(str(user_id))
+        update_user('joined', psycopg2.extensions.AsIs('CURRENT_TIMESTAMP'), str(user_id))
             
 
 def generate_wallet(user_id):

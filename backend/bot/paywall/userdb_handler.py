@@ -77,7 +77,7 @@ else:
 
 @db_connection
 def insert_user(cursor, user_id, referral, reffered_by):
-    insert_query = sql.SQL("INSERT INTO users (user_id, Referrals,reffered_by  ) VALUES (%s, %s, %s)")
+    insert_query = sql.SQL('INSERT INTO users (user_id, referrals, referred_by  ) VALUES (%s, %s, %s)')
     cursor.execute(insert_query, (user_id, referral, reffered_by))
     print("Inserted data successfully")
 

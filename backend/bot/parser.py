@@ -128,15 +128,16 @@ async def top_holders_holdings_parsed(token, limit):
             if top1:
                 symbol =escape_markdown(top1['symbol'])
                 symbol = f"{symbol}"#(https://dexscreener.com/solana/{top1['address']})"
-                h_info += (f"*{symbol}*: {format_number(top1['valueUsd'])}, ")
+                h_info += (f"`{symbol}`: {format_number(top1['valueUsd'])}, ")
+                
             if top2:
                 symbol =escape_markdown(top2['symbol'])
                 symbol = f"{symbol}"#](https://dexscreener.com/solana/{top2['address']})"
-                h_info += (f"*{symbol}*: {format_number(top2['valueUsd'])}, ")
+                h_info += (f"`{symbol}`: {format_number(top2['valueUsd'])}, ")
             if top3:
                 symbol =escape_markdown(top3['symbol'])
                 symbol = f"{symbol}"#](https://dexscreener.com/solana/{top3['address']})"
-                h_info += (f"*{symbol}*: {format_number(top3['valueUsd'])} \n")
+                h_info += (f"`{symbol}`: {format_number(top3['valueUsd'])} \n")
 
 
             if len(current_message) + len(h_info) > 4096:
@@ -229,7 +230,10 @@ def shorten_address(address: str, length: int = 4) -> str:
 async def fresh_wallets_parsed(token, limit):
 
     if running:
-        token_info, wallet_ages = await fresh_wallets(token, limit)
+        data = await fresh_wallets(token, limit)
+        token_info = data ['token_info'] 
+        wallet_ages = data ['items']
+
     
     else:
         print ('parsing from json')
