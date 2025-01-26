@@ -96,7 +96,7 @@ async def top_holders_holdings_parsed(token, limit):
     message += f"├──💰 MC: {format_number(token_info['market_cap'])}\n"
     message += f"├──🫗 Liquidity: {format_number(token_info['liquidity'])}\n"
     message += f"├──👥Total Holder: {token_info['holder']:,}\n"   
-    message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n\n"
+    #message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n\n"
 
     noteworthy = check_noteworthy(top_holders)  
     message += f"* 💰 There are {len(noteworthy)}/ {len(top_holders)} noteworthy top holders:*\n\n"
@@ -345,13 +345,12 @@ async def top_holders_net_worth_map(token, limit):
     print(len(top_holders))
     # Token information part=
    # Token information part=
-    message = "Top  by Net Worth Map by Munki:\n\n"
-
+    message = "Top Net Worth Map by Munki:\n\n"
     message += f"*Summary of Top {limit} Holders: {token_info['symbol']} \\({token_info['name']}\\)*\n"
     message += f"├──💰MC: {format_number(token_info['market_cap'])}\n"
     message += f"├──🫗Liquidity: {format_number(token_info['liquidity'])}\n"
     message += f"├──👥Holders count: {token_info['holder']:,}\n"
-    message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n"
+    #message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n"
 
 
     c = 1
