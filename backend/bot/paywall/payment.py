@@ -65,8 +65,8 @@ def check_balance(wallet_address):
 
     # Format and send the response
     response = f"Balance for wallet {wallet_address}: {balance_in_sol} SOL "
-    if balance_in_sol < 0.01:
-        remaining_sol = 0.01 - balance_in_sol 
+    if balance_in_sol < 0.69:
+        remaining_sol = 0.69 - balance_in_sol 
         response = response  + f'Please transfer {remaining_sol} SOL and check again to unlock features'
         return response, payed 
     
