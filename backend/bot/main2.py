@@ -133,7 +133,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     response = '''/top - top [contract adress] to get list of topholders
 /userid - get your userid 
 /renew - renew your subscription
-/referal - get referal link
+/referral - get referral link
 /fresh - [contract adress] to get a list of fresh wallets
 /sub - get subscription status
 /map - [contract adress] get map of net worth of top holders
@@ -160,7 +160,7 @@ def main():
     app.add_handler(CommandHandler('userid', userid_command))
     app.add_handler(CommandHandler('renew', renew_command))
     app.add_handler(CommandHandler('start', start_command))
-    app.add_handler(CommandHandler('referal', referrallink_command))
+    app.add_handler(CommandHandler('referral', referrallink_command))
     app.add_handler(CommandHandler('sub', check_subscription))
     app.add_handler(CommandHandler('help', help))
 
