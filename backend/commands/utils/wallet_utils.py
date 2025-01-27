@@ -53,7 +53,7 @@ async def get_balance_birdeye(wallet, token):
         return None    
 
 async def get_balance(wallet: str, token: str = None, client: httpx.AsyncClient = None):
-    timeout=0.5
+    timeout=0.25
 
     """
     Get the balance of a wallet in SOL or a token
@@ -87,10 +87,10 @@ async def get_balance(wallet: str, token: str = None, client: httpx.AsyncClient 
     
     try:
         if client is None:
-            response = requests.post(quicknoderpc, headers=headers, json=data, timeout=timeout)
+            response = requests.post(await get_rpc(), headers=headers, json=data, timeout=timeout)
         else:
-            response = await client.post(quicknoderpc, headers=headers, json=data, timeout=timeout)
-    except:
+            response = await client.post(await get_rpc(), headers=headers, json=data, timeout=timeout)
+    except Exception as e:
         print("Error getting balance for", wallet, "in", token, ":Solana RPC")
         return None
 

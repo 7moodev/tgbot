@@ -78,7 +78,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
     # Check if 'top_holders_started' exists and is set, otherwise default to False
     if context.user_data.get('top_holders_started', False):
         context.user_data['top_holders_started'] = False
-        wait_message = await update.message.reply_text("Analyzing token please chill...")
+        wait_message = await update.message.reply_text("Analyzing top holders please chill...")
         holder_message = await top_holders_holdings_parsed(token_address, limit)
 
     elif context.user_data.get('net_worth_map_started', False):

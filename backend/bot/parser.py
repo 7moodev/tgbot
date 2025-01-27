@@ -329,7 +329,6 @@ async def fresh_wallets_parsed(token, limit):
     # Precompute current time
     current_time = int(time.time())
     count=0
-
     for wallet in wallet_ages:
         if count == 50:
             break
@@ -348,17 +347,21 @@ async def fresh_wallets_parsed(token, limit):
             age_seconds = current_time - wallet_age_unix
             days = age_seconds // (24 * 60 * 60)
             if days < 7:
+
                 message_parts.append(f"🔴 ")#(https://solscan.io/account/{wallet['wallet']})")
             elif days < 30:
+
                 message_parts.append(f"🟠 ")#(https://solscan.io/account/{wallet['wallet']})")
             elif days < 90: 
+
                 message_parts.append(f"🟡 ")#(https://solscan.io/account/{wallet['wallet']})")
             else:
+
                 message_parts.append(f"🟢 ")#(https://solscan.io/account/{wallet['wallet']})")
             count+=1
 
-        msg =  ''.join(message_parts)
-        return msg
+    msg =  ''.join(message_parts)
+    return msg
 async def fresh_wallets_v2_parsed(token, limit):
     data = await fresh_wallets_v2(token, limit)
     token_info = data['token_info']
@@ -585,7 +588,7 @@ async def noteworthy_addresses_parsed(token, limit):
 
 if __name__ == "__main__":
     time_now = time.time()
-    print(asyncio.run(fresh_wallets_v2_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
+    print(asyncio.run(fresh_wallets_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
     print("Execution time:", time.time() - time_now, "seconds")
     # print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))i
 
