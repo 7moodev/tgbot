@@ -1,13 +1,13 @@
 {
     "token_info": {
-        "price": 0.008694299051053645,
+        "price": 0.008942156706431007,
         "symbol": "Mizuki",
         "name": "Mizuki",
         "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
         "liquidity": 614248.2970903305,
-        "market_cap": 8694239.455511168,
+        "market_cap": 8942095.411934843,
         "circulatingSupply": 999993145.445984,
-        "realMc": 8694239.455511168,
+        "realMc": 8942095.411934843,
         "holder": 6598,
         "extensions": {
             "coingeckoId": "mizuki",
@@ -15,14 +15,13 @@
             "twitter": "https://twitter.com/_Mizuki_exe",
             "website": "https://terminal.mizuki-exe.xyz/"
         },
-        "priceChange1hPercent": 6.007884311802349
+        "priceChange1hPercent": 1.8875847358518998
     },
     "items": [
         {
             "count": 1,
             "wallet": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",
-            "age": 0,
-            "age_readable": "Exchange/LP"
+            "error": "Failed to fetch wallet info: 'int' object has no attribute 'get'"
         },
         {
             "count": 2,
@@ -63,7 +62,7 @@
         {
             "count": 8,
             "wallet": "6BE7yFZyvQRyg2vveW5GHPgvgorb6f8BWVfJir7zRVXH",
-            "age": 1727842237,
+            "age": 1727842360,
             "age_readable": "3 months"
         },
         {

@@ -547,7 +547,9 @@ async def noteworthy_addresses_parsed(token, limit):
 
 
 if __name__ == "__main__":
-    print(asyncio.run(fresh_wallets_v2_parsed("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump", 250)))
+    time_now = time.time()
+    print(asyncio.run(fresh_wallets_v2_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
+    print("Execution time:", time.time() - time_now, "seconds")
     # print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))i
 
 #     token_info = '{"symbol": "OBOT", "name": "OBOT", "logoURI": "https://ipfs.io/ipfs/QmeeSqjjrpQ5ht5uc21uG3j3PdVM46CkfTXUCyt23vs462", "liquidity": 1042030.2735918732, "market_cap": 8623704.06309531}'

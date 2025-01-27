@@ -15,7 +15,7 @@ async def fetch_wallet_info(count: int, wallet: str) -> Dict[str, Any]:
     time_now = time.time()
     time_before_three_months = 60 * 60 * 24 * 90
     try:
-        age = await get_wallet_age(wallet, max_age= time_before_three_months)
+        age = (await get_wallet_age(wallet, max_age= time_before_three_months)).get('blockTime')
         age_readable = await get_wallet_age_readable(wallet, age)
         return {
             "count": count,
