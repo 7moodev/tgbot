@@ -78,27 +78,27 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
     # Check if 'top_holders_started' exists and is set, otherwise default to False
     if context.user_data.get('top_holders_started', False):
         context.user_data['top_holders_started'] = False
-        wait_message = await update.message.reply_text("Analyzing token please shill...")
+        wait_message = await update.message.reply_text("Analyzing token please chill...")
         holder_message = await top_holders_holdings_parsed(token_address, limit)
 
     elif context.user_data.get('net_worth_map_started', False):
-        wait_message = await update.message.reply_text("Checking for whales please shill...")
+        wait_message = await update.message.reply_text("Checking for whales please chill...")
         context.user_data['net_worth_map_started'] = False
         holder_message = await top_holders_net_worth_map(token_address, limit)
 
     # Check if 'token_distribution_started' exists and is set, otherwise default to False
     elif context.user_data.get('token_distribution_started', False):
-        wait_message = await update.message.reply_text("Checking for holder distribution please shill...")
+        wait_message = await update.message.reply_text("Checking for holder distribution please chill...")
         context.user_data['token_distribution_started'] = False
         holder_message = await holder_distribution_parsed(token_address)
 
     elif context.user_data.get('fresh_wallets_started', False): 
-        wait_message = await update.message.reply_text("Checking for fresh wallets please shill...")
+        wait_message = await update.message.reply_text("Checking for fresh wallets please chill...")
         context.user_data['fresh_wallets_started'] = False
         holder_message = await fresh_wallets_parsed(token_address, limit)
     else: 
         try: 
-            wait_message = await update.message.reply_text("Analyzing token getting top holders please shill...")
+            wait_message = await update.message.reply_text("Analyzing token getting top holders please chill...")
             holder_message = await top_holders_holdings_parsed(token_address, limit)
         except Exception as e:
             print(e)

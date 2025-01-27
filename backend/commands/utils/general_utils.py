@@ -13,39 +13,24 @@ import math
 import aiohttp
 import json
 import ast
+import itertools
 
-heliusrpc = os.environ.get('heliusrpc')
+#heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
-heliusrpc1 = os.environ.get('heliusrpc1')
+quicknoderpc1 = os.environ.get('solrpc1')
+quicknoderpc2 = os.environ.get('solrpc2')
+quicknoderpc3 = os.environ.get('solrpc3')
+quicknoderpc4 = os.environ.get('solrpc4')
+#heliusrpc1 = os.environ.get('heliusrpc1')
 birdeyeapi = os.environ.get('birdeyeapi')
 
 # List of available RPCs
-rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
-
-# Variable to store the last used RPC
-last_rpc = None
+rpc_list = [quicknoderpc, quicknoderpc1, quicknoderpc2, quicknoderpc3, quicknoderpc4]
+rpc_iterator = itertools.cycle(rpc_list)
 
 async def get_rpc():
-    global last_rpc
-
-    # Filter out the last used RPC
-    available_rpcs = [rpc for rpc in rpc_list if rpc != last_rpc]
-
-    # Randomly select from available RPCs
-    selected_rpc = random.choice(available_rpcs)
-    
-    # Update the last used RPC
-    last_rpc = selected_rpc
-
-    # Identify which RPC was selected
-    if selected_rpc == heliusrpc:
-        print("Using heliusrpc")
-    elif selected_rpc == heliusrpc1:
-        print("Using heliusrpc1")
-    else:
-        print("Using quicknoderpc")
-
-    return selected_rpc
+    global rpc_iterator
+    return next(rpc_iterator)
 
 
 

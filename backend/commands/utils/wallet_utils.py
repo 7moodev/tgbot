@@ -10,40 +10,27 @@ from bisect import bisect_left
 from aiohttp import ClientSession, ClientError
 import aiohttp 
 import random
+import itertools
 MAX_SIGNATURES = 2500
 
-heliusrpc = os.environ.get('heliusrpc')
+#heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
-heliusrpc1 = os.environ.get('heliusrpc1')
+quicknoderpc1 = os.environ.get('solrpc1')
+quicknoderpc2 = os.environ.get('solrpc2')
+quicknoderpc3 = os.environ.get('solrpc3')
+quicknoderpc4 = os.environ.get('solrpc4')
+#heliusrpc1 = os.environ.get('heliusrpc1')
 birdeyeapi = os.environ.get('birdeyeapi')
 
 # List of available RPCs
-rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
-
-# Variable to store the last used RPC
-last_rpc = None
+rpc_list = [quicknoderpc, quicknoderpc1, quicknoderpc2, quicknoderpc3, quicknoderpc4]
+rpc_iterator = itertools.cycle(rpc_list)
 
 async def get_rpc():
-    global last_rpc
+    global rpc_iterator
+    return next(rpc_iterator)
 
-    # Filter out the last used RPC
-    available_rpcs = [rpc for rpc in rpc_list if rpc != last_rpc]
 
-    # Randomly select from available RPCs
-    selected_rpc = random.choice(available_rpcs)
-    
-    # Update the last used RPC
-    last_rpc = selected_rpc
-
-    # Identify which RPC was selected
-    if selected_rpc == heliusrpc:
-        print("Using heliusrpc")
-    elif selected_rpc == heliusrpc1:
-        print("Using heliusrpc1")
-    else:
-        print("Using quicknoderpc")
-
-    return selected_rpc
 async def get_balance_birdeye(wallet, token):
     print("Getting balance using Birdeye for", wallet, "in", token)
 
@@ -352,9 +339,9 @@ async def calculate_avg_holding(entry_data, exit_data):
     }
 
 
+async_client = httpx.AsyncClient(limits=httpx.Limits(max_connections=100))
 
-
-async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_filter: bool = True):
+async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_filter: bool = True, time_out: int = None):
     """
     Get the blocktime of the oldest transaction of a wallet in unix time.
     Returns 0 for exchanges or bot activity.
@@ -369,7 +356,7 @@ async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_fi
     before = None
     time_now_unix = int(time.time())
 
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(limits=httpx.Limits(max_connections=100)) as client:
         while True:
             # Exit if max_signatures is exceeded
             if all_signatures_count > max_signatures:
@@ -383,7 +370,10 @@ async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_fi
 
             try:
                 # Make asynchronous request
-                response = await client.post(await get_rpc(), headers=headers, json=data)
+                if time_out is not None:
+                    response = await client.post(await get_rpc(), headers=headers, json=data, timeout=time_out)
+                else:
+                    response = await client.post(await get_rpc(), headers=headers, json=data)
                 response.raise_for_status()
                 result = response.json().get('result', [])
 
@@ -402,10 +392,9 @@ async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_fi
                 # Exit early if fewer than 1000 results are returned
                 if len(result) < 1000:
                     break
-
-            except (httpx.RequestError, KeyError) as e:
+            except (httpx.RequestError, KeyError, httpx.HTTPStatusError) as e:
+                print(str(e))
                 print(f"Error fetching wallet age for {wallet}: {str(e)}")
-                print(response.json())
                 return None
     print("Returning wallet age for", wallet)
     return oldest_block_time

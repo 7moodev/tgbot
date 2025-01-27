@@ -4,39 +4,25 @@ import time
 import asyncio
 import json
 import random
+import itertools
 
-heliusrpc = os.environ.get('heliusrpc')
+#heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
-heliusrpc1 = os.environ.get('heliusrpc1')
+quicknoderpc1 = os.environ.get('solrpc1')
+quicknoderpc2 = os.environ.get('solrpc2')
+quicknoderpc3 = os.environ.get('solrpc3')
+quicknoderpc4 = os.environ.get('solrpc4')
+#heliusrpc1 = os.environ.get('heliusrpc1')
 birdeyeapi = os.environ.get('birdeyeapi')
 
 # List of available RPCs
-rpc_list = [heliusrpc, quicknoderpc, heliusrpc1]
-
-# Variable to store the last used RPC
-last_rpc = None
+rpc_list = [quicknoderpc, quicknoderpc1, quicknoderpc2, quicknoderpc3, quicknoderpc4]
+rpc_iterator = itertools.cycle(rpc_list)
 
 async def get_rpc():
-    global last_rpc
+    global rpc_iterator
+    return next(rpc_iterator)
 
-    # Filter out the last used RPC
-    available_rpcs = [rpc for rpc in rpc_list if rpc != last_rpc]
-
-    # Randomly select from available RPCs
-    selected_rpc = random.choice(available_rpcs)
-    
-    # Update the last used RPC
-    last_rpc = selected_rpc
-
-    # Identify which RPC was selected
-    if selected_rpc == heliusrpc:
-        print("Using heliusrpc")
-    elif selected_rpc == heliusrpc1:
-        print("Using heliusrpc1")
-    else:
-        print("Using quicknoderpc")
-
-    return selected_rpc
         
 async def get_token_overview(token:str=None):
     print("Getting token overview for", token)
@@ -74,9 +60,6 @@ async def get_token_supply(token:str=None):
     response = requests.post(await get_rpc(), headers=headers, json=data)
     if response.status_code != 200:
         return None
-    print("Returning total supply for", token)
-    print(response.json())
-    return float(response.json()['result']['value']['uiAmount'])
     if response.status_code != 200:
         return None
     print("Returning total supply for", token)

@@ -95,7 +95,7 @@ async def fresh_wallets(token: str, limit: int) -> Dict[str, Any]:
 if __name__ == "__main__":
     start_time = time.time()
     token = "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"
-    limit = 0
+    limit = 100
     result = asyncio.run(fresh_wallets(token, limit))
     with open("backend/commands/outputs/fresh_wallets.json", "w") as f:
         json.dump(result, f, indent=4)
