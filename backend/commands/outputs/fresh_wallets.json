@@ -1,21 +1,21 @@
 {
     "token_info": {
-        "price": 0.008771144929278305,
+        "price": 0.008694299051053645,
         "symbol": "Mizuki",
         "name": "Mizuki",
         "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
         "liquidity": 614248.2970903305,
-        "market_cap": 8771084.806991605,
+        "market_cap": 8694239.455511168,
         "circulatingSupply": 999993145.445984,
-        "realMc": 8771084.806991605,
-        "holder": 6599,
+        "realMc": 8694239.455511168,
+        "holder": 6598,
         "extensions": {
             "coingeckoId": "mizuki",
             "description": "The AI agent revolves around the AI agent\u2019s role as a whistleblower in the Web3 space, exposing \"larp\" AI agents (those pretending to have advanced capabilities without delivering) and highlighting companies that fail to implement proper security protocols. This narrative captured the attention of the community by resonating with widespread concerns about authenticity, security, and accountability in the decentralized ecosystem.",
             "twitter": "https://twitter.com/_Mizuki_exe",
             "website": "https://terminal.mizuki-exe.xyz/"
         },
-        "priceChange1hPercent": 7.60663351638425
+        "priceChange1hPercent": 6.007884311802349
     },
     "items": [
         {
@@ -63,8 +63,8 @@
         {
             "count": 8,
             "wallet": "6BE7yFZyvQRyg2vveW5GHPgvgorb6f8BWVfJir7zRVXH",
-            "age": 1699890620,
-            "age_readable": "1 year"
+            "age": 1727842237,
+            "age_readable": "3 months"
         },
         {
             "count": 9,
@@ -81,7 +81,7 @@
         {
             "count": 11,
             "wallet": "71SCsakuGkB2uwiXo5YTUBRnRzckFniuQ5xGF2FVToFr",
-            "age": 1692889992,
+            "age": 1692891099,
             "age_readable": "1 year"
         },
         {
@@ -117,8 +117,8 @@
         {
             "count": 17,
             "wallet": "HUddtYB3iJKW57AaRqZa4JpJ15Tm7rbYqJJwGttneDWz",
-            "age": 1723872695,
-            "age_readable": "5 months"
+            "age": 1725738781,
+            "age_readable": "4 months"
         },
         {
             "count": 18,
@@ -189,8 +189,8 @@
         {
             "count": 29,
             "wallet": "4DcmaFKRAXKvhFjZwVT72pNGvVNRzPux6hAFh6umQ3jG",
-            "age": 1710467989,
-            "age_readable": "10 months"
+            "age": 1713039572,
+            "age_readable": "9 months"
         },
         {
             "count": 30,

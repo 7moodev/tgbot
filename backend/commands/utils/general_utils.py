@@ -32,6 +32,24 @@ async def get_rpc():
     global rpc_iterator
     return next(rpc_iterator)
 
+async def get_tx(signature: str):
+    url = "https://fluent-dry-water.solana-mainnet.quiknode.pro/da1fa2655346449c8e2b4623b4f0c11775770de6/"
+    headers = {"Content-Type": "application/json"}
+    data = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "getTransaction",
+        "params": [
+            signature,
+            {"encoding": "jsonParsed", "maxSupportedTransactionVersion": 0}
+        ]
+    }
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        return response.json()
+    except Exception as e:
+        print("Error getting transaction: ", e)
+        return None
 
 
 def timing_decorator(func):

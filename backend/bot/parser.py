@@ -3,6 +3,7 @@ from .tg_format_test import send_message
 from ..commands.top_holders_holdings import get_top_holders_holdings
 from ..commands.holding_distribution import get_holding_distribution 
 from ..commands.fresh_wallets import fresh_wallets
+from ..commands.fresh_wallets_v2 import fresh_wallets_v2
 from ..commands.noteworthy_addresses import get_noteworthy_addresses
 import time
 import asyncio
@@ -251,7 +252,7 @@ async def holder_distribution_parsed(token):
     return markdown, logo_url
 
 
-def shorten_address(address: str, length: int = 4) -> str:
+def shorten_address(address: str, length: int = 3) -> str:
     """
     Shorten the address to the given length.
     """
@@ -276,7 +277,7 @@ async def fresh_wallets_parsed(token, limit):
     token_name = token_info['name']
     market_cap = format_number(token_info['market_cap'])
     liquidity = format_number(token_info['liquidity'])
-    holder = format_number(token_info['holder'])
+    holder = format_number(token_info['holder'], with_dollar_sign=False)
     message_parts = [
         f"*Token*: {token_symbol} \\({token_name}\\)\n",
         f"├──💰 MC: {market_cap}\n",
@@ -324,6 +325,31 @@ async def fresh_wallets_parsed(token, limit):
 
         msg =  ''.join(message_parts)
         return msg
+async def fresh_wallets_v2_parsed(token, limit):
+    data = await fresh_wallets_v2(token, limit)
+    token_info = data['token_info']
+    valid_results = data['valid_results']
+    items = data['items']
+    token_symbol = token_info['symbol']
+    token_name = token_info['name']
+    market_cap = format_number(token_info['market_cap'])
+    liquidity = format_number(token_info['liquidity'])
+    holder = format_number(token_info['holder'], with_dollar_sign=False)
+    message_parts = [
+        f"*Token*: {token_symbol} ({token_name})\n",
+        f"├──💰 MC: {market_cap}\n",
+        f"├──💦 Liquidity: {liquidity}\n",
+        f"├──👥 Holders count: {holder}\n",
+        f"Fresh Wallets {valid_results}/{limit}: \n\n",
+    ]
+    for item in items:
+        if 'error' in item:
+            continue
+        elif item['funding_source']:
+            message_parts.append(f"#{item['count']}🌿({shorten_address(item['address'])}) holds {item['holding_pct']}% || funded by {shorten_address(item['funding_source'])}\n")
+    
+    msg = ''.join(message_parts)
+    return msg
 
 
 async def top_holders_net_worth_map(token, limit):
@@ -521,108 +547,109 @@ async def noteworthy_addresses_parsed(token, limit):
 
 
 if __name__ == "__main__":
+    print(asyncio.run(fresh_wallets_v2_parsed("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump", 250)))
     # print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))i
 
-    token_info = '{"symbol": "OBOT", "name": "OBOT", "logoURI": "https://ipfs.io/ipfs/QmeeSqjjrpQ5ht5uc21uG3j3PdVM46CkfTXUCyt23vs462", "liquidity": 1042030.2735918732, "market_cap": 8623704.06309531}'
-    token_info = json.loads(token_info)
-    timenow = float(time.time())
-    print(token_info)
+#     token_info = '{"symbol": "OBOT", "name": "OBOT", "logoURI": "https://ipfs.io/ipfs/QmeeSqjjrpQ5ht5uc21uG3j3PdVM46CkfTXUCyt23vs462", "liquidity": 1042030.2735918732, "market_cap": 8623704.06309531}'
+#     token_info = json.loads(token_info)
+#     timenow = float(time.time())
+#     print(token_info)
 
-    def find_unescaped_periods(text, context_length=10):
-        """
-        Find unescaped periods (.) in a string and show context around them.
+#     def find_unescaped_periods(text, context_length=10):
+#         """
+#         Find unescaped periods (.) in a string and show context around them.
         
-        Args:
-            text (str): The input string to search.
-            context_length (int): Number of characters to show before and after the match.
+#         Args:
+#             text (str): The input string to search.
+#             context_length (int): Number of characters to show before and after the match.
         
-        Returns:
-            List of tuples: Each tuple contains (match_position, context_before, match, context_after).
-        """
-        # Regex pattern to match unescaped periods
-        pattern = r"(?<!\\)\."
+#         Returns:
+#             List of tuples: Each tuple contains (match_position, context_before, match, context_after).
+#         """
+#         # Regex pattern to match unescaped periods
+#         pattern = r"(?<!\\)\."
         
-        # Find all matches
-        matches = []
-        for match in re.finditer(pattern, text):
-            start = match.start()
-            end = match.end()
+#         # Find all matches
+#         matches = []
+#         for match in re.finditer(pattern, text):
+#             start = match.start()
+#             end = match.end()
             
-            # Extract context before and after the match
-            context_before = text[max(0, start - context_length):start]
-            context_after = text[end:min(len(text), end + context_length)]
+#             # Extract context before and after the match
+#             context_before = text[max(0, start - context_length):start]
+#             context_after = text[end:min(len(text), end + context_length)]
             
-            # Append the match and its context to the results
-            matches.append((start, context_before, match.group(), context_after))
+#             # Append the match and its context to the results
+#             matches.append((start, context_before, match.group(), context_after))
         
-        return matches  
+#         return matches  
     
-    BOT_TOKEN = os.environ.get('tgTOKEN')
+#     BOT_TOKEN = os.environ.get('tgTOKEN')
 
 
 
-# Replace 'USER_CHAT_ID' with the chat_id of the user you want to send the message to
-    USER_CHAT_ID = 6313106291 # Example chat_id
+# # Replace 'USER_CHAT_ID' with the chat_id of the user you want to send the message to
+#     USER_CHAT_ID = 6313106291 # Example chat_id
 
-# Initialize the bot
-    message = asyncio.run(top_holders_holdings_parsed('www',20))
-#    unescaped_characters = []
-#    for i in range (len (message)) :
-#        unescaped_characters.append ((find_unescaped_periods(message[i])))
-#
+# # Initialize the bot
+#     message = asyncio.run(top_holders_holdings_parsed('www',20))
+# #    unescaped_characters = []
+# #    for i in range (len (message)) :
+# #        unescaped_characters.append ((find_unescaped_periods(message[i])))
+# #
 
-#
-#
-#
-#    print (message)
-#    print (unescaped_characters)
-    for i in range(0, len(message)):
-        asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message[i]))
-#
-    message, something = asyncio.run(holder_distribution_parsed('www'))
-#    asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
-#    message = fresh_wallets_parsed('www',20)
-#    print (message) 
-    print (message)
-    asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
-    message = asyncio.run(top_holders_net_worth_map('www',20))
-    asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
+# #
+# #
+# #
+# #    print (message)
+# #    print (unescaped_characters)
+#     for i in range(0, len(message)):
+#         asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message[i]))
+# #
+#     message, something = asyncio.run(holder_distribution_parsed('www'))
+# #    asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
+# #    message = fresh_wallets_parsed('www',20)
+# #    print (message) 
+#     print (message)
+#     asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
+#     message = asyncio.run(top_holders_net_worth_map('www',20))
+#     asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message))
     
-    message = asyncio.run(noteworthy_addresses_parsed('www',20))
+#     message = asyncio.run(noteworthy_addresses_parsed('www',20))
 
-    for i in range(0, len(message)):
-        asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message[i]))
+#     for i in range(0, len(message)):
+#         asyncio.run(send_message(BOT_TOKEN, USER_CHAT_ID, message[i]))
 
 
-# Send a message to the user
-     #array_of_objects = ast.literal_eval(data)
-    #print(array_of_objects)
+# # Send a message to the user
+#      #array_of_objects = ast.literal_eval(data)
+#     #print(array_of_objects)
 
-    # Convert each dictionary in the list to a JSON string
-    #array_of_json = [json.dumps(d) for d in array_of_objects]
+#     # Convert each dictionary in the list to a JSON string
+#     #array_of_json = [json.dumps(d) for d in array_of_objects]
 
     
-    #holders = asyncio.run(top_holders_holdings_parsed(token_info, array_of_objects))
+#     #holders = asyncio.run(top_holders_holdings_parsed(token_info, array_of_objects))
 
-   # print (holders)
-   #  import telegram
-   #  import os
-   #  import telebot
-   #  token = os.environ.get('tgbot')
-   # 
-   #  if not token:
-   #      raise ValueError("Bot token not found in environment variables")
-   #  
-   #  bot = telebot.TeleBot(token)
-   #  chat_id = os.environ.get('tgchat')
-   #  if len(holders) > 4096:
-   #      for text in split_message(holders):
-   #          bot.send_message(chat_id=chat_id, text=text, parse_mode=telegram.constants.ParseMode.MARKDOWN)
-   #  else:
-   #      bot.send_message(chat_id=chat_id, text=holders)
-   #  
-    #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
-    # fresh_wallets = asyncio.run(fresh_wallets("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 50))
-    # print((fresh_wallets[1]))
-    # print(fresh_wallets_parsed(fresh_wallets[0], fresh_wallets[1]))
-    # print(float(time.time()) - timenow)
+#    # print (holders)
+#    #  import telegram
+#    #  import os
+#    #  import telebot
+#    #  token = os.environ.get('tgbot')
+#    # 
+#    #  if not token:
+#    #      raise ValueError("Bot token not found in environment variables")
+#    #  
+#    #  bot = telebot.TeleBot(token)
+#    #  chat_id = os.environ.get('tgchat')
+#    #  if len(holders) > 4096:
+#    #      for text in split_message(holders):
+#    #          bot.send_message(chat_id=chat_id, text=text, parse_mode=telegram.constants.ParseMode.MARKDOWN)
+#    #  else:
+#    #      bot.send_message(chat_id=chat_id, text=holders)
+#    #  
+#     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
+#     # fresh_wallets = asyncio.run(fresh_wallets("7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump", 50))
+#     # print((fresh_wallets[1]))
+#     # print(fresh_wallets_parsed(fresh_wallets[0], fresh_wallets[1]))
+#     # print(float(time.time()) - timenow)

@@ -339,9 +339,9 @@ async def calculate_avg_holding(entry_data, exit_data):
     }
 
 
-async_client = httpx.AsyncClient(limits=httpx.Limits(max_connections=100))
 
-async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_filter: bool = True, time_out: int = None):
+
+async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, max_age:int = None,  bot_filter: bool = True, time_out: int = None):
     """
     Get the blocktime of the oldest transaction of a wallet in unix time.
     Returns 0 for exchanges or bot activity.
@@ -355,12 +355,15 @@ async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_fi
     oldest_block_time = None
     before = None
     time_now_unix = int(time.time())
-
-    async with httpx.AsyncClient(limits=httpx.Limits(max_connections=100)) as client:
+    oldest = None
+    async with httpx.AsyncClient() as client:
         while True:
+            if max_age:
+                if oldest_block_time and oldest_block_time < time_now_unix - max_age:
+                    return oldest
             # Exit if max_signatures is exceeded
             if all_signatures_count > max_signatures:
-                return oldest_block_time
+                return oldest
 
             # Prepare request payload
             params = [wallet, {"limit": 1000}]
@@ -370,10 +373,8 @@ async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_fi
 
             try:
                 # Make asynchronous request
-                if time_out is not None:
-                    response = await client.post(await get_rpc(), headers=headers, json=data, timeout=time_out)
-                else:
-                    response = await client.post(await get_rpc(), headers=headers, json=data)
+                     # Make asynchronous request
+                response = await client.post(await get_rpc(), headers=headers, json=data, timeout=time_out)
                 response.raise_for_status()
                 result = response.json().get('result', [])
 
@@ -384,20 +385,21 @@ async def get_wallet_age(wallet: str = None, max_signatures: int = 20000, bot_fi
                 all_signatures_count += len(result)
                 if bot_filter and time_now_unix - result[-1].get('blockTime', 0) < 72000:
                     return 0
-
                 # Update oldest block time and before signature
-                oldest_block_time = result[-1].get('blockTime', oldest_block_time)
-                before = result[-1]['signature']
+                oldest = result[-1]
+                before = oldest['signature']
+                oldest_block_time = oldest.get('blockTime', oldest_block_time)
 
                 # Exit early if fewer than 1000 results are returned
                 if len(result) < 1000:
                     break
             except (httpx.RequestError, KeyError, httpx.HTTPStatusError) as e:
-                print(str(e))
+                print(response.json())
                 print(f"Error fetching wallet age for {wallet}: {str(e)}")
                 return None
+
     print("Returning wallet age for", wallet)
-    return oldest_block_time
+    return oldest
 async def get_wallet_age_readable(wallet:str=None, time_in_unix=None):
     if time_in_unix is None:
         wallet_age_unix = get_wallet_age(wallet)

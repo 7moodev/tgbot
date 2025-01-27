@@ -12,8 +12,10 @@ async def fetch_wallet_info(count: int, wallet: str) -> Dict[str, Any]:
     """
     Fetch wallet age asynchronously.
     """
+    time_now = time.time()
+    time_before_three_months = 60 * 60 * 24 * 90
     try:
-        age = await get_wallet_age(wallet)
+        age = await get_wallet_age(wallet, max_age= time_before_three_months)
         age_readable = await get_wallet_age_readable(wallet, age)
         return {
             "count": count,
@@ -95,7 +97,7 @@ async def fresh_wallets(token: str, limit: int) -> Dict[str, Any]:
 if __name__ == "__main__":
     start_time = time.time()
     token = "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"
-    limit = 100
+    limit = 50
     result = asyncio.run(fresh_wallets(token, limit))
     with open("backend/commands/outputs/fresh_wallets.json", "w") as f:
         json.dump(result, f, indent=4)
