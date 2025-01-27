@@ -1,7 +1,7 @@
 import httpx
 import os
 import asyncio
-from .utils.token_utils import get_rpc, get_top_holders, get_token_overview, get_token_creation_info
+from .utils.token_utils import get_rpc, get_top_holders, get_token_overview, get_token_creation_info, get_token_supply
 from .utils.wallet_utils import get_wallet_age, calculate_avg_entry,calculate_avg_holding, get_wallet_trade_history, calculate_avg_exit, get_wallet_age_readable
 import time
 import json
@@ -20,29 +20,30 @@ async def get_holder_avg_entry_price(wallet:str ,token: str, token_creation_time
     return avg_raw_entry_price, avg_raw_exit_price, avg_actual_holding_price
 
 async def get_holders_avg_entry_price(token: str, limit:int):
-    token_overview = await get_token_overview(token) 
- 
-    if token_overview:
-        token_data = token_overview.get('data', {})
-        holder_count = token_data.get('holder', 0)
-        total_supply = token_data.get('mc', 0)
-        symbol = token_data.get('symbol', '')
-        name = token_data.get('name', '')
-        logo_url = token_data.get('logoURI', '')
-        liquidity = token_data.get('liquidity', 0)
-        market_cap = token_data.get('mc', 0)
-    else:
-        print("Failed to fetch token overview.")
-    token_info = {
-        'supply': total_supply,
-        'symbol': symbol,
-        'name': name,
-        'logo_url': logo_url,
-        'liquidity': liquidity,
-        'market_cap': market_cap,
-    }
-    top_holders = await get_top_holders(token, limit)
+    total_supply = await get_token_supply(token)
     token_creation_info = await get_token_creation_info(token)
+    token_overview = await get_token_overview(token)
+    if token_overview:
+        token_overview = token_overview['data']
+        token_info = {
+            'price': token_overview['price'],
+            'symbol': token_overview['symbol'],
+            'name': token_overview['name'],
+            'logoURI': token_overview['logoURI'],
+            'liquidity': token_overview['liquidity'],
+            'market_cap': token_overview['mc'],
+            'supply': total_supply,
+            'circulatingSupply': token_overview['circulatingSupply'],
+            'realMc': token_overview['realMc'],
+            'holder': token_overview['holder'],
+            'extensions': token_overview['extensions'],
+            'priceChange1hPercent': token_overview['priceChange1hPercent'],
+        }
+        if token_creation_info:
+            token_info['creationTime'] = token_creation_info['blockUnixTime']
+    else:
+        token_info = {}
+    top_holders = await get_top_holders(token, limit)
     dev = token_creation_info['owner']
     token_creation_time = token_creation_info['blockUnixTime']
     res = []
@@ -68,7 +69,7 @@ async def get_holders_avg_entry_price(token: str, limit:int):
 
 if __name__ == "__main__":
     start_time = time.time()
-    res = asyncio.run(get_holders_avg_entry_price("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump", 50))
+    res = asyncio.run(get_holders_avg_entry_price("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump", 25))
     #Execution time: 9.242473602294922 seconds for 50 holders
     print(f"Execution time: {time.time() - start_time} seconds")
     with open("backend/commands/outputs/holders_avg_entry_price.json", 'w') as f:  

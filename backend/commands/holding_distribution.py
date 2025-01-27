@@ -6,7 +6,7 @@ from asyncio import Semaphore
 from aiohttp import ClientSession
 import math
 import os
-from .utils.token_utils import get_token_overview, get_top_holders
+from .utils.token_utils import get_token_overview, get_top_holders, get_token_supply, get_token_creation_info
 from .utils.general_utils import get_whales
 from .utils.wallet_utils import get_balance, get_balance_birdeye
 
@@ -168,9 +168,67 @@ async def get_holding_distribution(token):
     
     return results
 
+async def get_holding_distribution_v2(token, limit):
+    # These functions are assumed to be defined elsewhere in your code
+    total_supply = await get_token_supply(token)
+    top_holders = await get_top_holders(token, limit)
+    token_creation_info = await get_token_creation_info(token)
+    # Fetch token overview
+    token_overview = await get_token_overview(token)
+    if token_overview:
+        token_overview = token_overview['data']
+        token_info = {
+            'price': token_overview['price'],
+            'symbol': token_overview['symbol'],
+            'name': token_overview['name'],
+            'logoURI': token_overview['logoURI'],
+            'liquidity': token_overview['liquidity'],
+            'market_cap': token_overview['mc'],
+            'supply': total_supply,
+            'circulatingSupply': token_overview['circulatingSupply'],
+            'realMc': token_overview['realMc'],
+            'holder': token_overview['holder'],
+            'extensions': token_overview['extensions'],
+            'priceChange1hPercent': token_overview['priceChange1hPercent'],
+        }
+        if token_creation_info:
+            token_info['creationTime'] = token_creation_info['blockUnixTime']
+    else:
+        token_info = {}
+    current_sol_price = 250 # to be fetched later
+    items =[{
+        "0-1000": 0,
+        "1000-5000": 0,
+        "5000-10000": 0,
+        "10000-50000": 0,
+        "50000+": 0,
+    }]
+    for holder in top_holders:
+        print(holder['owner'])
+        sol_balance = await get_balance(wallet=holder['owner'], token = "So11111111111111111111111111111111111111112")
+        print(sol_balance)
+        usdc_balance = await get_balance(wallet=holder['owner'], token = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
+        usdt_balance = await get_balance(wallet=holder['owner'], token = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB")
+        item = items[0]
+        if sol_balance is None or usdc_balance is None or usdt_balance is None:
+            item["50000+"] += 1
+            continue
+        total = sol_balance*current_sol_price + usdc_balance + usdt_balance
+        if total < 1000:
+            item["0-1000"] += 1
+        elif total < 5000:
+            item["1000-5000"] += 1
+        elif total < 10000:
+            item["5000-10000"] += 1
+        elif total < 50000:
+            item["10000-50000"] += 1
+        else:
+            item["50000+"] += 1
+    return {"token_info":token_info, "items": items}
+
 if __name__ == "__main__":
     start_time = time.time()
     token = "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"  # Example token
-    result = asyncio.run(get_holding_distribution(token))
+    result = asyncio.run(get_holding_distribution_v2(token, limit=50))
     print(result)
     print(f"Execution time: {time.time() - start_time} seconds")

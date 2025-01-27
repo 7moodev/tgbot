@@ -1,14 +1,33 @@
 {
     "token_info": {
-        "supply": 348721589.49024516,
+        "price": 0.2735517068737778,
         "symbol": "VINE",
         "name": "Vine Coin",
-        "logo_url": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-        "liquidity": 27636251.30252178,
-        "market_cap": 348721589.49024516
+        "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
+        "liquidity": 21264991.496632464,
+        "market_cap": 273549482.1945827,
+        "supply": 999991858.11883,
+        "circulatingSupply": 999991869.404316,
+        "realMc": 273549482.7354505,
+        "holder": 140860,
+        "extensions": {
+            "description": "Do it for the Vine.",
+            "coingeckoId": "vine",
+            "twitter": "https://twitter.com/rus",
+            "website": "https://www.vineco.in"
+        },
+        "priceChange1hPercent": -1.6057188148710198,
+        "creationTime": 1737591431
     },
-    "agg_avg": 169681223.01241875,
+    "agg_avg": 157025784.76773363,
     "items": [
+        {
+            "holder": "u6PJ8DtQuPFnfmwHbGFULQ4u4EgjDiyYKjVEsynXq2w",
+            "label": "No Trades/Funded",
+            "avg_raw_entry_price": null,
+            "avg_raw_exit_price": null,
+            "avg_actual_holding_price": null
+        },
         {
             "holder": "CvAN3FYtSDQ6vrnJBmNJWWCzoeCzQs2BX85NVuoFcg87",
             "label": "No Trades/Funded",
@@ -27,20 +46,20 @@
             "holder": "6EAaPqnwT54YnYfCRyupN8rK25i2hbguBFcbfVQ8hGWj",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 13707446.51184662,
+                "avg_entry_price": 13707443.450786497,
                 "total_amount": 27640516.415264,
                 "sniped_pfun": false,
                 "oldest_trade_time": 1737594391,
                 "oldest_tx_hash": "b38WArVmYrSASvYgKu9HgRTUzNSfJhsUA5rm9YvoS3gwrkVS4pK7wx2Af224kpu2y9YtiFFQteRPZxc3krJbAv4"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 5803699.131598931,
+                "avg_exit_price": 5803697.835553605,
                 "total_amount": 1016710.39496,
                 "oldest_trade_time": 1737594557,
                 "oldest_tx_hash": "5Y391zAkU6FCJCzhmDSMG6JGwhWTPNRscySUTiPF5LL29dxZfcz7QEKr5VsXX3ZgGD4WjnuyRvYKTm4MwPoCRhMv"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 14009274.962463614,
+                "avg_holding_price": 14009271.834001074,
                 "current_holding_amount": 26623806.020304,
                 "rebuy_detected": true
             }
@@ -49,26 +68,33 @@
             "holder": "Fnz5CaHjX8SBuJAL6cKwLVY6QnAT7o5HNxz47qbYzMMW",
             "label": "Funded",
             "avg_raw_entry_price": {
-                "avg_entry_price": 21700.44590030308,
+                "avg_entry_price": 21700.441054296964,
                 "total_amount": 21488934.325522,
                 "sniped_pfun": true,
-                "sniper_pfun_price": 21700.44590030308,
+                "sniper_pfun_price": 21700.441054296964,
                 "sniper_pfun_unix_time": 1737591544,
                 "sniper_pfun_hash": "kkYkjseL4AYfDh7FzdVrrn6qWhUE74zntjDLUC4k76p7sbtJtNJ4gW3VnL8VVrosSPZ3T7vaMDTAszPwjAZVJzx",
                 "oldest_trade_time": 1737591544,
                 "oldest_tx_hash": "kkYkjseL4AYfDh7FzdVrrn6qWhUE74zntjDLUC4k76p7sbtJtNJ4gW3VnL8VVrosSPZ3T7vaMDTAszPwjAZVJzx"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 18048702.624370635,
+                "avg_exit_price": 18048698.593848694,
                 "total_amount": 956549.084206,
                 "oldest_trade_time": 1737594783,
                 "oldest_tx_hash": "i9Suhd12fGkPJJuoLqebtwxC47LfWq2U283maMwvK7U43YWA2RY7pLy4NSTzrpVTnDUBozKUJMXTQmkvb5KqHH2"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": -818129.5213505034,
+                "avg_holding_price": -818129.3386510012,
                 "current_holding_amount": 20532385.241316,
                 "rebuy_detected": true
             }
+        },
+        {
+            "holder": "A77HErqtfN1hLLpvZ9pCtu66FEtM8BveoaKbbMoZ4RiR",
+            "label": "No Trades/Funded",
+            "avg_raw_entry_price": null,
+            "avg_raw_exit_price": null,
+            "avg_actual_holding_price": null
         },
         {
             "holder": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",
@@ -81,23 +107,23 @@
             "holder": "AfGiE2ewhDARAaJZgGfoPUfXsG93KPYavjEDbe5vBhrk",
             "label": "Funded",
             "avg_raw_entry_price": {
-                "avg_entry_price": 17518.82178908233,
+                "avg_entry_price": 17518.81787689002,
                 "total_amount": 43109650.071324,
                 "sniped_pfun": true,
-                "sniper_pfun_price": 17518.82178908233,
+                "sniper_pfun_price": 17518.81787689002,
                 "sniper_pfun_unix_time": 1737591516,
                 "sniper_pfun_hash": "4yhxXqEpAMX8Q1TZQnNxrUgciBnCs2JNCiQjwd9W5cAKNLU7gj7nvB7PgVnHAMN6SKhmCJsBFFi9C4kb7rAwoZ1N",
                 "oldest_trade_time": 1737591516,
                 "oldest_tx_hash": "4yhxXqEpAMX8Q1TZQnNxrUgciBnCs2JNCiQjwd9W5cAKNLU7gj7nvB7PgVnHAMN6SKhmCJsBFFi9C4kb7rAwoZ1N"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 10174016.276788525,
+                "avg_exit_price": 10174014.004791658,
                 "total_amount": 28323446.623354003,
                 "oldest_trade_time": 1737594688,
                 "oldest_tx_hash": "4nSNvVsxK7VwbMCSRBZiXeSVrfZ4zKRDVnPEjv8PRDwLGvb6Qb61XeP3GsnmpXG33ugoWGjkMFJLLmRc7o9y2RaD"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": -19437577.58339405,
+                "avg_holding_price": -19437573.24271735,
                 "current_holding_amount": 14786203.447969995,
                 "rebuy_detected": true
             }
@@ -106,65 +132,29 @@
             "holder": "6Ge32v1gWV4KR8tGiEBPHqd2y3pDs7xMtm7YMrW3gMrw",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 138197472.1499299,
+                "avg_entry_price": 138197441.28854585,
                 "total_amount": 8215425.296747001,
                 "sniped_pfun": false,
                 "oldest_trade_time": 1737751043,
                 "oldest_tx_hash": "4cex9euN9AiUHvHPPWPNTBh9RG2A8LKYCW2kuucXe2Cwt8HcbqeDMBpqkKXM3aWqTJzwoYR5vW7fJ9xAdX6Y755Q"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864518,
-                "oldest_tx_hash": ""
+                "avg_exit_price": 297161536.422748,
+                "total_amount": 350000,
+                "oldest_trade_time": 1737940870,
+                "oldest_tx_hash": "3RgRXtwupfCswjDHyMEDGcMUPBK2WsvQhn4wpA9PLfoHpgoDzC312hzNy9hmpBgjVPG17zGn4FepM9k6ZdEspW6v"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 138197472.1499299,
-                "current_holding_amount": 8215425.296747001,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "u6PJ8DtQuPFnfmwHbGFULQ4u4EgjDiyYKjVEsynXq2w",
-            "label": "No Trades/Funded",
-            "avg_raw_entry_price": null,
-            "avg_raw_exit_price": null,
-            "avg_actual_holding_price": null
-        },
-        {
-            "holder": "A77HErqtfN1hLLpvZ9pCtu66FEtM8BveoaKbbMoZ4RiR",
-            "label": "No Trades/Funded",
-            "avg_raw_entry_price": null,
-            "avg_raw_exit_price": null,
-            "avg_actual_holding_price": null
-        },
-        {
-            "holder": "J9HqxT4U39B45YcXxL4B1GZzdhSrXFr2N2Lam4bXrQeB",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 106045141.2583777,
-                "total_amount": 11780302.814563,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737604995,
-                "oldest_tx_hash": "4iLk1KzCSgNyVXfZys9iB3AXSmCP5142ai25dNue4YBBt7Gch38veDsfw222ksLKMfFZrQPfKaSPTkKgFdNwrpdS"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864519,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 106045141.2583777,
-                "current_holding_amount": 11780302.814563,
-                "rebuy_detected": false
+                "avg_holding_price": 131123769.97416933,
+                "current_holding_amount": 7865425.296747001,
+                "rebuy_detected": true
             }
         },
         {
             "holder": "FAYfNAK7e56rv34ZkxPn9xAptWS1YECrA6zNh97aMAGY",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 194633781.88533363,
+                "avg_entry_price": 194633738.4209504,
                 "total_amount": 4746923.976913004,
                 "sniped_pfun": false,
                 "oldest_trade_time": 1737622073,
@@ -173,11 +163,11 @@
             "avg_raw_exit_price": {
                 "avg_exit_price": 0.0,
                 "total_amount": 0,
-                "oldest_trade_time": 1737864519,
+                "oldest_trade_time": 1737994932,
                 "oldest_tx_hash": ""
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 194633781.88533363,
+                "avg_holding_price": 194633738.4209504,
                 "current_holding_amount": 4746923.976913004,
                 "rebuy_detected": false
             }
@@ -186,7 +176,7 @@
             "holder": "9W263tnZPFb2JEp8QUiAmpypEVZRUuhBodUM9bQTCfU5",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 249276437.28156075,
+                "avg_entry_price": 249276381.61472583,
                 "total_amount": 7770847.331880998,
                 "sniped_pfun": false,
                 "oldest_trade_time": 1737616770,
@@ -195,34 +185,56 @@
             "avg_raw_exit_price": {
                 "avg_exit_price": 0.0,
                 "total_amount": 0,
-                "oldest_trade_time": 1737864520,
+                "oldest_trade_time": 1737994932,
                 "oldest_tx_hash": ""
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 249276437.28156075,
+                "avg_holding_price": 249276381.61472586,
                 "current_holding_amount": 7770847.331880998,
                 "rebuy_detected": false
+            }
+        },
+        {
+            "holder": "J9HqxT4U39B45YcXxL4B1GZzdhSrXFr2N2Lam4bXrQeB",
+            "label": "Normal",
+            "avg_raw_entry_price": {
+                "avg_entry_price": 106045117.57704851,
+                "total_amount": 11780302.814563,
+                "sniped_pfun": false,
+                "oldest_trade_time": 1737604995,
+                "oldest_tx_hash": "4iLk1KzCSgNyVXfZys9iB3AXSmCP5142ai25dNue4YBBt7Gch38veDsfw222ksLKMfFZrQPfKaSPTkKgFdNwrpdS"
+            },
+            "avg_raw_exit_price": {
+                "avg_exit_price": 358276727.4466311,
+                "total_amount": 595594.531437,
+                "oldest_trade_time": 1737932084,
+                "oldest_tx_hash": "3MqbpVPDDugcVx22bdA3JtbpuKb5UkGuhvaKWeEKd3QRhkdAeS6uqDFZsjdeM8e3fa6ksuYnWcNarDSU52eyqck1"
+            },
+            "avg_actual_holding_price": {
+                "avg_holding_price": 92613585.5521572,
+                "current_holding_amount": 11184708.283126,
+                "rebuy_detected": true
             }
         },
         {
             "holder": "6rg2rfZ6Sim6j63LXvaLgbWicVGWhJUYHkCxgSHZBCqs",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 14481963.23610555,
+                "avg_entry_price": 14481960.00208526,
                 "total_amount": 10616517.783219002,
                 "sniped_pfun": false,
                 "oldest_trade_time": 1737600678,
                 "oldest_tx_hash": "51Va2TxhNY6anPkPcAhwVUjsUY9gqi7tn5gZkS8rudTCSjJPAo8mzjx8bKNY7JVcDM5Ga3hnrFF6sBTZsYrGXdTQ"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 215030141.31105793,
-                "total_amount": 101316.61776099988,
+                "avg_exit_price": 279059652.6163622,
+                "total_amount": 328292.21776099986,
                 "oldest_trade_time": 1737740367,
                 "oldest_tx_hash": "4TgG96ybrtSuqPJeXWZ8EZMLvrmDMjuSFb2rUQhrk2rqCvRSxwGTEAwvrVmN3SKtDZ9KeLfSmEik8sGuasW9Q9tX"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 12549630.912551768,
-                "current_holding_amount": 10515201.165458003,
+                "avg_holding_price": 6039415.957361799,
+                "current_holding_amount": 10288225.565458002,
                 "rebuy_detected": true
             }
         },
@@ -230,46 +242,53 @@
             "holder": "2BocdyQGg3apZetbQNdPqGDESRMxBsYmTCUCmEcgrejv",
             "label": "Funded",
             "avg_raw_entry_price": {
-                "avg_entry_price": 29845.424842960045,
+                "avg_entry_price": 29845.41817806883,
                 "total_amount": 26184623.744133,
                 "sniped_pfun": true,
-                "sniper_pfun_price": 29845.424842960045,
+                "sniper_pfun_price": 29845.41817806883,
                 "sniper_pfun_unix_time": 1737591562,
                 "sniper_pfun_hash": "2QCXZfzeV3w8YRpqDApmpB8pxj2srxKqMCDS6LGZkJU84KGyMfT3q7Bv2CBkHhQUewYim1kcNLsLEZJrzV68d54M",
                 "oldest_trade_time": 1737591562,
                 "oldest_tx_hash": "2QCXZfzeV3w8YRpqDApmpB8pxj2srxKqMCDS6LGZkJU84KGyMfT3q7Bv2CBkHhQUewYim1kcNLsLEZJrzV68d54M"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 6062905.52637956,
+                "avg_exit_price": 6062904.1724499045,
                 "total_amount": 16248741.528656,
                 "oldest_trade_time": 1737594783,
                 "oldest_tx_hash": "4kFqJxqi4TerSPBPt3bHvxfyKEnCGpDfGcPD1wEJTLFsjroTk7NJ6CHtLfkBdNwdqmb9TbsqAkwKm149mKiJquv5"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": -9836378.035819227,
+                "avg_holding_price": -9836375.839221591,
                 "current_holding_amount": 9935882.215476999,
                 "rebuy_detected": true
             }
         },
         {
+            "holder": "5sTQ5ih7xtctBhMXHr3f1aWdaXazWrWfoehqWdqWnTFP",
+            "label": "No Trades/Funded",
+            "avg_raw_entry_price": null,
+            "avg_raw_exit_price": null,
+            "avg_actual_holding_price": null
+        },
+        {
             "holder": "8quVxKzc21GybehhMKwhiuuVks9eg1carGoBUuqpZJ1a",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 92635345.5772093,
-                "total_amount": 16376679.552001001,
+                "avg_entry_price": 94572417.77700303,
+                "total_amount": 16501023.858507002,
                 "sniped_pfun": false,
                 "oldest_trade_time": 1737601060,
                 "oldest_tx_hash": "3zVqhLVvBXe1vNinVxCsc9HZZzw65aRugsvi2Dp38sH9FNLRES7kv2wjNBjraapa9rA46iMzoj5egX8SvjUohtuG"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 175041585.01992255,
+                "avg_exit_price": 175041545.93074462,
                 "total_amount": 3307895.868028001,
                 "oldest_trade_time": 1737612732,
                 "oldest_tx_hash": "MyCDVEUh1GhSYeg4x7hk5pxn9nrZ3sQYoc7rYSuoGWC2JvohDUdbAzcGsWBeJqtT8hXuwTG5ZZJUDDkZ2KaK13y"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 71777149.01171164,
-                "current_holding_amount": 13068783.683973,
+                "avg_holding_price": 74396497.65285413,
+                "current_holding_amount": 13193127.990479,
                 "rebuy_detected": true
             }
         },
@@ -277,7 +296,7 @@
             "holder": "3EqUQwk7wuZWJA1LahJqzZajGKbQwcvQAkLydkHxrU3s",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 215756152.5172949,
+                "avg_entry_price": 215756104.33599767,
                 "total_amount": 4899443.904280001,
                 "sniped_pfun": false,
                 "oldest_trade_time": 1737617976,
@@ -286,46 +305,24 @@
             "avg_raw_exit_price": {
                 "avg_exit_price": 0.0,
                 "total_amount": 0,
-                "oldest_trade_time": 1737864523,
+                "oldest_trade_time": 1737994935,
                 "oldest_tx_hash": ""
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 215756152.5172949,
+                "avg_holding_price": 215756104.33599767,
                 "current_holding_amount": 4899443.904280001,
                 "rebuy_detected": false
             }
         },
         {
-            "holder": "6K2d9LvM3i47P9FxzEQP4hXZwiHA2c2wgfzGTeTvJqj8",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 261455725.5026413,
-                "total_amount": 3935189.967558999,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737812714,
-                "oldest_tx_hash": "2aczEAeybmvry9a1wKabFnCvekbSAouA7toUL7fPyTcQZL64RRdHzBuhhnB5q1Zwg8ZU6LfHTwZ1FA3b7o3BYrbx"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864523,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 261455725.5026413,
-                "current_holding_amount": 3935189.967558999,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "8ai8kRH3zrtG3N6dXSsUdb4WD1iCMnjRQXpmYCVvUoZE",
+            "holder": "6eBx4MP9f9VbjrZrDYJitR6QfYhZ1NVg3c7wkZiwCowS",
             "label": "No Trades/Funded",
             "avg_raw_entry_price": null,
             "avg_raw_exit_price": null,
             "avg_actual_holding_price": null
         },
         {
-            "holder": "CCMJ8aCwkDwDyZXV3KVANxpZiwBgg9u4UCeCX1hTTdrM",
+            "holder": "8ai8kRH3zrtG3N6dXSsUdb4WD1iCMnjRQXpmYCVvUoZE",
             "label": "No Trades/Funded",
             "avg_raw_entry_price": null,
             "avg_raw_exit_price": null,
@@ -339,486 +336,18 @@
             "avg_actual_holding_price": null
         },
         {
-            "holder": "6eBx4MP9f9VbjrZrDYJitR6QfYhZ1NVg3c7wkZiwCowS",
+            "holder": "CCMJ8aCwkDwDyZXV3KVANxpZiwBgg9u4UCeCX1hTTdrM",
             "label": "No Trades/Funded",
             "avg_raw_entry_price": null,
             "avg_raw_exit_price": null,
             "avg_actual_holding_price": null
         },
         {
-            "holder": "3MnDSRjsYbYJFASJyzWNCNTnZ9JyibGyeH2JTcExtzB8",
+            "holder": "DiU3HUiBgrANuS3VXyr9w29dRQncJTmC4AJroQ2myz7y",
             "label": "No Trades/Funded",
             "avg_raw_entry_price": null,
             "avg_raw_exit_price": null,
             "avg_actual_holding_price": null
-        },
-        {
-            "holder": "GpNbukV5nggkJfsEEbKrJaZkdgYcNWCAaD91Mi4MmGQi",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 232702103.54459706,
-                "total_amount": 21462661.073653,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737628233,
-                "oldest_tx_hash": "kpswR7tGBNKn9qDtT89YkGSZ67X3qwRstxxvdGRU4avTUJM9wxpcQ5Hkor3k5AejDnHM4XKxtRBcaSPcnKQbCk4"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 187882121.7816961,
-                "total_amount": 15280114.208332002,
-                "oldest_trade_time": 1737745053,
-                "oldest_tx_hash": "KkN8sjHAm5LQnyVDuVA5ZDDwHp253oAabWmsUKSoNcP4VdwV33bxtxNXus2FsgcR1bync4Po3GCW29WpqCQHuZf"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 343474323.3224937,
-                "current_holding_amount": 6182546.865320999,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "65qGwfc7kw5pTvBzSqm1Cvgh7FYNkXVpDrxJzHNJmEC5",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 144949477.85947767,
-                "total_amount": 2319855.260012,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737693415,
-                "oldest_tx_hash": "2xuY2v1Wp4F1w1F64S7qPx2xyKpmnkrLub8A7wr2s8sJTUpAyF6nHz6KsNziKS6C2XwCCjh51XHeLuNhT8BtfLrT"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864525,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 144949477.85947767,
-                "current_holding_amount": 2319855.260012,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "HpJ6bsNhW4ftV1E1KtSwvr9yQ55ZbHaxMVvgney6gpoY",
-            "label": "Funded",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 6342439.162842908,
-                "total_amount": 14639870.158116,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737597293,
-                "oldest_tx_hash": "2hhDMGGAS893sFR3tVTSCDjrobjR7Cjp47vTXKcwXX5TscLWpV5iijFxvsnzZTmZzTagAX9trt95f5uFJR61yfrp"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 230053075.85806414,
-                "total_amount": 9963987.0,
-                "oldest_trade_time": 1737617401,
-                "oldest_tx_hash": "qqbP289k29zpaftps73TwT9sj5VEwuR2LF5t4qwXH8LHQ4d1a5cYG7FXwV1Sf5UX1umi23udMpYm3p6cHqMeFM8"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": -470369617.23743576,
-                "current_holding_amount": 4675883.158116,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "GGeEroxtu3xWZGsbqqpNBtVRhkMDQh9WwYAGWbgAeQt7",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 314556046.9550686,
-                "total_amount": 4610706.750988,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737634999,
-                "oldest_tx_hash": "2hc8TB2UVEcqwiAt6GXTDZjvRLn74LAMHsLZSeJbmRuz5EEEutfLuis7RUaSXVJPigvgWbuDXGtfXm1nadTP1H3m"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864525,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 314556046.9550686,
-                "current_holding_amount": 4610706.750988,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "9YGd2uCJj9XuLtrFmyi4jVJb7zqhya7Vbk4KGHpZrYNJ",
-            "label": "Funded",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 103970.2581925333,
-                "total_amount": 7330799.339283,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737592826,
-                "oldest_tx_hash": "3kDVVmA9EhEx7tskXs8MA3pxVR52UVbvFX7vKGQ76MbgDsgmmpYdfDwuF6pq1nDEP7DrbazuFXWubJheebALZaRb"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 68594162.10497643,
-                "total_amount": 1706358.8299999998,
-                "oldest_trade_time": 1737602365,
-                "oldest_tx_hash": "2KSgzFpxz28RtcMsRs7Hgivto2JpbDhpu7MeEEaHDAhyBxEPs65VkgUC9hcQndDfANx23gNdyWBp6roqbfjQKCsa"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": -20674779.811839245,
-                "current_holding_amount": 5624440.509283,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "AVAZvHLR2PcWpDf8BXY4rVxNHYRBytycHkcB5z5QNXYm",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 385693908.9796972,
-                "total_amount": 3484134.4634199995,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737781966,
-                "oldest_tx_hash": "5PHwy3NRyVac7PdocEg23FnBLZmzN1TjDRrnVY6ZHEb8n118dp1jH6KWj5ZpCWEWknvuNVfLuKF8nthTRsen5TZE"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864526,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 385693908.9796972,
-                "current_holding_amount": 3484134.4634199995,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "52AYS4VdJkMtLMpr6vTAaa18qZmHEBPg8EHnxbYvi5uZ",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 216551459.67157128,
-                "total_amount": 3543841.1454990003,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737632445,
-                "oldest_tx_hash": "5iEwdobEehzFs3tFHtQr12iGrUPx3t5Byt53ySzFRSg7GmbAiU2Q4h25ykBNt7cRu7WXPDdU9fubu9efNwFZ9wo6"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 158551276.12409446,
-                "total_amount": 325000,
-                "oldest_trade_time": 1737676159,
-                "oldest_tx_hash": "2S1hVqDBTFbnBoTiVD3hKfcaJWBkCZZry93zAiT9Cknmb9E8bCjDJVWmqCyZuw6BqyViT9Dtm1a19ZFZP7RSc324"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 222407623.05487105,
-                "current_holding_amount": 3218841.1454990003,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "CskQrvhZQYsjuzkwqKTS2cxAoBph7rcBj3tDHLHWZ5Dn",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 154992780.21842012,
-                "total_amount": 7724318.811531001,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737603915,
-                "oldest_tx_hash": "3xqzijgzVUMbNoc5RvYsdNHypcFbkpBuf58vptwMyJY3EmPUXNUoRdKVkDWZiQyxMtCJEo4WNFzwUQJgVN8ETJU9"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 212709479.0455479,
-                "total_amount": 5302145.4141379865,
-                "oldest_trade_time": 1737609284,
-                "oldest_tx_hash": "2J2h1zp8bCUhL2JNmjhhgLHaFKh9GizYPSEA3f5aAAZTsaANe8zKbuTmcLVouJR3Ck7jPFTqsAsNieMsVDg9DtAN"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 28650739.49796186,
-                "current_holding_amount": 2422173.3973930143,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "2ovj9YxBE4NGyZEFBLyHAb7wxJHgHo1rtjdGLeG3JGDT",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 230720528.02996695,
-                "total_amount": 3258534.8022539997,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737663315,
-                "oldest_tx_hash": "2rprSVSFM3rqnLAtUooSzvbp8jJqmpL6aGPHgEdS6QnZ9a6MMePG4Xr1bnkiLz5uvcnsf3o5hCLEZ1K8s16qFzp7"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864527,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 230720528.02996695,
-                "current_holding_amount": 3258534.8022539997,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "EiuLXiogQws7CLoYspvG7Xg9vd5jqmkfc8Fgx3vwqnvF",
-            "label": "No Trades/Funded",
-            "avg_raw_entry_price": null,
-            "avg_raw_exit_price": null,
-            "avg_actual_holding_price": null
-        },
-        {
-            "holder": "3y1jvCpZ4HbHYNvuPcJ4vRHub9TBSYXc3yrBFRjKmgrH",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 327273203.72196436,
-                "total_amount": 3541876.8454650003,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737638791,
-                "oldest_tx_hash": "3ksw7LUVrTsfXCEUAowU4zDiBL772iRzSUPNaySejtsY2SPxYBohgi2TiCwsPzBP7iW72VEuhrknSDYbR4bNinTK"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864528,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 327273203.72196436,
-                "current_holding_amount": 3541876.8454650003,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "8ZniDsMmxUhK616ekXRf2gge1dZ5aGsViyhSbwH3GaH8",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 292574899.22539645,
-                "total_amount": 3328931.3792160004,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737794426,
-                "oldest_tx_hash": "3XVMQK9bEu1AfbJQfgaNiWbmzoG4eFU6UC7ATia7PviDwkAzmQ1NVQWqrta2ACRzSRGWHrs7MVTodCDFe13FYQnX"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864528,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 292574899.22539645,
-                "current_holding_amount": 3328931.3792160004,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "3ZvDVJLq3yoCWMMjBU7dDdPySNPi8FJbWiiDy3bAPtKF",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 11099033.24727226,
-                "total_amount": 3440917.74874,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737599086,
-                "oldest_tx_hash": "3rV7SY87iXe83SdTCnQULWqHyKfDnutT7GsuvnZeSXew3fF9jk8tQFgSX5aDhsZewseBWyMb2N9P38xnTzMRrZtL"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 253127861.2064465,
-                "total_amount": 76281.554131,
-                "oldest_trade_time": 1737665997,
-                "oldest_tx_hash": "4qTLcWeWi4UFGV9MWG9S297TbxYQPhu51ANupdu2D23vbUkkoGTAGp4vrcTs3UJTmt2rpxsXG4D24td6UdhM8Cxj"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 5611861.953445136,
-                "current_holding_amount": 3364636.1946090003,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "J5YWwgyHAGEKWqycLrFBFRZqa7mTa1eTDKq4iSJsRWK7",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 372983495.1524345,
-                "total_amount": 877902.974575,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737837201,
-                "oldest_tx_hash": "3WHKfeASarxNRMtBJymvXZNiyx3Cyd47dnP7dYe9VyfyG8eygTtSXc6vHPfXq4zM9vCB7a6ZuTaprAsXvdArAYmN"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864529,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 372983495.1524345,
-                "current_holding_amount": 877902.974575,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "kCVKJ3nuDH1twVXUJCWXsnPTswiHgEV3heYhd1g81E2",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 134733001.82893753,
-                "total_amount": 1690850.3532510002,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737754951,
-                "oldest_tx_hash": "5A9RPNKR2zARHyGyc5Zer2zHfz1QJRDe7Uj5NKGafqKrsNkLM3HYtAsLnf9NNSKYwKQ1gfkArSKZ9CNLPLQy2uXk"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864530,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 134733001.82893753,
-                "current_holding_amount": 1690850.3532510002,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "77DXFZnMebramt4dXfdwem1AjnfNnVnG8FkcVWpSwdjB",
-            "label": "No Trades/Funded",
-            "avg_raw_entry_price": null,
-            "avg_raw_exit_price": null,
-            "avg_actual_holding_price": null
-        },
-        {
-            "holder": "4E2zbwMuheneS3FniPhPwhJyauwvnuHx6SZR9ag8LmW3",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 49714405.72638499,
-                "total_amount": 2870407.8419629997,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737604879,
-                "oldest_tx_hash": "5Z7orX95G6yTGphyjctLcLgR6eEBA8N1cXihoFY27RX7rdapcuxM5A4taWS1Rj25J9B88nd7TRGktYvYPjxqoFP3"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864530,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 49714405.72638498,
-                "current_holding_amount": 2870407.8419629997,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "7WUzqEfQqK2sRbweM7h2BHJVyam3q487MTUj1AxNc6fZ",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 154507105.35055724,
-                "total_amount": 5772295.981151999,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737606179,
-                "oldest_tx_hash": "2ra3uzJsVSpHqEg7ASSPqVg5V5xj9m94LvB8jhi1LmD8VGiAPieaeL75eBPLgh7unRndprnP1J44M35eA6ESE1og"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 271759339.82466334,
-                "total_amount": 3055474.622229,
-                "oldest_trade_time": 1737784902,
-                "oldest_tx_hash": "5znfTbfw22mSckxYtfQJcxmRi347RCVb1cLrZwbM6swU3raVfuDUsk421Gfr1nrLhGve7Cq4ckAPXeEZNLoUhsmX"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 22639315.93605659,
-                "current_holding_amount": 2716821.358922999,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "FRqj7Vav9twL2m5sB4WWfdhYcuGUGYYJnxKucNnsgaMQ",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 9041815.66936591,
-                "total_amount": 2776318.493536,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737597237,
-                "oldest_tx_hash": "KNMcKGCPHd5L1ELLLaZtLUCwYgnQ4swKBpV1c5K8TW8KHuitFuxEKaiyEozHaMqbGz4BihYEUQeh5yq7MxpFvvP"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864530,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 9041815.66936591,
-                "current_holding_amount": 2776318.493536,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "7BqxS73oFpGGfjTHikqM149qG3d4etueYVKWTmq4g2AY",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 208734145.2639401,
-                "total_amount": 3217577.0581050003,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737611165,
-                "oldest_tx_hash": "5UeQ8XPksGKjiEnNPEyceEFSu1RXYKxntAunPfGGx8FoSG9eUPgPtRD49F8hasFTL4hLeSAa6zdAEKj2cktitHKK"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 298010139.5593789,
-                "total_amount": 658235.477863,
-                "oldest_trade_time": 1737826477,
-                "oldest_tx_hash": "5q3mBoxTc9kAXgQxytSXSk8xYYgbWU6oxWQHWoPu1Hu1J4Minhf3T8pcGrFMBSW2qhpZY8LFuea9RV7MGSPYqFma"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 185773307.51550785,
-                "current_holding_amount": 2559341.5802420005,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "HV6LWTxtJaa6trid2oKtvfL1tv5JwMM1AtuaTESy6Hcv",
-            "label": "No Trades/Funded",
-            "avg_raw_entry_price": null,
-            "avg_raw_exit_price": null,
-            "avg_actual_holding_price": null
-        },
-        {
-            "holder": "3zRwJEwN49joAochTQ3wyG6ZDmQuA9DA1sJcwdEmRUmD",
-            "label": "No Trades/Funded",
-            "avg_raw_entry_price": null,
-            "avg_raw_exit_price": null,
-            "avg_actual_holding_price": null
-        },
-        {
-            "holder": "dbt7xY87Cn7hpzRCbkNztAtYEfRfTcoMFk13nWRTvBQ",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 252437588.3275665,
-                "total_amount": 3791027.8530239984,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737644642,
-                "oldest_tx_hash": "UbwrE3mhbpQgizwU5c2BBvNHNZozoV9EdxRoLqVSFY9Y6zmmiVrEcjsevCc81AQNNzXdZ46kN3iRRuZ9BuBpsgt"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 296017090.5377024,
-                "total_amount": 2317358.811282,
-                "oldest_trade_time": 1737645130,
-                "oldest_tx_hash": "4ZyCZjQ5VMUDFChpC2vRTfcjjqKjBMJfppzarfw66zsuq4G9HLu1VEE9yqP8b2iD3wJmryBdCTwjp6NSeCGdaBCa"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 183908399.90235263,
-                "current_holding_amount": 1473669.0417419984,
-                "rebuy_detected": true
-            }
-        },
-        {
-            "holder": "9DYbNzkjgZzZh7vN6j8oHBwt37JMeHsDRHCWAM2nqqJJ",
-            "label": "Normal",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 197881536.28787234,
-                "total_amount": 2505133.1396149998,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737613567,
-                "oldest_tx_hash": "34ZpWKtQmEau9hLmS7S4QuxAZ7YvQd4MgzwG4SGcjwSfhGkEe4hWv11niA7j2Uq3g9tGfWeT9Jor3NhdxEr5ysxk"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864532,
-                "oldest_tx_hash": ""
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": 197881536.28787234,
-                "current_holding_amount": 2505133.1396149998,
-                "rebuy_detected": false
-            }
         },
         {
             "holder": "EVZWT6SkCyPXG6yn2JTzYTCbfL9paXJZh4ZLvxpqAiSS",
@@ -828,68 +357,46 @@
             "avg_actual_holding_price": null
         },
         {
-            "holder": "pDR9u4jC1xPquZLaZBypdCVHd171aXM7jNKUceSdDMx",
+            "holder": "GpNbukV5nggkJfsEEbKrJaZkdgYcNWCAaD91Mi4MmGQi",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 141176365.8291653,
-                "total_amount": 928351.190308,
+                "avg_entry_price": 232702051.57903737,
+                "total_amount": 21462661.073653,
                 "sniped_pfun": false,
-                "oldest_trade_time": 1737686332,
-                "oldest_tx_hash": "4wxWkswFPZzhXTYyDbU5wzeaEHKZtHgqciUBNYt3TPNwJJsfjNoRsB1vioqyvhLR93Lw7TbiqrcVCA4cFDDK8eTz"
+                "oldest_trade_time": 1737628233,
+                "oldest_tx_hash": "kpswR7tGBNKn9qDtT89YkGSZ67X3qwRstxxvdGRU4avTUJM9wxpcQ5Hkor3k5AejDnHM4XKxtRBcaSPcnKQbCk4"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864533,
-                "oldest_tx_hash": ""
+                "avg_exit_price": 196637672.48318285,
+                "total_amount": 16560114.208332002,
+                "oldest_trade_time": 1737745053,
+                "oldest_tx_hash": "KkN8sjHAm5LQnyVDuVA5ZDDwHp253oAabWmsUKSoNcP4VdwV33bxtxNXus2FsgcR1bync4Po3GCW29WpqCQHuZf"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 141176365.8291653,
-                "current_holding_amount": 928351.190308,
-                "rebuy_detected": false
+                "avg_holding_price": 354522454.95030177,
+                "current_holding_amount": 4902546.865320999,
+                "rebuy_detected": true
             }
         },
         {
-            "holder": "BCjpgg9U8kYAQX9h2CyoV155dZZ34ntvgiJSUarvkYx3",
+            "holder": "dbt7xY87Cn7hpzRCbkNztAtYEfRfTcoMFk13nWRTvBQ",
             "label": "Normal",
             "avg_raw_entry_price": {
-                "avg_entry_price": 63290445.42985847,
-                "total_amount": 2124845.178391,
+                "avg_entry_price": 346499372.9347551,
+                "total_amount": 9639255.963718986,
                 "sniped_pfun": false,
-                "oldest_trade_time": 1737604847,
-                "oldest_tx_hash": "5gT6n8eSS6SSAi4x4dBSMbNY5VjnKi6xGCesFAN4cr8GyJDHCVenzRNdcTK8eHMog7msAe1zZi6vhaork1TXLixy"
+                "oldest_trade_time": 1737644642,
+                "oldest_tx_hash": "UbwrE3mhbpQgizwU5c2BBvNHNZozoV9EdxRoLqVSFY9Y6zmmiVrEcjsevCc81AQNNzXdZ46kN3iRRuZ9BuBpsgt"
             },
             "avg_raw_exit_price": {
-                "avg_exit_price": 0.0,
-                "total_amount": 0,
-                "oldest_trade_time": 1737864533,
-                "oldest_tx_hash": ""
+                "avg_exit_price": 376326720.6481026,
+                "total_amount": 7562448.3529280005,
+                "oldest_trade_time": 1737645130,
+                "oldest_tx_hash": "4ZyCZjQ5VMUDFChpC2vRTfcjjqKjBMJfppzarfw66zsuq4G9HLu1VEE9yqP8b2iD3wJmryBdCTwjp6NSeCGdaBCa"
             },
             "avg_actual_holding_price": {
-                "avg_holding_price": 63290445.42985847,
-                "current_holding_amount": 2124845.178391,
-                "rebuy_detected": false
-            }
-        },
-        {
-            "holder": "9KojyjpTxnDFmjSoxAzEiCBpLMqXKx1Ji7MY6Q3fGTw7",
-            "label": "Funded",
-            "avg_raw_entry_price": {
-                "avg_entry_price": 90294519.82977013,
-                "total_amount": 4298194.637467999,
-                "sniped_pfun": false,
-                "oldest_trade_time": 1737602310,
-                "oldest_tx_hash": "4QH9Y3uZCrz51wh1ja88gmYggVscCGfHwjevMt2S3U5DC82HNG4saLBiar3v2CWSvJyU6YYPhYtwKJ8jPMiwVHnu"
-            },
-            "avg_raw_exit_price": {
-                "avg_exit_price": 317083053.11735404,
-                "total_amount": 2146813.93224,
-                "oldest_trade_time": 1737629500,
-                "oldest_tx_hash": "4bXWc7TQX2JnH3tQ9T4JaWtvWXKAAoR1RMGMcRWamqrcjoHtMkt3kTXdGMgfuzswmijwn1yREt4YsgSd2tS8Paad"
-            },
-            "avg_actual_holding_price": {
-                "avg_holding_price": -136012605.52044183,
-                "current_holding_amount": 2151380.705227999,
+                "avg_holding_price": 237886627.38481736,
+                "current_holding_amount": 2076807.6107909856,
                 "rebuy_detected": true
             }
         }
