@@ -126,7 +126,7 @@ async def top_holders_holdings_parsed(token, limit):
       # Token information part= 
 
 
-    message = f"*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
+    message = escape_markdown(f"*Token Info*: {token_info['symbol']} ({token_info['name']})\n")
     message += generate_socials_message(token_info, token)
     message += f"├──💰 MC: {format_number(token_info['market_cap'])}\n"
     message += f"├──🫗 Liquidity: {format_number(token_info['liquidity'])}\n"
