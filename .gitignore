@@ -4,6 +4,7 @@ vscode/
 /backend/commands/__pycache__/
 /backend/commands/utils/__pycache__/
 misc/
+venv/
 .env
 .DS_Store
 *.ipynb
