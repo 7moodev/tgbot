@@ -117,7 +117,9 @@ def specific_log(command,entry,content):
 
 def log_tamago(update: Update, response: str):
     print(f"log_tamago: {log_tamago}")
+    db = UserLogsDatabase()
     username = update.message.from_user.username
+    user_id = update.message.from_user.id
     coin_address = None
     command_name = "__internal_message__"
 
@@ -128,13 +130,8 @@ def log_tamago(update: Update, response: str):
     else:
         coin_address = message
 
-    db = UserLogsDatabase()
-    # db.dangerousely_drop_table("user_logs")  # This will drop the user_logs table
-    db.create_table()  # This will recreate the user_logs table
-    db.insert_log(username, coin_address, command_name, response)
-    logs = db.fetch_all_logs()
-    print(logs)
-    pass
+    db.create_table()  # This will recreate the user_logs table if not exists
+    db.insert_log(username, user_id, coin_address, command_name, response)
 
 if __name__ == "__main__":
     log_entry("wtf", "wtff", "s")
