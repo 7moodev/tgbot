@@ -61,7 +61,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         response: str = handle_response(text)
 
-    response ="test"
     log_tamago(update, response)
     print('Bot:', response)
     await update.message.reply_text(response)
@@ -191,8 +190,7 @@ def main():
     else:
         print('Polling locally (webhook removed)')
               # Remove any existing webhook explicitly
-        # asyncio.run(app.bot.delete_webhook()  )# Ensure this is awaited
-        # asyncio.run(app.bot.delete_webhook(TOKEN)  )# Ensure this is awaited
+        #asyncio.run(app.bot.delete_webhook()  )# Ensure this is awaited
         delete_webhook(TOKEN)
 
         app.run_polling(poll_interval=3)
