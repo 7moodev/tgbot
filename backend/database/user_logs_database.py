@@ -1,3 +1,4 @@
+import json
 from typing import List, Dict, Any
 from .database import Database
 from ..commands.utils.constants import DB_REL_PATH_TAMAGO
@@ -70,6 +71,33 @@ class UserLogsDatabase(Database):
             WHERE id = ?
         ''', (username, coin_address, command_name, command_result, log_id))
 
+    def update_logs_called_mapping(self, command_name: str, user_id: str):
+        # "TODO: add `command_called` column"
+        if 1:
+            return
+
+        row = self.fetch_one(f'SELECT command_called FROM {TABLE_NAME} WHERE user_id = {user_id}')
+        if row:
+            command_called = json.loads(row[0]) if row[0] else {}
+        else:
+            command_called = {}
+
+        # Increment the count for the specified command
+        if command_name in command_called:
+            command_called[command_name] += 1
+        else:
+            command_called[command_name] = 1
+
+        # Convert the dictionary back to a JSON string
+        command_called_str = json.dumps(command_called)
+
+        # Update the database with the new command_called value
+        self.execute_query(f'''
+            UPDATE {TABLE_NAME}
+            SET command_called = ?
+            WHERE id = {user_id}
+        ''', (command_called_str,))
+
     def delete_log(self, log_id: int):
         self.execute_query('DELETE FROM ${TABLE_NAME} WHERE id = ?', (log_id,))
 
@@ -81,6 +109,7 @@ if __name__ == "__main__":
 
     db.create_table()  # This will recreate the user_logs table
     db.insert_log('user1', 'id1', 'address1', 'command1', 'result1')
+    # db.update_logs_called_mapping('/test', '1')  # Increment the count for the 'test' command
     logs = db.fetch_all_logs()
     print(logs)
 
