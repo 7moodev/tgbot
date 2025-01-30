@@ -5,6 +5,7 @@ from telegram.ext import Application, ApplicationBuilder, CommandHandler, Messag
 from .tg_commands import *
 import os 
 from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, top_holders_net_worth_map, fresh_wallets_parsed
+from .log import log_tamago
 import asyncio
 import traceback
 limit = 50
@@ -60,6 +61,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         response: str = handle_response(text)
 
+    response ="test"
+    log_tamago(update, response)
     print('Bot:', response)
     await update.message.reply_text(response)
 
@@ -188,7 +191,8 @@ def main():
     else:
         print('Polling locally (webhook removed)')
               # Remove any existing webhook explicitly
-        #asyncio.run(app.bot.delete_webhook()  )# Ensure this is awaited
+        # asyncio.run(app.bot.delete_webhook()  )# Ensure this is awaited
+        # asyncio.run(app.bot.delete_webhook(TOKEN)  )# Ensure this is awaited
         delete_webhook(TOKEN)
 
         app.run_polling(poll_interval=3)

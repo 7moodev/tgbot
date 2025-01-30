@@ -3,6 +3,9 @@ import os
 import csv
 import time
 import sqlite3
+from telegram import Update
+from ..database.user_logs_database import UserLogsDatabase
+
 def log_entry(entry=None,command=None,content=None):
     # Create database connection
     conn = sqlite3.connect('db/user_logs.db')
@@ -111,5 +114,27 @@ def specific_log(command,entry,content):
     cursor.execute(insert_sql, list(flat_data.values()))
     conn.commit()
     conn.close()
+
+def log_tamago(update: Update, response: str):
+    print(f"log_tamago: {log_tamago}")
+    username = update.message.from_user.username
+    coin_address = None
+    command_name = "__internal_message__"
+
+    message = update.message.text
+    print(f"message: {message}")
+    if (message.startswith("/")):
+        command_name = message
+    else:
+        coin_address = message
+
+    db = UserLogsDatabase()
+    # db.dangerousely_drop_table("user_logs")  # This will drop the user_logs table
+    db.create_table()  # This will recreate the user_logs table
+    db.insert_log(username, coin_address, command_name, response)
+    logs = db.fetch_all_logs()
+    print(logs)
+    pass
+
 if __name__ == "__main__":
     log_entry("wtf", "wtff", "s")
