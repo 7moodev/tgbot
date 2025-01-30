@@ -1,5 +1,5 @@
 import os
-from utils.constants import commands_output_path
+from .constants import commands_output_path
 
 debug_should_log = False
 
