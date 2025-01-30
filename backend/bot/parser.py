@@ -94,9 +94,9 @@ async def top_holders_holdings_parsed(token, limit):
 
     #print(token_info)
       # Token information part=
-    message = f"*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
-    message += f"├──💰 MC: {format_number(token_info['market_cap'])}\n"
-    message += f"├──🫗 Liquidity: {format_number(token_info['liquidity'])}\n"
+    message = f"*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
+    message += f"├──💰MC: {format_number(token_info['market_cap'])}\n"
+    message += f"├──🫗Liquidity: {format_number(token_info['liquidity'])}\n"
     message += f"├──👥Total Holder: {token_info['holder']:,}\n"   
     #message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n\n"
 
@@ -234,7 +234,7 @@ async def holder_distribution_parsed(token):
         "🦈 holding (25000+)": int(total_holders * data_pc['25000+'] / 100)
             }
 
-    info  =f"\n*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
+    info  =f"\n*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
     info += f"├── MC: {format_number(token_info['market_cap'])}\n"
     info += f"├── Liquidity: {format_number(token_info['liquidity'])}\n"
     info += f"\n*Total Holders*: {total_holders:,}\n"
@@ -349,7 +349,8 @@ async def fresh_wallets_v2_parsed(token, limit):
         if 'error' in item:
             continue
         elif item['funding_source']:
-            message_parts.append(f"#{item['count']}🌿({shorten_address(item['address'])}) holds {item['holding_pct']}% || funded by {shorten_address(item['funding_source'])}\n")
+            message_parts.append(f"#{item['count']}🌿({shorten_address(item['address'])}) holds {item['holding_pct']}% |
+                                  funded by {shorten_address(item['funding_source'])}\n")
     
     msg = ''.join(message_parts)
     return msg
@@ -551,7 +552,7 @@ async def noteworthy_addresses_parsed(token, limit):
 
 if __name__ == "__main__":
     time_now = time.time()
-    print(asyncio.run(fresh_wallets_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", 100)))
+    print(asyncio.run(fresh_wallets_v2_parsed("H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump", 100)))
     print("Execution time:", time.time() - time_now, "seconds")
     # print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))i
 
