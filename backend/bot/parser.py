@@ -1,4 +1,6 @@
 from ctypes import memset
+
+from aiohttp.http import WebSocketReader
 from .tg_format_test import send_message
 from ..commands.top_holders_holdings import get_top_holders_holdings
 from ..commands.holding_distribution import get_holding_distribution 
@@ -74,7 +76,35 @@ def check_noteworthy(top_holders, cutoff=50_000):
 
     return noteworthy
     
-    
+def generate_socials_message(token_info, token):
+    # Start with the base message format
+    message = "├"
+    chart_link = f"[📊*CHART*](https://dexscreener.com/solana/{token})"
+
+
+    # Check if extensions exist and is not None
+    if token_info.get('extensions'):
+        extensions = token_info['extensions']
+        
+        # Check for 'website' in extensions and add the link if it exists
+        if extensions.get('website'):
+            website_link = f"──[*WEB*]({extensions['website']})"
+        else:
+            website_link = ""  # Leave it empty if 'website' doesn't exist
+        message += f"{website_link}"
+        # Add the chart link for DexScreener
+                
+        # Add the website and chart link to the message
+        if extensions.get('twitter'):
+            message += f"──[*X*]({extensions.get('twitter')})"
+
+        message += f"──{chart_link}\n"
+        
+    else:
+        # If extensions is None or doesn't exist, just include the chart link
+        message += chart_link
+
+    return message 
 
 async def top_holders_holdings_parsed(token, limit):
     if running:
@@ -93,21 +123,18 @@ async def top_holders_holdings_parsed(token, limit):
 
 
     #print(token_info)
-      # Token information part=
+      # Token information part= 
     message = f"*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
-    message += f"├──💰MC: {format_number(token_info['market_cap'])}\n"
-    message += f"├──🫗Liquidity: {format_number(token_info['liquidity'])}\n"
-    message += f"├──👥Total Holder: {token_info['holder']:,}\n"   
-    #message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n\n"
+    message += generate_socials_message(token_info, token)
+    message += f"├──💰 MC: {format_number(token_info['market_cap'])}\n"
+    message += f"├──🫗 Liquidity: {format_number(token_info['liquidity'])}\n"
+    message += f"├──👥 Total Holder: {token_info['holder']:,}\n\n"
+    message += f"*CA*: `{token}`\n\n"
 
     noteworthy = check_noteworthy(top_holders)  
-    message += f"* 💰 There are {len(noteworthy)}/ {len(top_holders)} noteworthy top holders:*\n\n"
-
-
+    message += f"* 💰 There are {len(noteworthy)}/{len(top_holders)} noteworthy top holders:*\n\n"
     message_parts = []
     current_message = message
-
-
     # Top holders part
     for holder in noteworthy:
         #print (holder)
@@ -128,9 +155,6 @@ async def top_holders_holdings_parsed(token, limit):
             whale = "🦐 "
         elif dollar_token_share > 10: 
             whale = "🫧 "
-
-
-
         try:
             if "error" in holder:
                 h_info += f"{whale}\\# {holder['count']}\\-\\({addy}\\)\\(💰 NW\\_Excl: $1M+\\) 🏦LP/Bot \\|\n"
@@ -205,7 +229,7 @@ async def holder_distribution_parsed(token):
 
         data = [{'0-500': 72.0, '500-1000': 2.0, '1000-5000': 6.0, '5000-25000': 2.0, '25000+': 18.0}, {'holder_count': 7199, 'retrieved_holders': 50, 'Symbol': 'Mizuki', 'Name': 'Mizuki'}, {'symbol': 'Mizuki', 'name': 'Mizuki', 'logo_url': 'https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR', 'liquidity': 828098.4949007538, 'market_cap': 18011571.94138404}]
     token_info = data[2]
-    logo_url = token_info['logo_url']
+    #logo_url = token_info['logo_url']
     # Distribution
     data_pc = data[0]
     data_meta = data[1]
@@ -249,14 +273,14 @@ async def holder_distribution_parsed(token):
         markdown += escape_markdown(f"{emoji}:  {count}\n")
 
    
-    return markdown, logo_url
+    return markdown #logo_url
 
 
-def shorten_address(address: str, length: int = 3) -> str:
+def shorten_address(address: str, length: int = 2) -> str:
     """
     Shorten the address to the given length.
     """
-    return f"{address[:length]}...{address[-length:]}"
+    return f"{address[:length]}.{address[-length:]}"
 # Convert to the readable format
 async def fresh_wallets_parsed(token, limit):
 
@@ -338,19 +362,21 @@ async def fresh_wallets_v2_parsed(token, limit):
     market_cap = format_number(token_info['market_cap'])
     liquidity = format_number(token_info['liquidity'])
     holder = format_number(token_info['holder'], with_dollar_sign=False)
+    socials = generate_socials_message(token_info, token)
     message_parts = [
-        f"*Token*: {token_symbol} ({token_name})\n",
+        f"*Token*: ${token_symbol} ({token_name})\n",
         f"├──💰 MC: {market_cap}\n",
         f"├──💦 Liquidity: {liquidity}\n",
         f"├──👥 Holders count: {holder}\n",
         f"Fresh Wallets {valid_results}/{limit}: \n\n",
+        socials
     ]
     for item in items:
         if 'error' in item:
             continue
         elif item['funding_source']:
-            message_parts.append(f"#{item['count']}🌿({shorten_address(item['address'])}) holds {item['holding_pct']}% |
-                                  funded by {shorten_address(item['funding_source'])}\n")
+            message_parts.append(f"🌿#{item['count']}\\({shorten_address(item['address'])}\\) {item['holding_pct']}% funded by {shorten_address(item['funding_source'])}\n")
+
     
     msg = ''.join(message_parts)
     return msg

@@ -1,6 +1,12 @@
 [
     {
+<<<<<<< HEAD
         "amount": "65123500000000",
+=======
+
+        "amount": "34798612253239",
+
+>>>>>>> 8540a7bf949c41cad04f765050da539f6a795d38
         "decimals": 6,
         "mint": "H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump",
         "owner": "Ei9s9jw9asBmSGjeF4Yoz2os37Vq3z156Z8NVPb5ayad",
@@ -12,8 +18,15 @@
         "decimals": 6,
         "mint": "H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump",
         "owner": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",
+<<<<<<< HEAD
         "token_account": "7XxGsY2UgXY98BX8rBfa1NCE7U9BY5ep77Di5R4bpgik",
         "ui_amount": 28446022.171133
+=======
+        "token_account": "6q65PT9hy9mrzWak9s7Vk5GXbRKx7ZDAj9GZyCTbyQnn",
+
+        "ui_amount": 34798612.253239
+
+>>>>>>> 8540a7bf949c41cad04f765050da539f6a795d38
     },
     {
         "amount": "19732610390127",
