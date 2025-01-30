@@ -6,6 +6,7 @@ from typing import Optional
 class UserLogEntity:
     id: int
     username: str
+    user_id: str
     coin_address: str
     command_name: str
     command_result: Optional[str]  # Nullable field
@@ -14,6 +15,7 @@ class UserLogEntity:
 default_user_log_entity = UserLogEntity(
     id=-1,
     username="user123",
+    user_id="id123",
     coin_address="0xABC123...",
     command_name="check_balance",
     command_result="Balance: 100 tokens",

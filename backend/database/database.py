@@ -31,6 +31,9 @@ class Database:
             row = cursor.fetchone()
             return row
 
+    def add_column(self, table_name: str, column_definition: str):
+        self.execute_query(f'ALTER TABLE {table_name} ADD COLUMN {column_definition}')
+
     def dangerousely_drop_table(self, table_name):
       self.execute_query(f'DROP TABLE IF EXISTS {table_name}')
 
