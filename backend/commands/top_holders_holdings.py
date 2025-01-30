@@ -176,6 +176,7 @@ async def get_top_holders_holdings(
     # Combine results
     output_file = ensure_file('top_holders_holdings.json')
     with open(output_file, 'w') as f:
+        json.dump({"token_info": token_info, "items": processed_holders}, f, indent=4)
     return {"token_info": token_info,"items": processed_holders}
 
 
