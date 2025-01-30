@@ -172,7 +172,7 @@ async def get_whales():
                     usdt_last_holder_balance = await get_balance(holder['owner'], token,)
             whales.add(holder['owner'])
     try:
-        with open('backend/constants/whales.json', 'w') as f:
+        with open('backend/commands/constants/whales.json', 'w') as f:
             json.dump({'timestamp': int(time.time()), sol: sol_last_holder_balance, msol: msol_last_holder_balance, usdc: usdc_last_holder_balance, usdt: usdt_last_holder_balance,
                        'items': list(whales)}, f, indent=4)
         print("Saved top holders to 'whales.json'.")

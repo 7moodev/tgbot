@@ -290,52 +290,75 @@ async def calculate_avg_entry(token_address, data ):
         return {"avg_entry_price":avg_entry_price * supply,'total_amount':total_amount, "sniped_pfun":sniped_pfun, "oldest_trade_time":oldest_trade_time, "oldest_tx_hash":oldest_tx_hash}
 
 async def calculate_avg_holding(entry_data, exit_data):
-    print("Calculating average holding price out of entry and exit data")
+    print("Calculating average holding (break-even) price out of entry and exit data")
     """
-    Calculate the average price of the current holding.
+    Calculate the "new average" or break-even price of the current holding from a trading perspective.
 
     Parameters:
     - entry_data: dict containing results from calculate_avg_entry function, 
-                  including 'avg_entry_price' and 'total_amount' (total buy amount).
+                  including:
+                    'avg_entry_price' (float): your original buy/entry price 
+                    'total_amount' (float): total tokens purchased
     - exit_data: dict containing results from calculate_avg_exit function, 
-                 including 'avg_exit_price' and 'total_amount' (total sell amount).
+                 including:
+                    'avg_exit_price' (float): (average) price at which tokens were sold
+                    'total_amount' (float): total tokens sold
+
     Returns:
     - dict: {
-        "avg_holding_price": float,  # Average price of the current holding, if 0 meaning wallet got funded
-        "current_holding_amount": float,  # Current amount of the token held, if negative then it's funded amount
-        "rebuy_detected": bool  # Whether a rebuy after selling has occurred
+        "avg_holding_price": float,  
+            # Break-even price for the REMAINING tokens.  If 0 => no tokens left.
+        "current_holding_amount": float,  
+            # Number of tokens still held after partial sells (can be 0 or negative).
+        "rebuy_detected": bool  
+            # Whether user sold some tokens and then bought again afterward
       }
     """
     # Extract values from input data
-    avg_entry_price = entry_data.get("avg_entry_price", 0)
-    total_buy_amount = entry_data.get("total_amount", 0)
-    avg_exit_price = exit_data.get("avg_exit_price", 0)
-    total_sell_amount = exit_data.get("total_amount", 0)
-
-    # Calculate current holdings
+    avg_entry_price = entry_data.get("avg_entry_price", 0.0)
+    total_buy_amount = entry_data.get("total_amount", 0.0)
+    avg_exit_price = exit_data.get("avg_exit_price", 0.0)
+    total_sell_amount = exit_data.get("total_amount", 0.0)
+    avg_entry_cost = avg_entry_price * total_buy_amount
+    avg_exit_cost = avg_exit_price * total_sell_amount
     current_holding_amount = total_buy_amount - total_sell_amount
-
-    # Handle cases where there's no holding left
-    if current_holding_amount <= 0:
+    if (avg_entry_cost == 0):
         return {
-            "avg_holding_price": 0,  # No holdings, average price is zero
+            "avg_holding_price": 0.0,  # No holdings, break-even doesn't apply
             "current_holding_amount": current_holding_amount,
-            "rebuy_detected": False
+            "rebuy_detected": False,
+            "label": "No Buys"
         }
+    if (avg_exit_cost == 0):
+        return {
+            "avg_holding_price": avg_entry_price,  # No sells, break-even is the entry price
+            "current_holding_amount": current_holding_amount, # to check, if current holding = this, then normal, otherwise funded
+            "rebuy_detected": False,
+            "label": None
+        }
+    #21488934*21700
+    #956549*18048674
 
-    # Detect rebuy: true if sold some tokens and then bought again
-    rebuy_detected = total_sell_amount > 0 and total_buy_amount > total_sell_amount
-
-    # Calculate the total cost of current holdings
-    total_cost_of_holdings = (avg_entry_price * total_buy_amount) - (avg_exit_price * total_sell_amount)
-
-    # Calculate average price of the current holding
-    avg_holding_price = total_cost_of_holdings / current_holding_amount
-    print("Returning average holding price out of entry and exit data")
-    return {
-        "avg_holding_price": avg_holding_price ,
+    avg_break_even = (avg_entry_cost - avg_exit_cost) / current_holding_amount
+    if (current_holding_amount <= 0):
+        return {
+            "avg_holding_price": avg_entry_price,  # No holdings, break-even doesn't apply
+            "current_holding_amount": current_holding_amount,
+            "rebuy_detected": False,
+            "label": "Funded"
+        }
+    if (avg_break_even < 0):
+        return {
+            "avg_holding_price": avg_entry_price,  # No holdings, break-even doesn't apply
+            "current_holding_amount": current_holding_amount,
+            "rebuy_detected": False,
+            "label": "Normal"
+        }
+    return  {
+        "avg_holding_price": avg_break_even,
         "current_holding_amount": current_holding_amount,
-        "rebuy_detected": rebuy_detected
+        "rebuy_detected": False,
+        "label": "Normal"
     }
 
 
@@ -493,19 +516,21 @@ if __name__ == "__main__":
     #print(asyncio.run(get_wallet_avg_price("7tco85pE38UHUmaSNZRnsvcw2GXJv5TowP1tSw3GAL6M", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "buy", httpx.AsyncClient())))
     #print(asyncio.run(get_all_signatures('UeXfwweGMBV8JkTQ7pFF6shPR9EiKEg8VnTNF4qKjhh')))
     #print(asyncio.run(get_balance('5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVh', '9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump')))
-    hist = asyncio.run(get_wallet_trade_history('52AYS4VdJkMtLMpr6vTAaa18qZmHEBPg8EHnxbYvi5uZ', 100, 0, 0))
-    # entry = calculate_avg_entry(hist, "7yZFFUhq9ac7DY4WobLL539pJEUbMnQ5AGQQuuEMpump")
+    hist = asyncio.run(get_wallet_trade_history('Fnz5CaHjX8SBuJAL6cKwLVY6QnAT7o5HNxz47qbYzMMW', 100, 0, 0))
+    entry = asyncio.run(calculate_avg_entry( "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump", hist))
     exit = asyncio.run(calculate_avg_exit("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",hist))
+    holding = asyncio.run(calculate_avg_holding(entry, exit))
     with open("wtf11.json", 'w') as f:  
-        json.dump(hist, f, indent=4)
+        holding = {'holding': holding, 'entry': entry, 'exit': exit, 'hist': hist}
+        json.dump(holding, f, indent=4)
     # print(entry)
     # print(exit)
     # holding = calculate_avg_holding(entry_data=entry, exit_data=exit)
     # print(holding)
     #print(asyncio.run(get_wallet_age("Hq2nUyT8VxgNcrgQM7eBA69iPp2jQvNCT7iycDqL3RJg")))
-    wtf = asyncio.run(get_wallet_trade_history("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF", limit=1000, after_time=1737332294))
+    #wtf = asyncio.run(get_wallet_trade_history("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF", limit=1000, after_time=1737332294))
 
-    print(exit)
+    #print(exit)
     # with open("wtf1.json", 'w') as f:  
     #     json.dump(wtf, f, indent=4)
     #print(asyncio.run(get_wallet_portfolio("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF")))

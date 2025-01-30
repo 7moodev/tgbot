@@ -7,6 +7,7 @@ from ..commands.holding_distribution import get_holding_distribution
 from ..commands.fresh_wallets import fresh_wallets
 from ..commands.fresh_wallets_v2 import fresh_wallets_v2
 from ..commands.noteworthy_addresses import get_noteworthy_addresses
+from ..commands.holders_avg_entry_price import get_holders_avg_entry_price
 import time
 import asyncio
 import json
@@ -381,6 +382,45 @@ async def fresh_wallets_v2_parsed(token, limit):
     msg = ''.join(message_parts)
     return msg
 
+async def holders_avg_entry_price_parsed(token: str, limit:int):
+    data  = await get_holders_avg_entry_price(token=token)
+    token_info = data['token_info']
+    agg_avg = data['agg_avg']
+    items = data['items']
+    token_symbol = token_info['symbol']
+    token_name = token_info['name']
+    market_cap = format_number(token_info['market_cap'])
+    liquidity = format_number(token_info['liquidity'])
+    holder = format_number(token_info['holder'], with_dollar_sign=False)
+    socials = generate_socials_message(token_info, token)
+    message_parts = [
+        f"*Token*: ${token_symbol} ({token_name})\n",
+        f"├──💰 MC: {market_cap}\n",
+        f"├──💦 Liquidity: {liquidity}\n",
+        f"├──👥 Holders count: {holder}\n\n",
+        f"Average Entry Price by Market Cap in 💲\n\n",
+        socials
+    ]
+    for item in items:
+        if 'error' not in item:
+            label = item['label']
+            if label == 'No Trades/Funded':
+                label = "For Free (Funded)"
+                amount = format_number(item['holding'], with_dollar_sign=False)
+                msg = f"#{item['count']}({shorten_address(item['address'])}) | {amount} {label} 🚩\n"  
+            elif label == "Funded":
+                label = "Partially Funded"      
+                amount = format_number(item['holding'], with_dollar_sign=False)
+                avg_entry_price = item['avg_raw_entry_price']['avg_entry_price']
+                pfun = item['avg_raw_entry_price']['sniped_pfun']
+                avg_actual_price = item['avg_actual_holding_price']['avg_holding_price']
+
+                if pfun: 
+                    hash = item['sniper_pfun_hash']
+                if avg_actual_price <0:
+                    
+                    msg = f"#{item['count']}({shorten_address(item['address'])}) | {amount} {label} | Avg Entry Price: {avg_entry_price} | Avg Actual Price: {avg_actual_price} | Sniper Hash: {hash}\n"
+                
 
 async def top_holders_net_worth_map(token, limit):
     if running:
