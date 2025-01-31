@@ -8,11 +8,12 @@ class Database:
     def connect_db(self):
         return sqlite3.connect(self.db_path)
 
-    def execute_query(self, query: str, params: tuple = ()):
+    def execute_query(self, query: str, params: tuple = ()) -> int | None:
         with self.connect_db() as conn:
             cursor = conn.cursor()
             cursor.execute(query, params)
             conn.commit()
+            return cursor.lastrowid
 
     def create_table(self, create_table_sql: str):
         self.execute_query(create_table_sql)
