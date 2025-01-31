@@ -146,6 +146,18 @@ async def delete_webhook(TOKEN):
     bot = Bot(TOKEN)
     await bot.delete_webhook()
 
+def wrap_command(func, command_name: str = ''):
+    async def wrapped(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        try:
+            log_tamago(update, command_name)
+            func(update, context)
+        except Exception as e:
+            print(f"[main] wrap_command error: {e}")
+            await error(update, context)
+    return wrapped
+
+def testi(one, two):
+    pass
 
 def main():
     print ('start_command')
@@ -154,17 +166,17 @@ def main():
     #Commands
     #main functions
     #app.add_handler(CommandHandler('distro', token_distribution_command))
-    app.add_handler(CommandHandler('top', topholders_command))
-    app.add_handler(CommandHandler('fresh', fresh_wallets_command))
-    app.add_handler(CommandHandler('map', top_net_worth_map_command))
+    app.add_handler(CommandHandler('top', wrap_command(topholders_command)))
+    app.add_handler(CommandHandler('fresh', wrap_command(fresh_wallets_command)))
+    app.add_handler(CommandHandler('map', wrap_command(top_net_worth_map_command)))
 
     #user functions
-    app.add_handler(CommandHandler('userid', userid_command))
-    app.add_handler(CommandHandler('renew', renew_command))
-    app.add_handler(CommandHandler('start', start_command))
-    app.add_handler(CommandHandler('referral', referrallink_command))
-    app.add_handler(CommandHandler('sub', check_subscription))
-    app.add_handler(CommandHandler('help', help))
+    app.add_handler(CommandHandler('userid', wrap_command(userid_command)))
+    app.add_handler(CommandHandler('renew', wrap_command(renew_command)))
+    app.add_handler(CommandHandler('start', wrap_command(start_command)))
+    app.add_handler(CommandHandler('referral', wrap_command(referrallink_command)))
+    app.add_handler(CommandHandler('sub', wrap_command(check_subscription)))
+    app.add_handler(CommandHandler('help', wrap_command(help)))
 
     #Buttons
 
