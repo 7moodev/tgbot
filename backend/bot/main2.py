@@ -5,6 +5,7 @@ from telegram.ext import Application, ApplicationBuilder, CommandHandler, Messag
 from .tg_commands import *
 import os 
 from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, top_holders_net_worth_map, fresh_wallets_parsed
+from .log import log_tamago
 import asyncio
 import traceback
 limit = 50
@@ -60,6 +61,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         response: str = handle_response(text)
 
+    log_tamago(update, response)
     print('Bot:', response)
     await update.message.reply_text(response)
 

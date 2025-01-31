@@ -3,6 +3,7 @@ import asyncio
 import httpx
 from .utils.token_utils import get_token_supply, get_token_overview, get_top_holders, get_token_creation_info
 from .utils.wallet_utils import get_wallet_age
+from .utils.os_utils import ensure_file
 import time
 from aiohttp import ClientSession, ClientError
 import json
@@ -173,7 +174,8 @@ async def get_top_holders_holdings(
         processed_holders = await asyncio.gather(*holder_tasks)
     
     # Combine results
-    with open("backend/commands/outputs/top_holders_holdings.json", 'w') as f:
+    output_file = ensure_file('top_holders_holdings.json')
+    with open(output_file, 'w') as f:
         json.dump({"token_info": token_info, "items": processed_holders}, f, indent=4)
     return {"token_info": token_info,"items": processed_holders}
 
@@ -224,7 +226,8 @@ if __name__ == "__main__":
     #print(format_message(holders[0], holders[1]))
     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
     print(float(time.time()) - timenow)
-    with open("backend/commands/outputs/top_holders_holdings.json", 'w') as f:
+    output_file = ensure_file('top_holders_holdings.json')
+    with open(output_file, 'w') as f:
         json.dump(holders, f, indent=4)
 
 
