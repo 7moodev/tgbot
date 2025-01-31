@@ -14,3 +14,8 @@ are you gonna make it finally, anon?
 
 ### Run
 python backend/bot/main2.py
+
+### Useful
+- check if your bot is running
+  - https://api.telegram.org/bot<token>/getMe
+
