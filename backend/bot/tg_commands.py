@@ -2,6 +2,7 @@ from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
+from .log import log_tamago
 
 BOT_USERNAME= os.environ.get('tgNAME')  
 limit = 50
@@ -17,6 +18,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     s = check_user(user_id, referral_info )
     # Define keyboard layout
+    log_tamago(update)
     await update.message.reply_text("Welcome to EL MUNKI 🐵🌕 you horny degen! This is your personal Memecoin Analytics Tool. Get started by using the commands below:\n\nSend /top [contract address] to get a list of Top Holders \nSend /map [contract] to get an net_worth overview of the top holders  \nSend /fresh for checking fresh wallets \nSend /sub to check your subscription \nSend /renew to activate or renew your subscription")
 
 async def referrallink_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
@@ -27,6 +29,7 @@ async def referrallink_command(update: Update, context: ContextTypes.DEFAULT_TYP
 
  
     # Define keyboard layout
+    log_tamago(update, response=referral_link)
     await update.message.reply_text(f"Your refferal link is: \n {referral_link}")
 
 async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -48,16 +51,19 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
             for parts in message:
                 if parts == message[0]:
+                    log_tamago(update, response=parts)
                     await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=wait_message.message_id,
                     text=parts
                     , parse_mode='MarkdownV2', disable_web_page_preview=True)
                 else:
+                    log_tamago(update, response=parts)
                     await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
     else:
-        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+        log_tamago(update, response='To use this function please use /renew to get a subscription')
+        await update.message.reply_text('To use this function plase use /renew to get a subscription' , parse_mode='MarkdownV2')
 
 
 async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -75,6 +81,7 @@ async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAUL
             message = await top_holders_net_worth_map(token_address, limit )
             print (message)
 
+            log_tamago(update, response=message)
             await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=wait_message.message_id,
@@ -117,18 +124,21 @@ async def fresh_wallets_command(update: Update, context: ContextTypes.DEFAULT_TY
             wait_message = await update.message.reply_text("Looking for Fresh Wallets please shill...")
             holder_message = await fresh_wallets_parsed(token_address, limit)
             print (holder_message)
+            log_tamago(update, response=holder_message)
             await context.bot.edit_message_text(
                     chat_id=update.effective_chat.id,
                     message_id=wait_message.message_id,
                     text=holder_message
                     , parse_mode='MarkdownV2', disable_web_page_preview=True)
     else:
+        log_tamago(update, response='To use this function please use /renew to get a subscription')
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
 
 
 
 async def userid_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    log_tamago(update, response=update.message.chat.id)
     await update.message.reply_text(f'{update.message.chat.id}')
 
 
@@ -140,6 +150,7 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         time_left = datetime.strptime( info['expiration_date'],"%Y-%m-%d %H:%M:%S.%f")
         time_left=time_left.strftime("%B %d, %Y %I:%M%p %Z")
         response = f'You already have an active subscription expiring {time_left}'
+        log_tamago(update, response=response)
         await update.message.reply_text(f'{response}')
     
     else: 
@@ -156,6 +167,7 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # Send message with the keyboard
         # await update.message.reply_text(f'{renew_message}')
+        log_tamago(update, response=renew_message)
         await update.message.reply_text(f'{renew_message}', reply_markup=reply_markup)
     
 async def check_renew(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
@@ -181,6 +193,7 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
         response = f'No subscription active. Use /renew to buy a subscription.'
 
         #await update.message.reply_text(f'{response}')
+    log_tamago(update, response=response)
     await context.bot.edit_message_text(
         chat_id=update.effective_chat.id,
         message_id=check_message.message_id,
