@@ -1,24 +1,130 @@
 {
     "token_info": {
-        "price": 0.008842517081964431,
-        "symbol": "Mizuki",
-        "name": "Mizuki",
-        "logoURI": "https://ipfs.io/ipfs/Qmdtq5b4Z5JouWWothvSXydP3Rz8WyqTKtQVXhh5LiZrrR",
-        "liquidity": 614248.2970903305,
-        "market_cap": 8842456.470453456,
-        "supply": 999993145.445899,
-        "circulatingSupply": 999993145.445984,
-        "realMc": 8842456.470453456,
-        "holder": 6597,
+        "price": 0.010897842265609503,
+        "symbol": "GARLIC",
+        "name": "Garlicoin",
+        "logoURI": "https://ipfs.io/ipfs/Qmb4VWUcVdzVs5zx3cYvcb9SqNTxGbvjqkjTtmpBQXWCEy",
+        "liquidity": 1264484.532407556,
+        "market_cap": 10897838.627658516,
+        "supply": 999999593.970519,
+        "circulatingSupply": 999999666.176947,
+        "realMc": 10897838.627658527,
+        "holder": 11901,
         "extensions": {
-            "coingeckoId": "mizuki",
-            "description": "The AI agent revolves around the AI agent\u2019s role as a whistleblower in the Web3 space, exposing \"larp\" AI agents (those pretending to have advanced capabilities without delivering) and highlighting companies that fail to implement proper security protocols. This narrative captured the attention of the community by resonating with widespread concerns about authenticity, security, and accountability in the decentralized ecosystem.",
-            "twitter": "https://twitter.com/_Mizuki_exe",
-            "website": "https://terminal.mizuki-exe.xyz/"
+            "description": "For garlic bread enthusiasts (inspired by a Reddit meme) "
         },
-        "priceChange1hPercent": 0.3548740996994215,
-        "creationTime": 1733878974
+        "priceChange1hPercent": 54.49263404405389,
+        "creationTime": 1737976116
     },
-    "valid_results": 0,
-    "items": []
+    "valid_results": 12,
+    "items": [
+        {
+            "count": 11,
+            "address": "9sECrpDWGzy9gYiRbAyizNuQMkz61ZJDHFkP6tenEV7H",
+            "holding": 10529888,
+            "holding_pct": 1.053,
+            "age": 1737555048,
+            "age_readable": "5 days",
+            "funding_source": "5VCwKtCXgCJ6kit5FybXjvriW3xELsFDhYrPSqtJNmcD"
+        },
+        {
+            "count": 14,
+            "address": "xJdnFAFDddU712uiiC2Y67xS8UHUHuWYdDpPgaodi5u",
+            "holding": 10061247,
+            "holding_pct": 1.006,
+            "age": 1737707867,
+            "age_readable": "3 days",
+            "funding_source": "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9"
+        },
+        {
+            "count": 19,
+            "address": "HuYYMZ8JsuMeKAVfNs3PfoRGD7gk42sB8RyGCc2nCDVu",
+            "holding": 6942609,
+            "holding_pct": 0.694,
+            "age": 1737694208,
+            "age_readable": "3 days",
+            "funding_source": "8MMob389sWpYYLSuCaw827rYmd9riwyfEvVPsLza8vYo"
+        },
+        {
+            "count": 31,
+            "address": "A9vEAz9iGa6DmNJ1RDUorgrNAspCcJbYm8S34p6utR3j",
+            "holding": 4621000,
+            "holding_pct": 0.462,
+            "age": 1737526169,
+            "age_readable": "5 days",
+            "funding_source": "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9"
+        },
+        {
+            "count": 49,
+            "address": "HsCsiBTirJM2557JfnDVCPHmoYVWXY2gA95tGtdKX6Qt",
+            "holding": 2796490,
+            "holding_pct": 0.28,
+            "age": 1737556588,
+            "age_readable": "5 days",
+            "funding_source": "9hLVr1QNZK8TNz3WBUCAeFiVSD5Z7Atkz8c3dqnTNdeP"
+        },
+        {
+            "count": 65,
+            "address": "C2toBH8qvNy3sDSN6E4fZAyrgEjj333EzG1Ex3G5jfeA",
+            "holding": 2137006,
+            "holding_pct": 0.214,
+            "age": 1737593465,
+            "age_readable": "4 days",
+            "funding_source": "38mXzjMFE7eYUSG6Pc1QsEeqLa4f8ozy1KLSGZRqLcH4"
+        },
+        {
+            "count": 71,
+            "address": "Dwxn4Wn6cRJLFRkGvZ4z24s8SQZTQpxzaekY3qJ4bBpJ",
+            "holding": 2012233,
+            "holding_pct": 0.201,
+            "age": 1737848171,
+            "age_readable": "1 day",
+            "funding_source": "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9"
+        },
+        {
+            "count": 74,
+            "address": "4ih9YmNFV1K663h5LJRse72h5Eg9HaGpnWhFLUP32GG8",
+            "holding": 1952319,
+            "holding_pct": 0.195,
+            "age": 1737407629,
+            "age_readable": "6 days",
+            "funding_source": "12dnaU2YsVMWxe3vejQUe8pdHDEsaxHgRTpe9XSjPBdJ"
+        },
+        {
+            "count": 80,
+            "address": "3JNZuh2Yrit5bYtqin7TXwDAvKBpEsYAWrNfiab8yJeT",
+            "holding": 1856315,
+            "holding_pct": 0.186,
+            "age": 1737808470,
+            "age_readable": "2 days",
+            "funding_source": "5tzFkiKscXHK5ZXCGbXZxdw7gTjjD1mBwuoFbhUvuAi9"
+        },
+        {
+            "count": 83,
+            "address": "7uxcxoyM9AFM6zfccpP7FeKvSN3VYRVLDuDe7x5vy3sM",
+            "holding": 1720967,
+            "holding_pct": 0.172,
+            "age": 1737696892,
+            "age_readable": "3 days",
+            "funding_source": "4hfNG4Z2MM3MrW1askVPrwGxV4SLqoBdLJn66kCGme4L"
+        },
+        {
+            "count": 98,
+            "address": "mW4PZB45isHmnjGkLpJvjKBzVS5NXzTJ8UDyug4gTsM",
+            "holding": 1488152,
+            "holding_pct": 0.149,
+            "age": 1737857230,
+            "age_readable": "1 day",
+            "funding_source": "85UMsKMnbYpFMvR4JeJ1PkpN3MvRi5aSZLBiCuT4UM4M"
+        },
+        {
+            "count": 99,
+            "address": "sigE4C3Nt5dXJHdsE5h2jQagf3Fumu5DRJbAyihzX8M",
+            "holding": 1453677,
+            "holding_pct": 0.145,
+            "age": 1737418383,
+            "age_readable": "6 days",
+            "funding_source": "2xBw9aAs4MqnGqRigMPL29d4XTbmg3Ded6vTVaBYkt6R"
+        }
+    ]
 }

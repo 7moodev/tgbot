@@ -48,23 +48,28 @@ async def get_holders_avg_entry_price(token: str, limit:int):
     token_creation_time = token_creation_info['blockUnixTime']
     res = []
     counted = 0
+    count = 0
     agg_avg_price = 0
     for holder in top_holders:
         holder_address = holder['owner']
+        holding_amount = holder['ui_amount']
+        
         avg_raw_entry_price, avg_raw_exit_price, avg_actual_holding_price = await get_holder_avg_entry_price(holder_address, token, token_creation_time)
-        if avg_raw_entry_price is None or avg_raw_exit_price is None or avg_actual_holding_price is None:
-          
-                res.append({'holder': holder_address,'label': 'No Trades/Funded', 'avg_raw_entry_price': None, 'avg_raw_exit_price': None, 'avg_actual_holding_price': None})
+        if avg_raw_entry_price is None:
+                res.append({'holder': holder_address,'holding': holding_amount,'label': 'No Trades/Funded', 'avg_raw_entry_price': None, 'avg_raw_exit_price': None, 'avg_actual_holding_price': None})
             #implement logic to check where the tokens came from
         if avg_actual_holding_price is not None:
             price = avg_actual_holding_price['avg_holding_price']
-            if price >=0 and avg_actual_holding_price['current_holding_amount']>=0:
+            label = avg_actual_holding_price['label']
+            if label is None:
+                if holding_amount > avg_actual_holding_price['current_holding_amount']:
+                    label = 'Funded'
+            if label == "Normal":
                 counted+=1
                 agg_avg_price+=price
-                res.append({'holder': holder_address,'label': 'Normal', 'avg_raw_entry_price': avg_raw_entry_price, 'avg_raw_exit_price': avg_raw_exit_price, 'avg_actual_holding_price': avg_actual_holding_price})
-            else:
-                res.append({'holder': holder_address,'label': 'Funded', 'avg_raw_entry_price': avg_raw_entry_price, 'avg_raw_exit_price': avg_raw_exit_price, 'avg_actual_holding_price': avg_actual_holding_price})
-    print(f"Returning {counted} holders with valid avg entry prices")
+            res.append({'count': count,'holder': holder_address,'holding': holding_amount,'label': label, 'avg_raw_entry_price': avg_raw_entry_price, 'avg_raw_exit_price': avg_raw_exit_price, 'avg_actual_holding_price': avg_actual_holding_price})
+        count = count+1
+        print(f"Returning {counted} holders with valid avg entry prices")
     return {"token_info": token_info,"agg_avg": (agg_avg_price/counted), "items": res}
 
 if __name__ == "__main__":
