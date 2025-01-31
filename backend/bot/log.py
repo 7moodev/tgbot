@@ -115,7 +115,7 @@ def specific_log(command,entry,content):
     conn.commit()
     conn.close()
 
-def log_tamago(update: Update, response: str):
+def log_tamago(update: Update = None, response: str = None):
     print(f"log_tamago: {log_tamago}")
     db = UserLogsDatabase()
     username = update.message.from_user.username
