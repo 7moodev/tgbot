@@ -16,6 +16,7 @@ class LogService:
     def log(self, message, *args):
         message = message + ' ' + ' '.join(map(str, args))
         self.logger.debug(message)
+        print(message)
 
 if __name__ == "__main__":
     logger = LogService()
