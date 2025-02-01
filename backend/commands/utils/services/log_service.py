@@ -5,7 +5,7 @@ class LogService:
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.DEBUG)
 
-        self.formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        self.formatter = logging.Formatter('%(asctime)s [%(levelname)s]:[%(name)s] - %(message)s')
 
         self.file_handler = logging.FileHandler('logs/tgbot.log')
         self.file_handler.setLevel(logging.DEBUG)
