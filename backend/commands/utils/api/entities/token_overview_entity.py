@@ -1,14 +1,5 @@
-
 from dataclasses import dataclass
 from typing import Optional
-from typing import TypeVar, Generic
-
-T = TypeVar('T')
-
-@dataclass
-class ApiResponse(Generic[T]):
-  data: T
-  success: bool
 
 @dataclass
 class TokenOverviewEntity:
