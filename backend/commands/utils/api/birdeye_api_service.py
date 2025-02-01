@@ -56,7 +56,8 @@ class BirdeyeApiService:
             unix_time = int(time.time())
         if token is None:
             token = "So11111111111111111111111111111111111111112"
-        url = f"{BASE_URL}/defi/historical_price_unix?address={token}&unixtime={unix_time}"
+        params = dict_to_query_params({"address": token, "unixtime": unix_time})
+        url = f"{BASE_URL}/defi/historical_price_unix?{params}"
         try:
             response = requests.get(url, headers=self.headers)
         except:
@@ -75,19 +76,20 @@ class BirdeyeApiService:
         Get the price of a token at a given unix time, costs 5 credits per request
         """
         type = "1m"
-        url = f"{BASE_URL}/defi/history_price?address={token}&address_type=token&type={type}&time_from={start}&time_to={end}"
+        params = dict_to_query_params(
+            {
+                "address": token,
+                "address_type": "token",
+                "type": type,
+                "time_from": start,
+                "time_to": end,
+            }
+        )
+        url = f"{BASE_URL}/defi/history_price?{params}"
         try:
             response = requests.get(url, headers=self.headers)
         except:
-            logger.log(
-                "Error getting price historical for",
-                token,
-                "from",
-                start,
-                "to",
-                end,
-                ":Birdeye",
-            )
+            logger.log( "Error getting price historical for", token, "from", start, "to", end, ":Birdeye",)  # fmt: skip
             return None
         if response.status_code != 200:
             if response.json()["success"] == False:
@@ -116,9 +118,7 @@ class BirdeyeApiService:
                 try:
                     all_data = json.load(file)
                 except json.JSONDecodeError:
-                    logger.log(
-                        "Error loading 'top_traders.json'. File is empty or corrupt."
-                    )
+                    logger.log( "Error loading 'top_traders.json'. File is empty or corrupt.")  # fmt: skip
                     all_data = {}
                 for item in all_data.get("items", []):
                     if (
@@ -129,7 +129,16 @@ class BirdeyeApiService:
         res = []
         while len(res) < limit:
 
-            url = f"{BASE_URL}/trader/gainers-losers?type={type}&sort_by=PnL&sort_type=desc&offset={len(res)}&limit=10"
+            params = dict_to_query_params(
+                {
+                    "type": type,
+                    "sort_by": "PnL",
+                    "sort_type": "desc",
+                    "offset": len(res),
+                    "limit": 10,
+                }
+            )
+            url = f"{BASE_URL}/trader/gainers-losers?{params}"
             response = requests.get(url, headers=self.headers)
             if response.status_code != 200:
                 logger.log("Error getting top traders: ", response.json())
@@ -173,7 +182,17 @@ class BirdeyeApiService:
         print("Getting trade history for", wallet)
         res = []
         while len(res) < limit:
-            url = f"{BASE_URL}/trader/txs/seek_by_time?address={wallet}&offset={len(res)}&limit=100&tx_type=swap&before_time={before_time}&after_time={after_time}"
+            params = dict_to_query_params(
+                {
+                    "address": wallet,
+                    "offset": len(res),
+                    "limit": 100,
+                    "tx_type": "swap",
+                    "before_time": before_time,
+                    "after_time": after_time,
+                }
+            )
+            url = f"{BASE_URL}/trader/txs/seek_by_time?{params}"
             response = requests.get(url, headers=self.headers)
             if response.status_code != 200:
                 print("Error getting trade_history: ", response.json())
@@ -208,7 +227,8 @@ class BirdeyeApiService:
         if token is None:
             return None
 
-        url = f"{BASE_URL}/defi/token_overview?address={token}"
+        params = dict_to_query_params({"address": token})
+        url = f"{BASE_URL}/defi/token_overview?{params}"
         response = requests.get(url, headers=self.headers)
         logger.log("Returning token overview for", token)
         return response.json()
@@ -238,7 +258,14 @@ class BirdeyeApiService:
         batch_size = 100
 
         while True:
-            url = f"{BASE_URL}/defi/v3/token/holder?address={token}&offset={offset}&limit={batch_size}"
+            params = dict_to_query_params(
+                {
+                    "address": token,
+                    "offset": offset,
+                    "limit": batch_size,
+                }
+            )
+            url = f"{BASE_URL}/defi/v3/token/holder?{params}"
             response = requests.get(url, headers=self.headers)
             if response.status_code != 200:
                 if not response.json()["success"]:
@@ -277,7 +304,8 @@ class BirdeyeApiService:
         """
         logger.log("Getting token creation info for", token)
 
-        url = f"{BASE_URL}/defi/token_creation_info?address={token}"
+        params = dict_to_query_params({"address": token})
+        url = f"{BASE_URL}/defi/token_creation_info?{params}"
 
         try:
             response = requests.get(url, headers=self.headers)
@@ -405,6 +433,23 @@ class BirdeyeApiService:
                 f"Error fetching balance using Birdeye for wallet {wallet} in {token}: {str(e)}"
             )
             return None
+
+
+def dict_to_query_params(params: dict) -> str:
+    """
+    Convert a dictionary to a query parameter string.
+
+    Args:
+        params (dict): Dictionary of query parameters.
+
+    Returns:
+        str: Query parameter string.
+
+    Example:
+        >>> dict_to_query_params({"key1": "value1", "key2": "value2"})
+        'key1=value1&key2=value2'
+    """
+    return "&".join(f"{key}={value}" for key, value in params.items())
 
 
 if __name__ == "__main__":
