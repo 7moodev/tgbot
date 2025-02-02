@@ -71,7 +71,7 @@ async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAUL
 
         else:
             token_address = context.args[0]
-            wait_message = await update.message.reply_text("Analyzing token and looking for Whales please shill...")
+            wait_message = await update.message.reply_text("Analyzing token and looking for Whales please chill...")
             message = await top_holders_net_worth_map(token_address, limit )
             print (message)
 
@@ -114,7 +114,7 @@ async def fresh_wallets_command(update: Update, context: ContextTypes.DEFAULT_TY
 
         else:
             token_address = context.args[0]
-            wait_message = await update.message.reply_text("Looking for Fresh Wallets please shill...")
+            wait_message = await update.message.reply_text("Looking for Fresh Wallets please chill...")
             holder_message = await fresh_wallets_parsed(token_address, limit)
             print (holder_message)
             await context.bot.edit_message_text(
@@ -156,7 +156,7 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # Send message with the keyboard
         # await update.message.reply_text(f'{renew_message}')
-        await update.message.reply_text(f'{renew_message}', reply_markup=reply_markup)
+        await update.message.reply_text(f'{renew_message}', reply_markup=reply_markup, parse_mode='MarkdownV2')
     
 async def check_renew(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
     user_id = update.callback_query.message.chat.id

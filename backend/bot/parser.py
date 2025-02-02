@@ -54,7 +54,7 @@ def format_number(amount, with_dollar_sign=True):
 
 def escape_markdown(text):
     # List of characters that need to be escaped in Markdown
-    special_chars = r'\`_{}[]()#+-.!|<>'
+    special_chars = r'\_{}[]()#+-.!|<>'
     # Use a regular expression to replace each special character with a backslash and the character
     return re.sub(r'([{}])'.format(re.escape(special_chars)), r'\\\1', text)
 
