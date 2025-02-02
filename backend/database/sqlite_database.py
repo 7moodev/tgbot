@@ -1,7 +1,8 @@
 import sqlite3
 from typing import List, Dict, Any
 
-class Database:
+
+class SqliteDatabase:
     def __init__(self, db_path: str):
         self.db_path = db_path
 
@@ -33,8 +34,7 @@ class Database:
             return row
 
     def add_column(self, table_name: str, column_definition: str):
-        self.execute_query(f'ALTER TABLE {table_name} ADD COLUMN {column_definition}')
+        self.execute_query(f"ALTER TABLE {table_name} ADD COLUMN {column_definition}")
 
     def dangerousely_drop_table(self, table_name):
-      self.execute_query(f'DROP TABLE IF EXISTS {table_name}')
-
+        self.execute_query(f"DROP TABLE IF EXISTS {table_name}")
