@@ -90,7 +90,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
     # Check if 'token_distribution_started' exists and is set, otherwise default to False
     elif context.user_data.get('token_distribution_started', False):
         wait_message = await update.message.reply_text("Checking for holder distribution please chill...")
-        command = 'distrubtion'
+        command = 'distribution'
         context.user_data['token_distribution_started'] = False
         holder_message = await holder_distribution_parsed(token_address)
 
@@ -98,13 +98,20 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
         wait_message = await update.message.reply_text("Checking for fresh wallets please chill...")
         command = 'fresh'
         context.user_data['fresh_wallets_started'] = False
-        holder_message = await fresh_wallets_parsed(token_address, limit)
+        holder_message = await fresh_wallets_v2_parsed(token_address, limit)
     elif context.user_data.get('avg_entry_started', False):
         wait_message = await update.message.reply_text("Checking for average entry price please chill...")
         command = 'avg'
         context.user_data['avg_entry_started'] = False
-        holder_message = await holders_avg_entry_price_parsed(token_address, limit)
-    else: 
+        holder_message = await holders_avg_entry_price_parsed(token_address, limit) 
+
+    elif context.user_data.get('wallets_age_started', False):
+        wait_message = await update.message.reply_text("Checking experience of top holdersplease chill...")
+        command = 'exp'
+        context.user_data['wallets_age_started'] = False
+        holder_message = await fresh_wallets_parsed(token_address, limit)
+
+    else:
         try: 
             wait_message = await update.message.reply_text("Analyzing token getting top holders please chill...")
             command = 'top'
@@ -116,8 +123,8 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
     await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__())
     print(holder_message)
     parse_mode = 'MarkdownV2'
-    if command == 'avg':
-        parse_mode = 'Markdown'
+    #if command == 'avg':
+    #    parse_mode = 'Markdown'
     if type(holder_message) == list:
         for parts in holder_message:
             if parts == holder_message[0]:
@@ -146,6 +153,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
 /userid - get your userid 
 /renew - renew your subscription
 /referral - get referral link
+/exp - get wallet experience estimate by age of wallet for topholders 
 /fresh - [contract adress] to get a list of fresh wallets
 /sub - get subscription status
 /map - [contract adress] get map of net worth of top holders
@@ -166,6 +174,7 @@ def main():
     #app.add_handler(CommandHandler('distro', token_distribution_command))
     app.add_handler(CommandHandler('top', topholders_command))
     app.add_handler(CommandHandler('fresh', fresh_wallets_command))
+    app.add_handler(CommandHandler('exp', wallets_age_command))
     app.add_handler(CommandHandler('map', top_net_worth_map_command))
     app.add_handler(CommandHandler('avg', avg_entry_command))
     #user functions
