@@ -397,23 +397,25 @@ async def fresh_wallets_v2_parsed(token, limit):
     items = data['items']
     token_symbol = token_info['symbol']
     token_name = token_info['name']
-    market_cap = format_number(token_info['market_cap'])
-    liquidity = format_number(token_info['liquidity'])
-    holder = format_number(token_info['holder'], with_dollar_sign=False)
-    socials = generate_socials_message(token_info, token)
+    market_cap = format_number(token_info['market_cap'], escape=False)
+    liquidity = format_number(token_info['liquidity'], escape=False)
+    holder = format_number(token_info['holder'], with_dollar_sign=False, escape=False)
+    socials = generate_socials_message_v1(token_info, token)
     message_parts = [
+        f"Fresh Wallets Detector, by @elmunkibot 🐵🌕\n\n",
         f"*Token*: ${token_symbol} ({token_name})\n",
-        f"├──💰 MC: {market_cap}\n",
-        f"├──💦 Liquidity: {liquidity}\n",
-        f"├──👥 Holders count: {holder}\n",
-        f"Fresh Wallets {valid_results}/{limit}: \n\n",
-        socials
+        socials,
+        f"├──💰 MC: *{market_cap}*\n",
+        f"├──💦 Liquidity: *{liquidity}*\n",
+        f"├──👥 Holders count: *{holder}*\n\n",
+        f"*CA*: `{token}`\n\n",
     ]
     for item in items:
         if 'error' in item:
             continue
         elif item['funding_source']:
-            message_parts.append(f"🌿#{item['count']}\\({shorten_address(item['address'])}\\) {item['holding_pct']}% funded by {shorten_address(item['funding_source'])}\n")
+            link = f"[({shorten_address(item['address'])})](https://solscan.io/account/{shorten_address(item['address'])})"
+            message_parts.append(f"🌿 #{item['count']}-{link} {item['holding_pct']}% funded by [{shorten_address(item['funding_source'])}](https://solscan.io/account/{item['funding_source']})\n")
 
     
     msg = ''.join(message_parts)
@@ -722,7 +724,7 @@ async def noteworthy_addresses_parsed(token, limit):
 
 if __name__ == "__main__":
     time_now = time.time()
-    print(asyncio.run(top_holders_net_worth_map("H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump", 0)))
+    print(asyncio.run(fresh_wallets_v2_parsed("H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump", 0)))
     print("Execution time:", time.time() - time_now, "seconds")
     # print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))i
 
