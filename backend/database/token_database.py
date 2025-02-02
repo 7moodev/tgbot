@@ -1,10 +1,10 @@
-import os
-from postgres_database import PostgresDatabase
-from commands.utils.api.entities.token_list_entity import TokenListEntity
+from .postgres_database import PostgresDatabase
+from ..commands.utils.api.entities.token_list_entity import TokenListEntity
+from ..commands.utils.services.log_service import LogService
 
 # Initialize the PostgresDatabase with the appropriate database URL
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://bruce:@localhost:5432/Testing")
-db = PostgresDatabase(DATABASE_URL)
+db = PostgresDatabase()
+logger = LogService("TOKENDB")
 
 
 def create_tokens_table():
@@ -24,7 +24,7 @@ def create_tokens_table():
     )
     """
     db.create_table(create_table_query)
-    print("Tokens table created successfully")
+    logger.log("Tokens table created successfully")
 
 
 def insert_token(token: TokenListEntity):
@@ -59,38 +59,40 @@ def insert_token(token: TokenListEntity):
             token.v24hUSD,
         ),
     )
-    print("Inserted token data successfully")
+    logger.log("Inserted token data successfully")
 
 
 def fetch_all_tokens():
     fetch_query = "SELECT * FROM tokens"
     records = db.fetch_all(fetch_query)
-    print("Data from tokens table:")
+    logger.log("Data from tokens table:")
     for record in records:
-        print(record)
+        logger.log(record)
     return records
 
 
 def fetch_token_by_address(address: str):
     fetch_query = "SELECT * FROM tokens WHERE address = %s"
     record = db.fetch_one(fetch_query, (address,))
-    print(record)
+    logger.log(record)
     return record
 
 
 def update_token(column_name: str, new_value, address: str):
     update_query = f"UPDATE tokens SET {column_name} = %s WHERE address = %s"
     db.execute_query(update_query, (new_value, address))
-    print("Token data updated successfully")
+    logger.log("Token data updated successfully")
 
 
 def add_column(column_name: str, data_type: str):
     add_column_query = f"ALTER TABLE tokens ADD COLUMN {column_name} {data_type}"
     db.execute_query(add_column_query)
-    print("Column added successfully")
+    logger.log("Column added successfully")
 
 
 # Example usage
 if __name__ == "__main__":
     create_tokens_table()
     # Add more function calls here to test the functionality
+
+# python -m backend.database.token_database
