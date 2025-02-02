@@ -8,9 +8,27 @@ import pandas as pd
 from solders.pubkey import Pubkey
 import numpy as np
 from solders.rpc import responses
-
+from .security import *
+from .userdb_handler import *
+import itertools
 # Solana RPC endpoint
-solana_client = Client("https://api.mainnet-beta.solana.com")   
+
+#heliusrpc = os.environ.get('heliusrpc')
+quicknoderpc = os.environ.get('solrpc')
+quicknoderpc1 = os.environ.get('solrpc1')
+quicknoderpc2 = os.environ.get('solrpc2')
+quicknoderpc3 = os.environ.get('solrpc3')
+quicknoderpc4 = os.environ.get('solrpc4')
+#heliusrpc1 = os.environ.get('heliusrpc1')
+birdeyeapi = os.environ.get('birdeyeapi')
+
+# List of available RPCs
+rpc_list = [quicknoderpc, quicknoderpc1, quicknoderpc2, quicknoderpc3, quicknoderpc4]
+rpc_iterator = itertools.cycle(rpc_list)
+
+def get_rpc():
+    global rpc_iterator
+    return next(rpc_iterator) 
 
 def check_user(user_id, referal_info):
     df = fetch_user_by_id(str(user_id))
@@ -41,6 +59,7 @@ def generate_wallet(user_id):
 
     
 def check_balance(wallet_address):
+    solana_client = Client(get_rpc())
     try:
         # Convert the string address to a PublicKey object
         public_key = Pubkey.from_string(wallet_address)
@@ -130,6 +149,6 @@ def deposit_wallet(user_id, deposit_wallet):
     return f'Reward wallet updated to: \n {deposit_wallet}' 
 
  
-
 if __name__ == "__main__":
-    generate_wallet(13232)
+    print(check_balance("Di5zGaS1UpD38dWR2xh7e3hYmU2HgJfw4TqHhwzEvthd"))
+    pass
