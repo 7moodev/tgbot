@@ -49,7 +49,7 @@ BIRDEYE_API_ENDPOINTS = {
     "wallet_token_balance": "v1/wallet/token_balance",
 }
 
-logger = LogService()
+logger = LogService("BIRDEYE")
 
 
 class BirdeyeApiService:
