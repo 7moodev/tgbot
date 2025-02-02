@@ -5,32 +5,25 @@ import os
 import requests
 import time
 
-from .entities.history_price_entity import (
-    HistoryPriceItems,
-)
-from .entities.token_creation_info_entity import (
+from .entities.api_entity import ApiResponse
+from .entities.token_entities import (
     TokenCreationInfoEntity,
-)
-from .entities.token_holder import (
     TokenHolderEntity,
     TokenHolderItems,
+    TokenOverviewEntity,
 )
-from .entities.trader_gainers_losers import (
+from .entities.history_price_entities import (
+    HistoricalPriceUnixEntity,
+    HistoryPriceItems,
+)
+from .entities.trader_entities import (
     TraderGainersLosersItems,
-)
-from .entities.trader_seek_by_time_entity import (
     TraderSeekByTimeItems,
 )
-from .entities.wallet_portfolio_entity import (
+from .entities.wallet_entities import (
     WalletPortfolioItems,
-)
-from .entities.wallet_token_balance import (
     WalletTokenBalanceEntity,
 )
-
-from .entities.api_entity import ApiResponse
-from .entities.historical_price_unix_entity import HistoricalPriceUnixEntity
-from .entities.token_overview_entity import TokenOverviewEntity
 from ..services.log_service import LogService
 
 birdeyeapi = os.environ.get("birdeyeapi")
