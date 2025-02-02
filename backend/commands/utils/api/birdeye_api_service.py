@@ -5,6 +5,29 @@ import os
 import requests
 import time
 
+from .entities.history_price_entity import (
+    HistoryPriceItems,
+)
+from .entities.token_creation_info_entity import (
+    TokenCreationInfoEntity,
+)
+from .entities.token_holder import (
+    TokenHolderEntity,
+    TokenHolderItems,
+)
+from .entities.trader_gainers_losers import (
+    TraderGainersLosersItems,
+)
+from .entities.trader_seek_by_time_entity import (
+    TraderSeekByTimeItems,
+)
+from .entities.wallet_portfolio_entity import (
+    WalletPortfolioItems,
+)
+from .entities.wallet_token_balance import (
+    WalletTokenBalanceEntity,
+)
+
 from .entities.api_entity import ApiResponse
 from .entities.historical_price_unix_entity import HistoricalPriceUnixEntity
 from .entities.token_overview_entity import TokenOverviewEntity
@@ -13,12 +36,8 @@ from ..services.log_service import LogService
 birdeyeapi = os.environ.get("birdeyeapi")
 CHAIN = "solana"
 BASE_URL = "https://public-api.birdeye.so"
-
 SEMAPHORE_NUM = 10
 REQUEST_SEMAPHORE = asyncio.Semaphore(SEMAPHORE_NUM)
-
-logger = LogService()
-
 BIRDEYE_API_ENDPOINTS = {
     "historical_price_unix": "defi/historical_price_unix",
     "history_price": "defi/history_price",
@@ -29,6 +48,8 @@ BIRDEYE_API_ENDPOINTS = {
     "wallet_token_list": "v1/wallet/token_list",
     "wallet_token_balance": "v1/wallet/token_balance",
 }
+
+logger = LogService()
 
 
 class BirdeyeApiService:
@@ -70,7 +91,7 @@ class BirdeyeApiService:
 
     async def get_price_historical(
         self, token: str = None, type: str = None, start: int = None, end: int = None
-    ):
+    ) -> ApiResponse[HistoryPriceItems]:
         logger.log("Getting price historical for", token, "from", start, "to", end)
         """
         Get the price of a token at a given unix time, costs 5 credits per request
@@ -102,7 +123,9 @@ class BirdeyeApiService:
     ===========================================        ===========================================
     """
 
-    async def get_top_traders(self, type: str = "1W", limit: int = 10000):
+    async def get_top_traders(
+        self, type: str = "1W", limit: int = 10000
+    ) -> ApiResponse[TraderGainersLosersItems]:
         """
         Costs 30 per call
         """
@@ -171,7 +194,7 @@ class BirdeyeApiService:
 
     async def get_wallet_trade_history(
         self, wallet: str, limit: int = 100, before_time: int = 0, after_time: int = 0
-    ):
+    ) -> ApiResponse[TraderSeekByTimeItems]:
 
         if limit == 0:
             if os.path.exists("trade_history.json"):
@@ -235,7 +258,7 @@ class BirdeyeApiService:
 
     async def get_top_holders_with_constraint(
         self, token: str = None, min_value_usd: float = None, price: float = None
-    ):
+    ) -> ApiResponse[TokenHolderEntity]:
         """
         Get the top holders of a token that hold at least min_value_usd worth of tokens
 
@@ -290,7 +313,9 @@ class BirdeyeApiService:
 
         return all_holders
 
-    async def get_token_creation_info(self, token: str = None):
+    async def get_token_creation_info(
+        self, token: str = None
+    ) -> ApiResponse[TokenCreationInfoEntity]:
         """{
         "data": {
             "txHash": "4ePtuFmo3uYX5m2mqMYEVqUpJzCoRHymmrTnCk1q1KiyvhpmCABVQ1sq1CFLMWHZAwbicC8V1Ao664WumAqxWQ86",
@@ -314,7 +339,9 @@ class BirdeyeApiService:
             logger.log("Error getting token creation info for", token, ":Birdeye")
             return None
 
-    async def get_top_holders(self, token: str = None, limit=None):
+    async def get_top_holders(
+        self, token: str = None, limit=None
+    ) -> ApiResponse[TokenHolderItems]:
         """
         Get the top holders of a token, costs 50 credits per request
         Iterates through all holders using offset pagination
@@ -391,7 +418,7 @@ class BirdeyeApiService:
 
     async def get_wallet_token_list(
         self, address: str, session: httpx.AsyncClient = None
-    ):
+    ) -> ApiResponse[WalletPortfolioItems]:
         """
         https://docs.birdeye.so/reference/get_defi-tokenlist
 
@@ -422,7 +449,9 @@ class BirdeyeApiService:
                     "error": f"Exception fetching portfolio for wallet {address}: {str(e)}"
                 }
 
-    async def get_balance_birdeye(self, wallet, token):
+    async def get_balance_birdeye(
+        self, wallet, token
+    ) -> ApiResponse[WalletTokenBalanceEntity]:
         print("Getting balance using Birdeye for", wallet, "in", token)
 
         params = dict_to_query_params({"wallet": wallet, "token_address": token})
