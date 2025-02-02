@@ -3,17 +3,25 @@ from typing import List
 
 
 @dataclass
-class WalletPortfolioEntity:
+class WalletEntity:
     address: str
     name: str
     symbol: str
     decimals: int
     balance: str
-    uiAmount: float
     chainId: str
-    logoURI: str
+
+
+@dataclass
+class WalletBalance:
+    uiAmount: float
     priceUsd: float
     valueUsd: float
+
+
+@dataclass
+class WalletPortfolioEntity(WalletEntity, WalletBalance):
+    logoURI: str
 
 
 @dataclass
@@ -45,7 +53,7 @@ class WalletPortfolioItems:
 
 
 @dataclass
-class WalletTokenBalanceEntity:
+class WalletTokenBalanceEntity(WalletEntity, WalletBalance):
     """
     {
         "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
@@ -60,12 +68,4 @@ class WalletTokenBalanceEntity:
     }
     """
 
-    address: str
-    name: str
-    symbol: str
-    decimals: int
-    balance: int
-    uiAmount: float
-    chainId: str
-    priceUsd: float
-    valueUsd: float
+    pass

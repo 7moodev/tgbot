@@ -4,6 +4,14 @@ from typing import List, Optional
 
 
 @dataclass
+class TokenEntity:
+    address: str
+    decimals: int
+    name: str
+    symbol: str
+
+
+@dataclass
 class TokenListEntity:
     address: str
     decimals: int
