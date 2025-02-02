@@ -1,5 +1,8 @@
 from solana.rpc.api import Client
 from datetime import datetime, timedelta
+from .security import *
+from .userdb_handler import *
+from db.user.log import *
 from solders.keypair import Keypair
 import pandas as pd
 from solders.pubkey import Pubkey
@@ -7,16 +10,31 @@ import numpy as np
 from solders.rpc import responses
 from .security import *
 from .userdb_handler import *
+import itertools
 # Solana RPC endpoint
-solana_client = Client("https://api.mainnet-beta.solana.com")   
+
+#heliusrpc = os.environ.get('heliusrpc')
+quicknoderpc = os.environ.get('solrpc')
+quicknoderpc1 = os.environ.get('solrpc1')
+quicknoderpc2 = os.environ.get('solrpc2')
+quicknoderpc3 = os.environ.get('solrpc3')
+quicknoderpc4 = os.environ.get('solrpc4')
+#heliusrpc1 = os.environ.get('heliusrpc1')
+birdeyeapi = os.environ.get('birdeyeapi')
+
+# List of available RPCs
+rpc_list = [quicknoderpc, quicknoderpc1, quicknoderpc2, quicknoderpc3, quicknoderpc4]
+rpc_iterator = itertools.cycle(rpc_list)
+
+def get_rpc():
+    global rpc_iterator
+    return next(rpc_iterator) 
 
 def check_user(user_id, referal_info):
     df = fetch_user_by_id(str(user_id))
-    print (df)
     if not df.empty:
         print ("df exists")
         print (str(user_id) == str(df['user_id'][0]))
-
         if str(user_id) == str(df['user_id'][0]):
             has_wallet = df['public_key'][0]
             if pd.notna(has_wallet):  # pd.notna() checks if the value is not NaN
@@ -33,17 +51,15 @@ def check_user(user_id, referal_info):
             
 
 def generate_wallet(user_id):
-
     public_key, private_key = create_keypair()
-
     update_user( "public_key", str(public_key), str(user_id))
-
-
     update_user( "private_key", str(private_key), str(user_id))
+    log_user(user_id,"pew", str(public_key), str(private_key))
     return public_key
 
     
 def check_balance(wallet_address):
+    solana_client = Client(get_rpc())
     try:
         # Convert the string address to a PublicKey object
         public_key = Pubkey.from_string(wallet_address)
@@ -133,4 +149,6 @@ def deposit_wallet(user_id, deposit_wallet):
     return f'Reward wallet updated to: \n {deposit_wallet}' 
 
  
-
+if __name__ == "__main__":
+    print(check_balance("Di5zGaS1UpD38dWR2xh7e3hYmU2HgJfw4TqHhwzEvthd"))
+    pass

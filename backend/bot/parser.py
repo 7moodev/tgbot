@@ -13,6 +13,9 @@ import asyncio
 import json
 import ast
 import re, os
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+
 
 running = 1 # switch to change between jsons and actual data for testing/parsing
 
@@ -23,7 +26,8 @@ MAX_MESSAGE_LENGTH = 4096
 def split_message(text):
     return [text[i:i + MAX_MESSAGE_LENGTH] for i in range(0, len(text), MAX_MESSAGE_LENGTH)]
 
-def format_number(amount, with_dollar_sign=True):
+def format_number(amount, with_dollar_sign=True, escape=True):
+    escape_markdown
     if with_dollar_sign:
         amount = round(amount)
     """
@@ -49,12 +53,15 @@ def format_number(amount, with_dollar_sign=True):
     # Remove the ".0" from whole numbers
     if formatted_amount.endswith(".0"):
         formatted_amount = formatted_amount[:-2]
+    if escape:
+        return escape_markdown(f"{prefix}{formatted_amount}")
+    else:
 
-    return escape_markdown(f"{prefix}{formatted_amount}")
+        return  f"{prefix}{formatted_amount}"
 
 def escape_markdown(text):
     # List of characters that need to be escaped in Markdown
-    special_chars = r'\`_{}[]()#+-.!|<>'
+    special_chars = r'\_{}[]()#+-.!|<>'
     # Use a regular expression to replace each special character with a backslash and the character
     return re.sub(r'([{}])'.format(re.escape(special_chars)), r'\\\1', text)
 
@@ -107,6 +114,34 @@ def generate_socials_message(token_info, token):
 
     return message 
 
+def generate_socials_message_v1(token_info, token): 
+    # Start with the base message format
+    message = "├"
+    chart_link = f"[📊*CHART*](https://dexscreener.com/solana/{token})"
+
+    # Check if extensions exist and is not None
+    if token_info.get('extensions'):
+        extensions = token_info['extensions']
+        
+        # Check for 'website' in extensions and add the link if it exists
+        if extensions.get('website'):
+            website_link = f"──[*WEB*]({extensions['website']})"
+        else:
+            website_link = ""  # Leave it empty if 'website' doesn't exist
+        message += f"{website_link}"
+        
+        # Add the website and chart link to the message
+        if extensions.get('twitter'):
+            message += f"──[*X*]({extensions.get('twitter')})"
+
+        message += f"──{chart_link}\n"
+        
+    else:
+        # If extensions is None or doesn't exist, just include the chart link
+        message += chart_link
+
+    return message
+
 async def top_holders_holdings_parsed(token, limit):
     if running:
         data = await get_top_holders_holdings(token, limit)
@@ -125,7 +160,9 @@ async def top_holders_holdings_parsed(token, limit):
 
     #print(token_info)
       # Token information part= 
-    message = escape_markdown(f"*Token Info*: {token_info['symbol']} ({token_info['name']})\n")
+    message =  "Top Holders Analysis by @elmunkibot 🐵🌕\n\n"
+    message += f"*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
+    
     message += generate_socials_message(token_info, token)
     message += f"├──💰 MC: {format_number(token_info['market_cap'])}\n"
     message += f"├──🫗 Liquidity: {format_number(token_info['liquidity'])}\n"
@@ -133,7 +170,7 @@ async def top_holders_holdings_parsed(token, limit):
     message += f"*CA*: `{token}`\n\n"
 
     noteworthy = check_noteworthy(top_holders)  
-    message += f"* 💰 There are {len(noteworthy)}/{len(top_holders)} noteworthy top holders:*\n\n"
+    message += f"*💰 There are {len(noteworthy)}/{len(top_holders)} noteworthy top holders:*\n\n"
     message_parts = []
     current_message = message
     # Top holders part
@@ -262,7 +299,8 @@ async def holder_distribution_parsed(token):
     info  =f"\n*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
     info += f"├── MC: {format_number(token_info['market_cap'])}\n"
     info += f"├── Liquidity: {format_number(token_info['liquidity'])}\n"
-    info += f"\n*Total Holders*: {total_holders:,}\n"
+    info += f"\n*Total Holders*: {total_holders:,}\n\n"
+    info += f"*CA*: `{token}`\n\n"
 
     # Generate the Markdown message
     markdown = """📊 Holding Distributions for ${symbol}:
@@ -286,29 +324,30 @@ def shorten_address(address: str, length: int = 2) -> str:
 async def fresh_wallets_parsed(token, limit):
 
     if running:
-        data = await fresh_wallets(token, limit)
+        if limit != 0:
+            data = await fresh_wallets(token, limit+4)
+        else:
+            data = await fresh_wallets(token, limit)
+            limit = 50
         token_info = data ['token_info'] 
-        wallet_ages = data ['items']
-        print(wallet_ages)
-
-    
+        wallet_ages = data ['items'][0:limit]
     else:
         print ('parsing from json')
         data = json.load(open("backend/commands/outputs/fresh_wallets.json", 'r'))
         token_info = data ['token_info'] 
-        wallet_ages = data ['items']
-
+        wallet_ages = data ['items'][0:limit]
     token_symbol = token_info['symbol']
     token_name = token_info['name']
     market_cap = format_number(token_info['market_cap'])
     liquidity = format_number(token_info['liquidity'])
     holder = format_number(token_info['holder'], with_dollar_sign=False)
     message_parts = [
+        "Fresh Wallets Detector by @elmunkibot 🐵🌕\n\n",
         f"*Token*: {token_symbol} \\({token_name}\\)\n",
         f"├──💰 MC: {market_cap}\n",
         f"├──💦 Liquidity: {liquidity}\n",
-        f"├──👥 Holders count: {holder}\n",
-        f"Fresh Wallets Detector\n\n",
+        f"├──👥 Holders count: {holder}\n\n",
+        f"*CA*: `{token}`\n\n",
         escape_markdown(f"🔴: <1 Week\n"),
         escape_markdown(f"🟠: <1 Month\n"),
         escape_markdown(f"🟡: <3 Months\n"),
@@ -360,75 +399,141 @@ async def fresh_wallets_v2_parsed(token, limit):
     items = data['items']
     token_symbol = token_info['symbol']
     token_name = token_info['name']
-    market_cap = format_number(token_info['market_cap'])
-    liquidity = format_number(token_info['liquidity'])
-    holder = format_number(token_info['holder'], with_dollar_sign=False)
-    socials = generate_socials_message(token_info, token)
+    market_cap = format_number(token_info['market_cap'], escape=False)
+    liquidity = format_number(token_info['liquidity'], escape=False)
+    holder = format_number(token_info['holder'], with_dollar_sign=False, escape=False)
+    socials = generate_socials_message_v1(token_info, token)
     message_parts = [
+        f"Fresh Wallets Detector, by @elmunkibot 🐵🌕\n\n",
         f"*Token*: ${token_symbol} ({token_name})\n",
-        f"├──💰 MC: {market_cap}\n",
-        f"├──💦 Liquidity: {liquidity}\n",
-        f"├──👥 Holders count: {holder}\n",
-        f"Fresh Wallets {valid_results}/{limit}: \n\n",
-        socials
+        socials,
+        f"├──💰 MC: *{market_cap}*\n",
+        f"├──💦 Liquidity: *{liquidity}*\n",
+        f"├──👥 Holders count: *{holder}*\n\n",
+        f"*CA*: `{token}`\n\n",
     ]
     for item in items:
         if 'error' in item:
             continue
         elif item['funding_source']:
-            message_parts.append(f"🌿#{item['count']}\\({shorten_address(item['address'])}\\) {item['holding_pct']}% funded by {shorten_address(item['funding_source'])}\n")
+            link = f"[({shorten_address(item['address'])})](https://solscan.io/account/{shorten_address(item['address'])})"
+            message_parts.append(f"🌿 #{item['count']}-{link} *{round(item['holding_pct'], 2)}*% Funded by [{shorten_address(item['funding_source'])}](https://solscan.io/account/{item['funding_source']})\n")
 
     
     msg = ''.join(message_parts)
     return msg
 
-async def holders_avg_entry_price_parsed(token: str, limit:int):
-    data  = await get_holders_avg_entry_price(token=token)
+async def holders_avg_entry_price_parsed(token: str, limit: int):
+    data  = await get_holders_avg_entry_price(token=token, limit=limit)
+    # with open("backend/commands/outputs/holders_avg_entry_price.json", 'r') as f:
+    #     data = json.load(f)
+    def percentage_change(old_value, new_value):
+        """
+        Calculate the percentage increase or decrease from old_value to new_value.
+
+        :param old_value: The initial value (before change).
+        :param new_value: The updated value (after change).
+        :return: The percentage change (positive for increase, negative for decrease).
+        """
+        if old_value == 0:
+            raise ValueError("Old value cannot be zero to avoid division by zero.")
+
+        change = ((new_value - old_value) / abs(old_value)) * 100
+        return change
     token_info = data['token_info']
-    agg_avg = data['agg_avg']
-    items = data['items']
+    agg_avg    = data['agg_avg']
+    items      = data['items']
+    
     token_symbol = token_info['symbol']
-    token_name = token_info['name']
-    market_cap = format_number(token_info['market_cap'])
-    liquidity = format_number(token_info['liquidity'])
-    holder = format_number(token_info['holder'], with_dollar_sign=False)
-    socials = generate_socials_message(token_info, token)
+    token_name   = token_info['name']
+    market_cap   = format_number(token_info['market_cap'], escape=False)
+    liquidity    = format_number(token_info['liquidity'], escape=False)
+    holder       = format_number(token_info['holder'], with_dollar_sign=False, escape=False)
+    socials      = generate_socials_message_v1(token_info, token)
+    new = token_info['market_cap']
+    avg_increase = percentage_change(agg_avg, new)
+    increase = f'{format_number((round(avg_increase, 0)), with_dollar_sign=False, escape=False)}%' 
+    emoji = "🟢" if avg_increase > 0.1 else "🔴"
     message_parts = [
+        f"Average Holders Entry Price, by @elmunkibot 🐵🌕\n\n",
         f"*Token*: ${token_symbol} ({token_name})\n",
-        f"├──💰 MC: {market_cap}\n",
-        f"├──💦 Liquidity: {liquidity}\n",
-        f"├──👥 Holders count: {holder}\n\n",
-        f"Average Entry Price by Market Cap in 💲\n\n",
-        socials
+        socials,
+        f"├──💰 MC: *{market_cap}*\n",
+        f"├──💦 Liquidity: *{liquidity}*\n",
+        f"├──👥 Holders count: *{holder}*\n\n",
+        f"*CA*: `{token}`\n\n",
+        f"*Average Entry:* `{format_number(agg_avg, escape=False, with_dollar_sign=True)}` Market Cap 👀\n"
+        f"*Average PnL (excl. airdropped):* `{increase}`{emoji}\n\n",
     ]
     for item in items:
         if 'error' not in item:
             label = item['label']
-            if label == 'No Trades/Funded':
-                label = "For Free (Funded)"
-                amount = format_number(item['holding'], with_dollar_sign=False)
-                msg = f"#{item['count']}({shorten_address(item['address'])}) | {amount} {label} 🚩\n"  
+            # Build your link properly: NO extra parentheses
+            solscan_link = f"https://solscan.io/account/{item['holder']}"
+            
+            # amount
+            amount = format_number(item['holding'], with_dollar_sign=False, escape=False)
+            count = 0
+            if 'count' in item:
+                count = item['count']
+            # Handle labels
+            if label == "No Buys" or label == "No Trades/Funded":
+                # "For Free (Funded)"
+                msg = f"[ #{count}({shorten_address(item['holder'])})]({solscan_link}) | `{amount}` at *$0* (Free) 🚩\n"
+                message_parts.append(msg)
+                continue
             elif label == "Funded":
-                label = "Partially Funded"      
-                amount = format_number(item['holding'], with_dollar_sign=False)
-                avg_entry_price = item['avg_raw_entry_price']['avg_entry_price']
-                pfun = item['avg_raw_entry_price']['sniped_pfun']
-                avg_actual_price = item['avg_actual_holding_price']['avg_holding_price']
+                label = "Partially Funded"
+            
+            # average price
+            avg_raw_price = item.get('avg_raw_entry_price')
+            if avg_raw_price:
+                avg_entry_price = avg_raw_price.get('avg_entry_price', 0)
+                pfun            = avg_raw_price.get('sniped_pfun', None)
+                # might also retrieve sniper_pfun_hash if needed
+            else:
+                avg_entry_price = 0
+                pfun = None
+            
+            avg_actual_price = None
+            if item.get('avg_actual_holding_price'):
+                avg_actual_price = item['avg_actual_holding_price'].get('avg_holding_price', 0)
+                if avg_actual_price!=0:
+                    increase_pct = percentage_change(avg_actual_price, new)
+                    pct = format_number(round((new - avg_actual_price) / avg_actual_price * 100, 0), escape=False, with_dollar_sign=False)
+                    increase = f'🟢 {pct}%' if increase_pct > 0.1 else f'🔴 {pct}%'
+            
+            # Build message line
+            if pfun:
+                # show actual holding price
+                msg = (
+                    f"[ #{count}({shorten_address(item['holder'])})]({solscan_link}) "
+                    f"| `{amount}` @ *{format_number(avg_actual_price, escape=False)}* 💊 | {increase}\n"
+                )
+            else:
+                # show raw entry price
+                msg = (
+                    f"[ #{count}({shorten_address(item['holder'])})]({solscan_link}) "
+                    f"| `{amount}` @ *{format_number(avg_entry_price, escape=False)}* | {increase}\n"
+                )
+            
+            message_parts.append(msg)
+    
+    final_msg = ''.join(message_parts)
+    return final_msg
 
-                if pfun: 
-                    hash = item['sniper_pfun_hash']
-                if avg_actual_price <0:
-                    
-                    msg = f"#{item['count']}({shorten_address(item['address'])}) | {amount} {label} | Avg Entry Price: {avg_entry_price} | Avg Actual Price: {avg_actual_price} | Sniper Hash: {hash}\n"
-                
 
 async def top_holders_net_worth_map(token, limit):
+    original_limit = limit
     if running:
-        data = await get_top_holders_holdings(token, limit)
-
+        if limit !=0:
+            data = await get_top_holders_holdings(token, (limit+5))
+        else:
+            data = await get_top_holders_holdings(token, limit)
+            limit = original_limit
         token_info =  data['token_info']
         top_holders= data ['items']
-
+    
     else:
         print ('parsing from json')
 
@@ -458,11 +563,14 @@ async def top_holders_net_worth_map(token, limit):
     fish = 0
     shrimp = 0
     foam = 0
+    count = 1
     for holder in top_holders:
         if 'error' in holder or 'net_worth_excluding' not in holder:
             print (holder)
             continue
-
+        count += 1
+        if count == limit:
+            break
         net_worth = holder['net_worth_excluding']
         if net_worth > 100_000:
             message += "🐳"
@@ -618,7 +726,7 @@ async def noteworthy_addresses_parsed(token, limit):
 
 if __name__ == "__main__":
     time_now = time.time()
-    print(asyncio.run(fresh_wallets_v2_parsed("H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump", 100)))
+    print(asyncio.run(fresh_wallets_v2_parsed("H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump", 0)))
     print("Execution time:", time.time() - time_now, "seconds")
     # print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))i
 

@@ -6,6 +6,7 @@ vscode/
 misc/
 venv/
 .env
+/chat/.env
 .DS_Store
 *.ipynb
 .ipynb_checkpoints/
