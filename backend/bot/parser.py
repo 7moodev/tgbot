@@ -299,7 +299,8 @@ async def holder_distribution_parsed(token):
     info  =f"\n*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
     info += f"├── MC: {format_number(token_info['market_cap'])}\n"
     info += f"├── Liquidity: {format_number(token_info['liquidity'])}\n"
-    info += f"\n*Total Holders*: {total_holders:,}\n"
+    info += f"\n*Total Holders*: {total_holders:,}\n\n"
+    info += f"*CA*: `{token}`\n\n"
 
     # Generate the Markdown message
     markdown = """📊 Holding Distributions for ${symbol}:
@@ -345,7 +346,8 @@ async def fresh_wallets_parsed(token, limit):
         f"*Token*: {token_symbol} \\({token_name}\\)\n",
         f"├──💰 MC: {market_cap}\n",
         f"├──💦 Liquidity: {liquidity}\n",
-        f"├──👥 Holders count: {holder}\n",
+        f"├──👥 Holders count: {holder}\n\n",
+        f"*CA*: `{token}`\n\n",
         escape_markdown(f"🔴: <1 Week\n"),
         escape_markdown(f"🟠: <1 Month\n"),
         escape_markdown(f"🟡: <3 Months\n"),
@@ -415,7 +417,7 @@ async def fresh_wallets_v2_parsed(token, limit):
             continue
         elif item['funding_source']:
             link = f"[({shorten_address(item['address'])})](https://solscan.io/account/{shorten_address(item['address'])})"
-            message_parts.append(f"🌿 #{item['count']}-{link} {item['holding_pct']}% funded by [{shorten_address(item['funding_source'])}](https://solscan.io/account/{item['funding_source']})\n")
+            message_parts.append(f"🌿 #{item['count']}-{link} *{round(item['holding_pct'], 2)}*% Funded by [{shorten_address(item['funding_source'])}](https://solscan.io/account/{item['funding_source']})\n")
 
     
     msg = ''.join(message_parts)
