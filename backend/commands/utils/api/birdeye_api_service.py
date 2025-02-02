@@ -334,7 +334,14 @@ class BirdeyeApiService:
         res = []
 
         while True:
-            url = f"{BASE_URL}/defi/v3/token/holder?address={token}&offset={offset}&limit={batch_size}"
+            params = dict_to_query_params(
+                {
+                    "address": token,
+                    "offset": offset,
+                    "limit": batch_size,
+                }
+            )
+            url = f"{BASE_URL}/defi/v3/token/holder?{params}"
             response = requests.get(url, headers=self.headers)
             if response.status_code != 200:
                 if response.json()["success"] == False:
@@ -394,7 +401,8 @@ class BirdeyeApiService:
         :param session: Shared HTTP client session
         :return: Portfolio data or error dict
         """
-        url = f"{BASE_URL}/v1/wallet/token_list?wallet={address}"
+        params = dict_to_query_params({"wallet": address})
+        url = f"{BASE_URL}/v1/wallet/token_list?{params}"
         async with REQUEST_SEMAPHORE:
             try:
                 fetch = session or requests
@@ -417,9 +425,8 @@ class BirdeyeApiService:
     async def get_balance_birdeye(self, wallet, token):
         print("Getting balance using Birdeye for", wallet, "in", token)
 
-        url = (
-            f"{BASE_URL}/v1/wallet/token_balance?wallet={wallet}&token_address={token}"
-        )
+        params = dict_to_query_params({"wallet": wallet, "token_address": token})
+        url = f"{BASE_URL}/v1/wallet/token_balance?{params}"
 
         try:
             response = requests.get(url, headers=self.headers)
