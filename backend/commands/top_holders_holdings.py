@@ -135,6 +135,9 @@ async def get_top_holders_holdings(
     :return: List of processed holder information
     """
     # These functions are assumed to be defined elsewhere in your code
+    if limit == 0:
+        with open("backend/commands/outputs/top_holders_holdings.json", 'r') as f:
+            return json.load(f)
     total_supply = await get_token_supply(token)
     top_holders = await get_top_holders(token, limit)
     token_creation_info = await get_token_creation_info(token)
@@ -173,13 +176,9 @@ async def get_top_holders_holdings(
         processed_holders = await asyncio.gather(*holder_tasks)
     
     # Combine results
-    with open("backend/commands/outputs/top_holders_holdings.json", 'w') as f:
-        json.dump({"token_info": token_info, "items": processed_holders}, f, indent=4)
+    
+        
     return {"token_info": token_info,"items": processed_holders}
-
-
-
-
 
 def format_message(token_info, top_holders):
 
@@ -219,12 +218,13 @@ def shorten_address(address: str, length: int = 4) -> str:
 #     #print(shorten_address("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump"))
 if __name__ == "__main__":
     timenow = float(time.time())
-    holders = asyncio.run(get_top_holders_holdings("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",10))
-    print(holders)
+    #holders = asyncio.run(get_top_holders_holdings("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",10))
+    #print(holders)
     #print(format_message(holders[0], holders[1]))
     #print(asyncio.run(get_wallet_portfolio("GitBH362uaPmp5yt5rNoPQ6FzS2t7oUBqeyodFPJSZ84")))
     print(float(time.time()) - timenow)
-    with open("backend/commands/outputs/top_holders_holdings.json", 'w') as f:
-        json.dump(holders, f, indent=4)
-
+    with open("backend/commands/outputs/top_holders_holdings.json", 'r') as f:
+        #json.dump(holders, f, indent=4)
+        file = json.load(f)
+        print(file)
 

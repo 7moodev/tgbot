@@ -6,7 +6,7 @@ from backend.commands.holding_distribution import get_holding_distribution
 from backend.commands.top_holders_holdings import get_top_holders_holdings
 from backend.commands.noteworthy_addresses import get_noteworthy_addresses
 
-from .parser import top_holders_holdings_parsed, fresh_wallets_parsed, holder_distribution_parsed, noteworthy_addresses_parsed
+from .parser import top_holders_holdings_parsed, fresh_wallets_parsed, holder_distribution_parsed, noteworthy_addresses_parsed, holders_avg_entry_price_parsed
 from telegram.constants import ParseMode
 import asyncio
 from PIL import Image, UnidentifiedImageError
@@ -207,9 +207,8 @@ def handle_token_response(message):
             if 32>len(token_address)>44:
                 bot.reply_to(message, "Invalid token address. Please provide a valid Solana token address.")
             else:
-                replies = asyncio.run(noteworthy_addresses_parsed(token_address, 0))
-                for reply in replies:
-                    bot.reply_to(message, reply, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True)
+                reply = asyncio.run(holders_avg_entry_price_parsed(token_address, 0))
+                bot.reply_to(message, reply, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
                 user_states.pop(message.chat.id, None)
         case _:
             bot.reply_to(message, "still in development")

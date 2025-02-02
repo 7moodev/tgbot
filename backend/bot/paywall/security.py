@@ -8,13 +8,16 @@ import os
 print (os.getcwd())
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-#pem_file_path = os.path.join(current_dir, '../public_key.pem')
+if os.getenv("pubkey") is None and os.environ.get("public_key") is None:
+    pem_file_path = os.path.join(current_dir, '../public_key.pem')
 
-#with open(pem_file_path, 'r') as file:
-#    content = file.read()
+    with open(pem_file_path, 'r') as file:
+        content = file.read()
+        public_key_obj = content
 
+if public_key_obj is None:
+    public_key_obj = os.getenv("pubkey")
 
-public_key_obj =os.environ.get("public_key")
 public_key = serialization.load_pem_public_key(
     public_key_obj.encode(),
     backend=default_backend()

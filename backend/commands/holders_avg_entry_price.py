@@ -20,10 +20,14 @@ async def get_holder_avg_entry_price(wallet:str ,token: str, token_creation_time
     return avg_raw_entry_price, avg_raw_exit_price, avg_actual_holding_price
 
 async def get_holders_avg_entry_price(token: str, limit:int):
+    if limit == 0:
+        with open("backend/commands/outputs/holders_avg_entry_price.json", 'r') as f:
+            return json.load(f)
     total_supply = await get_token_supply(token)
     token_creation_info = await get_token_creation_info(token)
     token_overview = await get_token_overview(token)
     if token_overview:
+        print(token_overview)
         token_overview = token_overview['data']
         token_info = {
             'price': token_overview['price'],
@@ -56,7 +60,7 @@ async def get_holders_avg_entry_price(token: str, limit:int):
         
         avg_raw_entry_price, avg_raw_exit_price, avg_actual_holding_price = await get_holder_avg_entry_price(holder_address, token, token_creation_time)
         if avg_raw_entry_price is None:
-                res.append({'holder': holder_address,'holding': holding_amount,'label': 'No Trades/Funded', 'avg_raw_entry_price': None, 'avg_raw_exit_price': None, 'avg_actual_holding_price': None})
+                res.append({'count': count,'holder': holder_address,'holding': holding_amount,'label': 'No Trades/Funded', 'avg_raw_entry_price': None, 'avg_raw_exit_price': None, 'avg_actual_holding_price': None})
             #implement logic to check where the tokens came from
         if avg_actual_holding_price is not None:
             price = avg_actual_holding_price['avg_holding_price']

@@ -1,34 +1,37 @@
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
-from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed
+from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed
 
-BOT_USERNAME= os.environ.get('tgNAME')  
+BOT_USERNAME= os.environ.get('tgNAME') 
+if not BOT_USERNAME:
+    BOT_USERNAME = "ALM_NotifyBot"  # tgNAME 
 limit = 50
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     user_id = update.message.chat.id 
     args = context.args
     referral_info = None
-    print (args)
-
     if len(args):
         referral_info = args[0]
     print (referral_info)
 
     s = check_user(user_id, referral_info )
     # Define keyboard layout
-    await update.message.reply_text("Welcome to EL MUNKI 🐵🌕 you horny degen! This is your personal Memecoin Analytics Tool. Get started by using the commands below:\n\nSend /top [contract address] to get a list of Top Holders \nSend /map [contract] to get an net_worth overview of the top holders  \nSend /fresh for checking fresh wallets \nSend /sub to check your subscription \nSend /renew to activate or renew your subscription")
-
+    msg = """Welcome to EL MUNKI 🐵🌕 you horny degen! This is your personal Memecoin Analytics Tool.
+Get started by using the commands below:
+\nSend /top [contract address] to get analytics on the top holders
+Send /map [contract address] to get a map of the top holders
+Send /fresh [contract address] to get fresh wallets list
+Send /avg [contract address] to get avg holding price among top holders
+Send /sub to see you subscription status
+Send /renew to renew your subscription"""
+    await update.message.reply_text(msg)
 async def referrallink_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     user_id = update.message.chat.id
     bot_name =  BOT_USERNAME[1:]
     referral_link = f"https://t.me/{bot_name}?start=ref_{user_id}"
-   
-
- 
     # Define keyboard layout
     await update.message.reply_text(f"Your refferal link is: \n {referral_link}")
-
 async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
     if check_access(user_id):
@@ -55,6 +58,33 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
                     , parse_mode='MarkdownV2', disable_web_page_preview=True)
                 else:
                     await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+
+    else:
+        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+
+async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id 
+    if check_access(user_id):
+        if len(context.args) != 1:
+            await update.message.reply_text("Please send me a token address.")
+            context.user_data['awaiting_token_address'] = True
+            context.user_data['avg_entry_started'] = True 
+            return 
+        else:
+            token_address = context.args[0]
+            wait_message = await update.message.reply_text("Analyzing token and getting top holders please shill...")
+
+            message = await holders_avg_entry_price_parsed(token_address, limit )
+            print (message)
+            for parts in message:
+                if parts == message[0]:
+                    await context.bot.edit_message_text(
+                    chat_id=update.effective_chat.id,
+                    message_id=wait_message.message_id,
+                    text=parts
+                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                else:
+                    await update.message.reply_text(parts , parse_mode='Markdown', disable_web_page_preview=True)
 
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
@@ -169,7 +199,6 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
     user_id = update.message.chat.id
     check_message = await update.message.reply_text("Checking Subscription Status...")
     # Here, you would replace 'check_payment' with whatever function checks for check_payment
-    
     info = get_user_info(user_id)
     if check_access(user_id):
         time_left = datetime.strptime( info['expiration_date'],"%Y-%m-%d %H:%M:%S.%f")

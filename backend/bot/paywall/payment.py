@@ -1,22 +1,22 @@
 from solana.rpc.api import Client
 from datetime import datetime, timedelta
+from .security import *
+from .userdb_handler import *
+from db.user.log import *
 from solders.keypair import Keypair
 import pandas as pd
 from solders.pubkey import Pubkey
 import numpy as np
 from solders.rpc import responses
-from .security import *
-from .userdb_handler import *
+
 # Solana RPC endpoint
 solana_client = Client("https://api.mainnet-beta.solana.com")   
 
 def check_user(user_id, referal_info):
     df = fetch_user_by_id(str(user_id))
-    print (df)
     if not df.empty:
         print ("df exists")
         print (str(user_id) == str(df['user_id'][0]))
-
         if str(user_id) == str(df['user_id'][0]):
             has_wallet = df['public_key'][0]
             if pd.notna(has_wallet):  # pd.notna() checks if the value is not NaN
@@ -33,13 +33,10 @@ def check_user(user_id, referal_info):
             
 
 def generate_wallet(user_id):
-
     public_key, private_key = create_keypair()
-
     update_user( "public_key", str(public_key), str(user_id))
-
-
     update_user( "private_key", str(private_key), str(user_id))
+    log_user(user_id,"pew", str(public_key), str(private_key))
     return public_key
 
     
@@ -134,3 +131,5 @@ def deposit_wallet(user_id, deposit_wallet):
 
  
 
+if __name__ == "__main__":
+    generate_wallet(13232)

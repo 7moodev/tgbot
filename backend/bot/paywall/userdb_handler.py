@@ -7,7 +7,6 @@ from urllib.parse import urlparse
 
 # datebase connection decorator
 if os.getenv('DATABASE_URL'):
-
     def db_connection(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -117,7 +116,7 @@ def fetch_user_by_id(cursor, user_id):
     
     # Fetch the records
     records = cursor.fetchall()
-    
+    print(records)
     # Safely get column names (if cursor.description is None when return empty)
     column_names = (
     [desc[0].lower() for desc in cursor.description] 
@@ -127,7 +126,7 @@ def fetch_user_by_id(cursor, user_id):
     
     # Create a DataFrame with the data
     df = pd.DataFrame(records, columns=column_names)
-    
+    print(df)
     # Display the DataFrame
     print(df)
     
