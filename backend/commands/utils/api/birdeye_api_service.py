@@ -362,11 +362,13 @@ class BirdeyeApiService:
                 }
             )
             url = f"{BASE_URL}/defi/v3/token/holder?{params}"
-            response = requests.get(url, headers=self.headers)
+            response: ApiResponse[TokenHolderItems] = requests.get(
+                url, headers=self.headers
+            )
             if response.status_code != 200:
                 if response.json()["success"] == False:
                     return None
-            batch = response.json()["data"]["items"]
+            batch: TokenHolderEntity = response.json()["data"]["items"]
             if (
                 not batch
                 or batch[0]["amount"] == "0"

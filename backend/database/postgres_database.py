@@ -1,6 +1,8 @@
 import os
+from typing import Any
 from dotenv import load_dotenv
 import psycopg2
+from psycopg2.extras import execute_values
 from functools import wraps
 from urllib.parse import urlparse
 from ..commands.utils.services.log_service import LogService
@@ -64,6 +66,21 @@ class PostgresDatabase:
             logger.error(e)
 
     @db_connection
+    def batch_execute_query(self, cursor, query: str, params: list[Any]):
+        """
+        batch_execute_query(cursor,
+            "INSERT INTO test (id, v1, v2) VALUES %s",
+            [(1, 2, 3), (4, 5, 6), (7, 8, 9)])
+
+        """
+        print(params)
+        try:
+            execute_values(cursor, query, params)
+
+        except Exception as e:
+            logger.error(e)
+
+    @db_connection
     def create_table(self, cursor, create_table_sql: str):
         try:
             cursor.execute(create_table_sql)
@@ -92,5 +109,12 @@ class PostgresDatabase:
     def add_column(self, cursor, table_name: str, column_definition: str):
         try:
             cursor.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_definition}")
+        except Exception as e:
+            logger.error(e)
+
+    @db_connection
+    def dangerousely_drop_table(self, cursor, table_name: str):
+        try:
+            cursor.execute(f"DROP TABLE {table_name}")
         except Exception as e:
             logger.error(e)
