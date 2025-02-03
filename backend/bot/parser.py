@@ -165,7 +165,7 @@ async def top_holders_holdings_parsed(token, limit):
     #print(token_info)
       # Token information part= 
     message =  "Top Holders Analysis by @elmunkibot 🐵🌕\n\n"
-    message += f"*Token Info*: ${escape_markdown(token_info['symbol'])} \\({escape_markdown(token_info['name'])}\\)\n"
+    message += f"*Token Info*: ${escape_markdown(token_info['symbol'])} \\({escape_markdown(escape_markdown(token_info['name']))}\\)\n"
     
     message += generate_socials_message(token_info, token)
     message += f"├──💰 MC: *{format_number(token_info['market_cap'])}*\n"
@@ -301,7 +301,7 @@ async def holder_distribution_parsed(token):
         "🦈 holding (25000+)": int(total_holders * data_pc['25000+'] / 100)
             }
 
-    info  =f"\n*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
+    info  =f"\n*Token Info*: ${token_info['symbol']} \\({escape_markdown(token_info['name'])}\\)\n"
     info += f"├── MC: *{format_number(token_info['market_cap'])}*\n"
     info += f"├── Liquidity: *{format_number(token_info['liquidity'])}*\n"
     info += f"\n*Total Holders*: *{total_holders:,}*\n\n"
@@ -342,7 +342,7 @@ async def fresh_wallets_parsed(token, limit):
         token_info = data ['token_info'] 
         wallet_ages = data ['items'][0:limit]
     token_symbol = token_info['symbol']
-    token_name = token_info['name']
+    token_name = escape_markdown(token_info['name'])
     market_cap = format_number(token_info['market_cap'])
     liquidity = format_number(token_info['liquidity'])
     holder = format_number(token_info['holder'], with_dollar_sign=False)
@@ -408,19 +408,19 @@ async def fresh_wallets_v2_parsed(token, limit):
     token_info = data['token_info']
     valid_results = data['valid_results']
     items = data['items']
-    token_symbol = token_info['symbol']
-    token_name = token_info['name']
+    token_symbol = escape_markdown(token_info['symbol'])
+    token_name = escape_markdown(escape_markdown(token_info['name']))
     market_cap = format_number(token_info['market_cap'])
     liquidity = format_number(token_info['liquidity'])
     holder = format_number(token_info['holder'], with_dollar_sign=False)
-    socials = generate_socials_message(token_info, token)
+    socials = escape_markdown(generate_socials_message(token_info, token))
     print (socials)
     print (holder)
     print (liquidity)
     print (market_cap)
     message_parts = [
         f"Fresh Wallets Detector, by @elmunkibot 🐵🌕\n\n",
-        f"*Token*: ${token_symbol} \\({token_name}\\)\n",
+        f"*Token*: *${token_symbol}* \\({token_name}\\)\n",
         socials,
         f"├──💰 MC: *{market_cap}*\n",
         f"├──💦 Liquidity: *{liquidity}*\n",
@@ -471,7 +471,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
     agg_avg    = data['agg_avg']
     items      = data['items']
     token_symbol =escape_markdown(token_info['symbol'])
-    token_name   = escape_markdown(token_info['name'])
+    token_name   = escape_markdown(escape_markdown(token_info['name']))
     market_cap   = format_number(token_info['market_cap'], escape=True)
     liquidity    = format_number(token_info['liquidity'], escape=True)
     holder       = format_number(token_info['holder'], with_dollar_sign=False, escape=True)
@@ -510,7 +510,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
             # Handle labels
             if label == "No Buys" or label == "No Trades/Funded":
                 # "For Free (Funded)"
-                msg = f"[\\#{count}{addy}]({solscan_link}) \\| `{amount}` at *$0* `\\(Free\\)` 🚩\n"
+                msg = f"[\\#{count}{addy}]({solscan_link}) \\| `{amount}` @ *$0* `\\(Free\\)` 🚩\n"
                 current_message += msg
                 counter_sniped += 1
                 continue
@@ -608,7 +608,7 @@ async def top_holders_net_worth_map(token, limit):
    # Token information part=
     message = "Top Net Worth Map by EL MUNKI 🐵🌕:\n\n"
 
-    message += f"*Token Info*: ${token_info['symbol']} *\\({token_info['name']}\\)*\n"
+    message += f"*Token Info*: ${token_info['symbol']} *\\({escape_markdown(token_info['name'])}\\)*\n"
     message += f"├──💰MC: *{format_number(token_info['market_cap'])}*\n"
     message += f"├──🫗Liquidity: *{format_number(token_info['liquidity'])}*\n"
     message += f"├──👥Holders count: *{token_info['holder']:,}*\n\n"
@@ -708,7 +708,7 @@ async def noteworthy_addresses_parsed(token, limit):
 
     # Escape token info for MarkdownV2
     token_symbol = escape_markdown(token_info['symbol'])
-    token_name = escape_markdown(token_info['name'])
+    token_name = escape_markdown(escape_markdown(token_info['name']))
     market_cap = format_number(token_info['market_cap'])
     liquidity = format_number(token_info['liquidity'])
     holder = format_number(token_info['holder'])
