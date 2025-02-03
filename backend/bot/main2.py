@@ -11,6 +11,7 @@ import os
 import json
 from .parser import *
 import backend.bot.exc as exc
+from .log import log_tamago
 import asyncio
 import traceback
 limit = 50 #to change
@@ -63,6 +64,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         response: str = handle_response(text)
 
+    log_tamago(update, response)
     print('Bot:', response)
     await update.message.reply_text(response)
 

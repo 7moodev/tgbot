@@ -4,7 +4,9 @@ vscode/
 /backend/commands/__pycache__/
 /backend/commands/utils/__pycache__/
 misc/
-# .env
+venv/
+.env
+/chat/.env
 .DS_Store
 *.ipynb
 .ipynb_checkpoints/

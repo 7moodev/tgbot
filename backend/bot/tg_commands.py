@@ -294,10 +294,10 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
         # Create the reply markup with the above keyboard layout
         reply_markup = InlineKeyboardMarkup(keyboard)
-        renew_message = f'''Thanks for deciding to renew your subscription!
+        renew_message = escape_markdown(f'''Thanks for deciding to renew your subscription!
     Monthly subscriptions are 0.69 SOL a month in our beta phase. Please deposit 0.69 SOL to the following address:
     `{public_key}`
-    After you have sent the funds, please click the Check button below.'''
+    After you have sent the funds, please click the Check button below.''')
 
         # Send message with the keyboard
         # await update.message.reply_text(f'{renew_message}')
