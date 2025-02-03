@@ -9,7 +9,7 @@ from .utils.general_utils import get_tx
 import httpx
 import os
 
-FRESH_DEFINITION_IN_DAYS = 7
+FRESH_DEFINITION_IN_DAYS = 14
 MAX_WORKERS = min(100, os.cpu_count() * 3)  # Adjust based on the number of CPU cores and workload
 
 async def fetch_wallet_details_async(holder, total_supply, idx: int):
