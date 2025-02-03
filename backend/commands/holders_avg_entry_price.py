@@ -52,7 +52,7 @@ async def get_holders_avg_entry_price(token: str, limit:int):
     token_creation_time = token_creation_info['blockUnixTime']
     res = []
     counted = 0
-    count = 0
+    count = 1
     agg_avg_price = 0
     for holder in top_holders:
         holder_address = holder['owner']

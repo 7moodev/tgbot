@@ -14,6 +14,7 @@ import json
 import ast
 import re, os
 import sys
+import backend.bot.exc as exc
 sys.stdout.reconfigure(encoding='utf-8')
 
 
@@ -80,6 +81,7 @@ def check_noteworthy(top_holders, cutoff=50_000):
             else:
                 print(f"Skipping holder due to missing or invalid 'net_worth': {holder}")
         except Exception as e:
+            exc.exc_type, exc.exc_value, exc.exc_traceback = sys.exc_info()
             print(f"Error processing holder: {holder}. Error: {e}")
 
     return noteworthy
@@ -110,7 +112,9 @@ def generate_socials_message(token_info, token):
         
     else:
         # If extensions is None or doesn't exist, just include the chart link
+        message = "├──"
         message += chart_link
+        message+= "\n"
 
     return message 
 
@@ -161,12 +165,12 @@ async def top_holders_holdings_parsed(token, limit):
     #print(token_info)
       # Token information part= 
     message =  "Top Holders Analysis by @elmunkibot 🐵🌕\n\n"
-    message += f"*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
+    message += f"*Token Info*: ${escape_markdown(token_info['symbol'])} \\({escape_markdown(token_info['name'])}\\)\n"
     
     message += generate_socials_message(token_info, token)
-    message += f"├──💰 MC: {format_number(token_info['market_cap'])}\n"
-    message += f"├──🫗 Liquidity: {format_number(token_info['liquidity'])}\n"
-    message += f"├──👥 Total Holder: {token_info['holder']:,}\n\n"
+    message += f"├──💰 MC: *{format_number(token_info['market_cap'])}*\n"
+    message += f"├──🫗 Liquidity: *{format_number(token_info['liquidity'])}*\n"
+    message += f"├──👥 Total Holder: *{token_info['holder']:,}*\n\n"
     message += f"*CA*: `{token}`\n\n"
 
     noteworthy = check_noteworthy(top_holders)  
@@ -243,6 +247,7 @@ async def top_holders_holdings_parsed(token, limit):
 
 
         except Exception as e:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
             print(f" holder: {holder}")
             print(f"Error processing holder: {e}")
         h_info += "\n"
@@ -297,9 +302,9 @@ async def holder_distribution_parsed(token):
             }
 
     info  =f"\n*Token Info*: ${token_info['symbol']} \\({token_info['name']}\\)\n"
-    info += f"├── MC: {format_number(token_info['market_cap'])}\n"
-    info += f"├── Liquidity: {format_number(token_info['liquidity'])}\n"
-    info += f"\n*Total Holders*: {total_holders:,}\n\n"
+    info += f"├── MC: *{format_number(token_info['market_cap'])}*\n"
+    info += f"├── Liquidity: *{format_number(token_info['liquidity'])}*\n"
+    info += f"\n*Total Holders*: *{total_holders:,}*\n\n"
     info += f"*CA*: `{token}`\n\n"
 
     # Generate the Markdown message
@@ -353,7 +358,7 @@ async def fresh_wallets_parsed(token, limit):
         escape_markdown(f"🟡: <3 Months\n"),
         escape_markdown(f"🟢: >3 Months\n"),
         escape_markdown(f"🔵: LP/Bot \n\n"),
-        escape_markdown(f"Ordered by holding --------->\n\n"),
+        escape_markdown(f"*Ordered by holding --------->*\n"),
     ]
     
     # Precompute current time
@@ -465,8 +470,8 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
     token_info = data['token_info']
     agg_avg    = data['agg_avg']
     items      = data['items']
-    token_symbol = token_info['symbol']
-    token_name   = token_info['name']
+    token_symbol =escape_markdown(token_info['symbol'])
+    token_name   = escape_markdown(token_info['name'])
     market_cap   = format_number(token_info['market_cap'], escape=True)
     liquidity    = format_number(token_info['liquidity'], escape=True)
     holder       = format_number(token_info['holder'], with_dollar_sign=False, escape=True)
@@ -477,7 +482,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
     emoji = "🟢" if avg_increase > 0.1 else "🔴"
     message_parts = []
     current_message = [ f"Average Holders Entry Price, by @elmunkibot 🐵🌕\n\n",
-        escape_markdown(f"*Token*: ${token_symbol} ({token_name})\n"),
+        escape_markdown(f"*Token*: *${token_symbol}* ({token_name})\n"),
         socials,
         f"├──💰 MC: *{market_cap}*\n",
         f"├──💦 Liquidity: *{liquidity}*\n",
@@ -505,7 +510,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
             # Handle labels
             if label == "No Buys" or label == "No Trades/Funded":
                 # "For Free (Funded)"
-                msg = f"[\\#{count}{addy}]({solscan_link}) \\| `{amount}` at *$0* \\(Free\\) 🚩\n"
+                msg = f"[\\#{count}{addy}]({solscan_link}) \\| `{amount}` at *$0* `\\(Free\\)` 🚩\n"
                 current_message += msg
                 counter_sniped += 1
                 continue
@@ -538,8 +543,8 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
             if pfun:
                 # show actual holding price
                 msg = (
-                    f"[ \\#{count}{addy}({solscan_link}) "
-                    f"\\| `{amount}` @ *{format_number(avg_actual_price, escape=True)}* 💊 \\| {increase}\n"
+                    f"[ \\#{count}{addy}]({solscan_link}) "
+                    f"\\| `{amount}` @ *{format_number(avg_actual_price, escape=True)}* `\\(Sniped\\)`💊 \\| {increase}\n"
                 )
                 
             else:
@@ -580,10 +585,11 @@ async def top_holders_net_worth_map(token, limit):
     original_limit = limit
     if running:
         if limit !=0:
-            data = await get_top_holders_holdings(token, (limit+5))
+            data = await get_top_holders_holdings(token, (limit+10))
         else:
             data = await get_top_holders_holdings(token, limit)
             limit = original_limit
+        print(data)
         token_info =  data['token_info']
         top_holders= data ['items']
     
@@ -602,10 +608,11 @@ async def top_holders_net_worth_map(token, limit):
    # Token information part=
     message = "Top Net Worth Map by EL MUNKI 🐵🌕:\n\n"
 
-    message += f"*Token Info*: {token_info['symbol']} \\({token_info['name']}\\)\n"
-    message += f"├──💰MC: {format_number(token_info['market_cap'])}\n"
-    message += f"├──🫗Liquidity: {format_number(token_info['liquidity'])}\n"
-    message += f"├──👥Holders count: {token_info['holder']:,}\n\n"
+    message += f"*Token Info*: ${token_info['symbol']} *\\({token_info['name']}\\)*\n"
+    message += f"├──💰MC: *{format_number(token_info['market_cap'])}*\n"
+    message += f"├──🫗Liquidity: *{format_number(token_info['liquidity'])}*\n"
+    message += f"├──👥Holders count: *{token_info['holder']:,}*\n\n"
+    message+= f"*CA*: `{token}`\n\n"
     #message += f"├──[*X*]({token_info['twitter']})──[*WEB*]({token_info['website']})──[📊*CHART*](https://dexscreener.com/solana/{token})\n"
 
 
@@ -669,7 +676,7 @@ async def top_holders_net_worth_map(token, limit):
         "🐳 ($100k+)": whale
             }
     message += "\n\n"
-    message += f"*Summary of Top {limit} Holders net worth excluding {token_info['symbol']} \\({token_info['name']}\\)*\n"
+    message += f"*Summary of Top {limit} Holders net worth excluding ${token_info['symbol']}:*\n"
 
     for emoji, count in holder_counts.items():
         message += escape_markdown(f"{emoji}:  {count}\n") 

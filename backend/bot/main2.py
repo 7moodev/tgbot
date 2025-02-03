@@ -10,6 +10,7 @@ import time
 import os 
 import json
 from .parser import *
+import backend.bot.exc as exc
 import asyncio
 import traceback
 limit = 50 #to change
@@ -66,89 +67,152 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(response)
 
 async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    context.user_data['awaiting_token_address'] = False
-    token_address = update.message.text.strip()
+        context.user_data['awaiting_token_address'] = False
+        token_address = update.message.text.strip()
 
-    # Validate token address
-    if len(token_address) < 43:  # Adjust this check for Solana addresses
-        await update.message.reply_text("Invalid token address. Please try again with a valid address.")
-        return
-    command = ''
-    # Store the token address in user_data
-    holder_message = None
-    # Check if 'top_holders_started' exists and is set, otherwise default to False
-    timenow = float(time.time())
-    if context.user_data.get('top_holders_started', False):
-        context.user_data['top_holders_started'] = False
-        command = 'top'
-        wait_message = await update.message.reply_text("Analyzing top holders please chill...")
-        holder_message = await top_holders_holdings_parsed(token_address, limit)
-
-    elif context.user_data.get('net_worth_map_started', False):
-        wait_message = await update.message.reply_text("Checking for whales please chill...")
-        command = 'map'
-        context.user_data['net_worth_map_started'] = False
-        holder_message = await top_holders_net_worth_map(token_address, limit)
-
-    # Check if 'token_distribution_started' exists and is set, otherwise default to False
-    elif context.user_data.get('token_distribution_started', False):
-        wait_message = await update.message.reply_text("Checking for holder distribution please chill...")
-        command = 'distribution'
-        context.user_data['token_distribution_started'] = False
-        holder_message = await holder_distribution_parsed(token_address)
-
-    elif context.user_data.get('fresh_wallets_started', False): 
-        wait_message = await update.message.reply_text("Checking for fresh wallets please chill...")
-        command = 'fresh'
-        context.user_data['fresh_wallets_started'] = False
-        holder_message = await fresh_wallets_v2_parsed(token_address, limit)
-    elif context.user_data.get('avg_entry_started', False):
-        wait_message = await update.message.reply_text("Checking for average entry price please chill...")
-        command = 'avg'
-        context.user_data['avg_entry_started'] = False
-        holder_message = await holders_avg_entry_price_parsed(token_address, max(limit-20, 0)) 
-
-    elif context.user_data.get('wallets_age_started', False):
-        wait_message = await update.message.reply_text("Checking experience of top holdersplease chill...")
-        command = 'exp'
-        context.user_data['wallets_age_started'] = False
-        holder_message = await fresh_wallets_parsed(token_address, limit)
-
-    else:
-        try: 
-            wait_message = await update.message.reply_text("Analyzing token getting top holders please chill...")
+        # Validate token address
+        if len(token_address) < 43:  # Adjust this check for Solana addresses
+            await update.message.reply_text("Invalid token address. Please try again with a valid address.")
+            return
+        command = ''
+        # Store the token address in user_data
+        holder_message = None
+        # Check if 'top_holders_started' exists and is set, otherwise default to False
+        timenow = float(time.time())
+        if context.user_data.get('top_holders_started', False):
+            context.user_data['top_holders_started'] = False
             command = 'top'
-            holder_message = await top_holders_holdings_parsed(token_address, limit)
+            try:
+                wait_message = await update.message.reply_text("Analyzing top holders please chill...")
+                holder_message = await top_holders_holdings_parsed(token_address, limit)
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support.")
+
+        elif context.user_data.get('net_worth_map_started', False):
+            wait_message = await update.message.reply_text("Checking for whales please chill...")
+            command = 'map'
+            try:
+                context.user_data['net_worth_map_started'] = False
+                holder_message = await top_holders_net_worth_map(token_address, limit)
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support.")
+
+        # Check if 'token_distribution_started' exists and is set, otherwise default to False
+        elif context.user_data.get('token_distribution_started', False):
+            command = 'distribution'
+            try:
+                wait_message = await update.message.reply_text("Checking for holder distribution please chill...")
+                
+                context.user_data['token_distribution_started'] = False
+                holder_message = await holder_distribution_parsed(token_address)
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+        
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support.")
+
+        elif context.user_data.get('fresh_wallets_started', False): 
+            command = 'fresh'
+            try:
+                wait_message = await update.message.reply_text("Checking for fresh wallets please chill...")
+                context.user_data['fresh_wallets_started'] = False
+                holder_message = await fresh_wallets_v2_parsed(token_address, max(limit+50, 0))
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support.")
+        elif context.user_data.get('avg_entry_started', False):
+            command = 'avg'
+            try:
+                wait_message = await update.message.reply_text("Checking for average entry price please chill...")
+                context.user_data['avg_entry_started'] = False
+                holder_message = await holders_avg_entry_price_parsed(token_address, max(limit-20, 0)) 
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support.")
+
+        elif context.user_data.get('wallets_age_started', False):
+            wait_message = await update.message.reply_text("Checking experience of top holdersplease chill...")
+            command = 'exp'
+            context.user_data['wallets_age_started'] = False
+            holder_message = await fresh_wallets_parsed(token_address, limit)
+
+        else:
+            try: 
+                wait_message = await update.message.reply_text("Analyzing token getting top holders please chill...")
+                command = 'top'
+                holder_message = await top_holders_holdings_parsed(token_address, limit)
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                
+                await update.message.reply_text("Something went wrong, please contact support.")
+    
+            
+        # await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__())
+        #print(holder_message)
+        parse_mode = 'MarkdownV2'
+        #if command == 'avg':
+        #    parse_mode = 'Markdown'
+        try:
+            if type(holder_message) == list:
+                
+                for parts in holder_message:
+                    if parts == holder_message[0]:
+                        await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=parts
+                        , parse_mode=parse_mode, disable_web_page_preview=True)
+                    else:
+                        await update.message.reply_text(parts , parse_mode=parse_mode, disable_web_page_preview=True)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message[0], float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+            else:
+                await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=holder_message
+                        , parse_mode=parse_mode, disable_web_page_preview=True)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
         except Exception as e:
             print(e)
-            await update.message.reply_text("Something went wrong, please contact support.")
-    
-    # await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__())
-    print(holder_message)
-    parse_mode = 'MarkdownV2'
-    #if command == 'avg':
-    #    parse_mode = 'Markdown'
-    if type(holder_message) == list:
-        for parts in holder_message:
-            if parts == holder_message[0]:
-                await context.bot.edit_message_text(
-                chat_id=update.effective_chat.id,
-                message_id=wait_message.message_id,
-                text=parts
-                , parse_mode=parse_mode, disable_web_page_preview=True)
-            else:
-                await update.message.reply_text(parts , parse_mode=parse_mode, disable_web_page_preview=True)
-        await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message[0], float(time.time()) - timenow)
-        
-        
-    else:
-        await context.bot.edit_message_text(
-                chat_id=update.effective_chat.id,
-                message_id=wait_message.message_id,
-                text=holder_message
-                , parse_mode=parse_mode, disable_web_page_preview=True)
-        await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow)
-        
+            exc.exc_type = type(e).__name__
+            exc.exc_value = str(e)
+            exc.exc_traceback = str(e.__traceback__)
+            await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+            exc.exc_value = exc.exc_type = exc.exc_traceback = None
+            await update.message.reply_text("Something went wrong, please try again later or contact support.")
         
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 

@@ -19,7 +19,7 @@ HOST = os.getenv("host")
 PORT = os.getenv("port")
 DBNAME = os.getenv("dbname")
 
-async def log_chat(chat_id, name, command, contract, full_message, reply="not passed correctly", time = 0):
+async def log_chat(chat_id, name, command, contract, full_message, reply="not passed correctly", time = 0, exc_type = None, exc_value = None, exc_traceback = None):
     if not DBNAME or not USER or not PASSWORD or not HOST or not PORT:
         print("Please set the environment")
         return  
@@ -39,8 +39,8 @@ async def log_chat(chat_id, name, command, contract, full_message, reply="not pa
         cursor = connection.cursor()
         print("Connection established.")
         # Example query
-        insert_query = "INSERT INTO chat_logs (user_id, name, command, contract, full_message, reply, exec_time) VALUES (%s, %s, %s, %s, %s, %s, %s);"
-        data = (chat_id, name,command, contract, json.dumps(full_message), reply, time)
+        insert_query = "INSERT INTO chat_logs (user_id, name, command, contract, full_message, reply, exec_time, exc_type, exc_value, exc_traceback) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        data = (chat_id, name,command, contract, json.dumps(full_message), reply, time, exc_type, exc_value, exc_traceback)
         cursor.execute(insert_query, data)
         cursor.close()
         connection.commit()
@@ -50,4 +50,8 @@ async def log_chat(chat_id, name, command, contract, full_message, reply="not pa
         print(f"Failed to connect: {e}")
 
 if __name__ == "__main__":
-    asyncio.run(log_chat(123456, "Tesot", "Tedst", "Test", "Texst"))
+    try:
+        print(1/0)
+    except Exception as e:
+        asyncio.run(log_chat(1, "test", "test", "test", "test", exc_type = type(e).__name__, exc_value = str(e), exc_traceback = str(e.__traceback__)))
+    
