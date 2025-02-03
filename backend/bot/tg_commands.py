@@ -1,7 +1,7 @@
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
-from .parser import fresh_wallets_v2_parsed, noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed
+from .parser import fresh_wallets_v2_parsed, noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed, escape_markdown
 from db.chat.log import log_chat
 import time
 BOT_USERNAME= os.environ.get('tgNAME') 

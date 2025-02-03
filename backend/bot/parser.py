@@ -442,7 +442,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
         data  = await get_holders_avg_entry_price(token=token, limit=limit)
 
     else:
-          data  = json.load(open("./avg_entry.json", 'r'))
+          data  = json.load(open("backend/commands/outputs/holders_avg_entry_price.json", 'r'))
 
 
     
@@ -473,7 +473,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
     socials      = generate_socials_message(token_info, token)
     new = token_info['market_cap']
     avg_increase = percentage_change(agg_avg, new)
-    increase = f'{format_number((round(avg_increase, 0)), with_dollar_sign=False, escape=True)}%' 
+    increase = f'{format_number((round(avg_increase, 0)), with_dollar_sign=False, escape=False)}%' 
     emoji = "🟢" if avg_increase > 0.1 else "🔴"
     message_parts = []
     current_message = [ f"Average Holders Entry Price, by @elmunkibot 🐵🌕\n\n",
@@ -781,7 +781,7 @@ if __name__ == "__main__":
     time_now = time.time()
     #print(asyncio.run(fresh_wallets_v2_parsed("H1sWyyDceAPpGmMUxVBCHcR2LrCjz933pUyjWSLpump", 0)))
 
-    message = [asyncio.run(fresh_wallets_v2_parsed("testsit", 21))]
+    message = asyncio.run(holders_avg_entry_price_parsed("testsit", 21))
 
     #print(asyncio.run(holder_distribution_parsed("9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump")))i
 
