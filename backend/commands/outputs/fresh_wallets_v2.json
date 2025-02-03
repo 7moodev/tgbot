@@ -1,97 +1,76 @@
 {
     "token_info": {
-        "price": 0.16068259389324216,
-        "symbol": "VINE",
-        "name": "Vine Coin",
-        "logoURI": "https://ipfs.io/ipfs/QmRtFJu3ZospaS4EAk17iNXZGAJp7gMxzvsZckZxbqZa5r",
-        "liquidity": 13689412.140972622,
-        "market_cap": 160681012.93269852,
-        "supply": 999990160.95922,
-        "circulatingSupply": 999990160.972049,
-        "realMc": 160681012.9327096,
-        "holder": 127937,
+        "price": 0.00033597873568275686,
+        "symbol": "BINANCE",
+        "name": "Binance",
+        "logoURI": "https://ipfs.io/ipfs/QmeDMZn37aV7hY7hAyyiTJdJZPP1RHiKBzxZGoWQA3Rxef",
+        "liquidity": 92675.333988867,
+        "market_cap": 335967.9304209605,
+        "supply": 999967823.128351,
+        "circulatingSupply": 999967839.447415,
+        "realMc": 335967.9304209605,
+        "holder": 6643,
         "extensions": {
-            "description": "Do it for the Vine.",
-            "coingeckoId": "vine",
-            "twitter": "https://twitter.com/rus",
-            "website": "https://www.vineco.in"
+            "description": "Binance played us manipulating the markets. Time to take the bet and flip their market cap."
         },
-        "priceChange1hPercent": 1.5678324113355278,
-        "creationTime": 1737591431
+        "priceChange1hPercent": -26.825568277966287,
+        "creationTime": 1738469932
     },
-    "valid_results": 8,
+    "valid_results": 6,
     "items": [
         {
-            "count": 57,
-            "address": "9QevvoDUV8aVAchAcngtKKTLSf59YWvvze1xXgUM8mJE",
-            "holding": 1955869,
-            "holding_pct": 0.196,
-            "age": 1738335004,
-            "age_readable": "1 day",
-            "funding_source": "6kyCm1HTsUejhUAfEAqWtmxpu6Js4kpPZEmc2RWY9EPZ"
-        },
-        {
-            "count": 61,
-            "address": "HJFwDjAkKrSq8jyDkqa365DckFw6wwUVqfE9PpT4fDr2",
-            "holding": 1866033,
-            "holding_pct": 0.187,
-            "age": 1738304169,
-            "age_readable": "2 days",
-            "funding_source": "43kyj5P8NML8MjYqptmUywinbyxLFWrNAc96YZFxsQzx"
-        },
-        {
-            "count": 64,
-            "address": "4igWs8J2ZuyWXvdeMpAUKkvAz1Z5zTTdQX4SRMCsAsmp",
-            "holding": 1809082,
-            "holding_pct": 0.181,
-            "age": 1738046849,
+            "count": 1,
+            "address": "HhLbYW8k116GtvzsZ2ETTJmDbiumgQVmtX9VZLJXtNMS",
+            "holding": 44538303,
+            "holding_pct": 4.454,
+            "age": 1738063949,
             "age_readable": "5 days",
-            "funding_source": "HBQcZZb3WWVijG2iduDjrubmVkATtWmtprinYFnL173W"
+            "funding_source": "5ndLnEYqSFiA5yUFHo6LVZ1eWc6Rhh11K5CfJNkoHEPs"
         },
         {
-            "count": 76,
-            "address": "5p8e9AgrA7vxrUCLEj5mjXE7CS6cBmshHvEdTjzsRFBq",
-            "holding": 1505377,
-            "holding_pct": 0.151,
-            "age": 1738202640,
-            "age_readable": "3 days",
-            "funding_source": "6Do8zR9mg4cZK8vVvkX4AQF2AWyW2pfRLsbYQ2UChAus"
+            "count": 12,
+            "address": "7fbiY9Q3H4W4HY7boELuruf7x8Mj3qMnFtdXUQYwmzkq",
+            "holding": 8355870,
+            "holding_pct": 0.836,
+            "age": 1738081854,
+            "age_readable": "4 days",
+            "funding_source": "CgANddXc7FKSsdLSdFv67X8faZqQaRTeLMXkAVANkZD4"
         },
         {
-            "count": 77,
-            "address": "7e4v2aFdJv4KuqdeTN2UCSpL5VKZ3jDdvZSaE2eRFgda",
-            "holding": 1500000,
-            "holding_pct": 0.15,
-            "age": 1738270753,
-            "age_readable": "2 days",
-            "funding_source": "Eq1t7ZZnP3Vyy68M5e4eYLRPrTp8Tz2AoqzLKJQM9vkF"
-        },
-        {
-            "count": 79,
-            "address": "5i9tm9KVe4bX152Rkfkp83nzf8MsKSX1DjYDVPuapooN",
-            "holding": 1495326,
-            "holding_pct": 0.15,
-            "age": 1737932675,
+            "count": 25,
+            "address": "522pAVbJihQCgEC7U1qRT7hGUhK8omLi24oZDUat3ztc",
+            "holding": 4569171,
+            "holding_pct": 0.457,
+            "age": 1737943907,
             "age_readable": "6 days",
-            "funding_source": "BQqSmMRukf5pPniPh4vEuX1cSXiFokCTHaajV97RVFeZ"
+            "funding_source": "5F1seMKUqSNhv45f6FhB2cFmgJbk8U1avJw7M6TexUq1"
         },
         {
-            "count": 90,
-            "address": "38inq5X81EhbhqfVZpBZYPB4u8MAU6PNKGkH5jMAHTit",
-            "holding": 1293283,
-            "holding_pct": 0.129,
-            "age": 1738090373,
-            "age_readable": "4 days",
-            "funding_source": "HtTXRYAqa7JSDPsbpVZ3FAM2xrwXZ9o68hscGpPVhen7"
+            "count": 27,
+            "address": "EW9hzQDGUwGq11MdV7ryv9ByqZtzisei5UYuCt2kGmr3",
+            "holding": 4100305,
+            "holding_pct": 0.41,
+            "age": 1738407068,
+            "age_readable": "1 day",
+            "funding_source": "FzbcyEZ9m8xjtergWgWDq7mfPoHEbboBF791B6cTpzbq"
         },
         {
-            "count": 91,
-            "address": "DexKtTkCCgfmFGRbFJxqoofa3NpbUB9Zs2mq31bSptfS",
-            "holding": 1283251,
-            "holding_pct": 0.128,
-            "age": 1738122060,
-            "age_readable": "4 days",
-            "funding_source": "3APkmFrsCE6m81TjLBeYi8M1v747yPmshv7KzpmXn1sm"
+            "count": 31,
+            "address": "HUUM3V2yghULQEx5XHdYE6ssdgwRbPcirTuzhhw356qU",
+            "holding": 3734348,
+            "holding_pct": 0.373,
+            "age": 1738294155,
+            "age_readable": "2 days",
+            "funding_source": "9Ywf7wzm99EMgiv6SR177USLdkXt4jMBRDVzLThaLxHW"
+        },
+        {
+            "count": 38,
+            "address": "DhK5oJM14CGySkfCjqsbpQi6T3cjHMgjMQs9a3B6A66V",
+            "holding": 2924539,
+            "holding_pct": 0.292,
+            "age": 1737924386,
+            "age_readable": "6 days",
+            "funding_source": "D89hHJT5Aqyx1trP6EnGY9jJUB3whgnq3aUvvCqedvzf"
         }
     ]
 }

@@ -6,7 +6,8 @@ from solders.pubkey import Pubkey
 import os
 
 print (os.getcwd())
-
+# lazy fix this is very messy fix later
+public_key_obj = None
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if os.getenv("pubkey") is None and os.environ.get("public_key") is None:
     pem_file_path = os.path.join(current_dir, '../public_key.pem')
@@ -16,7 +17,7 @@ if os.getenv("pubkey") is None and os.environ.get("public_key") is None:
         public_key_obj = content
 
 if public_key_obj is None:
-    public_key_obj = os.getenv("pubkey")
+    public_key_obj = os.getenv("pubkey") or os.environ.get("public_key")
 
 public_key = serialization.load_pem_public_key(
     public_key_obj.encode(),
