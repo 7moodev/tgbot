@@ -112,7 +112,7 @@ def generate_socials_message(token_info, token):
         
     else:
         # If extensions is None or doesn't exist, just include the chart link
-        message = "├──"
+        message = escape_markdown("├──")
         message += chart_link
         message+= "\n"
 
@@ -413,14 +413,14 @@ async def fresh_wallets_v2_parsed(token, limit):
     market_cap = format_number(token_info['market_cap'])
     liquidity = format_number(token_info['liquidity'])
     holder = format_number(token_info['holder'], with_dollar_sign=False)
-    socials = escape_markdown(generate_socials_message(token_info, token))
+    socials = generate_socials_message(token_info, token)
     print (socials)
     print (holder)
     print (liquidity)
     print (market_cap)
     message_parts = [
         f"Fresh Wallets Detector, by @elmunkibot 🐵🌕\n\n",
-        f"*Token*: *${token_symbol}* \\({token_name}\\)\n",
+        f"*Token*: ${token_symbol} \\({token_name}\\)\n",
         socials,
         f"├──💰 MC: *{market_cap}*\n",
         f"├──💦 Liquidity: *{liquidity}*\n",
