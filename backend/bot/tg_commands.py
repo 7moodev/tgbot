@@ -1,7 +1,7 @@
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
-from .parser import fresh_wallets_v2_parsed, noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed
+from .parser import escape_markdown, fresh_wallets_v2_parsed, noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed
 
 BOT_USERNAME= os.environ.get('tgNAME') 
 if not BOT_USERNAME:
@@ -202,10 +202,10 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
         # Create the reply markup with the above keyboard layout
         reply_markup = InlineKeyboardMarkup(keyboard)
-        renew_message = f'''Thanks for deciding to renew your subscription!
+        renew_message = escape_markdown(f'''Thanks for deciding to renew your subscription!
     Monthly subscriptions are 0.69 SOL a month in our beta phase. Please deposit 0.69 SOL to the following address:
     `{public_key}`
-    After you have sent the funds, please click the Check button below.'''
+    After you have sent the funds, please click the Check button below.''')
 
         # Send message with the keyboard
         # await update.message.reply_text(f'{renew_message}')
