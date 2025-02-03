@@ -15,106 +15,137 @@ if not DATABASE_URL:
 
 
 logger = LogService("POSTGRES")
+console = logger
 
 
-def db_connection(func):
-    @wraps(func)
-    def wrapper(self, *args, **kwargs):
-        conn = None
+class PostgresDatabase:
+    def __init__(self, database_url: str = DATABASE_URL):
+        self.database_url = database_url
+        self.conn = None
+
+    def connect_db(self):
+        cursor = None
+
         try:
-            # Parse the DATABASE_URL environment variable
-            result = urlparse(DATABASE_URL)
+            result = urlparse(self.database_url)
+            # print(result)
             username = result.username
             password = result.password
             database = result.path[1:]  # Remove leading slash
             hostname = result.hostname
             port = result.port
 
-            conn = psycopg2.connect(
+            self.conn = psycopg2.connect(
                 database=database,
                 user=username,
                 password=password,
                 host=hostname,
                 port=port,
             )
-            cursor = conn.cursor()
-            result = func(self, cursor, *args, **kwargs)
-            conn.commit()
-            return result
+            cursor = self.conn.cursor()
+            self.conn.commit()
+            return self.conn
+
         except (Exception, psycopg2.Error) as error:
             logger.log("Error:", error)
-            if conn:
-                conn.rollback()
-        finally:
-            if conn:
-                cursor.close()
-                conn.close()
+            if self.conn:
+                self.conn.rollback()
 
-    return wrapper
+    def close(self):
+        self.conn.close()
 
-
-class PostgresDatabase:
-    def __init__(self, database_url: str = DATABASE_URL):
-        self.database_url = database_url
-
-    @db_connection
-    def execute_query(self, cursor, query: str, params: tuple = ()) -> int | None:
+    def execute_query(self, query: str, params: tuple = ()) -> int | None:
         try:
-            cursor.execute(query, params)
-            return cursor.lastrowid
+            with self.connect_db() as conn:
+                cursor = conn.cursor()
+                cursor.execute(query, params)
+                return cursor.lastrowid
         except Exception as e:
             logger.error(e)
+        finally:
+            if self.conn:
+                cursor.close()
+                self.conn.close()
 
-    @db_connection
-    def batch_execute_query(self, cursor, query: str, params: list[Any]):
+    def batch_execute_query(self, query: str, params: list[Any]):
         """
         batch_execute_query(cursor,
             "INSERT INTO test (id, v1, v2) VALUES %s",
             [(1, 2, 3), (4, 5, 6), (7, 8, 9)])
 
         """
-        print(params)
         try:
-            execute_values(cursor, query, params)
+            with self.connect_db() as conn:
+                cursor = conn.cursor()
+                execute_values(cursor, query, params)
 
         except Exception as e:
             logger.error(e)
+            raise e
+        finally:
+            if self.conn:
+                cursor.close()
+                self.conn.close()
 
-    @db_connection
-    def create_table(self, cursor, create_table_sql: str):
+    def create_table(self, create_table_sql: str):
         try:
-            cursor.execute(create_table_sql)
+            with self.connect_db() as conn:
+                cursor = conn.cursor()
+                cursor.execute(create_table_sql)
+        except Exception as e:
+            logger.error(e)
+            raise e
+        finally:
+            if self.conn:
+                cursor.close()
+                self.conn.close()
+
+    def fetch_all(self, query: str, params: tuple = ()) -> list:
+        try:
+            with self.connect_db() as conn:
+                cursor = conn.cursor()
+                cursor.execute(query, params)
+                rows = cursor.fetchall()
+                return rows
         except Exception as e:
             logger.error(e)
 
-    @db_connection
-    def fetch_all(self, cursor, query: str, params: tuple = ()) -> list:
+    def fetch_one(self, query: str, params: tuple = ()) -> tuple:
         try:
-            cursor.execute(query, params)
-            rows = cursor.fetchall()
-            return rows
+            with self.connect_db() as conn:
+                cursor = conn.cursor()
+                cursor.execute(query, params)
+                row = cursor.fetchone()
+                return row
         except Exception as e:
             logger.error(e)
+        finally:
+            if self.conn:
+                cursor.close()
+                self.conn.close()
 
-    @db_connection
-    def fetch_one(self, cursor, query: str, params: tuple = ()) -> tuple:
+    def add_column(self, table_name: str, column_definition: str):
         try:
-            cursor.execute(query, params)
-            row = cursor.fetchone()
-            return row
+            with self.connect_db() as conn:
+                cursor = conn.cursor()
+                cursor.execute(
+                    f"ALTER TABLE {table_name} ADD COLUMN {column_definition}"
+                )
         except Exception as e:
             logger.error(e)
+        finally:
+            if self.conn:
+                cursor.close()
+                self.conn.close()
 
-    @db_connection
-    def add_column(self, cursor, table_name: str, column_definition: str):
+    def dangerousely_drop_table(self, table_name: str):
         try:
-            cursor.execute(f"ALTER TABLE {table_name} ADD COLUMN {column_definition}")
+            with self.connect_db() as conn:
+                cursor = conn.cursor()
+                cursor.execute(f"DROP TABLE {table_name}")
         except Exception as e:
             logger.error(e)
-
-    @db_connection
-    def dangerousely_drop_table(self, cursor, table_name: str):
-        try:
-            cursor.execute(f"DROP TABLE {table_name}")
-        except Exception as e:
-            logger.error(e)
+        finally:
+            if self.conn:
+                cursor.close()
+                self.conn.close()

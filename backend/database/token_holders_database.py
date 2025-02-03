@@ -2,24 +2,29 @@ from .postgres_database import PostgresDatabase
 from ..commands.utils.api.entities.token_entities import (
     TokenHolderEntity,
     Mock_TokenHolderItems,
+    TokenHolderItems,
 )
 from ..commands.utils.services.log_service import LogService
 
 logger = LogService("TOKENHOLDERDB")
+console = logger
 
 
 class TokenHolderDatabase(PostgresDatabase):
     def __init__(self, table_name: str = "token_holders"):
         self.table_name = table_name
+        super().__init__()
 
     def create_token_holders_table(self):
         create_table_query = f"""
         CREATE TABLE IF NOT EXISTS {self.table_name} (
+            id SERIAL PRIMARY KEY,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             amount TEXT,
             decimals INTEGER,
             mint TEXT,
             owner TEXT,
-            token_account TEXT PRIMARY KEY,
+            token_account TEXT,
             ui_amount INTEGER
         )
         """
@@ -35,6 +40,7 @@ class TokenHolderDatabase(PostgresDatabase):
             decimals = EXCLUDED.decimals,
             mint = EXCLUDED.mint,
             owner = EXCLUDED.owner,
+            token_account = EXCLUDED.token_account,
             ui_amount = EXCLUDED.ui_amount
         """
         self.execute_query(
@@ -50,7 +56,7 @@ class TokenHolderDatabase(PostgresDatabase):
         )
         logger.log("Inserted token holder data successfully")
 
-    def batch_insert_token_holders(self, token_holders: list[TokenHolderEntity]):
+    def batch_insert_token_holders(self, token_holders: TokenHolderItems):
         insert_query = f"""
         INSERT INTO {self.table_name} (amount, decimals, mint, owner, token_account, ui_amount)
         VALUES %s
@@ -59,11 +65,24 @@ class TokenHolderDatabase(PostgresDatabase):
             decimals = EXCLUDED.decimals,
             mint = EXCLUDED.mint,
             owner = EXCLUDED.owner,
+            token_account = EXCLUDED.token_account,
             ui_amount = EXCLUDED.ui_amount
         """
+        params = [
+            (
+                th["amount"],
+                th["decimals"],
+                th["mint"],
+                th["owner"],
+                th["token_account"],
+                th["ui_amount"],
+            )
+            for th in token_holders["items"]
+        ]
+        console.log(">>>> _ >>>> ~ params:", params)
         self.batch_execute_query(
             insert_query,
-            token_holders,
+            params,
         )
         logger.log("Batch inserted token holder data successfully")
 
@@ -100,7 +119,7 @@ class TokenHolderDatabase(PostgresDatabase):
 if __name__ == "__main__":
     db = TokenHolderDatabase()
     db.create_token_holders_table()
-    db.batch_execute_query(Mock_TokenHolderItems)
+    db.batch_insert_token_holders(Mock_TokenHolderItems)
     # Add more function calls here to test the functionality
 
 # python -m backend.database.token_holders_database
