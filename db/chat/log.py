@@ -19,7 +19,7 @@ HOST = os.getenv("host")
 PORT = os.getenv("port")
 DBNAME = os.getenv("dbname")
 
-async def log_chat(chat_id, name, command, contract, full_message):
+async def log_chat(chat_id, name, command, contract, full_message, reply="not passed correctly", time = 0):
     if not DBNAME or not USER or not PASSWORD or not HOST or not PORT:
         print("Please set the environment")
         return  
@@ -39,8 +39,8 @@ async def log_chat(chat_id, name, command, contract, full_message):
         cursor = connection.cursor()
         print("Connection established.")
         # Example query
-        insert_query = "INSERT INTO chat_logs (user_id, name, command, contract, full_message) VALUES (%s, %s, %s, %s, %s);"
-        data = (chat_id, name,command, contract, json.dumps(full_message))
+        insert_query = "INSERT INTO chat_logs (user_id, name, command, contract, full_message, reply, exec_time) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+        data = (chat_id, name,command, contract, json.dumps(full_message), reply, time)
         cursor.execute(insert_query, data)
         cursor.close()
         connection.commit()

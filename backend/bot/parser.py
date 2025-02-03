@@ -421,17 +421,19 @@ async def fresh_wallets_v2_parsed(token, limit):
         f"├──💦 Liquidity: *{liquidity}*\n",
         f"├──👥 Holders count: *{holder}*\n\n",
         f"*CA*: `{token}`\n\n",
+        f"Detected *{valid_results}/{limit}* Fresh Wallets:\n\n"
     ]
+    found = False
     for item in items:
         if 'error' in item:
             continue
         elif item['funding_source']:
+            found = True
             link = f"[\\({escape_markdown(shorten_address(item['address']))}\\)](https://solscan.io/account/{item['address']})"
             holds = escape_markdown(f"{round(item['holding_pct'], 2)}")
             message_parts.append(f"🌿 \\#{item['count']}\\-{link} *{holds}*% Funded by [{escape_markdown(shorten_address(item['funding_source']))}](https://solscan.io/account/{item['funding_source']})\n")
-
-
-    
+    if not found:
+        message_parts.append("🌿 *No Fresh wallets found*\\!👀\n")
     msg = ''.join(message_parts)
     return msg
 
@@ -463,7 +465,6 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
     token_info = data['token_info']
     agg_avg    = data['agg_avg']
     items      = data['items']
-    
     token_symbol = token_info['symbol']
     token_name   = token_info['name']
     market_cap   = format_number(token_info['market_cap'], escape=True)
@@ -474,9 +475,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
     avg_increase = percentage_change(agg_avg, new)
     increase = f'{format_number((round(avg_increase, 0)), with_dollar_sign=False, escape=True)}%' 
     emoji = "🟢" if avg_increase > 0.1 else "🔴"
-
     message_parts = []
-
     current_message = [ f"Average Holders Entry Price, by @elmunkibot 🐵🌕\n\n",
         escape_markdown(f"*Token*: ${token_symbol} ({token_name})\n"),
         socials,
@@ -487,9 +486,10 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
         f"*Average Entry:* `{format_number(agg_avg, escape=True, with_dollar_sign=True)}` Market Cap 👀\n",
         escape_markdown(f"*Average PnL (excl. free tokens):* `{increase}`{emoji}\n\n"),
     ]
-
     current_message = ''.join(current_message)
-
+    counter_sniped = 0
+    counter_in_profit = 0
+    counter_in_loss = 0
     for item in items:
         if 'error' not in item:
             label = item['label']
@@ -507,6 +507,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
                 # "For Free (Funded)"
                 msg = f"[\\#{count}{addy}]({solscan_link}) \\| `{amount}` at *$0* \\(Free\\) 🚩\n"
                 current_message += msg
+                counter_sniped += 1
                 continue
             elif label == "Funded":
                 label = "Partially Funded"
@@ -527,8 +528,12 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
                 if avg_actual_price!=0:
                     increase_pct = percentage_change(avg_actual_price, new)
                     pct = format_number(round((new - avg_actual_price) / avg_actual_price * 100, 0), escape=True, with_dollar_sign=False)
-                    increase = f'🟢 {pct}%' if increase_pct > 0.1 else f'🔴 {pct}%'
-            
+                    if increase_pct > 0.1:
+                        increase = f'🟢 {pct}%' 
+                        counter_in_profit += 1
+                    else:
+                        increase = f'🔴 {pct}%'
+                        counter_in_loss += 1
             # Build message line
             if pfun:
                 # show actual holding price
@@ -556,7 +561,10 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
 
 
         msg += "\n"
-
+    current_message+= f"\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\n*Summary of {len(items)} Holders*:\n"
+    current_message+= f"*\\-* `{counter_sniped}/{len(items)}` have received free tokens 🚩\n"
+    current_message+= f"*\\-* `{counter_in_profit}/{len(items)}` are in profit 🟢\n"
+    current_message+= f"*\\-* `{counter_in_loss}/{len(items)}` are in loss 🔴\n"
     if current_message:
         message_parts.append(current_message)
 

@@ -322,7 +322,7 @@ async def calculate_avg_holding(entry_data, exit_data):
     avg_entry_cost = avg_entry_price * total_buy_amount
     avg_exit_cost = avg_exit_price * total_sell_amount
     current_holding_amount = total_buy_amount - total_sell_amount
-    if (avg_entry_cost == 0):
+    if (avg_entry_cost == 0 or current_holding_amount == 0):
         return {
             "avg_holding_price": 0.0,  # No holdings, break-even doesn't apply
             "current_holding_amount": current_holding_amount,
@@ -338,7 +338,7 @@ async def calculate_avg_holding(entry_data, exit_data):
         }
     #21488934*21700
     #956549*18048674
-
+    
     avg_break_even = (avg_entry_cost - avg_exit_cost) / current_holding_amount
     if (current_holding_amount <= 0):
         return {
