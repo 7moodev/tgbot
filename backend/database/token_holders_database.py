@@ -13,7 +13,7 @@ console = logger
 class TokenHolderDatabase(PostgresDatabase):
     def __init__(self, table_name: str = "token_holders"):
         self.table_name = table_name
-        super().__init__()
+        super().__init__(table_name=table_name)
 
     def create_token_holders_table(self):
         create_table_query = f"""
@@ -35,13 +35,6 @@ class TokenHolderDatabase(PostgresDatabase):
         insert_query = f"""
         INSERT INTO {self.table_name} (amount, decimals, mint, owner, token_account, ui_amount)
         VALUES (%s, %s, %s, %s, %s, %s)
-        ON CONFLICT (token_account) DO UPDATE SET
-            amount = EXCLUDED.amount,
-            decimals = EXCLUDED.decimals,
-            mint = EXCLUDED.mint,
-            owner = EXCLUDED.owner,
-            token_account = EXCLUDED.token_account,
-            ui_amount = EXCLUDED.ui_amount
         """
         self.execute_query(
             insert_query,
@@ -60,13 +53,6 @@ class TokenHolderDatabase(PostgresDatabase):
         insert_query = f"""
         INSERT INTO {self.table_name} (amount, decimals, mint, owner, token_account, ui_amount)
         VALUES %s
-        ON CONFLICT (token_account) DO UPDATE SET
-            amount = EXCLUDED.amount,
-            decimals = EXCLUDED.decimals,
-            mint = EXCLUDED.mint,
-            owner = EXCLUDED.owner,
-            token_account = EXCLUDED.token_account,
-            ui_amount = EXCLUDED.ui_amount
         """
         params = [
             (
@@ -79,7 +65,6 @@ class TokenHolderDatabase(PostgresDatabase):
             )
             for th in token_holders["items"]
         ]
-        console.log(">>>> _ >>>> ~ params:", params)
         self.batch_execute_query(
             insert_query,
             params,
@@ -118,6 +103,7 @@ class TokenHolderDatabase(PostgresDatabase):
 # Example usage
 if __name__ == "__main__":
     db = TokenHolderDatabase()
+    # db.dangerousely_drop_table()
     db.create_token_holders_table()
     db.batch_insert_token_holders(Mock_TokenHolderItems)
     # Add more function calls here to test the functionality
