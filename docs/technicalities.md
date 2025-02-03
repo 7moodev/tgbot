@@ -6,7 +6,7 @@
   - top_holders_holdings_parsed (parser.py)
     - get_top_holders_holdings (top_holders_holdings.py)
       - SolanaApiService.get_token_supply
-      - BirdEyeApiService.get_token_overview                         .
+      - BirdEyeApiService.get_token_overview                         x
       - BirdEyeApiService.get_top_holders                            x
       - process_holder (top_holders_holdings.py)
         - get_wallet_portfolio
@@ -34,6 +34,12 @@
       - BirdEyeApiService.get_top_holders
       - get_holder_avg_entry_price (holders_avg_entry_price.py)
         - BirdEyeApiService.get_wallet_trade_history
+
+## /map
+- top_net_worth_map_command (tg_commands.py)
+  - top_holders_net_worth_map (parser.py)
+    - get_top_holders_holdings (top_holders_holdings.py)
+      - (see /top)
 
 
 # Explanations
