@@ -120,7 +120,6 @@ class PostgresDatabase:
                 cursor.execute(create_table_sql)
         except Exception as e:
             logger.error(e)
-            raise e
         finally:
             if self.conn:
                 cursor.close()

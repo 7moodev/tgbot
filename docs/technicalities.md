@@ -6,9 +6,8 @@
   - top_holders_holdings_parsed (parser.py)
     - get_top_holders_holdings (top_holders_holdings.py)
       - SolanaApiService.get_token_supply
-      - BirdEyeApiService.get_token_creation_info
-      - BirdEyeApiService.get_token_overview
-      - BirdEyeApiService.get_top_holders
+      - BirdEyeApiService.get_token_overview                         .
+      - BirdEyeApiService.get_top_holders                            x
       - process_holder (top_holders_holdings.py)
         - get_wallet_portfolio
           = SolanaApiService.get_wallet_token_list
