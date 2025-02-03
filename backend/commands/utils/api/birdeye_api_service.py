@@ -5,6 +5,8 @@ import os
 import requests
 import time
 
+from typing import List
+
 from .entities.api_entity import ApiResponse
 from .entities.token_entities import (
     TokenCreationInfoEntity,
@@ -25,6 +27,7 @@ from .entities.wallet_entities import (
     WalletTokenBalanceEntity,
 )
 from ..services.log_service import LogService
+from ....database.token_holders_database import tokenHoldersDatabase
 
 birdeyeapi = os.environ.get("birdeyeapi")
 CHAIN = "solana"
@@ -368,7 +371,8 @@ class BirdeyeApiService:
             if response.status_code != 200:
                 if response.json()["success"] == False:
                     return None
-            batch: TokenHolderEntity = response.json()["data"]["items"]
+            batch: List[TokenHolderEntity] = response.json()["data"]["items"]
+            tokenHoldersDatabase.batch_insert_token_holders(batch)
             if (
                 not batch
                 or batch[0]["amount"] == "0"
