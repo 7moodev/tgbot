@@ -7,6 +7,7 @@ import time
 
 from typing import List
 
+
 from .entities.api_entity import ApiResponse
 from .entities.token_entities import (
     TokenCreationInfoEntity,
@@ -28,6 +29,7 @@ from .entities.wallet_entities import (
 )
 from ..services.log_service import LogService
 from ....database.token_holders_database import tokenHoldersDatabase
+from ....database.token_overviews_database import tokenOverviewsDatabase
 
 birdeyeapi = os.environ.get("birdeyeapi")
 CHAIN = "solana"
@@ -235,8 +237,8 @@ class BirdeyeApiService:
     """
 
     async def get_token_overview(
-        self, token: str = None
-    ) -> ApiResponse[TokenOverviewEntity]:
+        self, token: str | None = None
+    ) -> ApiResponse[TokenOverviewEntity] | None:
         """
         https://docs.birdeye.so/reference/get_defi-token-overview
         Get the overview of a token
@@ -250,7 +252,9 @@ class BirdeyeApiService:
         url = f"{BASE_URL}/defi/token_overview?{params}"
         response = requests.get(url, headers=self.headers)
         logger.log("Returning token overview for", token)
-        return response.json()
+        payload: ApiResponse[TokenOverviewEntity] = response.json()
+        tokenOverviewsDatabase.insert_token_overview(payload.data)
+        return payload
 
     async def get_top_holders_with_constraint(
         self, token: str = None, min_value_usd: float = None, price: float = None

@@ -137,10 +137,25 @@ Mock_TokenHolderItems = [
 
 
 @dataclass
-class TokenOverviewEntity:
+class TokenOverviewEntityFocus:
+    symbol: str
+    name: str
+    price: float
+    supply: float
+    mc: float
+    holder: int
+    liquidity: float
+    priceChange1hPercent: float
+    circulatingSupply: float
+    realMc: float
+    extensions: dict
+    logoURI: str
+
+
+@dataclass
+class TokenOverviewEntity(TokenOverviewEntityFocus):
     """
     {
-      "data": {
         "address": "So11111111111111111111111111111111111111112",
         "decimals": 9,
         "symbol": "SOL",
@@ -346,8 +361,6 @@ class TokenOverviewEntity:
         "vSell24hChangePercent": -8.280992114912914,
         "watch": null,
         "numberMarkets": 915424
-      },
-      "success": true
     }
     """
 
@@ -546,3 +559,6 @@ class TokenOverviewEntity:
     vSell24hChangePercent: float
     watch: Optional[None]
     numberMarkets: int
+
+
+Mock_TokenOverviewItems = {}
