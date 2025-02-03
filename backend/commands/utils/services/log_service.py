@@ -17,12 +17,12 @@ class LogService:
         self.logger.addHandler(self.file_handler)
 
     def log(self, message: str, *args):
-        message = message + " " + " ".join(map(str, args))
+        message = str(message) + " " + " ".join(map(str, args))
         self.logger.debug(message.strip())
         print(message)
 
     def error(self, message: str, *args):
-        message = message + " " + " ".join(map(str, args))
+        message = str(message) + " " + " ".join(map(str, args))
         self.logger.error(message.strip())
         print(message)
 
