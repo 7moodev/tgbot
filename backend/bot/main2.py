@@ -3,7 +3,9 @@ from typing import Final
 from telegram import Bot, Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .tg_commands import *
+from telegram import Update, BotCommand
 from db.chat.log import log_chat
+import time
 # from ...db.user.log import log_user
 import os 
 import json
@@ -75,6 +77,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
     # Store the token address in user_data
     holder_message = None
     # Check if 'top_holders_started' exists and is set, otherwise default to False
+    timenow = float(time.time())
     if context.user_data.get('top_holders_started', False):
         context.user_data['top_holders_started'] = False
         command = 'top'
@@ -103,7 +106,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
         wait_message = await update.message.reply_text("Checking for average entry price please chill...")
         command = 'avg'
         context.user_data['avg_entry_started'] = False
-        holder_message = await holders_avg_entry_price_parsed(token_address, limit) 
+        holder_message = await holders_avg_entry_price_parsed(token_address, max(limit-20, 0)) 
 
     elif context.user_data.get('wallets_age_started', False):
         wait_message = await update.message.reply_text("Checking experience of top holdersplease chill...")
@@ -115,12 +118,12 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
         try: 
             wait_message = await update.message.reply_text("Analyzing token getting top holders please chill...")
             command = 'top'
-            holder_message = await top_holders_holdings_parsed(token_address, max(limit-20, 0))
+            holder_message = await top_holders_holdings_parsed(token_address, limit)
         except Exception as e:
             print(e)
             await update.message.reply_text("Something went wrong, please contact support.")
-
-    await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__())
+    
+    # await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__())
     print(holder_message)
     parse_mode = 'MarkdownV2'
     #if command == 'avg':
@@ -135,12 +138,18 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
                 , parse_mode=parse_mode, disable_web_page_preview=True)
             else:
                 await update.message.reply_text(parts , parse_mode=parse_mode, disable_web_page_preview=True)
+        await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message[0], float(time.time()) - timenow)
+        
+        
     else:
         await context.bot.edit_message_text(
                 chat_id=update.effective_chat.id,
                 message_id=wait_message.message_id,
                 text=holder_message
                 , parse_mode=parse_mode, disable_web_page_preview=True)
+        await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow)
+        
+        
 
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     print (f'Update {update} caused error {context.error}')
@@ -165,19 +174,39 @@ async def delete_webhook(TOKEN):
     await bot.delete_webhook()
 
 
+async def set_bot_commands(application: Application):
+    commands = [
+        BotCommand("start", "Start interacting with the bot."),
+        BotCommand("top", "Get a list of the top noteworthy holders."),
+        BotCommand("fresh", "Get a list of fresh wallets."),
+        BotCommand("exp", "Get an estimate of the age of the top holders' wallets."),
+        BotCommand("map", "Get a map of the net worth of the top holders."),
+        BotCommand("avg", "Get the average entry price of the top holders."),
+        BotCommand("renew", "Renew your subscription."),
+        BotCommand("referral", "Get your referral link."),
+        BotCommand("sub", "Check your subscription status."),
+        BotCommand("userid", "Get your user id."),
+        BotCommand("help", "Display available commands."),
+    ]
+    await application.bot.set_my_commands(commands)
+
+async def initialize_bot(app):
+    print("Initializing bot commands...")
+    await app.bot.delete_my_commands()
+    await set_bot_commands(app)
+
 def main():
-    print ('start_command')
+    print("Starting bot...")
+    
+    # Initialize the bot application
     app = Application.builder().token(TOKEN).build()
 
-    #Commands
-    #main functions
-    #app.add_handler(CommandHandler('distro', token_distribution_command))
+    # Register command handlers
     app.add_handler(CommandHandler('top', topholders_command))
     app.add_handler(CommandHandler('fresh', fresh_wallets_command))
     app.add_handler(CommandHandler('exp', wallets_age_command))
     app.add_handler(CommandHandler('map', top_net_worth_map_command))
     app.add_handler(CommandHandler('avg', avg_entry_command))
-    #user functions
     app.add_handler(CommandHandler('userid', userid_command))
     app.add_handler(CommandHandler('renew', renew_command))
     app.add_handler(CommandHandler('start', start_command))
@@ -185,18 +214,17 @@ def main():
     app.add_handler(CommandHandler('sub', check_subscription))
     app.add_handler(CommandHandler('help', help))
 
-    #Buttons
-
     app.add_handler(CallbackQueryHandler(handle_buttons))
-    #Messages
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
-    #Error
     app.add_error_handler(error)
-    #Set Webhook
+
+    # Ensure bot initialization before running
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(initialize_bot(app))
+
     if HEROKU_APP_NAME:
         webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
-        print (webhook_url)
-        print (PORT)
         print(f"Webhook set to: {webhook_url}")
         app.run_webhook(
             listen="0.0.0.0",
@@ -205,17 +233,9 @@ def main():
             webhook_url=webhook_url,
         )
     else:
-        print('Polling locally (webhook removed)')
-              # Remove any existing webhook explicitly
-        #asyncio.run(app.bot.delete_webhook()  )# Ensure this is awaited
-        delete_webhook(TOKEN)
-
+        print("Polling locally (webhook removed)")
+        delete_webhook(TOKEN)  # Ensure this function is properly defined elsewhere
         app.run_polling(poll_interval=3)
-
-
-
-# webhook 
 
 if __name__ == "__main__":
     main()
-
