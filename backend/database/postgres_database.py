@@ -18,8 +18,44 @@ logger = LogService("POSTGRES")
 console = logger
 
 
+def db_connection(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        conn = None
+        try:
+            # Parse the DATABASE_URL environment variable
+            result = urlparse(DATABASE_URL)
+            username = result.username
+            password = result.password
+            database = result.path[1:]  # Remove leading slash
+            hostname = result.hostname
+            port = result.port
+
+            conn = psycopg2.connect(
+                database=database,
+                user=username,
+                password=password,
+                host=hostname,
+                port=port,
+            )
+            cursor = conn.cursor()
+            result = func(self, cursor, *args, **kwargs)
+            conn.commit()
+            return result
+        except (Exception, psycopg2.Error) as error:
+            logger.log("Error:", error)
+            if conn:
+                conn.rollback()
+        finally:
+            if conn:
+                cursor.close()
+                conn.close()
+
+    return wrapper
+
+
 class PostgresDatabase:
-    def __init__(self, database_url: str = DATABASE_URL):
+    def __init__(self, database_url: str = DATABASE_URL, table_name: str = None):
         self.database_url = database_url
         self.conn = None
 
@@ -67,25 +103,15 @@ class PostgresDatabase:
                 cursor.close()
                 self.conn.close()
 
-    def batch_execute_query(self, query: str, params: list[Any]):
+    @db_connection
+    def batch_execute_query(self, cursor, query: str, params: list[Any]):
         """
         batch_execute_query(cursor,
             "INSERT INTO test (id, v1, v2) VALUES %s",
             [(1, 2, 3), (4, 5, 6), (7, 8, 9)])
 
         """
-        try:
-            with self.connect_db() as conn:
-                cursor = conn.cursor()
-                execute_values(cursor, query, params)
-
-        except Exception as e:
-            logger.error(e)
-            raise e
-        finally:
-            if self.conn:
-                cursor.close()
-                self.conn.close()
+        execute_values(cursor, query, params)
 
     def create_table(self, create_table_sql: str):
         try:
@@ -138,14 +164,7 @@ class PostgresDatabase:
                 cursor.close()
                 self.conn.close()
 
-    def dangerousely_drop_table(self, table_name: str):
-        try:
-            with self.connect_db() as conn:
-                cursor = conn.cursor()
-                cursor.execute(f"DROP TABLE {table_name}")
-        except Exception as e:
-            logger.error(e)
-        finally:
-            if self.conn:
-                cursor.close()
-                self.conn.close()
+    @db_connection
+    def dangerousely_drop_table(self, cursor):
+        cursor.execute(f"DROP TABLE {self.table_name}")
+        logger.log(f"Dropped table {self.table_name}")
