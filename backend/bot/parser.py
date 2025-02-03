@@ -463,7 +463,7 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
         :return: The percentage change (positive for increase, negative for decrease).
         """
         if old_value == 0:
-            raise ValueError("Old value cannot be zero to avoid division by zero.")
+            return new_value
 
         change = ((new_value - old_value) / abs(old_value)) * 100
         return change
@@ -478,6 +478,8 @@ async def holders_avg_entry_price_parsed(token: str, limit: int):
     socials      = generate_socials_message(token_info, token)
     new = token_info['market_cap']
     avg_increase = percentage_change(agg_avg, new)
+    if avg_increase == new:
+        items = items[:25]
     increase = f'{format_number((round(avg_increase, 0)), with_dollar_sign=False, escape=False)}%' 
     emoji = "🟢" if avg_increase > 0.1 else "🔴"
     message_parts = []

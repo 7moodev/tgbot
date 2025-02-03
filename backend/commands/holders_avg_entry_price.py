@@ -75,9 +75,9 @@ async def get_holders_avg_entry_price(token: str, limit:int):
         count = count+1
 
         print(f"Returning {counted} holders with valid avg entry prices")
-    with open("backend/commands/outputs/holders_avg_entry_price.json", 'w') as f:  
-        json.dump({"token_info": token_info,"agg_avg": (agg_avg_price/counted), "items": res}, f, indent=4)
-    return {"token_info": token_info,"agg_avg": (agg_avg_price/counted), "items": res}
+    # with open("backend/commands/outputs/holders_avg_entry_price.json", 'w') as f:  
+    #     json.dump({"token_info": token_info,"agg_avg": (agg_avg_price/counted), "items": res}, f, indent=4)
+    return {"token_info": token_info,"agg_avg": (agg_avg_price/max(counted, 1)), "items": res}
 
 if __name__ == "__main__":
     start_time = time.time()
