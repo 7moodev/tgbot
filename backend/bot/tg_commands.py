@@ -2,7 +2,7 @@ from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .log import log_tamago
-from .parser import noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed
+from .parser import fresh_wallets_v2_parsed, noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed
 
 BOT_USERNAME= os.environ.get('tgNAME') 
 if not BOT_USERNAME:
@@ -46,7 +46,7 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
         else:
             token_address = context.args[0]
-            wait_message = await update.message.reply_text("Analyzing token and getting top holders please shill...")
+            wait_message = await update.message.reply_text("Analyzing token and getting top holders please chill...")
 
             message = await top_holders_holdings_parsed(token_address, limit )
             print (message)
@@ -78,7 +78,7 @@ async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return 
         else:
             token_address = context.args[0]
-            wait_message = await update.message.reply_text("Analyzing token and getting top holders please shill...")
+            wait_message = await update.message.reply_text("Analyzing token and getting top holders please chill...")
 
             message = await holders_avg_entry_price_parsed(token_address, limit )
             print (message)
@@ -90,7 +90,7 @@ async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     text=parts
                     , parse_mode='MarkdownV2', disable_web_page_preview=True)
                 else:
-                    await update.message.reply_text(parts , parse_mode='Markdown', disable_web_page_preview=True)
+                    await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
@@ -152,6 +152,29 @@ async def fresh_wallets_command(update: Update, context: ContextTypes.DEFAULT_TY
         else:
             token_address = context.args[0]
             wait_message = await update.message.reply_text("Looking for Fresh Wallets please chill...")
+            holder_message = await fresh_wallets_v2_parsed(token_address, limit)
+            print (holder_message)
+            await context.bot.edit_message_text(
+                    chat_id=update.effective_chat.id,
+                    message_id=wait_message.message_id,
+                    text=holder_message
+                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
+    else:
+        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+
+
+async def wallets_age_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id 
+    if check_access(user_id):
+        if len(context.args) != 1:
+            await update.message.reply_text("Please send me a token address.")
+            context.user_data['awaiting_token_address'] = True
+            context.user_data['wallets_age_started'] = True 
+            return
+
+        else:
+            token_address = context.args[0]
+            wait_message = await update.message.reply_text("Checking top holders experience please chill...")
             holder_message = await fresh_wallets_parsed(token_address, limit)
             print (holder_message)
             log_tamago(update, response=holder_message)
