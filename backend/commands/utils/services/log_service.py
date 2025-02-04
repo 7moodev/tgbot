@@ -1,5 +1,7 @@
 import logging
 
+from backend.commands.utils.os_utils import ensure_dir, ensure_file
+
 
 class LogService:
     def __init__(self, name: str = "DEFAULT"):
@@ -9,6 +11,9 @@ class LogService:
         self.formatter = logging.Formatter(
             "%(asctime)s [%(levelname)s]:[%(name)s] - %(message)s"
         )
+
+        ensure_dir("logs")
+        ensure_file("tgbot.log", "logs")
 
         self.file_handler = logging.FileHandler("logs/tgbot.log")
         self.file_handler.setLevel(logging.DEBUG)
@@ -30,3 +35,5 @@ class LogService:
 if __name__ == "__main__":
     logger = LogService()
     logger.log("test", "another", 1)
+
+# python -m backend.commands.utils.services.log_service
