@@ -29,3 +29,8 @@ python backend/bot/main2.py
 - tox
   - https://tox.wiki/en/4.24.1/
   - https://pypi.org/project/tox/
+
+#### Example
+cd /tests/examples
+- pytest
+- pytest -q test_sysexit.py
