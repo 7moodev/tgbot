@@ -52,7 +52,7 @@ async def get_holders_avg_entry_price(token: str, limit:int):
     token_creation_time = token_creation_info['blockUnixTime']
     res = []
     counted = 0
-    count = 0
+    count = 1
     agg_avg_price = 0
     for holder in top_holders:
         holder_address = holder['owner']
@@ -73,8 +73,11 @@ async def get_holders_avg_entry_price(token: str, limit:int):
                 agg_avg_price+=price
             res.append({'count': count,'holder': holder_address,'holding': holding_amount,'label': label, 'avg_raw_entry_price': avg_raw_entry_price, 'avg_raw_exit_price': avg_raw_exit_price, 'avg_actual_holding_price': avg_actual_holding_price})
         count = count+1
+
         print(f"Returning {counted} holders with valid avg entry prices")
-    return {"token_info": token_info,"agg_avg": (agg_avg_price/counted), "items": res}
+    # with open("backend/commands/outputs/holders_avg_entry_price.json", 'w') as f:  
+    #     json.dump({"token_info": token_info,"agg_avg": (agg_avg_price/counted), "items": res}, f, indent=4)
+    return {"token_info": token_info,"agg_avg": (agg_avg_price/max(counted, 1)), "items": res}
 
 if __name__ == "__main__":
     start_time = time.time()

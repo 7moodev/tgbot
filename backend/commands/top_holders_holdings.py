@@ -177,7 +177,8 @@ async def get_top_holders_holdings(
         processed_holders = await asyncio.gather(*holder_tasks)
     
     # Combine results
-    
+    with open("backend/commands/outputs/top_holders_holdings.json", 'w') as f:
+        json.dump({"token_info": token_info,"items": processed_holders}, f, indent=4)
         
     return {"token_info": token_info,"items": processed_holders}
 

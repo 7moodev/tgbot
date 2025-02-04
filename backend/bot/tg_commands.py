@@ -2,8 +2,10 @@ from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
 from .log import log_tamago
-from .parser import fresh_wallets_v2_parsed, noteworthy_addresses_parsed, top_holders_holdings_parsed, holder_distribution_parsed, get_noteworthy_addresses, top_holders_net_worth_map, fresh_wallets_parsed, holders_avg_entry_price_parsed
-
+from .parser import *
+from db.chat.log import log_chat
+import backend.bot.exc as exc
+import time
 BOT_USERNAME= os.environ.get('tgNAME') 
 if not BOT_USERNAME:
     BOT_USERNAME = "ALM_NotifyBot"  # tgNAME 
@@ -46,23 +48,37 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
         else:
             token_address = context.args[0]
+            
             wait_message = await update.message.reply_text("Analyzing token and getting top holders please chill...")
-
+            time_now = float(time.time())
             message = await top_holders_holdings_parsed(token_address, limit )
-            print (message)
+            #print (message)
+            if type(message) == str:
+                log_message = message
+            else:
+                log_message = message[0]
 
-
-            for parts in message:
-                if parts == message[0]:
-                    log_tamago(update, response=parts)
-                    await context.bot.edit_message_text(
-                    chat_id=update.effective_chat.id,
-                    message_id=wait_message.message_id,
-                    text=parts
-                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
-                else:
-                    log_tamago(update, response=parts)
-                    await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            try:
+                for parts in message:
+                    if parts == message[0]:
+                        log_tamago(update, response=parts)
+                        await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=parts
+                        , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                    else:
+                        log_tamago(update, response=parts)
+                        await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                    await log_chat(user_id, update.message.chat.username, "top", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                    exc.exc_type = exc.exc_value = exc.exc_traceback = None
+            except Exception as e:
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(user_id, update.message.chat.username, "top", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support or try again later.")
 
     else:
         log_tamago(update, response='To use this function please use /renew to get a subscription')
@@ -78,19 +94,35 @@ async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return 
         else:
             token_address = context.args[0]
-            wait_message = await update.message.reply_text("Analyzing token and getting top holders please chill...")
-
+            wait_message = await update.message.reply_text("Analyzing token and getting avg entry, please chill...")
+            time_now = float(time.time())
             message = await holders_avg_entry_price_parsed(token_address, limit )
-            print (message)
-            for parts in message:
-                if parts == message[0]:
-                    await context.bot.edit_message_text(
-                    chat_id=update.effective_chat.id,
-                    message_id=wait_message.message_id,
-                    text=parts
-                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
-                else:
-                    await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            if type(message) == str:
+                log_message = message
+            else:
+                log_message = message[0]
+
+            #print (message)
+            try: 
+                for parts in message:
+                
+                    if parts == message[0]:
+                        await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=parts
+                        , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                    else:
+                        await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                    await log_chat(user_id, update.message.chat.username, "avg", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                    exc.exc_type = exc.exc_value = exc.exc_traceback = None
+            except Exception as e:
+                    exc.exc_type = type(e).__name__
+                    exc.exc_value = str(e)
+                    exc.exc_traceback = str(e.__traceback__)
+                    await log_chat(user_id, update.message.chat.username, "avg", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                    exc.exc_type = exc.exc_value = exc.exc_traceback = None                       
+                    await update.message.reply_text("Something went wrong, please contact support or try again later.")
 
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
@@ -107,16 +139,31 @@ async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAUL
 
         else:
             token_address = context.args[0]
-            wait_message = await update.message.reply_text("Analyzing token and looking for Whales please chill...")
+            time_now = float(time.time())
+            wait_message = await update.message.reply_text("Analyzing token and looking for Whales, please chill...")
             message = await top_holders_net_worth_map(token_address, limit )
-            print (message)
+            if type(message) == str:
+                log_message = message
+            else:
+                log_message = message[0]
 
-            log_tamago(update, response=message)
-            await context.bot.edit_message_text(
-                    chat_id=update.effective_chat.id,
-                    message_id=wait_message.message_id,
-                    text=message
-                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            try:
+                log_tamago(update, response=message)
+                await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=message
+                        , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                await log_chat(user_id, update.message.chat.username, "map", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                #print (message)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
+            except Exception as e:
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(user_id, update.message.chat.username, "map", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support or try again later.")
 
 
     else:
@@ -133,10 +180,23 @@ async def token_distribution_command(update: Update, context: ContextTypes.DEFAU
 
         else:
             token_address = context.args[0]
+            time_now = float(time.time())
             holder_message = await holder_distribution_parsed(token_address)
-            print (holder_message)
-
-            await update.message.reply_text(holder_message , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            if type(holder_message) == str:
+                log_message = holder_message
+            else:
+                log_message = holder_message[0]
+            try:
+                await update.message.reply_text(holder_message , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                await log_chat(user_id, update.message.chat.username, "dist", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
+            #print (holder_message)
+            except Exception as e:
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(user_id, update.message.chat.username, "dist", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
@@ -151,14 +211,28 @@ async def fresh_wallets_command(update: Update, context: ContextTypes.DEFAULT_TY
 
         else:
             token_address = context.args[0]
-            wait_message = await update.message.reply_text("Looking for Fresh Wallets please chill...")
+            time_now = float(time.time())
+            wait_message = await update.message.reply_text("Looking for Fresh Wallets, please chill...")
             holder_message = await fresh_wallets_v2_parsed(token_address, limit)
-            print (holder_message)
-            await context.bot.edit_message_text(
-                    chat_id=update.effective_chat.id,
-                    message_id=wait_message.message_id,
-                    text=holder_message
-                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            if type(holder_message) == str:
+                log_message = holder_message
+            else:
+                log_message = holder_message[0]
+            try:
+                await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=holder_message
+                        , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                await log_chat(user_id, update.message.chat.username, "fresh", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
+            except Exception as e:
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(user_id, update.message.chat.username, "fresh", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support or try again later.")
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
@@ -174,15 +248,33 @@ async def wallets_age_command(update: Update, context: ContextTypes.DEFAULT_TYPE
 
         else:
             token_address = context.args[0]
+            time_now = float(time.time())
             wait_message = await update.message.reply_text("Checking top holders experience please chill...")
             holder_message = await fresh_wallets_parsed(token_address, limit)
-            print (holder_message)
-            log_tamago(update, response=holder_message)
-            await context.bot.edit_message_text(
-                    chat_id=update.effective_chat.id,
-                    message_id=wait_message.message_id,
-                    text=holder_message
-                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
+            if type(holder_message) == str:
+                log_message = holder_message
+            else:
+                log_message = holder_message[0]
+            try:
+                
+                
+                #print (holder_message)
+                log_tamago(update, response=holder_message)
+                await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=holder_message
+                        , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                
+                await log_chat(user_id, update.message.chat.username, "exp", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None           
+            except Exception as e: 
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(user_id, update.message.chat.username, "exp", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                exc.exc_type = exc.exc_value = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support or try again later.")   
     else:
         log_tamago(update, response='To use this function please use /renew to get a subscription')
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
@@ -213,10 +305,10 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
         # Create the reply markup with the above keyboard layout
         reply_markup = InlineKeyboardMarkup(keyboard)
-        renew_message = f'''Thanks for deciding to renew your subscription!
+        renew_message = escape_markdown(f'''Thanks for deciding to renew your subscription!
     Monthly subscriptions are 0.69 SOL a month in our beta phase. Please deposit 0.69 SOL to the following address:
     `{public_key}`
-    After you have sent the funds, please click the Check button below.'''
+    After you have sent the funds, please click the Check button below.''')
 
         # Send message with the keyboard
         # await update.message.reply_text(f'{renew_message}')

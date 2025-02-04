@@ -1,76 +1,21 @@
 {
     "token_info": {
-        "price": 0.00033597873568275686,
-        "symbol": "BINANCE",
-        "name": "Binance",
-        "logoURI": "https://ipfs.io/ipfs/QmeDMZn37aV7hY7hAyyiTJdJZPP1RHiKBzxZGoWQA3Rxef",
-        "liquidity": 92675.333988867,
-        "market_cap": 335967.9304209605,
-        "supply": 999967823.128351,
-        "circulatingSupply": 999967839.447415,
-        "realMc": 335967.9304209605,
-        "holder": 6643,
+        "price": 0.00012850310606150008,
+        "symbol": "MEMESat-1",
+        "name": "The World\u2019s 1st Meme Satellite",
+        "logoURI": "https://ipfs.io/ipfs/QmUaJySGttBe9d7DUT21rYUpov8GuyMQW5JwYvfRueLyHA",
+        "liquidity": 42113.86429910222,
+        "market_cap": 128012.57254714645,
+        "supply": 996182710.835652,
+        "circulatingSupply": 996182710.835652,
+        "realMc": 128012.57254714645,
+        "holder": 1017,
         "extensions": {
-            "description": "Binance played us manipulating the markets. Time to take the bet and flip their market cap."
+            "description": "Let\u2019s Go to Space, Inc.\u2019s first satellite mission is the Mission for Education and Multimedia Engagement, better known as MEMESat-1."
         },
-        "priceChange1hPercent": -26.825568277966287,
-        "creationTime": 1738469932
+        "priceChange1hPercent": 0,
+        "creationTime": 1731896221
     },
-    "valid_results": 6,
-    "items": [
-        {
-            "count": 1,
-            "address": "HhLbYW8k116GtvzsZ2ETTJmDbiumgQVmtX9VZLJXtNMS",
-            "holding": 44538303,
-            "holding_pct": 4.454,
-            "age": 1738063949,
-            "age_readable": "5 days",
-            "funding_source": "5ndLnEYqSFiA5yUFHo6LVZ1eWc6Rhh11K5CfJNkoHEPs"
-        },
-        {
-            "count": 12,
-            "address": "7fbiY9Q3H4W4HY7boELuruf7x8Mj3qMnFtdXUQYwmzkq",
-            "holding": 8355870,
-            "holding_pct": 0.836,
-            "age": 1738081854,
-            "age_readable": "4 days",
-            "funding_source": "CgANddXc7FKSsdLSdFv67X8faZqQaRTeLMXkAVANkZD4"
-        },
-        {
-            "count": 25,
-            "address": "522pAVbJihQCgEC7U1qRT7hGUhK8omLi24oZDUat3ztc",
-            "holding": 4569171,
-            "holding_pct": 0.457,
-            "age": 1737943907,
-            "age_readable": "6 days",
-            "funding_source": "5F1seMKUqSNhv45f6FhB2cFmgJbk8U1avJw7M6TexUq1"
-        },
-        {
-            "count": 27,
-            "address": "EW9hzQDGUwGq11MdV7ryv9ByqZtzisei5UYuCt2kGmr3",
-            "holding": 4100305,
-            "holding_pct": 0.41,
-            "age": 1738407068,
-            "age_readable": "1 day",
-            "funding_source": "FzbcyEZ9m8xjtergWgWDq7mfPoHEbboBF791B6cTpzbq"
-        },
-        {
-            "count": 31,
-            "address": "HUUM3V2yghULQEx5XHdYE6ssdgwRbPcirTuzhhw356qU",
-            "holding": 3734348,
-            "holding_pct": 0.373,
-            "age": 1738294155,
-            "age_readable": "2 days",
-            "funding_source": "9Ywf7wzm99EMgiv6SR177USLdkXt4jMBRDVzLThaLxHW"
-        },
-        {
-            "count": 38,
-            "address": "DhK5oJM14CGySkfCjqsbpQi6T3cjHMgjMQs9a3B6A66V",
-            "holding": 2924539,
-            "holding_pct": 0.292,
-            "age": 1737924386,
-            "age_readable": "6 days",
-            "funding_source": "D89hHJT5Aqyx1trP6EnGY9jJUB3whgnq3aUvvCqedvzf"
-        }
-    ]
+    "valid_results": 0,
+    "items": []
 }
