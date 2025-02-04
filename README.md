@@ -21,11 +21,17 @@ python backend/bot/main2.py
 - Heroku
   - heroku logs --tail -a munki-tg-bot
   - heroku logs --num 1500 -a munki-tg-bot
-
+- freeze requirements.txt after installing a package
+  - pip freeze > requirements.txt
 
 ### Testing
 - pytest
     - https://docs.pytest.org/en/stable/getting-started.html
+- coverage
+  - coverage run -m pytest arg1 arg2 arg3
+  - coverage report
+  - coverage html
+  - coverage html && open htmlcov/index.html
 - tox
   - https://tox.wiki/en/4.24.1/
   - https://pypi.org/project/tox/
