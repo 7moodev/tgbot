@@ -1,0 +1,91 @@
+"""
+Running multiple assert statements safely
+
+Sometimes you may want to run multiple asserts after doing all that setup, which makes sense as, in more complex systems, a single action can kick off multiple behaviors. pytest has a convenient way of handling this and it combines a bunch of what we’ve gone over so far.
+
+All that’s needed is stepping up to a larger scope, then having the act step defined as an autouse fixture, and finally, making sure all the fixtures are targeting that higher level scope.
+
+Let’s pull an example from above, and tweak it a bit. Let’s say that in addition to checking for a welcome message in the header, we also want to check for a sign out button, and a link to the user’s profile.
+
+Let’s take a look at how we can structure that so we can run multiple asserts without having to repeat all those steps again.
+
+Note
+
+For this example, certain fixtures (i.e. base_url and admin_credentials) are implied to exist elsewhere. So for now, let’s assume they exist, and we’re just not looking at them.
+
+"""
+
+from uuid import uuid4
+from urllib.parse import urljoin
+
+from selenium.webdriver import Chrome
+import pytest
+
+from src.utils.pages import LoginPage, LandingPage
+from src.utils import AdminApiClient
+from src.utils.data_types import User
+
+
+@pytest.fixture(scope="class")
+def admin_client(base_url, admin_credentials):
+    return AdminApiClient(base_url, **admin_credentials)
+
+
+@pytest.fixture(scope="class")
+def user(admin_client):
+    _user = User(name="Susan", username=f"testuser-{uuid4()}", password="P4$$word")
+    admin_client.create_user(_user)
+    yield _user
+    admin_client.delete_user(_user)
+
+
+@pytest.fixture(scope="class")
+def driver():
+    _driver = Chrome()
+    yield _driver
+    _driver.quit()
+
+
+@pytest.fixture(scope="class")
+def landing_page(driver, login):
+    return LandingPage(driver)
+
+
+class TestLandingPageSuccess:
+    @pytest.fixture(scope="class", autouse=True)
+    def login(self, driver, base_url, user):
+        driver.get(urljoin(base_url, "/login"))
+        page = LoginPage(driver)
+        page.login(user)
+
+    def test_name_in_header(self, landing_page, user):
+        assert landing_page.header == f"Welcome, {user.name}!"
+
+    def test_sign_out_button(self, landing_page):
+        assert landing_page.sign_out_button.is_displayed()
+
+    def test_profile_link(self, landing_page, user):
+        profile_href = urljoin(base_url, f"/profile?id={user.profile_id}")
+        assert landing_page.profile_link.get_attribute("href") == profile_href
+
+
+"""
+Notice that the methods are only referencing self in the signature as a formality. No state is tied to the actual test class as it might be in the unittest.TestCase framework. Everything is managed by the pytest fixture system.
+
+Each method only has to request the fixtures that it actually needs without worrying about order. This is because the act fixture is an autouse fixture, and it made sure all the other fixtures executed before it. There’s no more changes of state that need to take place, so the tests are free to make as many non-state-changing queries as they want without risking stepping on the toes of the other tests.
+
+The login fixture is defined inside the class as well, because not every one of the other tests in the module will be expecting a successful login, and the act may need to be handled a little differently for another test class. For example, if we wanted to write another test scenario around submitting bad credentials, we could handle it by adding something like this to the test file:
+
+"""
+
+
+class TestLandingPageBadCredentials:
+    @pytest.fixture(scope="class")
+    def faux_user(self, user):
+        _user = deepcopy(user)
+        _user.password = "badpass"
+        return _user
+
+    def test_raises_bad_credentials_exception(self, login_page, faux_user):
+        with pytest.raises(BadCredentialsException):
+            login_page.login(faux_user)

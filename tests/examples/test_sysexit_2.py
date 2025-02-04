@@ -8,3 +8,6 @@ def f():
 def test_mytest():
     with pytest.raises(SystemExit):
         f()
+
+
+# pytest -q test_sysexit.py
