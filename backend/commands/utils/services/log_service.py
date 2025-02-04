@@ -1,6 +1,7 @@
 import logging
 
 from backend.commands.utils.os_utils import ensure_dir, ensure_file
+from backend.commands.utils.constants import root_path
 
 
 class LogService:
@@ -12,10 +13,10 @@ class LogService:
             "%(asctime)s [%(levelname)s]:[%(name)s] - %(message)s"
         )
 
-        ensure_dir("logs")
-        ensure_file("tgbot.log", "logs")
+        ensure_dir(root_path + "/logs")
+        ensure_file("tgbot.log", root_path + "/logs")
 
-        self.file_handler = logging.FileHandler("logs/tgbot.log")
+        self.file_handler = logging.FileHandler(root_path + "/logs/tgbot.log")
         self.file_handler.setLevel(logging.DEBUG)
         self.file_handler.setFormatter(self.formatter)
 
