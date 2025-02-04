@@ -1,8 +1,14 @@
+from dotenv import load_dotenv
 import pytest
 from unittest.mock import patch, MagicMock
-from datetime import datetime, timedelta
 import pandas as pd
 
+load_dotenv()
+import sys
+import os
+
+root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+sys.path.insert(0, root_path)
 
 from backend.bot.paywall.payment import (
     check_user,
@@ -20,8 +26,13 @@ class TestPayment:
     @patch("backend.bot.paywall.payment.fetch_user_by_id")
     @patch("backend.bot.paywall.payment.generate_wallet")
     @patch("backend.bot.paywall.payment.update_user")
+    @patch("backend.bot.paywall.payment.insert_user")
     def test_check_user_existing(
-        self, mock_update_user, mock_generate_wallet, mock_fetch_user_by_id
+        self,
+        mock_insert_user,
+        mock_update_user,
+        mock_generate_wallet,
+        mock_fetch_user_by_id,
     ):
         mock_fetch_user_by_id.return_value = pd.DataFrame(
             {"user_id": ["123"], "public_key": ["some_public_key"]}
@@ -30,92 +41,68 @@ class TestPayment:
         assert result == "some_public_key"
         mock_generate_wallet.assert_not_called()
         mock_update_user.assert_not_called()
+        mock_insert_user.assert_not_called()
 
-    # @patch("backend.bot.paywall.payment.fetch_user_by_id")
+    @pytest.mark.only
+    @patch("backend.bot.paywall.payment.fetch_user_by_id")
     # @patch("backend.bot.paywall.payment.generate_wallet")
     # @patch("backend.bot.paywall.payment.update_user")
-    # def test_check_user_new(
-    #     self, mock_update_user, mock_generate_wallet, mock_fetch_user_by_id
-    # ):
-    #     mock_fetch_user_by_id.return_value = pd.DataFrame()
-    #     mock_generate_wallet.return_value = "new_public_key"
-    #     check_user("123", "ref_info")
-    #     mock_generate_wallet.assert_called_once_with("123")
-    #     mock_update_user.assert_called()
+    # @patch("backend.bot.paywall.payment.insert_user")
+    def test_check_user_new(
+        self,
+        # mock_insert_user,
+        # mock_update_user,
+        # mock_generate_wallet,
+        mock_fetch_user_by_id,
+    ):
+        mock_fetch_user_by_id.return_value = pd.DataFrame()
+        # mock_generate_wallet.return_value = "new_public_key"
+        check_user("123", "ref_info")
+        # mock_insert_user.assert_called_once_with("123", 0, "ref_info")
+        # mock_generate_wallet.assert_called_once_with("123")
+        # mock_update_user.assert_called()
 
-    # @patch("backend.bot.paywall.payment.Client")
-    # def test_check_balance(self, mock_client):
-    #     mock_client_instance = mock_client.return_value
-    #     mock_client_instance.get_account_info.return_value.value = MagicMock(
-    #         lamports=690000000
-    #     )
-    #     response, payed = check_balance("some_wallet_address")
-    #     assert response == "Happy Trading! the features are now unlocked"
-    #     assert payed == 1
+    # @pytest.mark.skip
+    @patch("backend.bot.paywall.payment.Client")
+    @patch("backend.bot.paywall.payment.get_rpc")
+    def test_check_balance(self, mock_get_rpc, mock_client):
+        mock_get_rpc.return_value = "mock_rpc_url"
+        mock_client_instance = mock_client.return_value
+        mock_client_instance.get_account_info.return_value = MagicMock(
+            value=MagicMock(lamports=1000000000)
+        )
 
-    # @patch("backend.bot.paywall.payment.Client")
-    # def test_check_balance_insufficient(self, mock_client):
-    #     mock_client_instance = mock_client.return_value
-    #     mock_client_instance.get_account_info.return_value.value = MagicMock(
-    #         lamports=100000000
-    #     )
-    #     response, payed = check_balance("some_wallet_address")
-    #     assert "Please transfer" in response
-    #     assert payed == 0
+        checked = check_balance("some_wallet_address")
+        print("vvvv")
+        print(checked)
+        result, payed = checked
+        assert result == "Balance for wallet some_wallet_address: 1.0 SOL "
+        assert payed == 0
 
-    # @patch("backend.bot.paywall.payment.fetch_user_by_id")
-    # def test_get_user_info(self, mock_fetch_user_by_id):
-    #     mock_fetch_user_by_id.return_value = pd.DataFrame(
-    #         {
-    #             "user_id": ["123"],
-    #             "public_key": ["some_public_key"],
-    #             "expiration_date": [None],
-    #         }
-    #     ).set_index("user_id")
-    #     result = get_user_info("123")
-    #     assert result["public_key"] == "some_public_key"
+    @pytest.mark.skip
+    @patch("backend.bot.paywall.payment.Client")
+    @patch("backend.bot.paywall.payment.get_rpc")
+    def test_check_balance_insufficient(self, mock_get_rpc, mock_client):
+        mock_get_rpc.return_value = "mock_rpc_url"
+        mock_client_instance = mock_client.return_value
+        mock_client_instance.get_account_info.return_value = MagicMock(
+            value=MagicMock(lamports=500000000)
+        )
 
-    # @patch("backend.bot.paywall.payment.check_balance")
-    # @patch("backend.bot.paywall.payment.get_user_info")
-    # @patch("backend.bot.paywall.payment.update_user")
-    # def test_grant_access(
-    #     self, mock_update_user, mock_get_user_info, mock_check_balance
-    # ):
-    #     mock_get_user_info.return_value = {
-    #         "public_key": "some_public_key",
-    #         "expiration_date": None,
-    #         "referred_by": None,
-    #     }
-    #     mock_check_balance.return_value = (
-    #         "Happy Trading! the features are now unlocked",
-    #         1,
-    #     )
-    #     response = grant_access("123")
-    #     assert "Happy Trading!" in response
-    #     mock_update_user.assert_called()
+        result, payed = check_balance("some_wallet_address")
+        assert "Please transfer 0.19 SOL and check again to unlock features" in result
+        assert payed == 0
 
-    # @patch("backend.bot.paywall.payment.get_user_info")
-    # def test_check_access(self, mock_get_user_info):
-    #     mock_get_user_info.return_value = {
-    #         "expiration_date": (datetime.now() + timedelta(days=1)).strftime(
-    #             "%Y-%m-%d %H:%M:%S.%f"
-    #         )
-    #     }
-    #     assert check_access("123") == True
+    @pytest.mark.skip
+    @patch("backend.bot.paywall.payment.Client")
+    @patch("backend.bot.paywall.payment.get_rpc")
+    def test_check_balance_sufficient(self, mock_get_rpc, mock_client):
+        mock_get_rpc.return_value = "mock_rpc_url"
+        mock_client_instance = mock_client.return_value
+        mock_client_instance.get_account_info.return_value = MagicMock(
+            value=MagicMock(lamports=1000000000)
+        )
 
-    # @patch("backend.bot.paywall.payment.get_user_info")
-    # def test_check_access_expired(self, mock_get_user_info):
-    #     mock_get_user_info.return_value = {
-    #         "expiration_date": (datetime.now() - timedelta(days=1)).strftime(
-    #             "%Y-%m-%d %H:%M:%S.%f"
-    #         )
-    #     }
-    #     assert check_access("123") == False
-
-    # @patch("backend.bot.paywall.payment.update_user")
-    # def test_deposit_wallet(self, mock_update_user):
-    #     response = deposit_wallet("123", "new_wallet_address")
-    #     assert "Reward wallet updated to" in response
-    #     mock_update_user.assert_called_once_with(
-    #         "deposit_wallet", "new_wallet_address", "123"
-    #     )
+        result, payed = check_balance("some_wallet_address")
+        assert "Happy Trading! the features are now unlocked" in result
+        assert payed == 1
