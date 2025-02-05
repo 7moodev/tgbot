@@ -234,6 +234,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
 /map - [contract adress] get map of net worth of top holders
 
     '''
+    log_tamago(update, response=response)
     await update.message.reply_text(f'{response}')
 async def delete_webhook(TOKEN):
     bot = Bot(TOKEN)

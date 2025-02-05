@@ -25,11 +25,12 @@ class UserLogsDatabase(Database):
         '''
         super().create_table(create_table_sql)
 
-    def insert_log(self, username: str, user_id: str, coin_address: str, command_name: str, command_result: str = None):
-        self.execute_query(f'''
+    def insert_log(self, username: str, user_id: str, coin_address: str, command_name: str, command_result: str = None) -> int | None:
+        last_row_id = self.execute_query(f'''
             INSERT INTO {TABLE_NAME} (username, user_id, coin_address, command_name, command_result)
             VALUES (?, ?, ?, ?, ?)
         ''', (username, user_id, coin_address, command_name, command_result))
+        return last_row_id
 
     def fetch_all_logs(self) -> List[Dict[str, Any]]:
         rows = self.fetch_all(f'SELECT * FROM {TABLE_NAME}')

@@ -1,6 +1,7 @@
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
+from .log import log_tamago
 from .parser import *
 from db.chat.log import log_chat
 import backend.bot.exc as exc
@@ -27,12 +28,14 @@ Send /fresh [contract address] to get fresh wallets list
 Send /avg [contract address] to get avg holding price among top holders
 Send /sub to see you subscription status
 Send /renew to renew your subscription"""
+    log_tamago(update)
     await update.message.reply_text(msg)
 async def referrallink_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
     user_id = update.message.chat.id
     bot_name =  BOT_USERNAME[1:]
     referral_link = f"https://t.me/{bot_name}?start=ref_{user_id}"
     # Define keyboard layout
+    log_tamago(update, response=referral_link)
     await update.message.reply_text(f"Your refferal link is: \n {referral_link}")
 async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
@@ -58,12 +61,14 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
             try:
                 for parts in message:
                     if parts == message[0]:
+                        log_tamago(update, response=parts)
                         await context.bot.edit_message_text(
                         chat_id=update.effective_chat.id,
                         message_id=wait_message.message_id,
                         text=parts
                         , parse_mode='MarkdownV2', disable_web_page_preview=True)
                     else:
+                        log_tamago(update, response=parts)
                         await update.message.reply_text(parts , parse_mode='MarkdownV2', disable_web_page_preview=True)
                     await log_chat(user_id, update.message.chat.username, "top", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
                     exc.exc_type = exc.exc_value = exc.exc_traceback = None
@@ -76,7 +81,8 @@ async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 await update.message.reply_text("Something went wrong, please contact support or try again later.")
 
     else:
-        await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
+        log_tamago(update, response='To use this function please use /renew to get a subscription')
+        await update.message.reply_text('To use this function plase use /renew to get a subscription' , parse_mode='MarkdownV2')
 
 async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
@@ -142,6 +148,7 @@ async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAUL
                 log_message = message[0]
 
             try:
+                log_tamago(update, response=message)
                 await context.bot.edit_message_text(
                         chat_id=update.effective_chat.id,
                         message_id=wait_message.message_id,
@@ -252,6 +259,7 @@ async def wallets_age_command(update: Update, context: ContextTypes.DEFAULT_TYPE
                 
                 
                 #print (holder_message)
+                log_tamago(update, response=holder_message)
                 await context.bot.edit_message_text(
                         chat_id=update.effective_chat.id,
                         message_id=wait_message.message_id,
@@ -268,12 +276,14 @@ async def wallets_age_command(update: Update, context: ContextTypes.DEFAULT_TYPE
                 exc.exc_type = exc.exc_value = exc.exc_traceback = None
                 await update.message.reply_text("Something went wrong, please contact support or try again later.")   
     else:
+        log_tamago(update, response='To use this function please use /renew to get a subscription')
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
 
 
 
 async def userid_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    log_tamago(update, response=update.message.chat.id)
     await update.message.reply_text(f'{update.message.chat.id}')
 
 
@@ -285,6 +295,7 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         time_left = datetime.strptime( info['expiration_date'],"%Y-%m-%d %H:%M:%S.%f")
         time_left=time_left.strftime("%B %d, %Y %I:%M%p %Z")
         response = f'You already have an active subscription expiring {time_left}'
+        log_tamago(update, response=response)
         await update.message.reply_text(f'{response}')
     
     else: 
@@ -301,6 +312,7 @@ async def renew_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # Send message with the keyboard
         # await update.message.reply_text(f'{renew_message}')
+        log_tamago(update, response=renew_message)
         await update.message.reply_text(f'{renew_message}', reply_markup=reply_markup, parse_mode='MarkdownV2')
     
 async def check_renew(update: Update, context: ContextTypes.DEFAULT_TYPE) -> str:
@@ -325,6 +337,7 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
         response = f'No subscription active. Use /renew to buy a subscription.'
 
         #await update.message.reply_text(f'{response}')
+    log_tamago(update, response=response)
     await context.bot.edit_message_text(
         chat_id=update.effective_chat.id,
         message_id=check_message.message_id,
