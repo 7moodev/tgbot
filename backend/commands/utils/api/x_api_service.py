@@ -1,16 +1,22 @@
 from dotenv import load_dotenv
-import requests
 import os
 import json
 import requests
 from dataclasses import dataclass
 from typing import List, Optional
 from enum import Enum
+import tweepy
 
 load_dotenv()
 
 BASE_URL = "https://api.x.com/2/tweets"
 BEARER_TOKEN = os.environ.get("X_BEARER_TOKEN")
+client = tweepy.Client(
+    consumer_key=os.environ.get("API_KEY"),
+    consumer_secret=os.environ.get("API_KEY_SECRET"),
+    access_token=os.environ.get("ACCESS_TOKEN"),
+    access_token_secret=os.environ.get("ACCESS_TOKEN_SECRET"),
+)
 
 
 @dataclass
@@ -62,12 +68,10 @@ class PostTweetPayload:
 
 def post_tweet(tweet_text):
     payload: PostTweetPayload = {"reply_settings": "subscribers", "text": tweet_text}
-    headers = {
-        "Authorization": f"Bearer {BEARER_TOKEN}",
-        "Content-Type": "application/json",
-    }
-    print(">>>> _ >>>> ~ headers:", headers)
-    response_raw = requests.post(BASE_URL, json=payload, headers=headers)
+    response_raw = client.create_tweet(
+        reply_settings=payload["reply_settings"], text=payload["text"]
+    )
+    print(response_raw)
     response = response_raw.json()
     print(response)
 
@@ -95,7 +99,7 @@ Find out more at
 https://munki.gitbook.io/munki
     """
     try:
-        post_tweet("test")
+        post_tweet(tweet_text)
     except Exception as e:
         print(f"An error occurred: {e}")
     pass
