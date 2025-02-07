@@ -1,19 +1,21 @@
 import asyncio
 import json
+from dotenv import load_dotenv
 import httpx
 import os
 import requests
 import time
 
-from typing import List
+from typing import List, Optional
 
 
-from .entities.api_entity import ApiResponse
+from .entities.api_entity import ApiRequestParams, ApiResponse, DEFAULT_PARAMS
 from .entities.token_entities import (
     TokenCreationInfoEntity,
     TokenHolderEntity,
     TokenHolderItems,
     TokenOverviewEntity,
+    TokenTrendingList,
 )
 from .entities.history_price_entities import (
     HistoricalPriceUnixEntity,
@@ -30,6 +32,8 @@ from .entities.wallet_entities import (
 from ..services.log_service import LogService
 from ....database.token_holders_database import tokenHoldersDatabase
 from ....database.token_overviews_database import tokenOverviewsDatabase
+
+load_dotenv()
 
 birdeyeapi = os.environ.get("birdeyeapi")
 CHAIN = "solana"
@@ -48,13 +52,14 @@ BIRDEYE_API_ENDPOINTS = {
 }
 
 logger = LogService("BIRDEYE")
+console = logger
 
 
 class BirdeyeApiService:
     def __init__(self):
         self.headers = {
             "accept": "application/json",
-            "chain": CHAIN,
+            "x-chain": CHAIN,
             "X-API-KEY": birdeyeapi,
         }
 
@@ -334,6 +339,7 @@ class BirdeyeApiService:
 
         try:
             response = requests.get(url, headers=self.headers)
+            console.log(">>>> _ >>>> ~ response:", response)
             return response.json()["data"]
         except Exception as e:
             logger.log("Error getting token creation info for", token, ":Birdeye")
@@ -413,6 +419,42 @@ class BirdeyeApiService:
         logger.log("Returned", len(all_holders), "holders")
         return all_holders
 
+    async def get_trending_list(
+        self, params: ApiRequestParams = None
+    ) -> ApiResponse[TokenTrendingList]:
+        """
+        sort_by string required Defaults to rank, values: rank, volume24hUSD, liquidity
+        sort_type string required Defaults to asc, values: asc, desc
+        offset integer Defaults to 0
+        limit integer 1 to 20 Defaults to 20
+        """
+        if params is None:
+            params = {
+                "sort_by": "rank",
+                "sort_type": "desc",
+                "offset": 0,
+                "limit": 2,
+            }
+        else:
+            if params.get("sort_by") is None:
+                params["sort_by"] = "rank"
+            if params.get("sort_type") is None:
+                params["sort_type"] = "desc"
+            if params.get("offset") is None:
+                params["offset"] = 0
+            if params.get("limit") is None:
+                params["limit"] = 2
+
+        params_str = dict_to_query_params(params)
+        console.log(">>>> _ >>>> ~ params_str:", params_str)
+        url = f"{BASE_URL}/defi/token_trending?{params_str}"
+        console.log(">>>> _ >>>> ~ url:", url)
+        console.log(">>>> _ >>>> ~ self.headers:", self.headers)
+        response_raw = requests.get(url, headers=self.headers)
+        response = response_raw.json()
+        console.log(">>>> _ >>>> ~ response:", response)
+        return response
+
     """
     ===========================================        ===========================================
     =========================================== WALLET ===========================================
@@ -475,6 +517,7 @@ class BirdeyeApiService:
 
 
 def dict_to_query_params(params: dict) -> str:
+    console.log(">>>> _ >>>> ~ params:", params)
     """
     Convert a dictionary to a query parameter string.
 
@@ -495,9 +538,12 @@ if __name__ == "__main__":
 
     async def call():
         service = BirdeyeApiService()
-        response = await service.get_token_overview(
-            "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9"
-        )
-        response.data
+        # response = await service.get_token_overview( "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9") # fmt: skip
+        # response = await service.get_trending_list()  # fmt: skip
+        response = await service.get_token_creation_info("8GrhA85mcgnaMjyXZ8Hdicayu7byXxbKyEd5UjLnpump")  # fmt: skip
+        console.log(">>>> _ >>>> ~ response:", response)
 
-    call()
+    asyncio.run(call())
+
+
+# python -m backend.commands.utils.api.birdeye_api_service
