@@ -5,33 +5,31 @@ import os
 import requests
 import time
 
-from .entities.history_price_entity import (
-    HistoryPriceItems,
-)
-from .entities.token_creation_info_entity import (
-    TokenCreationInfoEntity,
-)
-from .entities.token_holder import (
-    TokenHolderEntity,
-    TokenHolderItems,
-)
-from .entities.trader_gainers_losers import (
-    TraderGainersLosersItems,
-)
-from .entities.trader_seek_by_time_entity import (
-    TraderSeekByTimeItems,
-)
-from .entities.wallet_portfolio_entity import (
-    WalletPortfolioItems,
-)
-from .entities.wallet_token_balance import (
-    WalletTokenBalanceEntity,
-)
+from typing import List
+
 
 from .entities.api_entity import ApiResponse
-from .entities.historical_price_unix_entity import HistoricalPriceUnixEntity
-from .entities.token_overview_entity import TokenOverviewEntity
+from .entities.token_entities import (
+    TokenCreationInfoEntity,
+    TokenHolderEntity,
+    TokenHolderItems,
+    TokenOverviewEntity,
+)
+from .entities.history_price_entities import (
+    HistoricalPriceUnixEntity,
+    HistoryPriceItems,
+)
+from .entities.trader_entities import (
+    TraderGainersLosersItems,
+    TraderSeekByTimeItems,
+)
+from .entities.wallet_entities import (
+    WalletPortfolioItems,
+    WalletTokenBalanceEntity,
+)
 from ..services.log_service import LogService
+from ....database.token_holders_database import tokenHoldersDatabase
+from ....database.token_overviews_database import tokenOverviewsDatabase
 
 birdeyeapi = os.environ.get("birdeyeapi")
 CHAIN = "solana"
@@ -49,7 +47,7 @@ BIRDEYE_API_ENDPOINTS = {
     "wallet_token_balance": "v1/wallet/token_balance",
 }
 
-logger = LogService()
+logger = LogService("BIRDEYE")
 
 
 class BirdeyeApiService:
@@ -239,8 +237,8 @@ class BirdeyeApiService:
     """
 
     async def get_token_overview(
-        self, token: str = None
-    ) -> ApiResponse[TokenOverviewEntity]:
+        self, token: str | None = None
+    ) -> ApiResponse[TokenOverviewEntity] | None:
         """
         https://docs.birdeye.so/reference/get_defi-token-overview
         Get the overview of a token
@@ -254,7 +252,9 @@ class BirdeyeApiService:
         url = f"{BASE_URL}/defi/token_overview?{params}"
         response = requests.get(url, headers=self.headers)
         logger.log("Returning token overview for", token)
-        return response.json()
+        payload: ApiResponse[TokenOverviewEntity] = response.json()
+        tokenOverviewsDatabase.insert_token_overview(payload.data)
+        return payload
 
     async def get_top_holders_with_constraint(
         self, token: str = None, min_value_usd: float = None, price: float = None
@@ -369,11 +369,14 @@ class BirdeyeApiService:
                 }
             )
             url = f"{BASE_URL}/defi/v3/token/holder?{params}"
-            response = requests.get(url, headers=self.headers)
+            response: ApiResponse[TokenHolderItems] = requests.get(
+                url, headers=self.headers
+            )
             if response.status_code != 200:
                 if response.json()["success"] == False:
                     return None
-            batch = response.json()["data"]["items"]
+            batch: List[TokenHolderEntity] = response.json()["data"]["items"]
+            tokenHoldersDatabase.batch_insert_token_holders(batch)
             if (
                 not batch
                 or batch[0]["amount"] == "0"

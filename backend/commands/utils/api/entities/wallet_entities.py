@@ -3,17 +3,25 @@ from typing import List
 
 
 @dataclass
-class WalletPortfolioEntity:
+class WalletEntity:
     address: str
     name: str
     symbol: str
     decimals: int
     balance: str
-    uiAmount: float
     chainId: str
-    logoURI: str
+
+
+@dataclass
+class WalletBalance:
+    uiAmount: float
     priceUsd: float
     valueUsd: float
+
+
+@dataclass
+class WalletPortfolioEntity(WalletEntity, WalletBalance):
+    logoURI: str
 
 
 @dataclass
@@ -42,3 +50,22 @@ class WalletPortfolioItems:
     wallet: str
     totalUsd: float
     items: List[WalletPortfolioEntity]
+
+
+@dataclass
+class WalletTokenBalanceEntity(WalletEntity, WalletBalance):
+    """
+    {
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "name": "Tether USD",
+        "symbol": "USDT",
+        "decimals": 6,
+        "balance": 94149341656019,
+        "uiAmount": 94149341.656019,
+        "chainId": "eth-mainnet",
+        "priceUsd": 0.9999915198446391,
+        "valueUsd": 94149341656019.2
+    }
+    """
+
+    pass

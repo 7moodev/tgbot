@@ -18,4 +18,6 @@ python backend/bot/main2.py
 ### Useful
 - check if your bot is running
   - https://api.telegram.org/bot<token>/getMe
-
+- Heroku
+  - heroku logs --tail -a munki-tg-bot
+  - heroku logs --num 1500 -a munki-tg-bot
