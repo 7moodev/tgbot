@@ -57,6 +57,7 @@ def db_connection(func):
 class PostgresDatabase:
     def __init__(self, database_url: str = DATABASE_URL, table_name: str = None):
         self.database_url = database_url
+        self.table_name = table_name
         self.conn = None
 
     def connect_db(self):
@@ -165,5 +166,5 @@ class PostgresDatabase:
 
     @db_connection
     def dangerousely_drop_table(self, cursor):
-        cursor.execute(f"DROP TABLE {self.table_name}")
+        cursor.execute(f"DROP TABLE IF EXISTS {self.table_name}")
         logger.log(f"Dropped table {self.table_name}")
