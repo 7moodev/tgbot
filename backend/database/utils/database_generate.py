@@ -1,4 +1,4 @@
-from backend.commands.utils.api.entities.token_entities import TrendingTokenEntity
+from backend.commands.utils.api.entities.token_entities import TokenCreationInfoEntity, TrendingTokenEntity
 from backend.database.utils.db_string import convert_to_snake_case, lower_first_letter, pluralize
 
 class DatabaseGenerator:
@@ -35,11 +35,15 @@ class DatabaseGenerator:
                 sql_type = sql_type + "[]"
             fields.append(f"{convert_to_snake_case(field_name)} {sql_type}")
         fields_query = ",\n            ".join(fields)
+        sql_timestamp = "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+        if len(self.as_array_keys) > 0:
+            sql_timestamp = "timestamp TIMESTAMP[] DEFAULT ARRAY [CURRENT_TIMESTAMP]"
+
         create_table_query = f"""
         CREATE TABLE IF NOT EXISTS {{self.table_name}} (
             id SERIAL PRIMARY KEY,
             {fields_query},
-            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            {sql_timestamp}
         )
         """
         return create_table_query
@@ -75,15 +79,51 @@ class {service_class_name}(PostgresDatabase):
         if (debug_should_log):
             logger.log(f"{{self.table_name}} table created successfully")
 
-    def insert(self, data):
-        columns = ', '.join([convert_to_snake_case(key) for key in data.keys()])
+    def insert(self, data: {self.dataclass_type.__name__}):
+        entries = []
+        entries_as_array = []
+        for item in data.items():
+            if item[0] in self.as_array_keys:
+                entries_as_array.append(item)
+            else:
+                entries.append(item)
+
+        columns = ', '.join([convert_to_snake_case(item[0]) for item in entries])
+        if len(entries_as_array) > 0:
+            columns = columns + ', '.join([convert_to_snake_case(item[0]) for item in entries_as_array])
+
         placeholders = ', '.join(['%s'] * len(data))
-        query = f"INSERT INTO {{self.table_name}} ({{columns}}) VALUES ({{placeholders}})"
-        self.execute_query(query, list(data.values()))
+
+        set_sql = ""
+        on_conflict_sql = ""
+        if len(self.as_array_keys) > 0:
+            unique_column_name = "token_address"
+            on_conflict_sql = f"ON CONFLICT ({{unique_column_name}}) DO UPDATE"
+            set_sql = ",\n".join([
+                f"{{convert_to_snake_case(item[0])}} = COALESCE({{self.table_name}}.{{convert_to_snake_case(item[0])}}, '{{}}') || EXCLUDED.{{convert_to_snake_case(item[0])}}"
+                for item in entries_as_array
+            ])
+            set_sql = "SET " + set_sql + f", timestamp = array_append(token_creation_info_entities_database.timestamp, CURRENT_TIMESTAMP)"
+
+        query = f\"\"\"
+            INSERT INTO {{self.table_name}} ({{columns}})
+            VALUES ({{placeholders}})
+            {{on_conflict_sql}}
+            {{set_sql}}
+        \"\"\"
+
+        data_values = []
+        if len(entries) > 0:
+            data_values = [entry[1] for entry in entries]
+        if len(entries_as_array) > 0:
+            data_values = data_values + [[entry[1]] for entry in entries_as_array]
+
+        params = tuple(data_values)
+        self.execute_query(query, params)
         if (debug_should_log):
             logger.log("Inserted data successfully")
 
-    def batch_insert(self, data_list):
+    def batch_insert(self, data_list: list[{self.dataclass_type.__name__}]):
         if not data_list:
             return
 
@@ -104,6 +144,8 @@ class {service_class_name}(PostgresDatabase):
                 f"{{convert_to_snake_case(item[0])}} = COALESCE({{self.table_name}}.{{convert_to_snake_case(item[0])}}, '{{{{}}}}') || EXCLUDED.{{convert_to_snake_case(item[0])}}"
                 for item in entries_as_array
             ])
+            if len(self.as_array_keys) > 0:
+                set_sql = set_sql + f", timestamp = array_append({self.table_name}.timestamp, CURRENT_TIMESTAMP)"
             query = f\"""
                 INSERT INTO {{self.table_name}} ({{columns}}, {{columns_as_array}})
                 VALUES %s
@@ -118,8 +160,6 @@ class {service_class_name}(PostgresDatabase):
                 data_values = data_values + [[entry[1]] for entry in entries_as_array]
             values.append(tuple(data_values))
 
-        console.log('>>>> _ >>>> ~ query:', query)
-        console.log('>>>> _ >>>> ~ values:', values)
         self.batch_execute_query(query, values)
 
         if (debug_should_log):
@@ -143,12 +183,16 @@ class {service_class_name}(PostgresDatabase):
 
 {lower_first_letter(service_class_name)} = {service_class_name}()
 
+mock_data: {self.dataclass_type.__name__} = {{
+
+}}
+
 # Example usage
 if __name__ == "__main__":
     db = {service_class_name}()
     db.dangerousely_drop_table()
     db.create_table()
-    # db.insert(Mock_TokenOverviewItems)
+    # db.insert(mock_data)
 
 # python -m backend.database.{self.table_name}
 
@@ -159,13 +203,18 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     # wallet_entity_service = DatabaseGenerator(WalletTokenBalanceEntity)
-    as_array_keys = ["liquidity", "volume24hUSD", "volume24hChangePercent", "fdv", "marketcap", "rank", "price", "price24hChangePercent"]
-    unique_key = ["address"]
-    wallet_entity_service = DatabaseGenerator(TrendingTokenEntity, as_array_keys = as_array_keys, unique_key = unique_key)
+    # unique_key = ["address"]
+    unique_key = ["tokenAddress"]
+
+    as_array_keys = []
+    entity = TokenCreationInfoEntity
+    # as_array_keys = ["liquidity", "volume24hUSD", "volume24hChangePercent", "fdv", "marketcap", "rank", "price", "price24hChangePercent"]
+    # entity = TrendingTokenEntity
+
+    wallet_entity_service = DatabaseGenerator(entity, as_array_keys = as_array_keys, unique_key = unique_key)
     generated = wallet_entity_service.generate_database_service()
     file_name = wallet_entity_service.table_name
     with open(f"backend/database/{file_name}.py", 'w') as f:
-        # write file with content
         f.write(generated)
 
 
