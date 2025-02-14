@@ -150,6 +150,7 @@ class TokenOverviewEntityFocus:
     realMc: float
     extensions: dict
     logoURI: str
+    creationTime: Optional[str]
 
 
 @dataclass
@@ -562,3 +563,59 @@ class TokenOverviewEntity(TokenOverviewEntityFocus):
 
 
 Mock_TokenOverviewItems = {}
+
+
+@dataclass
+class TrendingTokenEntity:
+    """
+    {
+        "address": "HJXh1XULVe2Mdp6mTKd5K7of1uFqBTbmcWzvBv6cpump",
+        "decimals": 6,
+        "liquidity": 34641.80933146691,
+        "logoURI": "https://img.fotofolio.xyz/?w=30&h=30&url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmR7QnPaYcfwoG8oymK5JRDsB9GSgHr71mJmL2MuJ7Qk3x",
+        "name": "AVOCATO",
+        "symbol": "ATO",
+        "volume24hUSD": 1202872.3148187269,
+        "rank": 1,
+        "price": 0.00010551649518689046
+    },
+    """
+
+    address: str
+    decimals: int
+    liquidity: float
+    logoURI: str
+    name: str
+    symbol: str
+    volume24hUSD: float
+    rank: int
+    price: float
+
+
+@dataclass
+class TokenTrendingList:
+    """
+    {
+        "updateUnixTime": 1726681733,
+        "updateTime": "2024-09-18T17:48:53",
+        "tokens": [
+            {
+                "address": "HJXh1XULVe2Mdp6mTKd5K7of1uFqBTbmcWzvBv6cpump",
+                "decimals": 6,
+                "liquidity": 34641.80933146691,
+                "logoURI": "https://img.fotofolio.xyz/?w=30&h=30&url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmR7QnPaYcfwoG8oymK5JRDsB9GSgHr71mJmL2MuJ7Qk3x",
+                "name": "AVOCATO",
+                "symbol": "ATO",
+                "volume24hUSD": 1202872.3148187269,
+                "rank": 1,
+                "price": 0.00010551649518689046
+            },
+        ],
+        "total": 1000
+    }
+    """
+
+    updateUnixTime: int
+    updateTime: str
+    tokens: List[TrendingTokenEntity]
+    total: int
