@@ -1,33 +1,34 @@
 # -------------------------------------
-# trending_token_entities_database.py
+# token_overview_entities_database.py
 
 from typing import List
 from backend.database.utils.db_string import convert_to_snake_case
 from .postgres_database import PostgresDatabase
-from ..commands.utils.api.entities.token_entities import TrendingTokenEntity
+from ..commands.utils.api.entities.token_entities import TokenOverviewEntity
 from ..commands.utils.services.log_service import LogService
 
-logger = LogService("TRENDINGTOKENENTITYDB")
+logger = LogService("TOKENOVERVIEWENTITYDB")
 console = logger
 
 debug_should_log = False
 
 
-class TrendingTokenEntityDatabase(PostgresDatabase):
+class TokenOverviewEntitiesDatabase(PostgresDatabase):
     def __init__(
         self,
         as_array_keys=[
-            "liquidity",
-            "volume24hUSD",
-            "volume24hChangePercent",
-            "fdv",
-            "marketcap",
-            "rank",
             "price",
-            "price24hChangePercent",
+            "supply",
+            "mc",
+            "holder",
+            "liquidity",
+            "priceChange1hPercent",
+            "circulatingSupply",
+            "realMc",
+            "logoURI",
         ],
     ):
-        super().__init__(table_name="trending_token_entities_database")
+        super().__init__(table_name="token_overview_entities_database")
         self.as_array_keys = as_array_keys
 
     def create_table(self):
@@ -36,18 +37,18 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
         CREATE TABLE IF NOT EXISTS {self.table_name} (
             id SERIAL PRIMARY KEY,
             address TEXT UNIQUE,
-            decimals INTEGER,
-            liquidity FLOAT[],
-            logo_uri TEXT,
-            name TEXT,
             symbol TEXT,
-            volume24h_usd FLOAT[],
-            volume24h_change_percent FLOAT[],
-            fdv FLOAT[],
-            marketcap FLOAT[],
-            rank INTEGER[],
+            name TEXT,
             price FLOAT[],
-            price24h_change_percent FLOAT[],
+            supply FLOAT[],
+            mc FLOAT[],
+            holder INTEGER[],
+            liquidity FLOAT[],
+            price_change1h_percent FLOAT[],
+            circulating_supply FLOAT[],
+            real_mc FLOAT[],
+            extensions TEXT,
+            logo_uri TEXT[],
             timestamp TIMESTAMP[] DEFAULT ARRAY [CURRENT_TIMESTAMP]
         )
         """
@@ -55,15 +56,59 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
         if debug_should_log:
             logger.log(f"{self.table_name} table created successfully")
 
-    def insert(self, data):
-        columns = ", ".join([convert_to_snake_case(key) for key in data.keys()])
+    def insert(self, data: TokenOverviewEntity):
+        entries = []
+        entries_as_array = []
+        for item in data.items():
+            if item[0] in self.as_array_keys:
+                entries_as_array.append(item)
+            else:
+                entries.append(item)
+
+        columns = ", ".join([convert_to_snake_case(item[0]) for item in entries])
+        if len(entries_as_array) > 0:
+            columns = columns + ", ".join(
+                [convert_to_snake_case(item[0]) for item in entries_as_array]
+            )
+
         placeholders = ", ".join(["%s"] * len(data))
-        query = f"INSERT INTO {self.table_name} ({columns}) VALUES ({placeholders})"
-        self.execute_query(query, list(data.values()))
+
+        set_sql = ""
+        on_conflict_sql = ""
+        if len(self.as_array_keys) > 0:
+            unique_column_name = "token_address"
+            on_conflict_sql = f"ON CONFLICT ({unique_column_name}) DO UPDATE"
+            set_sql = ",\n".join(
+                [
+                    f"{convert_to_snake_case(item[0])} = COALESCE({self.table_name}.{convert_to_snake_case(item[0])}, '{{}}') || EXCLUDED.{convert_to_snake_case(item[0])}"
+                    for item in entries_as_array
+                ]
+            )
+            set_sql = (
+                "SET "
+                + set_sql
+                + f", timestamp = array_append(token_creation_info_entities_database.timestamp, CURRENT_TIMESTAMP)"
+            )
+
+        query = f"""
+            INSERT INTO {self.table_name} ({columns})
+            VALUES ({placeholders})
+            {on_conflict_sql}
+            {set_sql}
+        """
+
+        data_values = []
+        if len(entries) > 0:
+            data_values = [entry[1] for entry in entries]
+        if len(entries_as_array) > 0:
+            data_values = data_values + [[entry[1]] for entry in entries_as_array]
+
+        params = tuple(data_values)
+        self.execute_query(query, params)
         if debug_should_log:
             logger.log("Inserted data successfully")
 
-    def batch_insert(self, data_list):
+    def batch_insert(self, data_list: list[TokenOverviewEntity]):
         if not data_list:
             return
 
@@ -88,10 +133,10 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
                     for item in entries_as_array
                 ]
             )
-            if len(self.as_array_keys):
+            if len(self.as_array_keys) > 0:
                 set_sql = (
                     set_sql
-                    + f", timestamp = array_append({self.table_name}.timestamp, CURRENT_TIMESTAMP)"
+                    + f", timestamp = array_append(token_overview_entities_database.timestamp, CURRENT_TIMESTAMP)"
                 )
             query = f"""
                 INSERT INTO {self.table_name} ({columns}, {columns_as_array})
@@ -112,7 +157,7 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
         if debug_should_log:
             logger.log("Batch inserted data successfully")
 
-    def fetch_all(self) -> List[TrendingTokenEntity]:
+    def fetch_all(self) -> List[TokenOverviewEntity]:
         fetch_query = f"SELECT * FROM {self.table_name}"
         records = self.fetch_all(fetch_query)
         if debug_should_log:
@@ -121,7 +166,7 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
                 logger.log(record)
         return records
 
-    def fetch_by_address(self, address: str) -> TrendingTokenEntity:
+    def fetch_by_address(self, address: str) -> TokenOverviewEntity:
         fetch_query = f"SELECT * FROM {self.table_name} WHERE address = {address}"
         record = self.fetch_one(fetch_query)
         if debug_should_log:
@@ -129,13 +174,15 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
         return record
 
 
-trendingTokenEntityDatabase = TrendingTokenEntityDatabase()
+tokenOverviewEntitiesDatabase = TokenOverviewEntitiesDatabase()
+
+mock_data: TokenOverviewEntity = {}
 
 # Example usage
 if __name__ == "__main__":
-    db = TrendingTokenEntityDatabase()
+    db = TokenOverviewEntitiesDatabase()
     db.dangerousely_drop_table()
     db.create_table()
-    # db.insert(Mock_TokenOverviewItems)
+    # db.insert(mock_data)
 
-# python -m backend.database.trending_token_entities_database
+# python -m backend.database.token_overview_entities_database

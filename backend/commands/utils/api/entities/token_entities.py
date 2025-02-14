@@ -138,6 +138,7 @@ Mock_TokenHolderItems = [
 
 @dataclass
 class TokenOverviewEntityFocus:
+    address: str
     symbol: str
     name: str
     price: float
@@ -150,7 +151,6 @@ class TokenOverviewEntityFocus:
     realMc: float
     extensions: dict
     logoURI: str
-    creationTime: Optional[str]
 
 
 @dataclass
