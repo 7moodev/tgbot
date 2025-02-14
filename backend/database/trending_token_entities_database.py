@@ -36,7 +36,7 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
             rank INTEGER[],
             price FLOAT[],
             price24h_change_percent FLOAT[],
-            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            timestamp TIMESTAMP[] DEFAULT ARRAY [CURRENT_TIMESTAMP]
         )
         """)
         if (debug_should_log):
@@ -71,6 +71,8 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
                 f"{convert_to_snake_case(item[0])} = COALESCE({self.table_name}.{convert_to_snake_case(item[0])}, '{{}}') || EXCLUDED.{convert_to_snake_case(item[0])}"
                 for item in entries_as_array
             ])
+            if len(self.as_array_keys):
+                set_sql = set_sql + f", timestamp = array_append({self.table_name}.timestamp, CURRENT_TIMESTAMP)"
             query = f"""
                 INSERT INTO {self.table_name} ({columns}, {columns_as_array})
                 VALUES %s
