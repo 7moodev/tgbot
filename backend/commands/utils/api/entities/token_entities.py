@@ -569,15 +569,19 @@ Mock_TokenOverviewItems = {}
 class TrendingTokenEntity:
     """
     {
-        "address": "HJXh1XULVe2Mdp6mTKd5K7of1uFqBTbmcWzvBv6cpump",
+        "address": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
         "decimals": 6,
-        "liquidity": 34641.80933146691,
-        "logoURI": "https://img.fotofolio.xyz/?w=30&h=30&url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmR7QnPaYcfwoG8oymK5JRDsB9GSgHr71mJmL2MuJ7Qk3x",
-        "name": "AVOCATO",
-        "symbol": "ATO",
-        "volume24hUSD": 1202872.3148187269,
-        "rank": 1,
-        "price": 0.00010551649518689046
+        "liquidity": 23812612.41500791,
+        "logoURI": "https://static.jup.ag/jup/icon.png",
+        "name": "Jupiter",
+        "symbol": "JUP",
+        "volume24hUSD": 86976936.050854,
+        "volume24hChangePercent": 46.46922326872917,
+        "fdv": 5679270939.324086,
+        "marketcap": 2556176295.2462373,
+        "rank": 4,
+        "price": 0.8113268787559548,
+        "price24hChangePercent": -6.198208768404809
     },
     """
 
@@ -588,8 +592,12 @@ class TrendingTokenEntity:
     name: str
     symbol: str
     volume24hUSD: float
+    volume24hChangePercent: float
+    fdv: float
+    marketcap: float
     rank: int
     price: float
+    price24hChangePercent: float
 
 
 @dataclass
@@ -600,15 +608,19 @@ class TokenTrendingList:
         "updateTime": "2024-09-18T17:48:53",
         "tokens": [
             {
-                "address": "HJXh1XULVe2Mdp6mTKd5K7of1uFqBTbmcWzvBv6cpump",
+                "address": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
                 "decimals": 6,
-                "liquidity": 34641.80933146691,
-                "logoURI": "https://img.fotofolio.xyz/?w=30&h=30&url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmR7QnPaYcfwoG8oymK5JRDsB9GSgHr71mJmL2MuJ7Qk3x",
-                "name": "AVOCATO",
-                "symbol": "ATO",
-                "volume24hUSD": 1202872.3148187269,
-                "rank": 1,
-                "price": 0.00010551649518689046
+                "liquidity": 23812612.41500791,
+                "logoURI": "https://static.jup.ag/jup/icon.png",
+                "name": "Jupiter",
+                "symbol": "JUP",
+                "volume24hUSD": 86976936.050854,
+                "volume24hChangePercent": 46.46922326872917,
+                "fdv": 5679270939.324086,
+                "marketcap": 2556176295.2462373,
+                "rank": 4,
+                "price": 0.8113268787559548,
+                "price24hChangePercent": -6.198208768404809
             },
         ],
         "total": 1000
