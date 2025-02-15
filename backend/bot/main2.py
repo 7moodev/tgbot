@@ -23,6 +23,8 @@ if not TOKEN:
 PORT = int(os.environ.get('PORT', 8443))
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
 
+refcodes_list = ['MUUUN']
+
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
     query = update.callback_query
@@ -72,10 +74,34 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
         context.user_data['awaiting_token_address'] = False
         token_address = update.message.text.strip()
 
-        # Validate token address
-        if len(token_address) < 43:  # Adjust this check for Solana addresses
+        # Validate token addresses
+        if context.user_data.get('awaiting_refcode', False):
+            context.user_data['awaiting_refcode'] = False
+            command = 'trial'
+            user_id = update.message.chat.id
+
+            try: 
+                response = free_trial(user_id, refcode=token_address, free_trial=7)
+                await update.message.reply_text(f'{response}')
+                return
+ 
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support.")
+                return
+
+
+
+
+        elif len(token_address) < 43:  # Adjust this check for Solana addresses
             await update.message.reply_text("Invalid token address. Please try again with a valid address.")
             return
+
         command = ''
         # Store the token address in user_data
         holder_message = None
@@ -165,7 +191,9 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
             holder_message = await fresh_wallets_parsed(token_address, limit)
 
         else:
+
             try: 
+                
                 wait_message = await update.message.reply_text("Analyzing token getting top holders please chill...")
                 command = 'top'
                 holder_message = await top_holders_holdings_parsed(token_address, limit)
@@ -279,6 +307,7 @@ def main():
     app.add_handler(CommandHandler('start', start_command))
     app.add_handler(CommandHandler('referral', referrallink_command))
     app.add_handler(CommandHandler('sub', check_subscription))
+    app.add_handler(CommandHandler('trial', free_trial_command))
     app.add_handler(CommandHandler('help', help))
 
     app.add_handler(CallbackQueryHandler(handle_buttons))

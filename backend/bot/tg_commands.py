@@ -11,14 +11,15 @@ if not BOT_USERNAME:
     BOT_USERNAME = "ALM_NotifyBot"  # tgNAME 
 limit = 50
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE): 
-    user_id = update.message.chat.id 
+    user_id = update.message.chat.id
+    tg_username= update.message.chat.username
     args = context.args
     referral_info = None
     if len(args):
         referral_info = args[0]
     print (referral_info)
 
-    s = check_user(user_id, referral_info )
+    s = check_user(user_id, referral_info, tg_username )
     # Define keyboard layout
     msg = """Welcome to EL MUNKI 🐵🌕 you horny degen! This is your personal Memecoin Analytics Tool.
 Get started by using the commands below:
@@ -36,7 +37,7 @@ async def referrallink_command(update: Update, context: ContextTypes.DEFAULT_TYP
     referral_link = f"https://t.me/{bot_name}?start=ref_{user_id}"
     # Define keyboard layout
     log_tamago(update, response=referral_link)
-    await update.message.reply_text(f"Your refferal link is: \n {referral_link}")
+    await update.message.reply_text(f"Your referral link is: \n {referral_link}")
 async def topholders_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
     if check_access(user_id):
@@ -280,8 +281,20 @@ async def wallets_age_command(update: Update, context: ContextTypes.DEFAULT_TYPE
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
 
+async def free_trial_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id
+    
+    if len(context.args) != 1:
+            await update.message.reply_text("Please send me a Code.")
+            context.user_data['awaiting_refcode'] = True
+            return
 
-
+    elif context.args[0] not in refcode_list:
+        await update.message.reply_text("Invalid Referral Code! Please try another one.")
+    else:
+       response = free_trial(user_id, refcode=context.args[0], free_trial=7)
+       await update.message.reply_text(f'{response}')
+    
 async def userid_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     log_tamago(update, response=update.message.chat.id)
     await update.message.reply_text(f'{update.message.chat.id}')
