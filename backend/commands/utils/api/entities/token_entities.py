@@ -631,3 +631,21 @@ class TokenTrendingList:
     updateTime: str
     tokens: List[TrendingTokenEntity]
     total: int
+
+def convert_token_overview_to_focus(data: TokenOverviewEntity) -> TokenOverviewEntityFocus:
+    converted: TokenOverviewEntityFocus = {
+        "address": data["address"],
+        "symbol": data["symbol"],
+        "name": data["name"],
+        "price": data["price"],
+        "supply": data["supply"],
+        "mc": data["mc"],
+        "holder": data["holder"],
+        "liquidity": data["liquidity"],
+        "priceChange1hPercent": data["priceChange1hPercent"],
+        "circulatingSupply": data["circulatingSupply"],
+        "realMc": data["realMc"],
+        "extensions": data["extensions"],
+        "logoURI": data["logoURI"],
+    }
+    return converted
