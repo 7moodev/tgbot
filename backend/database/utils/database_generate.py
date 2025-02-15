@@ -34,7 +34,8 @@ class DatabaseGenerator:
             int: "INTEGER",
             float: "FLOAT",
             bool: "BOOLEAN",
-            list: "JSONB",  # Assuming lists will be stored as JSON
+            list: "JSONB",
+            dict: "JSONB",
         }
         return type_mapping.get(python_type, "TEXT")
 
@@ -65,14 +66,15 @@ class DatabaseGenerator:
     def generate_fetch_one_entity(self) -> str:
         field_assignments = []
         for field_name, field_info in self.dataclass_type.__dataclass_fields__.items():
-            field_assignments.append(f"{field_name}=record[{list(self.dataclass_type.__dataclass_fields__.keys()).index(field_name) + 1}]")
+            key_list = list(self.dataclass_type.__dataclass_fields__.keys())
+            field_assignments.append(f"\"{field_name}\": record[{key_list.index(field_name) + 1}]")
         field_assignments_str = ",\n            ".join(field_assignments)
 
-        return f"""
-        payload = {self.dataclass_type.__name__}(
-            {field_assignments_str}
-        )
-        """
+        return f"""payload: {self.dataclass_type.__name__} = {{
+            "id": record[0],
+            {field_assignments_str},
+            "timestamp": record[{len(key_list) + 1}],
+        }}"""
 
 
     def generate_database_service(self):
@@ -84,6 +86,8 @@ class DatabaseGenerator:
 # {self.table_name}.py
 
 from typing import List
+
+import psycopg2
 from backend.database.utils.db_string import convert_to_snake_case
 from .postgres_database import PostgresDatabase
 from ..commands.utils.api.entities.token_entities import (
@@ -113,24 +117,31 @@ class {service_class_name}(PostgresDatabase):
             if item[0] in self.as_array_keys:
                 entries_as_array.append(item)
             else:
-                entries.append(item)
+                if isinstance(item[1], dict):
+                    try:
+                        jsonified = psycopg2.extras.Json(item[1])
+                        entries.append((item[0], jsonified))
+                    except Exception as e:
+                        console.error(e)
+                else:
+                    entries.append(item)
 
         columns = ', '.join([convert_to_snake_case(item[0]) for item in entries])
         if len(entries_as_array) > 0:
-            columns = columns + ', '.join([convert_to_snake_case(item[0]) for item in entries_as_array])
+            columns = columns + ', ' + ', '.join([convert_to_snake_case(item[0]) for item in entries_as_array])
 
         placeholders = ', '.join(['%s'] * len(data))
 
         set_sql = ""
         on_conflict_sql = ""
         if len(self.as_array_keys) > 0:
-            unique_column_name = "token_address"
+            unique_column_name = "{self.unique_key[0]}"
             on_conflict_sql = f"ON CONFLICT ({{unique_column_name}}) DO UPDATE"
             set_sql = ",\\n".join([
                 f"{{convert_to_snake_case(item[0])}} = COALESCE({{self.table_name}}.{{convert_to_snake_case(item[0])}}, '{{{{}}}}') || EXCLUDED.{{convert_to_snake_case(item[0])}}"
                 for item in entries_as_array
             ])
-            set_sql = "SET " + set_sql + f", timestamp = array_append(token_creation_info_entities_database.timestamp, CURRENT_TIMESTAMP)"
+            set_sql = "SET " + set_sql + f",\\ntimestamp = array_append({{self.table_name}}.timestamp, CURRENT_TIMESTAMP)"
 
         query = f\"\"\"
             INSERT INTO {{self.table_name}} ({{columns}})
@@ -232,12 +243,13 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     # wallet_entity_service = DatabaseGenerator(WalletTokenBalanceEntity)
-    # unique_key = ["address"]
-    # as_array_keys = [ "price", "supply", "mc", "holder", "liquidity", "priceChange1hPercent", "circulatingSupply", "realMc", "logoURI" ]  # fmt: skip
-    # entity = TokenOverviewEntityFocus
-    unique_key = ["tokenAddress"]
-    as_array_keys = []
-    entity = TokenCreationInfoEntity
+
+    unique_key = ["address"]
+    as_array_keys = [ "price", "supply", "mc", "holder", "liquidity", "priceChange1hPercent", "circulatingSupply", "realMc"]  # fmt: skip
+    entity = TokenOverviewEntityFocus
+    # unique_key = ["tokenAddress"]
+    # as_array_keys = []
+    # entity = TokenCreationInfoEntity
     # as_array_keys = ["liquidity", "volume24hUSD", "volume24hChangePercent", "fdv", "marketcap", "rank", "price", "price24hChangePercent"]  # fmt: skip
     # entity = TrendingTokenEntity
 
