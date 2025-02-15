@@ -12,6 +12,11 @@ import aiohttp
 import random
 import itertools
 MAX_SIGNATURES = 2500
+import sys
+import io
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 
 #heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
@@ -147,38 +152,49 @@ async def get_wallet_portfolio(wallet: str):
 
 
     
-async def get_wallet_trade_history(wallet:str, limit:int=100, before_time:int=0, after_time:int=0):
+import aiohttp
 
-    if (limit == 0):
-        if os.path.exists('trade_history.json'):
-            with open('trade_history.json', 'r') as file:
-                data = json.load(file)
-                print("Returning cached data from 'trade_history.json'.")
-                return data
+async def get_wallet_trade_history(wallet:str, limit:int=100, before_time:int=0, after_time:int=0):
+    stop = before_time
+    before_time = 0
+    
+    if limit == 0 and os.path.exists('trade_history.json'):
+        with open('trade_history.json', 'r') as file:
+            data = json.load(file)
+            print("Returning cached data from 'trade_history.json'.")
+            return data
+    
     print("Getting trade history for", wallet)
     res = []
-    while(len(res) < limit):
-        url = f"https://public-api.birdeye.so/trader/txs/seek_by_time?address={wallet}&offset={len(res)}&limit=100&tx_type=swap&before_time={before_time}&after_time={after_time}"
-        headers = {
-            "accept": "application/json",
-            "x-chain": "solana",
-            "X-API-KEY": birdeyeapi
-        }
-        response = requests.get(url, headers=headers)
-        if (response.status_code != 200):
-            print("Error getting trade_history: ", response.json())
-            return res
-        res += response.json()['data']['items']
-        if len(response.json()['data']['items']) < 100:
-            break
-    # try:
-    #     with open('trade_history.json', 'w') as file:
-    #         json.dump(res, file, indent=4)
-    #     print(f"Saved trade history for {wallet} to 'trade_history.json'.")
-    # except Exception as e:
-    #     print(f"Error saving to 'top_holders.json': {e}")
+    
+    async with aiohttp.ClientSession() as session:
+        while len(res) < limit:
+            url = f"https://public-api.birdeye.so/trader/txs/seek_by_time?address={wallet}&offset={len(res)}&limit=100&tx_type=swap&before_time={before_time}&after_time={after_time}"
+            headers = {
+                "accept": "application/json",
+                "x-chain": "solana",
+                "X-API-KEY": birdeyeapi
+            }
+
+            async with session.get(url, headers=headers) as response:
+                if response.status != 200:
+                    print("Error getting trade_history:", await response.text())
+                    return res
+                
+                data = await response.json()
+                items = data['data']['items']
+                res += items
+
+                if stop != 0 and items and items[-1].get('block_unix_time', float('inf')) < stop:
+                    print("BROKE")
+                    break
+                
+                if len(items) < 100:
+                    break
+
     print("Returning trade history for", wallet)
     return res
+
 async def calculate_avg_exit(token_address, data):
     supply = await get_token_supply(token_address)
     print("Calculating average exit price for", token_address)
@@ -193,6 +209,8 @@ async def calculate_avg_exit(token_address, data):
         price = trade['base_price'] if trade.get('base_price') else trade['quote_price']
         quote_address = quote["address"]
         base_address = base["address"]
+        if 'type_swap' not in quote or 'type_swap' not in base:
+            continue
         quote_type_swap = quote["type_swap"]
         base_type_swap = base["type_swap"]
         trade_time = trade['block_unix_time']
@@ -246,6 +264,8 @@ async def calculate_avg_entry(token_address, data ):
         price = trade['base_price'] if trade.get('base_price') else trade['quote_price']    
         quote_address = quote["address"]
         base_address = base["address"]
+        if 'type_swap' not in quote or 'type_swap' not in base:
+            continue
         quote_type_swap = quote["type_swap"]
         base_type_swap = base["type_swap"]
         trade_time = trade['block_unix_time']
@@ -322,6 +342,13 @@ async def calculate_avg_holding(entry_data, exit_data):
     avg_entry_cost = avg_entry_price * total_buy_amount
     avg_exit_cost = avg_exit_price * total_sell_amount
     current_holding_amount = total_buy_amount - total_sell_amount
+    # if (avg_entry_price == 0 and avg_exit_price == 0):
+    #     return {
+    #         "avg_holding_price": 0.0,  # No holdings, break-even doesn't apply
+    #         "current_holding_amount": current_holding_amount,
+    #         "rebuy_detected": False,
+    #         "label": "No Idea"
+    #     }
     if (avg_entry_cost == 0 or current_holding_amount == 0):
         return {
             "avg_holding_price": 0.0,  # No holdings, break-even doesn't apply
@@ -507,22 +534,35 @@ async def get_all_signatures(wallet: str = None, limit: int = None):
     return None
 
 if __name__ == "__main__":
-    # start_time = time.time()
-    # asyncio.run(main())
-    # print(f"Execution time: {time.time() - start_time} seconds")
+    start_time = time.time()
+    hist = asyncio.run(get_wallet_trade_history('9ep2dgRSyDzCthaxgZezpHDcYcEheVEaLAcwMwGq5Wp3', 5000, 0, 1739494362))
+    print(hist)
+    entry = asyncio.run(calculate_avg_entry( "7ishPuuCB8KuBeM3ePCBfqyDHMc3aQoJ4DiKwc8HT5WH", hist))
+    print(entry)
+    exit = asyncio.run(calculate_avg_exit("7ishPuuCB8KuBeM3ePCBfqyDHMc3aQoJ4DiKwc8HT5WH",hist))
+    print(exit)
+    holding = asyncio.run(calculate_avg_holding(entry, exit))
+    with open("wtf11.json", 'w') as f:  
+        holding = {'holding': holding, 'entry': entry, 'exit': exit, 'hist': hist}
+        json.dump(holding, f, indent=4)
+    print(f"Execution time: {time.time() - start_time} seconds")
     #print(get_wallet_age("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"))
     #print(asyncio.run(get_wallet_trade_history("5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", ["ACTIVITY_TOKEN_SWAP", "ACTIVITY_AGG_TOKEN_SWAP"],
                                             #  httpx.AsyncClient())))
     #print(asyncio.run(get_wallet_avg_price("7tco85pE38UHUmaSNZRnsvcw2GXJv5TowP1tSw3GAL6M", "9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump", "buy", httpx.AsyncClient())))
     #print(asyncio.run(get_all_signatures('UeXfwweGMBV8JkTQ7pFF6shPR9EiKEg8VnTNF4qKjhh')))
     #print(asyncio.run(get_balance('5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVh', '9XS6ayT8aCaoH7tDmTgNyEXRLeVpgyHKtZk5xTXpump')))
-    hist = asyncio.run(get_wallet_trade_history('Fnz5CaHjX8SBuJAL6cKwLVY6QnAT7o5HNxz47qbYzMMW', 100, 0, 0))
-    entry = asyncio.run(calculate_avg_entry( "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump", hist))
-    exit = asyncio.run(calculate_avg_exit("6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump",hist))
-    holding = asyncio.run(calculate_avg_holding(entry, exit))
-    with open("wtf11.json", 'w') as f:  
-        holding = {'holding': holding, 'entry': entry, 'exit': exit, 'hist': hist}
-        json.dump(holding, f, indent=4)
+    # hist = asyncio.run(get_wallet_trade_history('9ep2dgRSyDzCthaxgZezpHDcYcEheVEaLAcwMwGq5Wp3', 300, 0, 1739494362))
+    # print(hist)
+    # entry = asyncio.run(calculate_avg_entry( "7ishPuuCB8KuBeM3ePCBfqyDHMc3aQoJ4DiKwc8HT5WH", hist))
+    # print(entry)
+    # exit = asyncio.run(calculate_avg_exit("7ishPuuCB8KuBeM3ePCBfqyDHMc3aQoJ4DiKwc8HT5WH",hist))
+    # print(exit)
+    # holding = asyncio.run(calculate_avg_holding(entry, exit))
+    # with open("wtf11.json", 'w') as f:  
+    #     holding = {'holding': holding, 'entry': entry, 'exit': exit, 'hist': hist}
+    #     json.dump(holding, f, indent=4)
+    # print("current balance", asyncio.run(get_balance("7ishPuuCB8KuBeM3ePCBfqyDHMc3aQoJ4DiKwc8HT5WH","2d8gK55W35sncJZEDDzgsBCgriw17MaGuPwiDBh79c4B" )))
     # print(entry)
     # print(exit)
     # holding = calculate_avg_holding(entry_data=entry, exit_data=exit)
@@ -535,3 +575,7 @@ if __name__ == "__main__":
     #     json.dump(wtf, f, indent=4)
     #print(asyncio.run(get_wallet_portfolio("713QQRd6NCcgLFiL4WFHcs84fAHrg1BLBSkiaUfP9ckF")))
     #print(asyncio.run(get_balance("4A7kWzk5wGxXaJCQC8kw7B17hSqGK9YVCoc2yxSedfS3", "So11111111111111111111111111111111111111112")))
+    1739519388
+    1739494362
+    1739494106
+    
