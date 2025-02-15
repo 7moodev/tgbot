@@ -8,6 +8,7 @@ minimum market cap
 """
 
 import asyncio
+import json
 import time
 from typing import List
 
@@ -27,7 +28,7 @@ THRESHOLDS = {
 }
 
 
-async def get_potential_tokens():
+async def get_potential_tokens() -> list[TrendingTokenEntity]:
     # 1. Call GET /trending from birdeye
     trending_tokens_response = await birdeyeApiService.get_trending_list()
     if not trending_tokens_response["success"]:
@@ -38,13 +39,10 @@ async def get_potential_tokens():
     # minimum 24h volume > $10M
     # minimum market cap > $1M
     # via /trending_list
-    # filtered_by_volume_and_mc = list(filter(lambda x: x['volume24hUSD'] > THRESHOLDS['volume24hUSD'] and x['marketcap'] > THRESHOLDS['marketcap'], trending_tokens))
-    filtered_by_volume_and_mc = trending_tokens
-    # only log the token names
-    console.log( ">>>> _ >>>> ~ filtered_by_volume:", [x["name"] for x in filtered_by_volume_and_mc],)  # fmt: skip
+    filtered_by_volume_and_mc = list(filter(lambda x: x['volume24hUSD'] > THRESHOLDS['volume24hUSD'] and x['marketcap'] > THRESHOLDS['marketcap'], trending_tokens))
+    # filtered_by_volume_and_mc = trending_tokens
 
     # newly created within 24h
-    # token_creation_info
     filtered_by_time = []
     async with httpx.AsyncClient() as session:
         birdeyeApiService.with_session(session)
@@ -52,7 +50,8 @@ async def get_potential_tokens():
         async def get_creation_info(token):
             # console.log(">>>> _ >>>> ~ file: x_bot.py:51 ~ token:", token)
             token_creation_info = await birdeyeApiService.get_token_creation_info(
-                token["address"]
+                token["address"],
+                token["symbol"]
             )
             if (
                 token_creation_info["success"]
@@ -69,13 +68,13 @@ async def get_potential_tokens():
         ]
 
     # minimum # holder > 2000
-    # via token_overview
     async with httpx.AsyncClient() as session:
         birdeyeApiService.with_session(session)
 
         async def get_token_overview(token):
             token_overview = await birdeyeApiService.get_token_overview(
-                token["address"]
+                token["address"],
+                token["symbol"]
             )
             if token_overview == None:
                 return None
@@ -105,16 +104,19 @@ async def init(address: str = None):
     if potential_tokens == None:
         return
 
+    # log and format json with 4 spaces
+
     # 2. Call /top on tokens from (1.)
     top_holders = []
     for token in potential_tokens:
-        top_holders_response = await birdeyeApiService.get_top_holders(token["address"])
-        if not top_holders_response["success"]:
+        # continue
+        top_holders_response = await birdeyeApiService.get_top_holders(token["address"], symbol=token["symbol"], limit=3)
+        if top_holders_response == None:
             continue
-        top_holders.append(top_holders_response["data"])
+        top_holders.append(top_holders_response)
 
     # 3. Mix in Eliza
-    console.log(">>>> _ >>>> ~ top_holders:", top_holders)
+    # console.log('>>>> _ >>>> ~ file: x_bot.py:118 ~ top_holders:', top_holders)  # fmt: skip
 
     # 4. Post to X
 
