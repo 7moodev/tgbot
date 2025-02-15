@@ -2,6 +2,8 @@
 # token_overview_entity_focuses_database.py
 
 from typing import List
+
+import psycopg2
 from backend.database.utils.db_string import convert_to_snake_case
 from .postgres_database import PostgresDatabase
 from ..commands.utils.api.entities.token_entities import (
@@ -15,7 +17,7 @@ console = logger
 debug_should_log = False
 
 class TokenOverviewEntityFocusesDatabase(PostgresDatabase):
-    def __init__(self, as_array_keys = ['price', 'supply', 'mc', 'holder', 'liquidity', 'priceChange1hPercent', 'circulatingSupply', 'realMc', 'logoURI']):
+    def __init__(self, as_array_keys = ['price', 'supply', 'mc', 'holder', 'liquidity', 'priceChange1hPercent', 'circulatingSupply', 'realMc']):
         super().__init__(table_name="token_overview_entity_focuses_database")
         self.as_array_keys = as_array_keys
 
@@ -34,8 +36,8 @@ class TokenOverviewEntityFocusesDatabase(PostgresDatabase):
             price_change1h_percent FLOAT[],
             circulating_supply FLOAT[],
             real_mc FLOAT[],
-            extensions TEXT,
-            logo_uri TEXT[],
+            extensions JSONB,
+            logo_uri TEXT,
             timestamp TIMESTAMP[] DEFAULT ARRAY [CURRENT_TIMESTAMP]
         )
         """)
@@ -49,24 +51,31 @@ class TokenOverviewEntityFocusesDatabase(PostgresDatabase):
             if item[0] in self.as_array_keys:
                 entries_as_array.append(item)
             else:
-                entries.append(item)
+                if isinstance(item[1], dict):
+                    try:
+                        jsonified = psycopg2.extras.Json(item[1])
+                        entries.append((item[0], jsonified))
+                    except Exception as e:
+                        console.error(e)
+                else:
+                    entries.append(item)
 
         columns = ', '.join([convert_to_snake_case(item[0]) for item in entries])
         if len(entries_as_array) > 0:
-            columns = columns + ', '.join([convert_to_snake_case(item[0]) for item in entries_as_array])
+            columns = columns + ', ' + ', '.join([convert_to_snake_case(item[0]) for item in entries_as_array])
 
         placeholders = ', '.join(['%s'] * len(data))
 
         set_sql = ""
         on_conflict_sql = ""
         if len(self.as_array_keys) > 0:
-            unique_column_name = "token_address"
+            unique_column_name = "address"
             on_conflict_sql = f"ON CONFLICT ({unique_column_name}) DO UPDATE"
             set_sql = ",\n".join([
                 f"{convert_to_snake_case(item[0])} = COALESCE({self.table_name}.{convert_to_snake_case(item[0])}, '{{}}') || EXCLUDED.{convert_to_snake_case(item[0])}"
                 for item in entries_as_array
             ])
-            set_sql = "SET " + set_sql + f", timestamp = array_append(token_creation_info_entities_database.timestamp, CURRENT_TIMESTAMP)"
+            set_sql = "SET " + set_sql + f",\ntimestamp = array_append({self.table_name}.timestamp, CURRENT_TIMESTAMP)"
 
         query = f"""
             INSERT INTO {self.table_name} ({columns})
@@ -140,9 +149,27 @@ class TokenOverviewEntityFocusesDatabase(PostgresDatabase):
     def fetch_by_address(self, address: str) -> TokenOverviewEntityFocus:
         fetch_query = f"SELECT * FROM {self.table_name} WHERE address = '{address}'"
         record = self.fetch_one(fetch_query)
+        payload: TokenOverviewEntityFocus = {
+            "id": record[0],
+            "address": record[1],
+            "symbol": record[2],
+            "name": record[3],
+            "price": record[4],
+            "supply": record[5],
+            "mc": record[6],
+            "holder": record[7],
+            "liquidity": record[8],
+            "priceChange1hPercent": record[9],
+            "circulatingSupply": record[10],
+            "realMc": record[11],
+            "extensions": record[12],
+            "logoURI": record[13],
+            "timestamp": record[14],
+        }
         if (debug_should_log):
-            logger.log(record)
-        return record
+            logger.log(payload)
+
+        return payload
 
 tokenOverviewEntityFocusesDatabase = TokenOverviewEntityFocusesDatabase()
 
