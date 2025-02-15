@@ -169,7 +169,7 @@ async def get_wallet_trade_history(wallet:str, limit:int=100, before_time:int=0,
     
     async with aiohttp.ClientSession() as session:
         while len(res) < limit:
-            url = f"https://public-api.birdeye.so/trader/txs/seek_by_time?address={wallet}&offset={len(res)}&limit=100&tx_type=swap&before_time={before_time}&after_time={after_time}"
+            url = f"https://public-api.birdeye.so/trader/txs/seek_by_time?address={wallet}&offset={len(res)}&limit=100&tx_type=swap"
             headers = {
                 "accept": "application/json",
                 "x-chain": "solana",
@@ -535,7 +535,7 @@ async def get_all_signatures(wallet: str = None, limit: int = None):
 
 if __name__ == "__main__":
     start_time = time.time()
-    hist = asyncio.run(get_wallet_trade_history('9ep2dgRSyDzCthaxgZezpHDcYcEheVEaLAcwMwGq5Wp3', 5000, 0, 1739494362))
+    hist = asyncio.run(get_wallet_trade_history('9ep2dgRSyDzCthaxgZezpHDcYcEheVEaLAcwMwGq5Wp3', 5000, 0, 1712805992))
     print(hist)
     entry = asyncio.run(calculate_avg_entry( "7ishPuuCB8KuBeM3ePCBfqyDHMc3aQoJ4DiKwc8HT5WH", hist))
     print(entry)
