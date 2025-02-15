@@ -6,6 +6,9 @@ from dataclasses import dataclass
 from typing import List, Optional
 from enum import Enum
 import tweepy
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 load_dotenv()
 

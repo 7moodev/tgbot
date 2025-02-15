@@ -6,6 +6,7 @@ from backend.commands.utils.constants import root_path
 
 class LogService:
     def __init__(self, name: str = "DEFAULT"):
+        self.name = name
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.DEBUG)
 
@@ -23,12 +24,12 @@ class LogService:
         self.logger.addHandler(self.file_handler)
 
     def log(self, message: str, *args):
-        message = str(message) + " " + " ".join(map(str, args))
+        message = f">>> [LOG][{self.name}] " + str(message) + " " + " ".join(map(str, args))
         self.logger.debug(message.strip())
         print(message)
 
     def error(self, message: str, *args):
-        message = str(message) + " " + " ".join(map(str, args))
+        message = f">>> [ERROR][{self.name}] " + str(message) + " " + " ".join(map(str, args))
         self.logger.error(message.strip())
         print(message)
 
