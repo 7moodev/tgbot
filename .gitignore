@@ -13,3 +13,8 @@ venv/
 
 logs/tgbot.log
 .coverage
+
+backend/commands/outputs/holders
+backend/commands/outputs/overview
+backend/commands/outputs/token_creation_info
+backend/commands/outputs/trending
