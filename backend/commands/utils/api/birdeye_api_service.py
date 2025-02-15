@@ -1,12 +1,18 @@
 import asyncio
 import json
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import httpx
 import os
 import requests
 import time
 
+
 from typing import List, Optional
+
+from backend.database.token_creation_info_entities_database import (
+    tokenCreationInfoEntitiesDatabase,
+)
 
 
 from .entities.api_entity import ApiRequestParams, ApiResponse, DEFAULT_PARAMS
@@ -15,7 +21,9 @@ from .entities.token_entities import (
     TokenHolderEntity,
     TokenHolderItems,
     TokenOverviewEntity,
+    TokenOverviewEntityFocus,
     TokenTrendingList,
+    convert_token_overview_to_focus,
 )
 from .entities.history_price_entities import (
     HistoricalPriceUnixEntity,
@@ -31,11 +39,14 @@ from .entities.wallet_entities import (
 )
 from ..services.log_service import LogService
 from ....database.token_holders_database import tokenHoldersDatabase
-from ....database.token_overviews_database import tokenOverviewsDatabase
+from ....database.token_overview_entity_focuses_database import tokenOverviewEntityFocusesDatabase
+from ....database.trending_token_entities_database import trendingTokenEntityDatabase
 
 load_dotenv()
 
 birdeyeapi = os.environ.get("birdeyeapi")
+DEBUG_JSON_API_RESPONSE = os.environ.get("DEBUG_JSON_API_RESPONSE")
+
 CHAIN = "solana"
 BASE_URL = "https://public-api.birdeye.so"
 SEMAPHORE_NUM = 10
@@ -62,6 +73,9 @@ class BirdeyeApiService:
             "x-chain": CHAIN,
             "X-API-KEY": birdeyeapi,
         }
+
+    def with_session(self, session: httpx.AsyncClient) -> None:
+        self.session = session
 
     """
     ===========================================       ===========================================
@@ -242,24 +256,44 @@ class BirdeyeApiService:
     """
 
     async def get_token_overview(
-        self, token: str | None = None
+        self, token: str | None = None, symbol: str | None = None
     ) -> ApiResponse[TokenOverviewEntity] | None:
         """
         https://docs.birdeye.so/reference/get_defi-token-overview
         Get the overview of a token
         Costs 20 credits per request
         """
-        logger.log("Getting token overview for", token)
         if token is None:
             return None
 
-        params = dict_to_query_params({"address": token})
-        url = f"{BASE_URL}/defi/token_overview?{params}"
-        response = requests.get(url, headers=self.headers)
-        logger.log("Returning token overview for", token)
-        payload: ApiResponse[TokenOverviewEntity] = response.json()
-        tokenOverviewsDatabase.insert_token_overview(payload.data)
-        return payload
+        logger.log("Getting token overview for", symbol, token)
+        response: ApiResponse[TokenOverviewEntity] = None
+        file_path = f"backend/commands/outputs/overview/token_overview_{token}.json"
+        if os.path.exists(file_path) and DEBUG_JSON_API_RESPONSE:
+            response = json.load(open(file_path, "r"))
+            converted = convert_token_overview_to_focus(data = response["data"])
+            tokenOverviewEntityFocusesDatabase.insert(converted)
+
+        else:
+            params = dict_to_query_params({"address": token})
+            url = f"{BASE_URL}/defi/token_overview?{params}"
+            caller = self.session or requests
+
+            try:
+                pass
+                response_raw: requests.Response = await caller.get(url, headers=self.headers)
+                response = response_raw.json()
+            except Exception as e:
+                logger.log("Error getting token overview for", symbol, token, ":Birdeye")
+                return None
+            finally:
+                converted = convert_token_overview_to_focus(response["data"])
+                tokenOverviewEntityFocusesDatabase.insert(converted)
+                with open(file_path, "w") as f:
+                    json.dump(response, f, indent=4)
+
+        logger.log("Returning token overview for", symbol, token)
+        return response
 
     async def get_top_holders_with_constraint(
         self, token: str = None, min_value_usd: float = None, price: float = None
@@ -319,7 +353,7 @@ class BirdeyeApiService:
         return all_holders
 
     async def get_token_creation_info(
-        self, token: str = None
+        self, token: str = None, symbol: str = None
     ) -> ApiResponse[TokenCreationInfoEntity]:
         """{
         "data": {
@@ -332,27 +366,50 @@ class BirdeyeApiService:
             "blockHumanTime": "2024-12-11T01:02:54.000Z"
         },"success": true}
         """
-        logger.log("Getting token creation info for", token)
+        logger.log("Getting token creation info for: ", symbol, token)
 
-        params = dict_to_query_params({"address": token})
-        url = f"{BASE_URL}/defi/token_creation_info?{params}"
+        response = None
+        file_path = f"backend/commands/outputs/token_creation_info/token_creation_info_{token}.json"
+        if os.path.exists(file_path) and DEBUG_JSON_API_RESPONSE:
+            try:
+                from_d = tokenCreationInfoEntitiesDatabase.fetch_by_address(token)
+                response: ApiResponse[TokenCreationInfoEntity] = {
+                    "data": from_d,
+                    "success": True
+                }
+            except:
+                response = json.load(open(file_path, "r"))
+            tokenCreationInfoEntitiesDatabase.insert(response["data"])
 
-        try:
-            response = requests.get(url, headers=self.headers)
-            console.log(">>>> _ >>>> ~ response:", response)
-            return response.json()["data"]
-        except Exception as e:
-            logger.log("Error getting token creation info for", token, ":Birdeye")
-            return None
+        else:
+            params = dict_to_query_params({"address": token})
+            url = f"{BASE_URL}/defi/token_creation_info?{params}"
+
+            try:
+                caller = self.session or requests
+                response_raw = await caller.get(url, headers=self.headers)
+                response: ApiResponse[TokenCreationInfoEntity] = response_raw.json()
+
+                console.log('>>>> B >>>> ~ file: birdeye_api_service.py:366 ~ response:', response)  # fmt: skip
+                tokenCreationInfoEntitiesDatabase.insert(response["data"])
+
+                with open(file_path, "w") as f:
+                    json.dump(response, f, indent=4)
+
+            except Exception as e:
+                logger.log("Error getting token creation info for", symbol, token, ":Birdeye")
+                return None
+
+        return response
 
     async def get_top_holders(
-        self, token: str = None, limit=None
-    ) -> ApiResponse[TokenHolderItems]:
+        self, token: str = None, limit=None, symbol: str = None
+    ) -> TokenHolderItems | None:
         """
         Get the top holders of a token, costs 50 credits per request
         Iterates through all holders using offset pagination
         """
-        logger.log("Getting top holders for", token, "with limit", limit)
+        logger.log("Getting top holders for", symbol, token, "with limit", limit)
         if limit == 0:
             if os.path.exists("top_holders.json"):
                 with open("top_holders.json", "r") as file:
@@ -362,97 +419,124 @@ class BirdeyeApiService:
         if token is None:
             return True
 
-        offset = 0
-        batch_size = 100 if limit is None or limit > 100 else limit
-        res = []
+        file_path = f"backend/commands/outputs/holders/token_holders_{token}.json"
+        if os.path.exists(file_path) and DEBUG_JSON_API_RESPONSE:
+            all_holders = json.load(open(file_path, "r"))
+            tokenHoldersDatabase.batch_insert(all_holders)
 
-        while True:
-            params = dict_to_query_params(
-                {
-                    "address": token,
-                    "offset": offset,
-                    "limit": batch_size,
-                }
-            )
-            url = f"{BASE_URL}/defi/v3/token/holder?{params}"
-            response: ApiResponse[TokenHolderItems] = requests.get(
-                url, headers=self.headers
-            )
-            if response.status_code != 200:
-                if response.json()["success"] == False:
-                    return None
-            batch: List[TokenHolderEntity] = response.json()["data"]["items"]
-            tokenHoldersDatabase.batch_insert_token_holders(batch)
-            if (
-                not batch
-                or batch[0]["amount"] == "0"
-                or batch[len(batch) - 1]["amount"] == "0"
-            ):
-                if len(all_holders) == 0:
-                    all_holders.extend(batch)
-                break
-            # logger.log(len(batch))
-            all_holders.extend(batch)
-            # If we have a limit and reached/exceeded it, trim and break
-            if limit is not None and len(all_holders) >= limit:
-                all_holders = all_holders[:limit]
-                break
-            # If this batch was smaller than requested, we've got all holders
-            if len(batch) < batch_size:
-                break
-            # Only continue if we need all holders
-            if limit is None or len(all_holders) < limit:
-                offset += batch_size
-            else:
-                break
+        else:
+            offset = 0
+            batch_size = 100 if limit is None or limit > 100 else limit
+            while True:
+                params = dict_to_query_params(
+                    {
+                        "address": token,
+                        "offset": offset,
+                        "limit": batch_size,
+                    }
+                )
+                url = f"{BASE_URL}/defi/v3/token/holder?{params}"
+                response: ApiResponse[TokenHolderItems] = requests.get(
+                    url, headers=self.headers
+                )
+                if response.status_code != 200:
+                    if response.json()["success"] == False:
+                        return None
+                batch: List[TokenHolderEntity] = response.json()["data"]["items"]
+                tokenHoldersDatabase.batch_insert(batch)
+                if (
+                    not batch
+                    or batch[0]["amount"] == "0"
+                    or batch[len(batch) - 1]["amount"] == "0"
+                ):
+                    if len(all_holders) == 0:
+                        all_holders.extend(batch)
+                    break
+                # logger.log(len(batch))
+                all_holders.extend(batch)
+                # If we have a limit and reached/exceeded it, trim and break
+                if limit is not None and len(all_holders) >= limit:
+                    all_holders = all_holders[:limit]
+                    break
+                # If this batch was smaller than requested, we've got all holders
+                if len(batch) < batch_size:
+                    break
+                # Only continue if we need all holders
+                if limit is None or len(all_holders) < limit:
+                    offset += batch_size
+                else:
+                    break
+
+        res = []
         for holder in all_holders:
             res.append(holder["owner"])
         try:
-            with open("top_holders.json", "w") as file:
+            with open(file_path, "w") as file:
                 json.dump(all_holders, file, indent=4)
             logger.log(
-                f"Saved top {len(res)} holders for {type} to 'top_holders.json'."
+                f"Saved top {len(res)} holders for {type} to '{file_path}'."
             )
         except Exception as e:
-            logger.log(f"Error saving to 'top_holders.json': {e}")
-        logger.log("Returning top holders for", token)
+            logger.log(f"Error saving to '{file_path}': {e}")
+
+        logger.log("Returning top holders for", symbol, token)
         logger.log("Returned", len(all_holders), "holders")
         return all_holders
 
-    async def get_trending_list(
-        self, params: ApiRequestParams = None
-    ) -> ApiResponse[TokenTrendingList]:
+    async def get_trending_list( self, params: ApiRequestParams = None) -> ApiResponse[TokenTrendingList]:
         """
         sort_by string required Defaults to rank, values: rank, volume24hUSD, liquidity
         sort_type string required Defaults to asc, values: asc, desc
         offset integer Defaults to 0
         limit integer 1 to 20 Defaults to 20
         """
-        if params is None:
-            params = {
-                "sort_by": "rank",
-                "sort_type": "desc",
-                "offset": 0,
-                "limit": 2,
-            }
-        else:
-            if params.get("sort_by") is None:
-                params["sort_by"] = "rank"
-            if params.get("sort_type") is None:
-                params["sort_type"] = "desc"
-            if params.get("offset") is None:
-                params["offset"] = 0
-            if params.get("limit") is None:
-                params["limit"] = 2
+        response = None
+        if DEBUG_JSON_API_RESPONSE:
+            response = json.load(
+                open(
+                    "backend/commands/outputs/trending/trending_list_sort_by=volume24hUSD&sort_type=desc&offset=0&limit=20_2025-02-12 12:30:04.json",
+                    "r",
+                )
+            )
+            trendingTokenEntityDatabase.batch_insert(response["data"]["tokens"])
 
-        params_str = dict_to_query_params(params)
-        console.log(">>>> _ >>>> ~ params_str:", params_str)
-        url = f"{BASE_URL}/defi/token_trending?{params_str}"
-        console.log(">>>> _ >>>> ~ url:", url)
-        console.log(">>>> _ >>>> ~ self.headers:", self.headers)
-        response_raw = requests.get(url, headers=self.headers)
-        response = response_raw.json()
-        console.log(">>>> _ >>>> ~ response:", response)
+        else:
+            if params is None:
+                params = {
+                    # "sort_by": "rank",
+                    # "sort_type": "asc",
+                    "sort_by": "volume24hUSD",
+                    "sort_type": "desc",
+                    "offset": 0,
+                    "limit": 20,
+                }
+            else:
+                if params.get("sort_by") is None:
+                    params["sort_by"] = "rank"
+                if params.get("sort_type") is None:
+                    params["sort_type"] = "desc"
+                if params.get("offset") is None:
+                    params["offset"] = 0
+                if params.get("limit") is None:
+                    params["limit"] = 10
+
+            params_str = dict_to_query_params(params)
+            url = f"{BASE_URL}/defi/token_trending?{params_str}"
+            response_raw = requests.get(url, headers=self.headers)
+            response: ApiResponse[TokenTrendingList] = response_raw.json()
+
+            if not response["success"]:
+                return response
+
+            # response = "['hi']"
+            trendingTokenEntityDatabase.batch_insert(response["data"]["tokens"])
+            timestamp = datetime.now().replace(microsecond=0)
+            with open(
+                f"backend/commands/outputs/trending/trending_list_{params_str}_{timestamp}.json",
+                "w",
+            ) as f:
+                json.dump(response, f, indent=4)
+
         return response
 
     """
@@ -517,7 +601,6 @@ class BirdeyeApiService:
 
 
 def dict_to_query_params(params: dict) -> str:
-    console.log(">>>> _ >>>> ~ params:", params)
     """
     Convert a dictionary to a query parameter string.
 
@@ -534,13 +617,16 @@ def dict_to_query_params(params: dict) -> str:
     return "&".join(f"{key}={value}" for key, value in params.items())
 
 
+birdeyeApiService = BirdeyeApiService()
+
 if __name__ == "__main__":
 
     async def call():
         service = BirdeyeApiService()
         # response = await service.get_token_overview( "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9") # fmt: skip
         # response = await service.get_trending_list()  # fmt: skip
-        response = await service.get_token_creation_info("8GrhA85mcgnaMjyXZ8Hdicayu7byXxbKyEd5UjLnpump")  # fmt: skip
+        # response = await service.get_token_creation_info("8GrhA85mcgnaMjyXZ8Hdicayu7byXxbKyEd5UjLnpump")  # fmt: skip
+        response = await service.get_token_creation_info("6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN")  # fmt: skip
         console.log(">>>> _ >>>> ~ response:", response)
 
     asyncio.run(call())

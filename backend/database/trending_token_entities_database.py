@@ -2,6 +2,7 @@
 # trending_token_entities_database.py
 
 from typing import List
+from backend.database.database_entity_adapter import DatabaseEntityAdapter
 from backend.database.utils.db_string import convert_to_snake_case
 from .postgres_database import PostgresDatabase
 from ..commands.utils.api.entities.token_entities import TrendingTokenEntity
@@ -128,12 +129,16 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
             logger.log(record)
         return record
 
-
-trendingTokenEntityDatabase = TrendingTokenEntityDatabase()
+unique_key = ["address"]
+as_array_keys = ["liquidity", "volume24hUSD", "volume24hChangePercent", "fdv", "marketcap", "rank", "price", "price24hChangePercent"]  # fmt: skip
+entity = TrendingTokenEntity
+trendingTokenEntityDatabase = DatabaseEntityAdapter(
+    entity, as_array_keys=as_array_keys, unique_key=unique_key
+)
 
 # Example usage
 if __name__ == "__main__":
-    db = TrendingTokenEntityDatabase()
+    db = trendingTokenEntityDatabase
     db.dangerousely_drop_table()
     db.create_table()
     # db.insert(Mock_TokenOverviewItems)

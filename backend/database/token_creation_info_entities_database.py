@@ -2,6 +2,7 @@
 # token_creation_info_entities_database.py
 
 from typing import List
+from backend.database.database_entity_adapter import DatabaseEntityAdapter
 from backend.database.utils.db_string import convert_to_snake_case
 from .postgres_database import PostgresDatabase
 from ..commands.utils.api.entities.token_entities import (
@@ -134,23 +135,30 @@ class TokenCreationInfoEntitiesDatabase(PostgresDatabase):
     def fetch_by_address(self, address: str) -> TokenCreationInfoEntity:
         fetch_query = f"SELECT * FROM {self.table_name} WHERE token_address = '{address}'"
         record = self.fetch_one(fetch_query)
-        
-        payload = TokenCreationInfoEntity(
-            txHash=record[1],
-            slot=record[2],
-            tokenAddress=record[3],
-            decimals=record[4],
-            owner=record[5],
-            blockUnixTime=record[6],
-            blockHumanTime=record[7]
-        )
-        
+
+        payload: TokenCreationInfoEntity = {
+            "id": record[0],
+            "txHash": record[1],
+            "slot": record[2],
+            "tokenAddress": record[3],
+            "decimals": record[4],
+            "owner": record[5],
+            "blockUnixTime": record[6],
+            "blockHumanTime": record[7],
+            "timestamp": record[8],
+        }
+
         if (debug_should_log):
             logger.log(payload)
 
         return payload
 
-tokenCreationInfoEntitiesDatabase = TokenCreationInfoEntitiesDatabase()
+unique_key = ["tokenAddress"]
+as_array_keys = []
+entity = TokenCreationInfoEntity
+tokenCreationInfoEntitiesDatabase = DatabaseEntityAdapter(
+    entity, as_array_keys=as_array_keys, unique_key=unique_key
+)
 
 mock_data: TokenCreationInfoEntity = {
 

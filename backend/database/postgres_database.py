@@ -98,7 +98,7 @@ class PostgresDatabase:
                 cursor.execute(query, params)
                 return cursor.lastrowid
         except Exception as e:
-            logger.error(e)
+            logger.error("execute_query", e)
         finally:
             if self.conn:
                 cursor.close()
@@ -120,7 +120,7 @@ class PostgresDatabase:
                 cursor = conn.cursor()
                 cursor.execute(create_table_sql)
         except Exception as e:
-            logger.error(e)
+            logger.error("batch_execute_query", e)
         finally:
             if self.conn:
                 cursor.close()
@@ -134,7 +134,7 @@ class PostgresDatabase:
                 rows = cursor.fetchall()
                 return rows
         except Exception as e:
-            logger.error(e)
+            logger.error("fetch_all", e)
 
     def fetch_one(self, query: str, params: tuple = ()) -> tuple:
         try:
@@ -144,7 +144,7 @@ class PostgresDatabase:
                 row = cursor.fetchone()
                 return row
         except Exception as e:
-            logger.error(e)
+            logger.error("fetch_one", e)
         finally:
             if self.conn:
                 cursor.close()
@@ -158,7 +158,7 @@ class PostgresDatabase:
                     f"ALTER TABLE {table_name} ADD COLUMN {column_definition}"
                 )
         except Exception as e:
-            logger.error(e)
+            logger.error("add_column", e)
         finally:
             if self.conn:
                 cursor.close()
