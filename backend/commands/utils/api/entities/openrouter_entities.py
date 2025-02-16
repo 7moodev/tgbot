@@ -52,6 +52,8 @@ class Prediction(TypedDict):
     type: Literal['content']
     content: str
 
+OpenRouterResponseFormat = Optional[Dict[str, str]]
+
 class OpenRouterRequest(TypedDict):
     # Either "messages" or "prompt" is required
     messages: Optional[List[OpenRouterMessage]]
@@ -62,7 +64,7 @@ class OpenRouterRequest(TypedDict):
 
     # Allows to force the model to produce specific output format.
     # See models page and note on this docs page for which models support it.
-    response_format: Optional[Dict[str, str]]  # Assuming { type: 'json_object' } is represented as {'type': 'json_object'}
+    response_format: OpenRouterResponseFormat  # Assuming { type: 'json_object' } is represented as {'type': 'json_object'}
 
     stop: Optional[Union[str, List[str]]]
     stream: Optional[bool] # Enable streaming

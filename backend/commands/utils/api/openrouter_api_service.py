@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from backend.commands.utils.api.entities.openrouter_entities import OpenRouterMessage, OpenRouterResponse
+from backend.commands.utils.api.entities.openrouter_entities import OpenRouterMessage, OpenRouterResponse, OpenRouterResponseFormat
 
 
 load_dotenv()
@@ -28,14 +28,15 @@ class OpenRouterApiClient():
             'Content-Type': 'application/json',
         },
 
-    async def chat(self, messages: OpenRouterMessage) -> OpenRouterResponse:
+    async def chat(self, messages: list[OpenRouterMessage], response_format: OpenRouterResponseFormat = None) -> OpenRouterResponse:
         url = f"{self.base_url}/v1/chat/completions"
         response = await requests.post(
             url=url,
             headers=self.headers,
             data=json.dumps({
                 "model": MODEL,
-                "messages": messages
+                "messages": messages,
+                "response_format": response_format
             })
         )
         return response

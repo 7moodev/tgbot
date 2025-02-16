@@ -1,4 +1,14 @@
 ---
+
+---
+A calculation:
+1. Getting trending tokens created within 24h with 1000+ holders
+2. Goal: Get 10 tokens fulfilling (1.)
+3. call GET /defi/token_trending with limit 20 (which is the maximum)
+4. On those 20 tokens call GET defi/token_overview (30cu) and GET /defi/token_creation_info (30cu) --> 60*20 = 1200CU
+5. Repeat 5 times to get the goal (2.) --> 6000CU
+6. Tokens fulfilling (2.) I quite rare, so we have to potentially repeat 50 times --> 60000CU
+---
 >>>> _ >>>> ~ file: holders_avg_entry_price.py:10 ~ wallet: 9ep2dgRSyDzCthaxgZezpHDcYcEheVEaLAcwMwGq5Wp3
 >>>> _ >>>> ~ file: holders_avg_entry_price.py:10 ~ token: 7ishPuuCB8KuBeM3ePCBfqyDHMc3aQoJ4DiKwc8HT5WH
 >>>> _ >>>> ~ file: holders_avg_entry_price.py:10 ~ token_creation_time: 1712805992
