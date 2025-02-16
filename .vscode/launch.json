@@ -11,6 +11,12 @@
       "module": "backend.cli.cli"
     },
     {
+      "name": "Python Debugger: Module: XBot",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "backend.xBot.x_bot"
+    },
+    {
       "name": "Python Debugger: Run backend.cli.cli as module",
       "type": "debugpy",
       "request": "launch",
