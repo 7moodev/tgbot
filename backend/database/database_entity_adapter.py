@@ -197,12 +197,28 @@ if __name__ == "__main__":
         if (debug_should_log):
             logger.log("Inserted data successfully")
 
+    def ensure_missing_field_is_null(self, data: dict):
+        """
+        Ensure that all fields are present in the data dictionary, because
+        Bug: Endpoint returns data with missing fields
+        """
+        for field in self.dataclass_type.__dataclass_fields__.keys():
+            if field not in data:
+                data[field] = None
+        # ensure fields are in the correct order
+        ordered = {k: data[k] for k in self.dataclass_type.__dataclass_fields__.keys()}
+        return ordered
+
     def batch_insert(self, data_list: list[Any]):
         if not data_list:
             return
 
         values = []
+        expected_num_of_fields = len(self.dataclass_type.__dataclass_fields__.items())
         for data in data_list:
+            if not len(data.items()) == expected_num_of_fields:
+                data = self.ensure_missing_field_is_null(data)
+
             entries = []
             entries_as_array = []
             for item in data.items():
@@ -246,7 +262,8 @@ if __name__ == "__main__":
                 data_values = data_values + [[entry[1]] for entry in entries_as_array]
             values.append(tuple(data_values))
 
-        self.batch_execute_query(query, values)
+        for i in range(0, len(values), 10):
+            self.batch_execute_query(query, values[i:i + 10])
 
         if (debug_should_log):
             logger.log("Batch inserted data successfully")
