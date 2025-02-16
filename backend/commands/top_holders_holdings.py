@@ -10,6 +10,7 @@ import json
 import asyncio
 import httpx
 from typing import List, Dict, Any
+from backend.commands.utils.api.birdeye_api_service import birdeyeApiService
 birdeyeapi = os.environ.get('birdeyeapi')
 API_RATE_LIMIT = 15  # Max API calls per second
 BATCH_SIZE = 15  # Maximum requests allowed per batch (aligned with rate limit)
@@ -136,14 +137,15 @@ async def get_top_holders_holdings(
     :return: List of processed holder information
     """
     # These functions are assumed to be defined elsewhere in your code
+    file_path = f"backend/commands/outputs/top_holders_holdings_{token}.json"
     if limit == 0:
-        with open("backend/commands/outputs/top_holders_holdings.json", 'r') as f:
+        with open(file_path, 'r') as f:
             return json.load(f)
     total_supply = await get_token_supply(token)
     top_holders = await get_top_holders(token, limit)
     token_creation_info = await get_token_creation_info(token)
     # Fetch token overview
-    token_overview = await get_token_overview(token)
+    token_overview = await birdeyeApiService.get_token_overview(token)
     if token_overview:
         token_overview = token_overview['data']
         token_info = {
@@ -177,7 +179,7 @@ async def get_top_holders_holdings(
         processed_holders = await asyncio.gather(*holder_tasks)
     
     # Combine results
-    with open("backend/commands/outputs/top_holders_holdings.json", 'w') as f:
+    with open(file_path, 'w') as f:
         json.dump({"token_info": token_info,"items": processed_holders}, f, indent=4)
         
     return {"token_info": token_info,"items": processed_holders}
