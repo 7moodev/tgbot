@@ -273,6 +273,7 @@ class BirdeyeApiService:
             response = json.load(open(file_path, "r"))
             converted = convert_token_overview_to_focus(data = response["data"])
             tokenOverviewEntityFocusesDatabase.insert(converted)
+            response["data"] = converted
 
         else:
             params = dict_to_query_params({"address": token})
@@ -280,17 +281,19 @@ class BirdeyeApiService:
             caller = self.session or requests
 
             try:
-                pass
                 response_raw: requests.Response = await caller.get(url, headers=self.headers)
                 response = response_raw.json()
+                pass
             except Exception as e:
                 logger.log("Error getting token overview for", symbol, token, ":Birdeye")
                 return None
             finally:
-                converted = convert_token_overview_to_focus(response["data"])
-                tokenOverviewEntityFocusesDatabase.insert(converted)
-                with open(file_path, "w") as f:
-                    json.dump(response, f, indent=4)
+                if not response == None:
+                    converted = convert_token_overview_to_focus(response["data"])
+                    tokenOverviewEntityFocusesDatabase.insert(converted)
+                    response["data"] = converted
+                    with open(file_path, "w") as f:
+                        json.dump(response, f, indent=4)
 
         logger.log("Returning token overview for", symbol, token)
         return response
@@ -353,7 +356,7 @@ class BirdeyeApiService:
         return all_holders
 
     async def get_token_creation_info(
-        self, token: str = None, symbol: str = None
+        self, token: str = None, symbol: str = None, local = False
     ) -> ApiResponse[TokenCreationInfoEntity]:
         """{
         "data": {
@@ -370,16 +373,20 @@ class BirdeyeApiService:
 
         response = None
         file_path = f"backend/commands/outputs/token_creation_info/token_creation_info_{token}.json"
-        if os.path.exists(file_path) and DEBUG_JSON_API_RESPONSE:
+        if os.path.exists(file_path) and (DEBUG_JSON_API_RESPONSE and local):
             try:
                 from_d = tokenCreationInfoEntitiesDatabase.fetch_by_address(token)
                 response: ApiResponse[TokenCreationInfoEntity] = {
                     "data": from_d,
                     "success": True
                 }
+                # console.log('>>>> _ >>>> ~ file: birdeye_api_service.py:379 ~ response:', response)  # fmt: skip
+                items = response['data'].items()
+                # console.log('>>>> _ >>>> ~ file: birdeye_api_service.py:384 ~ items:', items)  # fmt: skip
             except:
                 response = json.load(open(file_path, "r"))
-            tokenCreationInfoEntitiesDatabase.insert(response["data"])
+            if not response["data"] == None:
+                tokenCreationInfoEntitiesDatabase.insert(response["data"])
 
         else:
             params = dict_to_query_params({"address": token})
@@ -390,14 +397,13 @@ class BirdeyeApiService:
                 response_raw = await caller.get(url, headers=self.headers)
                 response: ApiResponse[TokenCreationInfoEntity] = response_raw.json()
 
-                console.log('>>>> B >>>> ~ file: birdeye_api_service.py:366 ~ response:', response)  # fmt: skip
-                tokenCreationInfoEntitiesDatabase.insert(response["data"])
-
+                if not response["data"] == None:
+                    tokenCreationInfoEntitiesDatabase.insert(response["data"])
                 with open(file_path, "w") as f:
                     json.dump(response, f, indent=4)
 
             except Exception as e:
-                logger.log("Error getting token creation info for", symbol, token, ":Birdeye")
+                logger.log("Error getting token creation info for", symbol, token,e, ":Birdeye")
                 return None
 
         return response
@@ -494,31 +500,33 @@ class BirdeyeApiService:
         if DEBUG_JSON_API_RESPONSE:
             response = json.load(
                 open(
-                    "backend/commands/outputs/trending/trending_list_sort_by=volume24hUSD&sort_type=desc&offset=0&limit=20_2025-02-12 12:30:04.json",
+                    "backend/commands/outputs/trending/trending_list_limit=20&offset=0&sort_by=rank&sort_type=asc_2025-02-16 22:19:30.json",
                     "r",
                 )
             )
-            trendingTokenEntityDatabase.batch_insert(response["data"]["tokens"])
+            tokens = response["data"]["tokens"]
+            print(len(tokens))
+            # trendingTokenEntityDatabase.batch_insert(tokens)
 
         else:
+            default_params = {
+                "sort_by": "rank", "sort_type": "asc",
+                # "sort_by": "volume24hUSD", "sort_type": "desc",
+                "offset": 0,
+                "limit": 20,
+            }
+
             if params is None:
-                params = {
-                    # "sort_by": "rank",
-                    # "sort_type": "asc",
-                    "sort_by": "volume24hUSD",
-                    "sort_type": "desc",
-                    "offset": 0,
-                    "limit": 20,
-                }
+                params = default_params
             else:
                 if params.get("sort_by") is None:
-                    params["sort_by"] = "rank"
+                    params["sort_by"] = default_params['sort_by']
                 if params.get("sort_type") is None:
-                    params["sort_type"] = "desc"
+                    params["sort_type"] = default_params['sort_type']
                 if params.get("offset") is None:
-                    params["offset"] = 0
+                    params["offset"] = default_params['offset']
                 if params.get("limit") is None:
-                    params["limit"] = 10
+                    params["limit"] = default_params['limit']
 
             params_str = dict_to_query_params(params)
             url = f"{BASE_URL}/defi/token_trending?{params_str}"

@@ -8,9 +8,13 @@ from enum import Enum
 import tweepy
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+from backend.commands.utils.services.log_service import LogService
+
+# logging.basicConfig(level=logging.DEBUG)
 
 load_dotenv()
+
+console = LogService("XAPI")
 
 BASE_URL = "https://api.x.com/2/tweets"
 BEARER_TOKEN = os.environ.get("X_BEARER_TOKEN")
@@ -70,7 +74,9 @@ class PostTweetPayload:
 
 
 def post_tweet(tweet_text):
+    console.log('>>>> _ >>>> ~ file: x_api_service.py:73 ~ tweet_text:', tweet_text)  # fmt: skip
     payload: PostTweetPayload = {"reply_settings": "subscribers", "text": tweet_text}
+    console.log('>>>> _ >>>> ~ file: x_api_service.py:75 ~ payload:', payload)  # fmt: skip
     response_raw = client.create_tweet(
         reply_settings=payload["reply_settings"], text=payload["text"]
     )

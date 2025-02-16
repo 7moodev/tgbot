@@ -604,6 +604,7 @@ class TrendingTokenForX(TypedDict):
     symbol: Optional[str]
     marketcap: Optional[float]
     num_of_holders: Optional[int]
+    num_of_whales: Optional[int]
 
 
 @dataclass
@@ -640,18 +641,18 @@ class TokenTrendingList:
 
 def convert_token_overview_to_focus(data: TokenOverviewEntity) -> TokenOverviewEntityFocus:
     converted: TokenOverviewEntityFocus = {
-        "address": data["address"],
-        "symbol": data["symbol"],
-        "name": data["name"],
-        "price": data["price"],
-        "supply": data["supply"],
-        "mc": data["mc"],
-        "holder": data["holder"],
-        "liquidity": data["liquidity"],
-        "priceChange1hPercent": data["priceChange1hPercent"],
-        "circulatingSupply": data["circulatingSupply"],
-        "realMc": data["realMc"],
-        "extensions": data["extensions"],
-        "logoURI": data["logoURI"],
+        "address": data.get("address", None),
+        "symbol": data.get("symbol", None),
+        "name": data.get("name", None),
+        "price": data.get("price", None),
+        "supply": data.get("supply", None),
+        "mc": data.get("mc", None),
+        "holder": data.get("holder", None),
+        "liquidity": data.get("liquidity", None),
+        "priceChange1hPercent": data.get("priceChange1hPercent", None),
+        "circulatingSupply": data.get("circulatingSupply", None),
+        "realMc": data.get("realMc", None),
+        "extensions": data.get("extensions", None),
+        "logoURI": data.get("logoURI", None),
     }
     return converted
