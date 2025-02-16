@@ -75,7 +75,8 @@ class PostTweetPayload:
 
 def post_tweet(tweet_text):
     console.log('>>>> _ >>>> ~ file: x_api_service.py:73 ~ tweet_text:', tweet_text)  # fmt: skip
-    payload: PostTweetPayload = {"reply_settings": "subscribers", "text": tweet_text}
+    payload: PostTweetPayload = {"text": tweet_text}
+    # payload: PostTweetPayload = {"reply_settings": "following", "text": tweet_text}
     console.log('>>>> _ >>>> ~ file: x_api_service.py:75 ~ payload:', payload)  # fmt: skip
     response_raw = client.create_tweet(
         reply_settings=payload["reply_settings"], text=payload["text"]
