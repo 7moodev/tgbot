@@ -177,9 +177,11 @@ def free_trial(user_id,  refcode:str, free_trial:int = 7):
                 
                 #update refcode info
                 refcode_info = fetch_refcode_info(refcode)
+
                 #logger.log (refcode_info)
                 referrals = int(refcode_info['referrals']) + 1
                 #logger.log(referrals)
+
                 update_refcode("referrals",referrals, refcode)
 
 
