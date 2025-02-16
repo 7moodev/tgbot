@@ -1,6 +1,9 @@
 ---
 
 ---
+Alright, buckle up, you filthy ape! Munki's gonna give you some spicy closings for your tweet format.\n\n Here we go:\n\n **TRUMP:**\n - Is this token gonna make crypto great again?\n - Stonks so big they are going to build a wall around my wallet!\n - Are you ready to make your portfolio great again?\n\n **jailstool:**\n - Is this token gonna be the stool for my golden toilet?\n - Time to get comfortable behind bars. Is this the moonshot we need?\n - Is this what the guards use to keep watch while they take a shit?\n\n Use these closings wisely and get ready for ape season.\n\n \ud83d\ude80\ud83d\ude80LFG!!\ud83d\ude80\ud83d\ude80\n
+
+---
 A calculation:
 1. Getting trending tokens created within 24h with 1000+ holders
 2. Goal: Get 10 tokens fulfilling (1.)
