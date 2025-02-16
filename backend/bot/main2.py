@@ -81,8 +81,8 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
             user_id = update.message.chat.id
 
             try: 
-                response = free_trial(user_id, refcode=token_address, free_trial=7)
-                await update.message.reply_text(f'{response}')
+                holder_message = free_trial(user_id, refcode=token_address, free_trial=7)
+                await update.message.reply_text(f'{holder_message}')
                 return
  
             except Exception as e:
