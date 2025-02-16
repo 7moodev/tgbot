@@ -92,8 +92,6 @@ async def generate_x_message(symbols: list[str], local = False) -> OpenRouterRes
             ]
         }
     ]
-    return
-    console.log('>>>> _ >>>> ~ file: x_openrouter_api.py:70 ~ messages:', messages)  # fmt: skip
     response = await openRouterApiClient.chat(messages)
     console.log('>>>> _ >>>> ~ file: x_openrouter_api.py:73 ~ response:', response)  # fmt: skip
 
