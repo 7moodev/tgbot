@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, TypedDict
 
 
 @dataclass
@@ -598,6 +598,12 @@ class TrendingTokenEntity:
     rank: int
     price: float
     price24hChangePercent: float
+
+class TrendingTokenForX(TypedDict):
+    address: Optional[str]
+    symbol: Optional[str]
+    marketcap: Optional[float]
+    num_of_holders: Optional[int]
 
 
 @dataclass
