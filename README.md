@@ -13,14 +13,20 @@ are you gonna make it finally, anon?
   source .env
 
 ### Run
-python backend/bot/main2.py
+python -m backend.bot.main2
 
 ### Useful
 - check if your bot is running
   - https://api.telegram.org/bot<token>/getMe
+
+#### Logs
 - Heroku
   - heroku logs --tail -a munki-tg-bot
   - heroku logs --num 1500 -a munki-tg-bot
+  - git push heroku main
+  - heroku ps:scale web=n -app $APP_NAME
+
+#### Package Management
 - freeze requirements.txt after installing a package
   - pip freeze > requirements.txt
 
