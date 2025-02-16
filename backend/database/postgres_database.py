@@ -84,7 +84,7 @@ class PostgresDatabase:
             return self.conn
 
         except (Exception, psycopg2.Error) as error:
-            logger.log("Error:", error)
+            logger.error("db_connection:", error)
             if self.conn:
                 self.conn.rollback()
 
@@ -111,8 +111,12 @@ class PostgresDatabase:
             "INSERT INTO test (id, v1, v2) VALUES %s",
             [(1, 2, 3), (4, 5, 6), (7, 8, 9)])
 
+        Note: Only supports up to 10 entries in params
         """
-        execute_values(cursor, query, params)
+        try:
+            execute_values(cursor, query, params)
+        except Exception as e:
+            logger.error("batch_execute_query", e)
 
     def create_table(self, create_table_sql: str):
         try:

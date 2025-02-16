@@ -115,7 +115,7 @@ class TrendingTokenEntityDatabase(PostgresDatabase):
 
     def fetch_all(self) -> List[TrendingTokenEntity]:
         fetch_query = f"SELECT * FROM {self.table_name}"
-        records = self.fetch_all(fetch_query)
+        records = super().fetch_all(fetch_query)
         if debug_should_log:
             logger.log("Data from {self.table_name} table:")
             for record in records:
@@ -139,8 +139,11 @@ trendingTokenEntityDatabase = DatabaseEntityAdapter(
 # Example usage
 if __name__ == "__main__":
     db = trendingTokenEntityDatabase
-    db.dangerousely_drop_table()
-    db.create_table()
+    # db.dangerousely_drop_table()
+    # db.create_table()
+    # fetched = db.fetch_by_address("6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN")
+    fetched = db.fetch_all()
+    console.log('>>>> _ >>>> ~ file: trending_token_entities_database.py:145 ~ fetched:', fetched)  # fmt: skip
     # db.insert(Mock_TokenOverviewItems)
 
 # python -m backend.database.trending_token_entities_database

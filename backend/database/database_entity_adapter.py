@@ -77,11 +77,10 @@ class DatabaseEntityAdapter(PostgresDatabase):
         for field_name, field_info in self.dataclass_type.__dataclass_fields__.items():
             key_list = list(self.dataclass_type.__dataclass_fields__.keys())
             field_assignments.append(f"\"{field_name}\": record[{key_list.index(field_name) + 1}]")
-        field_assignments_str = ",\n            ".join(field_assignments)
 
         payload = {
             "id": record[0],
-            **{field_name: record[key_list.index(field_name) + 1] for field_name in self.dataclass_type.__dataclass_fields__.keys()},
+            **{field_name: record[key_list.index(field_name) + 1][-1] if isinstance(record[key_list.index(field_name) + 1], list) else record[key_list.index(field_name) + 1] for field_name in self.dataclass_type.__dataclass_fields__.keys() },
             "timestamp": record[len(self.dataclass_type.__dataclass_fields__) + 1],
         }
         return payload
@@ -148,6 +147,8 @@ if __name__ == "__main__":
     def insert(self, data: TokenOverviewEntityFocus):
         entries = []
         entries_as_array = []
+        if data == None:
+            return
         for item in data.items():
             if item[0] in self.as_array_keys:
                 entries_as_array.append(item)
@@ -269,13 +270,14 @@ if __name__ == "__main__":
             logger.log("Batch inserted data successfully")
 
     def fetch_all(self) -> list[Any]:
-        fetch_query = f"SELECT * FROM {{self.table_name}}"
-        records = self.fetch_all(fetch_query)
+        fetch_query = f"SELECT * FROM {self.table_name}"
+        records = super().fetch_all(fetch_query)
         if (debug_should_log):
-            logger.log("Data from {{self.table_name}} table:")
+            logger.log(f"Data from {self.table_name} table:")
             for record in records:
                 logger.log(record)
-        return records
+        payload = [self.generate_fetch_one_payload(record) for record in records]
+        return payload
 
     def fetch_by_address(self, address: str):
         fetch_query = f"SELECT * FROM {self.table_name} WHERE {convert_to_snake_case(self.unique_key[0])} = '{address}'"
