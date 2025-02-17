@@ -26,7 +26,8 @@ THRESHOLDS = {
 }
 TRENDING_TOKENS_AMOUNT = 5
 FETCH_LIMIT = 20
-OFFSET_LIMIT = 400
+OFFSET_START = 0
+OFFSET_LIMIT = OFFSET_START + 200
 # OFFSET_LIMIT = FETCH_LIMIT
 TOP_HOLDER_AMOUNT = 50
 MINIMUM_DOLLAR_AMOUNT = 10
@@ -34,7 +35,7 @@ MINIMUM_DOLLAR_AMOUNT = 10
 async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTokenEntity]:
     console.log(" START ----- 1.1.1 Get trending tokens ----------------------------------------------------------------------------------------------")  # fmt: skip
     filtered_trending_tokens: list[TrendingTokenForX] = []
-    offset = 0
+    offset = OFFSET_START
     while len(filtered_trending_tokens) < limit:
         if offset >= OFFSET_LIMIT:
             break
