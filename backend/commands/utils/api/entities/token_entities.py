@@ -6,7 +6,6 @@ from typing import List, Optional, TypedDict
 @dataclass
 class TokenEntity:
     address: str
-    decimals: int
     name: str
     symbol: str
 
@@ -566,7 +565,7 @@ Mock_TokenOverviewItems = {}
 
 
 @dataclass
-class TrendingTokenEntity:
+class TrendingTokenEntity(TokenEntity):
     """
     {
         "address": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
@@ -605,6 +604,31 @@ class TrendingTokenForX(TypedDict):
     marketcap: Optional[float]
     num_of_holders: Optional[int]
     num_of_whales: Optional[int]
+
+@dataclass
+class TrendingTokenForXAnlysis():
+    address: Optional[str]
+    symbol: Optional[str]
+    marketcap: Optional[float]
+    volume24hUSD: Optional[float]
+
+    def convert_from_trending(self, token: TrendingTokenEntity):
+        payload: TrendingTokenForXAnlysis = {
+            "address": token.get("address", None),
+            "symbol": token.get("symbol", None),
+            "marketcap": token.get("marketcap", None),
+            "volume24hUSD": token.get("volume24hUSD", None),
+        }
+        return payload
+
+    def convert_from_overview(self, token: TokenOverviewEntity):
+        payload: TrendingTokenForXAnlysis = {
+            "address": token.get("address", None),
+            "symbol": token.get("symbol", None),
+            "marketcap": token.get("mc", None),
+            "volume24hUSD": token.get("v24hUSD", None),
+        }
+        return payload
 
 
 @dataclass

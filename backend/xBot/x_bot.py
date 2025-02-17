@@ -14,16 +14,19 @@ import json
 import time
 from typing import Any, Tuple
 
+from dotenv import load_dotenv
 import httpx
 from backend.bot.parser import check_noteworthy
 from backend.commands.top_holders_holdings import get_top_holders_holdings
 from backend.commands.utils.api.birdeye_api_service import birdeyeApiService
 from backend.commands.utils.api.entities.api_entity import ApiRequestParams
-from backend.commands.utils.api.entities.token_entities import TrendingTokenEntity, TrendingTokenForX
+from backend.commands.utils.api.entities.token_entities import TokenEntity, TrendingTokenEntity, TrendingTokenForX, TrendingTokenForXAnlysis
 from backend.commands.utils.api.x_api_service import post_tweet
 from backend.commands.utils.services.log_service import LogService
 from backend.database.trending_token_entities_database import trendingTokenEntityDatabase
 from .x_openrouter_api import generate_x_message
+
+load_dotenv()
 
 logger = LogService("XBOT")
 console = logger
@@ -79,18 +82,13 @@ async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTo
         console.log('>>>> _ >>>> ~ file: x_bot.py:80 ~ offset:', offset)  # fmt: skip
     console.log('>>>> _ >>>> ~ file: x_bot.py:46 ~ offset:', offset)  # fmt: skip
 
-    timestamp = datetime.now().replace(microsecond=0)
-    file_path = f"backend/commands/outputs/trending/1_trending_tokens_list_{timestamp}.json"
-    with open(file_path, "w") as f:
-        json.dump(filtered_trending_tokens, f, indent=4)
-
     return filtered_trending_tokens
 
 async def get_filtered_by_time(tokens: list[TrendingTokenEntity]) -> list[TrendingTokenEntity]:
     async with httpx.AsyncClient() as session:
         birdeyeApiService.with_session(session)
 
-        async def get_creation_info(token):
+        async def get_creation_info(token: TokenEntity):
             token_creation_info = await birdeyeApiService.get_token_creation_info(
                 token["address"],
                 token["symbol"],
@@ -118,7 +116,7 @@ async def get_filtered_by_holders(tokens: list[TrendingTokenEntity]) -> list[Tre
     async with httpx.AsyncClient() as session:
         birdeyeApiService.with_session(session)
 
-        async def get_token_overview(token):
+        async def get_token_overview(token: TokenEntity):
             token_overview = await birdeyeApiService.get_token_overview(
                 token["address"],
                 token["symbol"]
@@ -177,18 +175,45 @@ def extract_json(input: str):
     return as_json
 
 
+def save_to_json(trending_tokens, file_name: str = ''):
+    timestamp = datetime.now().replace(microsecond=0)
+    # file_path = f"backend/commands/outputs/{file_name}_{timestamp}.json"
+    file_path = f"backend/commands/outputs/{file_name}.json"
+    with open(file_path, "w") as f:
+        json.dump(trending_tokens, f, indent=4) # fmt: skip
 
+def get_from_json(file_name: str = ''): # fmt: skip
+    with open(f"backend/commands/outputs/{file_name}.json", "r") as f:
+        as_json = json.load(f)
+    return as_json
 
-async def init(address: str = None):
+def exists_json(file_name: str = ''):
+    try:
+        with open(f"backend/commands/outputs/{file_name}.json", "r") as f:
+            return True
+    except FileNotFoundError:
+        return False
+
+async def init(address: str = None, local = False):
     # 1. Get trending tokens
     console.log("1. Get trending tokens ---------------------------------------------------------------------------------------------------------")  # fmt: skip
-    if address:
-        trending_tokens
+    console.log('>>>> _ >>>> ~ file: x_bot.py:195 ~ address:', address)  # fmt: skip
+    trending_tokens: list[Any] = []
+    if local and exists_json("x_bot/1_trending_tokens"):
+        trending_tokens = get_from_json("x_bot/1_trending_tokens")
+    elif address:
+        maybe_token = await birdeyeApiService.get_token_overview(address)
+        maybe_token = TrendingTokenForXAnlysis().convert_from_trending(maybe_token)
+        if maybe_token:
+            trending_tokens = [maybe_token]
         pass
     else:
         trending_tokens = await get_trending_tokens()
     if trending_tokens == None:
         return
+
+    save_to_json(trending_tokens, "x_bot/1_trending_tokens")
+    return
 
     # 2. Call /top on tokens from (1.)
     console.log("2. Call /top on tokens from (1.) ---------------------------------------------------------------------------------------------------------")  # fmt: skip
@@ -242,7 +267,7 @@ async def init(address: str = None):
 
 
     # 4. Post to X
-    console.log("4. Post to X ---------------------------------------------------------------------------------------------------------")  # fmt: skip
+    console.log("4. Post to X ---------------------------------------------------------------------------------------------------------")
 #     message = """9 smart wallets just aped $BATCAT. The current MC is $3.271m, superhero squad mission incoming!
 
 # MUNKI"""
@@ -250,6 +275,7 @@ async def init(address: str = None):
 
 
 if __name__ == "__main__":
-    asyncio.run(init())
+    asyncio.run(init("5naj2assh2tnjvzuxwzrqhqwovnuawkj1jzaiafsvg95", local = True))
+    # asyncio.run(init())
 
 # python -m backend.xBot.x_bot

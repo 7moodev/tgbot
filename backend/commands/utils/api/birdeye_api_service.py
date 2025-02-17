@@ -6,15 +6,11 @@ import httpx
 import os
 import requests
 import time
-
-
 from typing import List, Optional
 
 from backend.database.token_creation_info_entities_database import (
     tokenCreationInfoEntitiesDatabase,
 )
-
-
 from .entities.api_entity import ApiRequestParams, ApiResponse, DEFAULT_PARAMS
 from .entities.token_entities import (
     TokenCreationInfoEntity,
@@ -73,6 +69,7 @@ class BirdeyeApiService:
             "x-chain": CHAIN,
             "X-API-KEY": birdeyeapi,
         }
+        self.session = None
 
     def with_session(self, session: httpx.AsyncClient) -> None:
         self.session = session
@@ -278,14 +275,16 @@ class BirdeyeApiService:
         else:
             params = dict_to_query_params({"address": token})
             url = f"{BASE_URL}/defi/token_overview?{params}"
-            caller = self.session or requests
-
             try:
-                response_raw: requests.Response = await caller.get(url, headers=self.headers)
+                if self.session:
+                    response_raw: requests.Response = await self.session.get(url, headers=self.headers)
+                else:
+                    response_raw: requests.Response = requests.get(url, headers=self.headers)
+
                 response = response_raw.json()
                 pass
             except Exception as e:
-                logger.log("Error getting token overview for", symbol, token, ":Birdeye")
+                logger.log("Error getting token overview for", symbol, token, e, ":Birdeye")
                 return None
             finally:
                 if not response == None:
@@ -393,8 +392,10 @@ class BirdeyeApiService:
             url = f"{BASE_URL}/defi/token_creation_info?{params}"
 
             try:
-                caller = self.session or requests
-                response_raw = await caller.get(url, headers=self.headers)
+                if self.session:
+                    response_raw = await self.session.get(url, headers=self.headers)
+                else:
+                    response_raw = requests.get(url, headers=self.headers)
                 response: ApiResponse[TokenCreationInfoEntity] = response_raw.json()
 
                 if not response["data"] == None:
