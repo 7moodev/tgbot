@@ -124,7 +124,7 @@ def grant_access(user_id):
 
             if info['referred_by'] is not None: 
         
-                referee_id = info['referred_by'][4:]
+                referee_id = info['referred_by'][REF_PREFIX_LENGTH:]
                 print ("referred by: "+ referee_id)
                 ref_info = get_user_info(referee_id)
                 referrals = int(ref_info['referrals']) + 1
