@@ -12,8 +12,9 @@ from .security import *
 from .userdb_handler import *
 import itertools
 import json
+
 # Solana RPC endpoint
-refcode_list = ['MUUUN']
+from .constants import *
 #heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')
 quicknoderpc1 = os.environ.get('solrpc1')
@@ -97,7 +98,7 @@ def get_user_info( user_id):
     user_id = str(user_id)
     df = fetch_user_by_id(user_id)
     df = df.set_index('user_id')
-    print (df)
+ 
 
     row_as_dict = df.loc[user_id].to_dict()
     row_as_dict ["user_id"] = user_id
@@ -123,7 +124,7 @@ def grant_access(user_id):
 
             if info['referred_by'] is not None: 
         
-                referee_id = info['referred_by'][4:]
+                referee_id = info['referred_by'][REF_PREFIX_LENGTH:]
                 print ("referred by: "+ referee_id)
                 ref_info = get_user_info(referee_id)
                 referrals = int(ref_info['referrals']) + 1
@@ -135,6 +136,14 @@ def grant_access(user_id):
         else:
             return response
 # free trial access 
+
+@db_connection
+def get_refcodes_list(cursor):
+    cursor.execute("SELECT refcode FROM refcodes")
+    records = cursor.fetchall()
+    refcodes_list = [x[0] for x in records]
+    return refcodes_list
+
 def free_trial(user_id,  refcode:str, free_trial:int = 7):
     info = get_user_info( user_id)
 
@@ -145,6 +154,7 @@ def free_trial(user_id,  refcode:str, free_trial:int = 7):
         return response
 
     else:
+        refcode_list = get_refcodes_list()
         if refcode in refcode_list: 
             if refcode in info['refcodes']:
                 response = 'You have already used this code.'
@@ -156,7 +166,7 @@ def free_trial(user_id,  refcode:str, free_trial:int = 7):
                 refcodes.append(refcode)
                 refcodes = json.dumps(refcodes)
 
-                update_user('refcodes', refcodes, user_id)
+                update_user('refcodes', refcodes, str(user_id))
 
                 expiration_date = datetime.now() + timedelta(days=free_trial)
                 
@@ -167,9 +177,11 @@ def free_trial(user_id,  refcode:str, free_trial:int = 7):
                 
                 #update refcode info
                 refcode_info = fetch_refcode_info(refcode)
-                print (refcode_info)
+
+                #logger.log (refcode_info)
                 referrals = int(refcode_info['referrals']) + 1
-                print (referrals)
+                #logger.log(referrals)
+
                 update_refcode("referrals",referrals, refcode)
 
 

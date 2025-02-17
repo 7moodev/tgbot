@@ -283,8 +283,18 @@ async def wallets_age_command(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 async def free_trial_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id
-    
-    if len(context.args) != 1:
+    refcode_list = get_refcodes_list()
+    info = get_user_info(user_id)
+
+
+
+    if (check_access(user_id)):
+        time_left = datetime.strptime( info['expiration_date'],"%Y-%m-%d %H:%M:%S.%f")
+        time_left=time_left.strftime("%B %d, %Y %I:%M%p %Z")
+        response = f'You have an active subscription expiring {time_left}'
+        await update.message.reply_text(f'{response}')
+
+    elif len(context.args) != 1:
             await update.message.reply_text("Please send me a Code.")
             context.user_data['awaiting_refcode'] = True
             return
@@ -292,7 +302,7 @@ async def free_trial_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
     elif context.args[0] not in refcode_list:
         await update.message.reply_text("Invalid Referral Code! Please try another one.")
     else:
-       response = free_trial(user_id, refcode=context.args[0], free_trial=7)
+       response = free_trial(str(user_id), refcode=context.args[0], free_trial=7)
        await update.message.reply_text(f'{response}')
     
 async def userid_command(update: Update, context: ContextTypes.DEFAULT_TYPE):

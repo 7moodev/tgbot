@@ -23,8 +23,6 @@ if not TOKEN:
 PORT = int(os.environ.get('PORT', 8443))
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
 
-refcodes_list = ['MUUUN']
-
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
     query = update.callback_query
@@ -73,7 +71,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYPE):
         context.user_data['awaiting_token_address'] = False
         token_address = update.message.text.strip()
-
+        command = ''
+        # Store the token address in user_data
+        holder_message = None
+        # Check if 'top_holders_started' exists and is set, otherwise default to False
+        timenow = float(time.time())
         # Validate token addresses
         if context.user_data.get('awaiting_refcode', False):
             context.user_data['awaiting_refcode'] = False
@@ -81,8 +83,8 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
             user_id = update.message.chat.id
 
             try: 
-                response = free_trial(user_id, refcode=token_address, free_trial=7)
-                await update.message.reply_text(f'{response}')
+                holder_message = free_trial(str(user_id), refcode=token_address, free_trial=7)
+                await update.message.reply_text(f'{holder_message}')
                 return
  
             except Exception as e:
@@ -102,11 +104,7 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
             await update.message.reply_text("Invalid token address. Please try again with a valid address.")
             return
 
-        command = ''
-        # Store the token address in user_data
-        holder_message = None
-        # Check if 'top_holders_started' exists and is set, otherwise default to False
-        timenow = float(time.time())
+
         if context.user_data.get('top_holders_started', False):
             context.user_data['top_holders_started'] = False
             command = 'top'
@@ -281,6 +279,7 @@ async def set_bot_commands(application: Application):
         BotCommand("referral", "Get your referral link."),
         BotCommand("sub", "Check your subscription status."),
         BotCommand("userid", "Get your user id."),
+        BotCommand("trial", "Get a free trial."),
         BotCommand("help", "Display available commands."),
     ]
     await application.bot.set_my_commands(commands)
