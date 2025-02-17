@@ -5,10 +5,16 @@ from .utils.token_utils import get_rpc, get_top_holders, get_token_overview, get
 from .utils.wallet_utils import get_wallet_age, calculate_avg_entry,calculate_avg_holding, get_wallet_trade_history, calculate_avg_exit, get_wallet_age_readable
 import time
 import json
+def months_difference(unix_time):
+    current_time = time.time()
+    difference_in_seconds = current_time - unix_time
+    difference_in_days = difference_in_seconds / 86400  # 86400 seconds in a day
+    difference_in_months = -(-difference_in_days // 30)  # Ceiling division
+    return int(difference_in_months)
 
-async def get_holder_avg_entry_price(wallet:str ,token: str, token_creation_time: int = 0):
+async def get_holder_avg_entry_price(wallet:str , limit:int ,token: str, token_creation_time: int = 0):
     print(f"Getting avg entry price of holder {wallet} for token", token)
-    trade_history = await get_wallet_trade_history(wallet=wallet, limit = 1000, after_time=token_creation_time)#to change to limit
+    trade_history = await get_wallet_trade_history(wallet=wallet, limit = limit, after_time=token_creation_time)#to change to limit
     if trade_history is None:
         return None, None, None
     if len(trade_history) == 0:
@@ -58,7 +64,7 @@ async def get_holders_avg_entry_price(token: str, limit:int):
         holder_address = holder['owner']
         holding_amount = holder['ui_amount']
         
-        avg_raw_entry_price, avg_raw_exit_price, avg_actual_holding_price = await get_holder_avg_entry_price(holder_address, token, token_creation_time)
+        avg_raw_entry_price, avg_raw_exit_price, avg_actual_holding_price = await get_holder_avg_entry_price(holder_address,min(1000*months_difference(token_creation_time), 10000), token, token_creation_time)
         if avg_raw_entry_price is None:
                 res.append({'count': count,'holder': holder_address,'holding': holding_amount,'label': 'No Trades/Funded', 'avg_raw_entry_price': None, 'avg_raw_exit_price': None, 'avg_actual_holding_price': None})
             #implement logic to check where the tokens came from
