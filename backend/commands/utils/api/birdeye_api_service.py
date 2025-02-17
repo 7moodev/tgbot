@@ -287,7 +287,7 @@ class BirdeyeApiService:
                 logger.log("Error getting token overview for", symbol, token, e, ":Birdeye")
                 return None
             finally:
-                if not response == None:
+                if response != None and response["data"]:
                     converted = convert_token_overview_to_focus(response["data"])
                     tokenOverviewEntityFocusesDatabase.insert(converted)
                     response["data"] = converted
