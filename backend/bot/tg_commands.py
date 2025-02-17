@@ -148,6 +148,11 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
             else:
                 log_message = message[0]
 
+            if len(message) == 0:
+                await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                await update.message.reply_text("Try harder. Nothing spicy here.")
+                return
+
             try: 
                 for parts in message:
                 
