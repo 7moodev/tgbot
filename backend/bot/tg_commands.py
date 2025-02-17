@@ -141,17 +141,26 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
             token_address = context.args[0]
             wait_message = await update.message.reply_text("Munki is scratching his butt, please wait...")
             time_now = float(time.time())
-            message = await process_ca_and_post_to_x(token_address, limit )
+
+            async def custom_log(message):
+                await context.bot.edit_message_text(
+                    chat_id=update.effective_chat.id,
+                    message_id=wait_message.message_id,
+                    text=escape_markdown(message)
+                , parse_mode='MarkdownV2', disable_web_page_preview=True)
+
+            message = await process_ca_and_post_to_x(token_address, limit, log_to_client=custom_log)
             # message = ['36 whales have aped $DOGE state. The current MC is $1267.2m, barking mad gains soon!.\n\n Munki', '50 whales have aped $SafeMoon. The current MC is $8212.4m, safely mooning soon!.\n\n Munki']
 
+            log_message = 'n/a'
             if type(message) == str:
                 log_message = message
             elif message and len(message) > 0:
                 log_message = message[0]
 
-            if len(message) == 0:
+            if message == None or len(message) == 0:
                 await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
-                await update.message.reply_text("Try harder. Nothing spicy here.")
+                await update.message.reply_text("No bananas found, this ca is boring, try another?")
                 return
 
             try: 
