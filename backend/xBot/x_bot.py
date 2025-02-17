@@ -54,7 +54,7 @@ THRESHOLD = THRESHOLD_THREE
 TRENDING_TOKENS_AMOUNT = 5
 FETCH_LIMIT = 20
 OFFSET_START = 0
-OFFSET_LIMIT = OFFSET_START + 200
+OFFSET_LIMIT = OFFSET_START + 1000
 # OFFSET_LIMIT = FETCH_LIMIT
 TOP_HOLDER_AMOUNT = 50
 MINIMUM_DOLLAR_AMOUNT = 10
@@ -183,7 +183,6 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
     if False and local and exists_json("x_bot/1_2_tokens_for_with_holders"):
         trending_tokens = get_from_json("x_bot/1_2_tokens_for_with_holders")
     else:
-        amount_of_holders_list = []
         for token in trending_tokens:
             top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=TOP_HOLDER_AMOUNT)
             # top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=0) # =0 for debugging, returns json
@@ -191,17 +190,14 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
                 continue
             amount_of_whales = get_amount_of_whales(top_holders_holdings)
             if amount_of_whales >= THRESHOLD['whales']:
-                amount_of_holders_list.append(amount_of_whales)
-                trending_tokens_with_holders: list[TrendingTokenForX] = [
-                    {
-                        "address": token["address"],
-                        "symbol": token["symbol"],
-                        "marketcap": token["marketcap"],
-                        "num_of_whales": amount_of_holders_list[i],
-                    }
-                    for i, token in enumerate(trending_tokens)
-                ]
-        trending_tokens_with_holders = [token for token in trending_tokens_with_holders if token["num_of_whales"] > 0]
+                potential = {
+                    "address": token["address"],
+                    "symbol": token["symbol"],
+                    "marketcap": token["marketcap"],
+                    "num_of_whales": amount_of_whales
+                }
+                trending_tokens_with_holders.append(potential)
+
         save_to_json(trending_tokens_with_holders, "x_bot/1_2_tokens_for_with_holders")
 
     # trending_tokens_with_holders=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0}]
