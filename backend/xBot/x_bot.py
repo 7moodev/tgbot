@@ -13,6 +13,7 @@ from backend.commands.utils.services.log_service import LogService
 from backend.database.trending_token_entities_database import trendingTokenEntityDatabase
 from backend.xBot.x_bot_utils import exists_json, extract_json, get_amount_of_whales, get_from_json, get_name_symbol_address, save_to_json
 from .x_openrouter_api import generate_x_message
+import backend.xBot.x_bot_utils as x_bot_utils
 
 load_dotenv()
 
@@ -239,6 +240,7 @@ async def default_log_to_client(message: str):
     console.log(message)
 
 async def process_ca_and_post_to_x(address: str = None, local = False, log_to_client: Any = default_log_to_client):
+    x_bot_utils.log_tracker_map = {}
     """
     Process tokens and post to X.
     - If no address is provided, get trending tokens.
@@ -264,7 +266,7 @@ async def process_ca_and_post_to_x(address: str = None, local = False, log_to_cl
 
 
 if __name__ == "__main__":
-    asyncio.run(process_ca_and_post_to_x("JBupE7ARrzMJTTZrDvZEg7PgJtnbm7LLvsNmAQfdfr6a", local = True))
+    asyncio.run(process_ca_and_post_to_x("DAqeqPJtH4WQESxgkShuU3cHXB1ZUz9iKSzTUFKPpump", local = True))
     # asyncio.run(process_ca_and_post_to_x())
 
 # python -m backend.xBot.x_bot
