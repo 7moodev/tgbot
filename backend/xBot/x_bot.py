@@ -169,7 +169,7 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
             converted = TrendingTokenForXAnlysis().convert_from_overview(token_overview_response['data'])
             if converted:
                 trending_tokens = [converted]
-                await log_to_client(f"Checking on {converted['symbol']} for ya")
+                await log_to_client(f"Checking on {converted['symbol']} for ya...")
     else:
         trending_tokens = await get_trending_tokens()
     if trending_tokens == None:
@@ -201,7 +201,7 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
                 trending_tokens_with_holders.append(potential)
                 await log_to_client(f"WHALES FOUND: >>{amount_of_whales}<<, weeeeeeeeeee")
             else:
-                await log_to_client(f"{amount_of_whales} whales?! But not enough for the threshold: {THRESHOLD['whales']}")
+                await log_to_client(f"{amount_of_whales} whales?! Not enough for the threshold: {THRESHOLD['whales']}")
 
         save_to_json(trending_tokens_with_holders, "x_bot/1_2_2_tokens_for_with_holders")
 
