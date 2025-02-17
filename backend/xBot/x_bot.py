@@ -1,29 +1,16 @@
-"""
-token_info from tokens database
-
-minimum 24h volume
-minimum # holders
-minimum market cap
-
-"""
-
 import asyncio
-from dataclasses import dataclass
-from datetime import datetime
-import json
 import time
-from typing import Any, Tuple
+from typing import Any
 
 from dotenv import load_dotenv
 import httpx
-from backend.bot.parser import check_noteworthy
 from backend.commands.top_holders_holdings import get_top_holders_holdings
 from backend.commands.utils.api.birdeye_api_service import birdeyeApiService
-from backend.commands.utils.api.entities.api_entity import ApiRequestParams
 from backend.commands.utils.api.entities.token_entities import TokenEntity, TrendingTokenEntity, TrendingTokenForX, TrendingTokenForXAnlysis
 from backend.commands.utils.api.x_api_service import post_tweet
 from backend.commands.utils.services.log_service import LogService
 from backend.database.trending_token_entities_database import trendingTokenEntityDatabase
+from backend.xBot.x_bot_utils import exists_json, get_amount_of_whales, get_from_json, save_to_json
 from .x_openrouter_api import generate_x_message
 
 load_dotenv()
@@ -39,15 +26,10 @@ THRESHOLDS = {
 }
 TRENDING_TOKENS_AMOUNT = 5
 FETCH_LIMIT = 20
-OFFSET_LIMIT = 100
+OFFSET_LIMIT = 300
 # OFFSET_LIMIT = FETCH_LIMIT
 TOP_HOLDER_AMOUNT = 50
 MINIMUM_DOLLAR_AMOUNT = 10
-
-"""
-X number of whales just aped $BONK. The current MC is $XYZ
-"""
-
 
 async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTokenEntity]:
     filtered_trending_tokens: list[TrendingTokenForX] = []
@@ -141,71 +123,18 @@ async def get_filtered_by_holders(tokens: list[TrendingTokenEntity]) -> list[Tre
 
     return filtered_by_holders
 
-def get_amount_of_holders(top_holder_holdings: list[Any]) -> Tuple[int, int]:
-    amount_of_whales = 0
-    amount_of_smart_wallets = 0
-    top_holders= top_holder_holdings['items']
-    noteworthy = check_noteworthy(top_holders)
-    for holder in noteworthy:
-        dollar_token_share = holder['net_worth']- holder['net_worth_excluding']
-        if dollar_token_share > 100_000:
-            amount_of_whales += 1
-        elif dollar_token_share > MINIMUM_DOLLAR_AMOUNT:
-            amount_of_smart_wallets += 1
-    return amount_of_whales, amount_of_smart_wallets
-
-def extract_json(input: str):
-    index = input.find("\"symbols\"")
-    while index != -1 and input[index] != "{":
-        index = input[:index].rfind("{")
-
-    end_index = input.rfind("}")
-    if end_index != -1:
-        input = input[:end_index + 1]
-    if index != -1 and end_index != -1:
-        json_str = input[index:end_index+1]
-        try:
-            as_json = json.loads(json_str)
-            logger.log("as_json: ", as_json)
-        except json.JSONDecodeError as e:
-            logger.log("JSONDecodeError: ", e)
-    else:
-        logger.log("No JSON found")
-
-    return as_json
-
-
-def save_to_json(trending_tokens, file_name: str = ''):
-    timestamp = datetime.now().replace(microsecond=0)
-    # file_path = f"backend/commands/outputs/{file_name}_{timestamp}.json"
-    file_path = f"backend/commands/outputs/{file_name}.json"
-    with open(file_path, "w") as f:
-        json.dump(trending_tokens, f, indent=4) # fmt: skip
-
-def get_from_json(file_name: str = ''): # fmt: skip
-    with open(f"backend/commands/outputs/{file_name}.json", "r") as f:
-        as_json = json.load(f)
-    return as_json
-
-def exists_json(file_name: str = ''):
-    try:
-        with open(f"backend/commands/outputs/{file_name}.json", "r") as f:
-            return True
-    except FileNotFoundError:
-        return False
-
-async def init(address: str = None, local = False):
-    # 1. Get trending tokens
-    console.log("1. Get trending tokens ---------------------------------------------------------------------------------------------------------")  # fmt: skip
+async def get_trending_tokens_with_holders(address: str, local = False) -> TrendingTokenForXAnlysis:
+    console.log("1.1 Get trending tokens ---------------------------------------------------------------------------------------------------------")  # fmt: skip
     console.log('>>>> _ >>>> ~ file: x_bot.py:195 ~ address:', address)  # fmt: skip
     trending_tokens: list[Any] = []
     if local and exists_json("x_bot/1_trending_tokens"):
         trending_tokens = get_from_json("x_bot/1_trending_tokens")
     elif address:
-        maybe_token = await birdeyeApiService.get_token_overview(address)
-        maybe_token = TrendingTokenForXAnlysis().convert_from_trending(maybe_token)
-        if maybe_token:
-            trending_tokens = [maybe_token]
+        token_overview_response = await birdeyeApiService.get_token_overview(address)
+        if token_overview_response:
+            converted = TrendingTokenForXAnlysis().convert_from_overview(token_overview_response['data'])
+            if converted:
+                trending_tokens = [converted]
         pass
     else:
         trending_tokens = await get_trending_tokens()
@@ -213,69 +142,90 @@ async def init(address: str = None, local = False):
         return
 
     save_to_json(trending_tokens, "x_bot/1_trending_tokens")
-    return
 
     # 2. Call /top on tokens from (1.)
-    console.log("2. Call /top on tokens from (1.) ---------------------------------------------------------------------------------------------------------")  # fmt: skip
-    amount_of_holders_list = []
-    for token in trending_tokens:
-        top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=TOP_HOLDER_AMOUNT)
-        # top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=0) # =0 for debugging, returns json
-        if top_holders_holdings == None:
-            continue
-        holders = get_amount_of_holders(top_holders_holdings)
-        amount_of_holders_list.append(holders)
-    console.log('>>>> _ >>>> ~ file: x_bot.py:154 ~ amount_of_whales_list:', amount_of_holders_list)  # fmt: skip
-    tokens_for_x: list[TrendingTokenForX] = [
-        {
-            "address": token["address"],
-            "symbol": token["symbol"],
-            "marketcap": token["marketcap"],
-            "num_of_whales": amount_of_holders_list[i][0],
-            "num_of_holders": amount_of_holders_list[i][1]
-        }
-        for i, token in enumerate(trending_tokens)
-    ]
-    timestamp = datetime.now().replace(microsecond=0)
-    with open(f"backend/commands/outputs/trending/2_tokens_for_x_{timestamp}.json", "w") as f:
-        json.dump(tokens_for_x, f, indent=4)
+    console.log("1.2 Call /top on tokens from (1.) ---------------------------------------------------------------------------------------------------------")  # fmt: skip
+    tokens_for_x: list[TrendingTokenForX] = []
+    if False and local and exists_json("x_bot/2_tokens_for_x"):
+        trending_tokens = get_from_json("x_bot/2_tokens_for_x")
+    else:
+        amount_of_holders_list = []
+        for token in trending_tokens:
+            top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=TOP_HOLDER_AMOUNT)
+            # top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=0) # =0 for debugging, returns json
+            if top_holders_holdings == None:
+                continue
+            amount_of_whales = get_amount_of_whales(top_holders_holdings)
+            amount_of_holders_list.append(amount_of_whales)
+        console.log('>>>> _ >>>> ~ file: x_bot.py:154 ~ amount_of_whales_list:', amount_of_holders_list)  # fmt: skip
+        tokens_for_x: list[TrendingTokenForX] = [
+            {
+                "address": token["address"],
+                "symbol": token["symbol"],
+                "marketcap": token["marketcap"],
+                "num_of_whales": amount_of_holders_list[i],
+            }
+            for i, token in enumerate(trending_tokens)
+        ]
+        tokens_for_x = [token for token in tokens_for_x if token["num_of_whales"] > 0]
 
-    # tokens_for_x=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0, 'num_of_holders': 9}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0, 'num_of_holders': 0}]
+    save_to_json(tokens_for_x, "x_bot/2_tokens_for_x")
 
-    # 3. Mix in AI formulation
-    console.log("3. Mix in AI formulation ---------------------------------------------------------------------------------------------------------")  # fmt: skip
-    symbols = [t["symbol"] for t in tokens_for_x]
-    ai_response = await generate_x_message(symbols, local = False)
-    response_content = ai_response["choices"][0]['message']['content']
-    as_json = extract_json(response_content)
+    # tokens_for_x=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0}]
+    return tokens_for_x
 
-    closing = as_json["closings"]
-    closing = ['superhero squad mission incoming!', 'rocket fuel for cosmos!']
-    """
-    X whales just aped $BONK. The current MC is $XYZ
-    """
+async def mix_in_ai(tokens_for_x: TrendingTokenForXAnlysis, local = False) -> TrendingTokenForXAnlysis:
+    console.log("2. Mix in AI formulation ---------------------------------------------------------------------------------------------------------")  # fmt: skip
     messages = []
-    for i, token in enumerate(tokens_for_x):
-        holders_message = ''
-        if token['num_of_whales'] > 0:
-            holders_message += f"{token['num_of_whales']} whales"
-        elif token['num_of_holders'] > 0:
-            holders_message += f"{token['num_of_holders']} smart wallets"
-        message = f"{holders_message} have aped ${token['symbol']}. The current MC is ${token['marketcap']}, {closing[i]}."
-        message += message + f"\n\n Munki"
-        messages.append(message)
+    symbols = [t["symbol"] for t in tokens_for_x]
+    if local and exists_json("x_bot/3_mix_in_ai"):
+        messages = get_from_json("x_bot/3_mix_in_ai")
+    elif len(symbols):
+        ai_response = await generate_x_message(symbols, local = False)
+        response_content = ai_response["choices"][0]['message']['content']
+        as_json = extract_json(response_content)
 
+        closing = as_json["closings"]
+        closing = ['superhero squad mission incoming!', 'rocket fuel for cosmos!']
+        """
+        X whales just aped $BONK. The current MC is $XYZ
+        """
+        for i, token in enumerate(tokens_for_x):
+            holders_message = ''
+            if token['num_of_whales'] > 0:
+                holders_message += f"{token['num_of_whales']} whales"
+            message = f"{holders_message} have aped ${token['symbol']}. The current MC is ${token['marketcap']}, {closing[i]}."
+            message += message + f"\n\n Munki"
+            messages.append(message)
 
-    # 4. Post to X
-    console.log("4. Post to X ---------------------------------------------------------------------------------------------------------")
+        save_to_json(messages, "x_bot/3_mix_in_ai")
+
+    console.log('>>>> _ >>>> ~ file: x_bot.py:1 ~ messages:', messages)  # fmt: skip
+    return messages
+
+async def process_ca_and_post_to_x(address: str = None, local = False):
+    """
+    Process tokens and post to X.
+    - If no address is provided, get trending tokens.
+    - If address is provided, get token info.
+    """
+    # 1. Get trending tokens
+    tokens_for_x = await get_trending_tokens_with_holders(address, local)
+
+    # 2. Mix in AI formulation
+    messages = await mix_in_ai(tokens_for_x, local)
+
+    # 3. Post to X
+    if len(messages):
+        console.log("4. Post to X ---------------------------------------------------------------------------------------------------------")
 #     message = """9 smart wallets just aped $BATCAT. The current MC is $3.271m, superhero squad mission incoming!
 
 # MUNKI"""
-#     post_tweet(message)
+        # post_tweet(message)
 
 
 if __name__ == "__main__":
-    asyncio.run(init("5naj2assh2tnjvzuxwzrqhqwovnuawkj1jzaiafsvg95", local = True))
-    # asyncio.run(init())
+    # asyncio.run(process_ca_and_post_to_x("CfJ58KZpVvPm5ketxbUMmRMHZh41AWZh9qx8r9cspump", local = True))
+    asyncio.run(process_ca_and_post_to_x())
 
 # python -m backend.xBot.x_bot
