@@ -48,8 +48,8 @@ THRESHOLD_THREE = {
     "created": int((time.time() - 24 * 60 * 60)),
 }
 # THRESHOLD = THRESHOLD_ONE
-THRESHOLD = THRESHOLD_TWO
-# THRESHOLD = THRESHOLD_THREE
+# THRESHOLD = THRESHOLD_TWO
+THRESHOLD = THRESHOLD_THREE
 
 TRENDING_TOKENS_AMOUNT = 5
 FETCH_LIMIT = 20
@@ -75,19 +75,16 @@ async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTo
         save_to_json(get_name_symbol_address(trending_tokens), "x_bot/1_1_1_trending_token_short")
         # trending_tokens: list[TrendingTokenEntity] = trendingTokenEntityDatabase.fetch_all()
         console.log(" ----- 1.1.2 Filter by volume and mc ----------------------------------------------------------------------------------------------")  # fmt: skip
-        filtered_by_volume_and_mc: list[TrendingTokenEntity] = list(
-            filter(
-                lambda t: (
-                    t['volume24hUSD'] > THRESHOLD['volume24hUSD'] and
-                    t['marketcap'] > THRESHOLD['marketcap']
-                ),
-                trending_tokens
-            )
+        filtered_by_mc: list[TrendingTokenEntity] = list(
+            filter(lambda t: (t['marketcap'] > THRESHOLD['marketcap']), trending_tokens)
         )
-        save_to_json(filtered_by_volume_and_mc, "x_bot/1_1_2_filtered_by_volume_and_mc")
+        filtered_by_volume: list[TrendingTokenEntity] = list(
+            filter(lambda t: (t['marketcap'] > THRESHOLD['marketcap']), filtered_by_mc)
+        )
+        save_to_json(filtered_by_volume, "x_bot/1_1_2_filtered_by_volume_and_mc")
         # filtered_by_volume_and_mc = trending_tokens
         console.log(" ----- 1.1.3 Filter by time ----------------------------------------------------------------------------------------------")  # fmt: skip
-        filtered_by_time = await get_filtered_by_time(filtered_by_volume_and_mc)
+        filtered_by_time = await get_filtered_by_time(filtered_by_volume)
         save_to_json(filtered_trending_tokens, "x_bot/1_1_3_filtered_by_time")
         console.log(" ----- 1.1.4 Filter by holders ----------------------------------------------------------------------------------------------")  # fmt: skip
         filtered_by_holders = await get_filtered_by_holders(filtered_by_time)
@@ -213,8 +210,8 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
 async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False) -> TrendingTokenForXAnlysis:
     console.log(" ----- 2. Mix in AI formulation ----------------------------------------------------------------------------------------------")  # fmt: skip
     messages = []
-    if local and exists_json("x_bot/3_mix_in_ai"):
-        messages = get_from_json("x_bot/3_mix_in_ai")
+    if local and exists_json("x_bot/2_mix_in_ai"):
+        messages = get_from_json("x_bot/2_mix_in_ai")
     elif len(tokens):
         symbols = [t["symbol"] for t in tokens]
         ai_response = await generate_x_message(symbols, local)
