@@ -4,6 +4,7 @@ from typing import Any
 
 from dotenv import load_dotenv
 import httpx
+from backend.bot.parser import format_number
 from backend.commands.top_holders_holdings import get_top_holders_holdings
 from backend.commands.utils.api.birdeye_api_service import birdeyeApiService
 from backend.commands.utils.api.entities.token_entities import TokenEntity, TrendingTokenEntity, TrendingTokenForX, TrendingTokenForXAnlysis
@@ -18,22 +19,32 @@ load_dotenv()
 logger = LogService("XBOT")
 console = logger
 
+# Threshold values for filtering tokens
+# |Volume (24h)| MC |Holders|Whales|Created|
+# |------------| -- |-------|------|-------|
+# | 10,000,000 | 1m | 2,000 | 10   |24h ago|
+# | 1,000,000  | 1m | 1,000 | 7    |24h ago|
+# | 500,000    | 1m | 500   | 5    |24h ago|
+
 THRESHOLD_ONE = {
-    "volume24hUSD": 10_000_000,
     "marketcap": 1_000_000,
+    "volume24hUSD": 10_000_000,
     "holder": 2_000,
-    "created": int((time.time() - 24 * 60 * 60)),
+    "whales": 10,
+    "created": int((time.time() - 24 * 60 * 60))
 }
 THRESHOLD_TWO = {
-    "volume24hUSD": 1_000_000,
     "marketcap": 1_000_000,
+    "volume24hUSD": 1_000_000,
     "holder": 1_000,
-    "created": int((time.time() - 24 * 60 * 60)),
+    "whales": 7,
+    "created": int((time.time() - 24 * 60 * 60))
 }
 THRESHOLD_THREE = {
-    "volume24hUSD": 500_000,
     "marketcap": 1_000_000,
+    "volume24hUSD": 500_000,
     "holder": 500,
+    "whales": 5,
     "created": int((time.time() - 24 * 60 * 60)),
 }
 # THRESHOLD = THRESHOLD_ONE
@@ -182,21 +193,21 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
             if top_holders_holdings == None:
                 continue
             amount_of_whales = get_amount_of_whales(top_holders_holdings)
-            amount_of_holders_list.append(amount_of_whales)
-        console.log('>>>> _ >>>> ~ file: x_bot.py:168 ~ amount_of_whales_list:', amount_of_holders_list)  # fmt: skip
-        trending_tokens_with_holders: list[TrendingTokenForX] = [
-            {
-                "address": token["address"],
-                "symbol": token["symbol"],
-                "marketcap": token["marketcap"],
-                "num_of_whales": amount_of_holders_list[i],
-            }
-            for i, token in enumerate(trending_tokens)
-        ]
+            if amount_of_whales >= THRESHOLD['whales']:
+                amount_of_holders_list.append(amount_of_whales)
+                trending_tokens_with_holders: list[TrendingTokenForX] = [
+                    {
+                        "address": token["address"],
+                        "symbol": token["symbol"],
+                        "marketcap": token["marketcap"],
+                        "num_of_whales": amount_of_holders_list[i],
+                    }
+                    for i, token in enumerate(trending_tokens)
+                ]
         trending_tokens_with_holders = [token for token in trending_tokens_with_holders if token["num_of_whales"] > 0]
         save_to_json(trending_tokens_with_holders, "x_bot/1_2_tokens_for_with_holders")
 
-    # tokens_for_x=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0}]
+    # trending_tokens_with_holders=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0}]
     return trending_tokens_with_holders
 
 async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False) -> TrendingTokenForXAnlysis:
@@ -211,21 +222,18 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False) -> Trending
         as_json = extract_json(response_content)
 
         closing = as_json["closings"]
-        closing = ['superhero squad mission incoming!', 'rocket fuel for cosmos!']
         """
         X whales just aped $BONK. The current MC is $XYZ
         """
         for i, token in enumerate(tokens):
-            holders_message = ''
-            if token['num_of_whales'] > 0:
-                holders_message += f"{token['num_of_whales']} whales"
-            message = f"{holders_message} have aped ${token['symbol']}. The current MC is ${token['marketcap']}, {closing[i]}."
-            message += message + f"\n\n Munki"
+            holders_message = f"{token['num_of_whales']} whales"
+            mc = format_number(token['marketcap'], escape=False)
+            message = f"{holders_message} have aped ${token['symbol']}. The current MC is {mc}, {closing[i]}."
+            message += "\n\n Munki"
             messages.append(message)
 
         save_to_json(messages, "x_bot/2_mix_in_ai")
 
-    console.log('>>>> _ >>>> ~ file: x_bot.py:1 ~ messages:', messages)  # fmt: skip
     return messages
 
 async def process_ca_and_post_to_x(address: str = None, local = False):
@@ -235,10 +243,12 @@ async def process_ca_and_post_to_x(address: str = None, local = False):
     - If address is provided, get token info.
     """
     # 1. Get trending tokens
-    tokens_for_x = await get_trending_tokens_with_holders(address, local)
+    trending_tokens_with_holders = await get_trending_tokens_with_holders(address, local)
+
 
     # 2. Mix in AI formulation
-    messages = await mix_in_ai(tokens_for_x, local)
+    messages = await mix_in_ai(trending_tokens_with_holders, local)
+    console.log('>>>> _ >>>> ~ file: x_bot.py:241 ~ messages:', messages)  # fmt: skip
 
     # 3. Post to X
     if len(messages):
