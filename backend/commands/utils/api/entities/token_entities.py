@@ -612,6 +612,12 @@ class TrendingTokenForXAnlysis():
     marketcap: Optional[float]
     volume24hUSD: Optional[float]
 
+    def __init__(self):
+        self.address = None
+        self.symbol = None
+        self.marketcap = None
+        self.volume24hUSD = None
+
     def convert_from_trending(self, token: TrendingTokenEntity):
         payload: TrendingTokenForXAnlysis = {
             "address": token.get("address", None),
