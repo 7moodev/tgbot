@@ -145,7 +145,7 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
 
             if type(message) == str:
                 log_message = message
-            else:
+            elif message and len(message) > 0:
                 log_message = message[0]
 
             if len(message) == 0:
