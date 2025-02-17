@@ -157,7 +157,7 @@ async def get_filtered_by_holders(tokens: list[TrendingTokenEntity]) -> list[Tre
 
     return filtered_by_holders
 
-async def get_trending_tokens_with_holders(address: str, local = False) -> TrendingTokenForXAnlysis:
+async def get_trending_tokens_with_holders(address: str, local = False, log_to_client: Any = None) -> TrendingTokenForXAnlysis:
     console.log(" ----- 1.1 Get trending tokens with holders ----------------------------------------------------------------------------------------------")  # fmt: skip
     console.log('>>>> _ >>>> ~ file: x_bot.py:195 ~ address:', address)  # fmt: skip
     trending_tokens: list[Any] = []
@@ -169,7 +169,7 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
             converted = TrendingTokenForXAnlysis().convert_from_overview(token_overview_response['data'])
             if converted:
                 trending_tokens = [converted]
-        pass
+                await log_to_client(f"Checking on {converted['symbol']} for ya")
     else:
         trending_tokens = await get_trending_tokens()
     if trending_tokens == None:
@@ -186,9 +186,12 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
         for token in trending_tokens:
             top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=TOP_HOLDER_AMOUNT)
             # top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=0) # =0 for debugging, returns json
+            save_to_json(top_holders_holdings, "x_bot/1_2_1_top_holders_holdings")
             if top_holders_holdings == None:
                 continue
             amount_of_whales = get_amount_of_whales(top_holders_holdings)
+            await log_to_client(f"WHALES FOUND: >>{amount_of_whales}<<, weeeeeeeeeee")
+            
             if amount_of_whales >= THRESHOLD['whales']:
                 potential = {
                     "address": token["address"],
@@ -197,19 +200,22 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
                     "num_of_whales": amount_of_whales
                 }
                 trending_tokens_with_holders.append(potential)
+            else:
+                await log_to_client(f"But not enough for the threshold: {THRESHOLD['whales']}")
 
-        save_to_json(trending_tokens_with_holders, "x_bot/1_2_tokens_for_with_holders")
+        save_to_json(trending_tokens_with_holders, "x_bot/1_2_2_tokens_for_with_holders")
 
     # trending_tokens_with_holders=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0}]
     return trending_tokens_with_holders
 
-async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False) -> TrendingTokenForXAnlysis:
+async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_client: Any = None) -> TrendingTokenForXAnlysis:
     console.log(" ----- 2. Mix in AI formulation ----------------------------------------------------------------------------------------------")  # fmt: skip
     messages = []
     if local and exists_json("x_bot/2_mix_in_ai"):
         messages = get_from_json("x_bot/2_mix_in_ai")
     elif len(tokens):
         symbols = [t["symbol"] for t in tokens]
+        await log_to_client("Engaging ROBOT MUNKI")
         ai_response = await generate_x_message(symbols, local)
         response_content = ai_response["choices"][0]['message']['content']
         as_json = extract_json(response_content)
@@ -229,18 +235,18 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False) -> Trending
 
     return messages
 
-async def process_ca_and_post_to_x(address: str = None, local = False):
+async def process_ca_and_post_to_x(address: str = None, local = False, log_to_client: Any = None):
     """
     Process tokens and post to X.
     - If no address is provided, get trending tokens.
     - If address is provided, get token info.
     """
     # 1. Get trending tokens
-    trending_tokens_with_holders = await get_trending_tokens_with_holders(address, local)
+    trending_tokens_with_holders = await get_trending_tokens_with_holders(address, local, log_to_client)
 
 
     # 2. Mix in AI formulation
-    messages = await mix_in_ai(trending_tokens_with_holders, local)
+    messages = await mix_in_ai(trending_tokens_with_holders, local, log_to_client)
     console.log('>>>> _ >>>> ~ file: x_bot.py:241 ~ messages:', messages)  # fmt: skip
 
     # 3. Post to X
@@ -250,10 +256,12 @@ async def process_ca_and_post_to_x(address: str = None, local = False):
 
 # MUNKI"""
         # post_tweet(message)
+    
+    return messages
 
 
 if __name__ == "__main__":
-    # asyncio.run(process_ca_and_post_to_x("CfJ58KZpVvPm5ketxbUMmRMHZh41AWZh9qx8r9cspump", local = True))
-    asyncio.run(process_ca_and_post_to_x())
+    asyncio.run(process_ca_and_post_to_x("JBupE7ARrzMJTTZrDvZEg7PgJtnbm7LLvsNmAQfdfr6a", local = True))
+    # asyncio.run(process_ca_and_post_to_x())
 
 # python -m backend.xBot.x_bot
