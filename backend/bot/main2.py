@@ -274,6 +274,7 @@ def main():
     app.add_handler(CommandHandler('exp', wallets_age_command))
     app.add_handler(CommandHandler('map', top_net_worth_map_command))
     app.add_handler(CommandHandler('avg', avg_entry_command))
+    app.add_handler(CommandHandler('ca', get_top_holders_and_formulate_x_post))
     app.add_handler(CommandHandler('userid', userid_command))
     app.add_handler(CommandHandler('renew', renew_command))
     app.add_handler(CommandHandler('start', start_command))

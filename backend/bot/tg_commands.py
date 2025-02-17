@@ -1,3 +1,4 @@
+from backend.xBot.x_bot import process_ca_and_post_to_x
 from .paywall.payment import *
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
@@ -127,6 +128,49 @@ async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text('To use this function please use /renew to get a subscription' , parse_mode='MarkdownV2')
 
+async def get_top_holders_and_formulate_x_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat.id 
+    if check_access(user_id):
+        if len(context.args) != 1:
+            await update.message.reply_text("Please send me a token address.")
+            context.user_data['awaiting_token_address'] = True
+            context.user_data['avg_entry_started'] = True 
+            return 
+        else:
+            token_address = context.args[0]
+            wait_message = await update.message.reply_text("Munki is scratching his butt, please wait...")
+            time_now = float(time.time())
+            message = await process_ca_and_post_to_x(token_address, limit )
+            # message = ['36 whales have aped $DOGE state. The current MC is $1267.2m, barking mad gains soon!.\n\n Munki', '50 whales have aped $SafeMoon. The current MC is $8212.4m, safely mooning soon!.\n\n Munki']
+
+            if type(message) == str:
+                log_message = message
+            else:
+                log_message = message[0]
+
+            try: 
+                for parts in message:
+                
+                    if parts == message[0]:
+                        await context.bot.edit_message_text(
+                            chat_id=update.effective_chat.id,
+                            message_id=wait_message.message_id,
+                            text=escape_markdown(parts)
+                        , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                    else:
+                        await update.message.reply_text(escape_markdown(parts) , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                    await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                    exc.exc_type = exc.exc_value = exc.exc_traceback = None
+            except Exception as e:
+                    exc.exc_type = type(e).__name__
+                    exc.exc_value = str(e)
+                    exc.exc_traceback = str(e.__traceback__)
+                    await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                    exc.exc_type = exc.exc_value = exc.exc_traceback = None                       
+                    await update.message.reply_text("Something went wrong, please contact support or try again later.")
+
+    else:
+        await update.message.reply_text('Pssssst. Only for the boss\' eyes.' , parse_mode='MarkdownV2')
 
 async def top_net_worth_map_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
