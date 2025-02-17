@@ -18,12 +18,28 @@ load_dotenv()
 logger = LogService("XBOT")
 console = logger
 
-THRESHOLDS = {
+THRESHOLD_ONE = {
     "volume24hUSD": 10_000_000,
     "marketcap": 1_000_000,
     "holder": 2_000,
     "created": int((time.time() - 24 * 60 * 60)),
 }
+THRESHOLD_TWO = {
+    "volume24hUSD": 1_000_000,
+    "marketcap": 1_000_000,
+    "holder": 1_000,
+    "created": int((time.time() - 24 * 60 * 60)),
+}
+THRESHOLD_THREE = {
+    "volume24hUSD": 500_000,
+    "marketcap": 1_000_000,
+    "holder": 500,
+    "created": int((time.time() - 24 * 60 * 60)),
+}
+# THRESHOLD = THRESHOLD_ONE
+THRESHOLD = THRESHOLD_TWO
+# THRESHOLD = THRESHOLD_THREE
+
 TRENDING_TOKENS_AMOUNT = 5
 FETCH_LIMIT = 20
 OFFSET_START = 0
@@ -51,8 +67,8 @@ async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTo
         filtered_by_volume_and_mc: list[TrendingTokenEntity] = list(
             filter(
                 lambda t: (
-                    t['volume24hUSD'] > THRESHOLDS['volume24hUSD'] and
-                    t['marketcap'] > THRESHOLDS['marketcap']
+                    t['volume24hUSD'] > THRESHOLD['volume24hUSD'] and
+                    t['marketcap'] > THRESHOLD['marketcap']
                 ),
                 trending_tokens
             )
@@ -90,7 +106,7 @@ async def get_filtered_by_time(tokens: list[TrendingTokenEntity]) -> list[Trendi
                 token_creation_info
                 and token_creation_info["success"]
                 and token_creation_info["data"]
-                and token_creation_info["data"]["blockUnixTime"] > THRESHOLDS["created"]
+                and token_creation_info["data"]["blockUnixTime"] > THRESHOLD["created"]
             ):
                 return token
             return None
@@ -117,7 +133,7 @@ async def get_filtered_by_holders(tokens: list[TrendingTokenEntity]) -> list[Tre
                 return None
             if (
                 token_overview["success"]
-                and token_overview["data"]["holder"] > THRESHOLDS["holder"]
+                and token_overview["data"]["holder"] > THRESHOLD["holder"]
             ):
                 if token["symbol"] == "Unknown":
                     token["symbol"] = token_overview["data"]["symbol"]
