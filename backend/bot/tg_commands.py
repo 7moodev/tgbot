@@ -135,7 +135,7 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
         if len(context.args) != 1:
             await update.message.reply_text("Please send me a token address.")
             context.user_data['awaiting_token_address'] = True
-            context.user_data['avg_entry_started'] = True 
+            context.user_data['formulate_x_post_started'] = True 
             return 
         else:
             token_address = context.args[0]
