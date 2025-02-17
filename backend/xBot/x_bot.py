@@ -10,7 +10,7 @@ from backend.commands.utils.api.entities.token_entities import TokenEntity, Tren
 from backend.commands.utils.api.x_api_service import post_tweet
 from backend.commands.utils.services.log_service import LogService
 from backend.database.trending_token_entities_database import trendingTokenEntityDatabase
-from backend.xBot.x_bot_utils import exists_json, get_amount_of_whales, get_from_json, save_to_json
+from backend.xBot.x_bot_utils import exists_json, extract_json, get_amount_of_whales, get_from_json, get_name_symbol_address, save_to_json
 from .x_openrouter_api import generate_x_message
 
 load_dotenv()
@@ -32,6 +32,7 @@ TOP_HOLDER_AMOUNT = 50
 MINIMUM_DOLLAR_AMOUNT = 10
 
 async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTokenEntity]:
+    console.log(" ----- 1.1.1 Get trending tokens ----------------------------------------------------------------------------------------------")  # fmt: skip
     filtered_trending_tokens: list[TrendingTokenForX] = []
     offset = 0
     while len(filtered_trending_tokens) < limit:
@@ -42,7 +43,10 @@ async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTo
             return
 
         trending_tokens: list[TrendingTokenEntity] = trending_tokens_response["data"]["tokens"]
+        save_to_json(filtered_trending_tokens, "x_bot/1_1_1_trending_token")
+        save_to_json(get_name_symbol_address(trending_tokens), "x_bot/1_1_1_trending_token_short")
         # trending_tokens: list[TrendingTokenEntity] = trendingTokenEntityDatabase.fetch_all()
+        console.log(" ----- 1.1.2 Filter by volume and mc ----------------------------------------------------------------------------------------------")  # fmt: skip
         filtered_by_volume_and_mc: list[TrendingTokenEntity] = list(
             filter(
                 lambda t: (
@@ -52,9 +56,14 @@ async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTo
                 trending_tokens
             )
         )
+        save_to_json(filtered_by_volume_and_mc, "x_bot/1_1_2_filtered_by_volume_and_mc")
         # filtered_by_volume_and_mc = trending_tokens
+        console.log(" ----- 1.1.3 Filter by time ----------------------------------------------------------------------------------------------")  # fmt: skip
         filtered_by_time = await get_filtered_by_time(filtered_by_volume_and_mc)
+        save_to_json(filtered_trending_tokens, "x_bot/1_1_3_filtered_by_time")
+        console.log(" ----- 1.1.4 Filter by holders ----------------------------------------------------------------------------------------------")  # fmt: skip
         filtered_by_holders = await get_filtered_by_holders(filtered_by_time)
+        save_to_json(filtered_trending_tokens, "x_bot/1_1_4_filtered_by_holders")
         filtered_trending_tokens.extend([
             TrendingTokenForX(address=t['address'], symbol=t["symbol"], marketcap=t["marketcap"])
             for t in filtered_by_holders
@@ -62,7 +71,6 @@ async def get_trending_tokens(limit = TRENDING_TOKENS_AMOUNT) -> list[TrendingTo
 
         offset += FETCH_LIMIT
         console.log('>>>> _ >>>> ~ file: x_bot.py:80 ~ offset:', offset)  # fmt: skip
-    console.log('>>>> _ >>>> ~ file: x_bot.py:46 ~ offset:', offset)  # fmt: skip
 
     return filtered_trending_tokens
 
@@ -124,11 +132,11 @@ async def get_filtered_by_holders(tokens: list[TrendingTokenEntity]) -> list[Tre
     return filtered_by_holders
 
 async def get_trending_tokens_with_holders(address: str, local = False) -> TrendingTokenForXAnlysis:
-    console.log("1.1 Get trending tokens ---------------------------------------------------------------------------------------------------------")  # fmt: skip
+    console.log(" ----- 1.1 Get trending tokens with holders ----------------------------------------------------------------------------------------------")  # fmt: skip
     console.log('>>>> _ >>>> ~ file: x_bot.py:195 ~ address:', address)  # fmt: skip
     trending_tokens: list[Any] = []
-    if local and exists_json("x_bot/1_trending_tokens"):
-        trending_tokens = get_from_json("x_bot/1_trending_tokens")
+    if local and exists_json("x_bot/1_1_trending_tokens_with_holders"):
+        trending_tokens = get_from_json("x_bot/1_1_trending_tokens_with_holders")
     elif address:
         token_overview_response = await birdeyeApiService.get_token_overview(address)
         if token_overview_response:
@@ -141,13 +149,13 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
     if trending_tokens == None:
         return
 
-    save_to_json(trending_tokens, "x_bot/1_trending_tokens")
+    save_to_json(trending_tokens, "x_bot/1_1_trending_tokens_with_holders")
 
     # 2. Call /top on tokens from (1.)
-    console.log("1.2 Call /top on tokens from (1.) ---------------------------------------------------------------------------------------------------------")  # fmt: skip
+    console.log(" ----- 1.2 Get top holders for tokens from (1.) ----------------------------------------------------------------------------------------------")  # fmt: skip
     tokens_for_x: list[TrendingTokenForX] = []
-    if False and local and exists_json("x_bot/2_tokens_for_x"):
-        trending_tokens = get_from_json("x_bot/2_tokens_for_x")
+    if False and local and exists_json("x_bot/1_2_tokens_for_with_holders"):
+        trending_tokens = get_from_json("x_bot/1_2_tokens_for_with_holders")
     else:
         amount_of_holders_list = []
         for token in trending_tokens:
@@ -169,19 +177,19 @@ async def get_trending_tokens_with_holders(address: str, local = False) -> Trend
         ]
         tokens_for_x = [token for token in tokens_for_x if token["num_of_whales"] > 0]
 
-    save_to_json(tokens_for_x, "x_bot/2_tokens_for_x")
+    save_to_json(tokens_for_x, "x_bot/1_2_tokens_for_with_holders")
 
     # tokens_for_x=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0}]
     return tokens_for_x
 
 async def mix_in_ai(tokens_for_x: TrendingTokenForXAnlysis, local = False) -> TrendingTokenForXAnlysis:
-    console.log("2. Mix in AI formulation ---------------------------------------------------------------------------------------------------------")  # fmt: skip
+    console.log(" ----- 2. Mix in AI formulation ----------------------------------------------------------------------------------------------")  # fmt: skip
     messages = []
     symbols = [t["symbol"] for t in tokens_for_x]
     if local and exists_json("x_bot/3_mix_in_ai"):
         messages = get_from_json("x_bot/3_mix_in_ai")
     elif len(symbols):
-        ai_response = await generate_x_message(symbols, local = False)
+        ai_response = await generate_x_message(symbols, local)
         response_content = ai_response["choices"][0]['message']['content']
         as_json = extract_json(response_content)
 
@@ -198,7 +206,7 @@ async def mix_in_ai(tokens_for_x: TrendingTokenForXAnlysis, local = False) -> Tr
             message += message + f"\n\n Munki"
             messages.append(message)
 
-        save_to_json(messages, "x_bot/3_mix_in_ai")
+        save_to_json(messages, "x_bot/2_mix_in_ai")
 
     console.log('>>>> _ >>>> ~ file: x_bot.py:1 ~ messages:', messages)  # fmt: skip
     return messages
@@ -217,7 +225,7 @@ async def process_ca_and_post_to_x(address: str = None, local = False):
 
     # 3. Post to X
     if len(messages):
-        console.log("4. Post to X ---------------------------------------------------------------------------------------------------------")
+        console.log(" ----- 3. Post to X ----------------------------------------------------------------------------------------------")
 #     message = """9 smart wallets just aped $BATCAT. The current MC is $3.271m, superhero squad mission incoming!
 
 # MUNKI"""

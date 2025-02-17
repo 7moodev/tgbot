@@ -4,6 +4,7 @@ import json
 from typing import Any
 
 from backend.bot.parser import check_noteworthy
+from backend.commands.utils.api.entities.token_entities import TokenEntity
 from backend.commands.utils.services.log_service import LogService
 
 console = LogService("XBOT")
@@ -56,3 +57,7 @@ def get_amount_of_whales(top_holder_holdings: list[Any]) -> int:
         if dollar_token_share > 100_000:
             amount_of_whales += 1
     return amount_of_whales
+
+def get_name_symbol_address(tokens: list[TokenEntity]) -> list[str]:
+    converted = [f"{t['name']} ({t['symbol']}) - {t['address']}" for t in tokens]
+    return converted
