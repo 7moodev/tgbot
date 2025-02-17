@@ -12,7 +12,8 @@ from .security import *
 from .userdb_handler import *
 import itertools
 import json
-
+from backend.commands.utils.services.log_service import LogService
+logger = LogService('PAYMENT')
 # Solana RPC endpoint
 from .constants import *
 #heliusrpc = os.environ.get('heliusrpc')
@@ -178,9 +179,9 @@ def free_trial(user_id,  refcode:str, free_trial:int = 7):
                 #update refcode info
                 refcode_info = fetch_refcode_info(refcode)
 
-                #logger.log (refcode_info)
+                logger.log (refcode_info)
                 referrals = int(refcode_info['referrals']) + 1
-                #logger.log(referrals)
+                logger.log(referrals)
 
                 update_refcode("referrals",referrals, refcode)
 
