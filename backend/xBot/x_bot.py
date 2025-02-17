@@ -190,8 +190,7 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
             if top_holders_holdings == None:
                 continue
             amount_of_whales = get_amount_of_whales(top_holders_holdings)
-            await log_to_client(f"WHALES FOUND: >>{amount_of_whales}<<, weeeeeeeeeee")
-            
+
             if amount_of_whales >= THRESHOLD['whales']:
                 potential = {
                     "address": token["address"],
@@ -200,8 +199,9 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
                     "num_of_whales": amount_of_whales
                 }
                 trending_tokens_with_holders.append(potential)
+                await log_to_client(f"WHALES FOUND: >>{amount_of_whales}<<, weeeeeeeeeee")
             else:
-                await log_to_client(f"But not enough for the threshold: {THRESHOLD['whales']}")
+                await log_to_client(f"{amount_of_whales} whales?! But not enough for the threshold: {THRESHOLD['whales']}")
 
         save_to_json(trending_tokens_with_holders, "x_bot/1_2_2_tokens_for_with_holders")
 
@@ -235,7 +235,10 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
 
     return messages
 
-async def process_ca_and_post_to_x(address: str = None, local = False, log_to_client: Any = None):
+async def default_log_to_client(message: str):
+    console.log(message)
+
+async def process_ca_and_post_to_x(address: str = None, local = False, log_to_client: Any = default_log_to_client):
     """
     Process tokens and post to X.
     - If no address is provided, get trending tokens.
@@ -256,7 +259,7 @@ async def process_ca_and_post_to_x(address: str = None, local = False, log_to_cl
 
 # MUNKI"""
         # post_tweet(message)
-    
+
     return messages
 
 
