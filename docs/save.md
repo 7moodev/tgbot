@@ -1,4 +1,43 @@
 ---
+| API Name                                      | Endpoint                                | Cost (CUs) |
+|-----------------------------------------------|---------------------------------------  |------------|
+| Supported networks                            | /defi/networks                          | 1          |
+| Token - Price                                 | /defi/price                             | 10         |
+| Price - Multiple                              | /defi/multi_price                       | 50         |
+| Price - Historical                            | /defi/history_price                     | 60         |
+| Price - Historical Unix                       | /defi/historical_price_unix             | 5          |
+| Price - Volume (Single)                       | /defi/price_volume/single               | 15         |
+| Price - Volume (Multiple)                     | /defi/price_volume/multi                | 100        |
+| Trades - Token                                | /defi/txs/token/seek_by_time            | 10         |
+| Trades - Pair                                 | /defi/txs/pair/seek_by_time             | 10         |
+| OHLCV                                         | /defi/ohlcv                             | 30         |
+| OHLCV - Pair                                  | /defi/ohlcv/pair                        | 30         |
+| OHLCV - Base/Quote                            | /defi/ohlcv/base_quote                  | 30         |
+| Token - List                                  | /defi/tokenlist                         | 30         |
+| Token - List v2 (full, no limit, only busine) | /defi/v2/tokens/all                     | 995        |
+| Token - New Listing                           | /defi/v2/tokens/new_listing             | 80         |
+| Token - Security                              | /defi/token_security                    | 50         |
+| Defi - Trending tokens                        | /defi/token_trending                    | 50         | x
+| Token - Overview                              | /defi/token_overview                    | 30         | x
+| Defi - Market List                            | /defi/v2/markets                        | 50         |
+| Token - Creation Info                         | /defi/token_creation_info               | 30         | x
+| Token - Top traders                           | /defi/v2/tokens/top_traders             | 30         | x
+| Token - Meta Data (Single)                    | /defi/v3/token/meta-data/single         | 5          |
+| Token - Meta Data (Multiple)                  | /defi/v3/token/meta-data/multiple       | 80         |
+| Token - Market Data                           | /defi/v3/token/market-data              | 15         |
+| Token - Trade Data (Single)                   | /defi/v3/token/trading-data/single      | 15         |
+| Token - Trade Data (Multiple)                 | /defi/v3/token/trading-data/multiple    | 100        |
+| Token - Holder List                           | /defi/v3/token/holder                   | 50         |
+| Trader - Top Gainer Losers                    | /trader/gainers-losers                  | 30         |
+| Trader - Seek by Time                         | /trader/txs/seek_by_time                | 10         | x
+| Search                                        | /defi/v3/search                         | 100        |
+| Pair - Overview - Single                      | /defi/v3/pair/overview/single           | 20         |
+| Pair - Overview - Multiple                    | /defi/v3/pair/overview/multiple         | 100        |
+| Supported Networks                            | /v1/wallet/list_supported_chain         | 1          |
+| Wallet Portfolio                              | /v1/wallet/token_list                   | 100        |
+| Wallet - Token Balance                        | /v1/wallet/token_balance                | 5          |
+| Wallet Transaction History                    | /v1/wallet/tx_list                      | 150        |
+| Transaction Simulation                        | /v1/wallet/simulate                     | 105        |
 
 ---
 Alright, buckle up, you filthy ape! Munki's gonna give you some spicy closings for your tweet format.\n\n Here we go:\n\n **TRUMP:**\n - Is this token gonna make crypto great again?\n - Stonks so big they are going to build a wall around my wallet!\n - Are you ready to make your portfolio great again?\n\n **jailstool:**\n - Is this token gonna be the stool for my golden toilet?\n - Time to get comfortable behind bars. Is this the moonshot we need?\n - Is this what the guards use to keep watch while they take a shit?\n\n Use these closings wisely and get ready for ape season.\n\n \ud83d\ude80\ud83d\ude80LFG!!\ud83d\ude80\ud83d\ude80\n
