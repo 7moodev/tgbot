@@ -1,3 +1,10 @@
+# Requirements
+|Volume (24h)| MC |Holders|Whales|Created|
+|------------| -- |-------|------|-------|
+| 10,000,000 | 1m | 2,000 | 10   |24h ago|
+| 1,000,000  | 1m | 1,000 | 7    |24h ago|
+| 500,000    | 1m | 500   | 5    |24h ago|
+
 
 # Goal
 In order to get more eyeballs on our product, we need an AI Agent / Bot that posts 10-20 top holder analyses (based on birdeye trending) of memecoins per day to gain attention
