@@ -73,17 +73,16 @@ class PostTweetPayload:
     text: str = ""
 
 
-def post_tweet(tweet_text):
+async def post_tweet(tweet_text):
     console.log('>>>> _ >>>> ~ file: x_api_service.py:73 ~ tweet_text:', tweet_text)  # fmt: skip
     payload: PostTweetPayload = {"text": tweet_text}
     # payload: PostTweetPayload = {"reply_settings": "following", "text": tweet_text}
     console.log('>>>> _ >>>> ~ file: x_api_service.py:75 ~ payload:', payload)  # fmt: skip
     response_raw = client.create_tweet(
-        reply_settings=payload["reply_settings"], text=payload["text"]
+        text=payload["text"]
     )
-    print(response_raw)
-    response = response_raw.json()
-    print(response)
+    response = response_raw.data
+    console.log('>>>> _ >>>> ~ file: x_api_service.py:85 ~ response:', response)  # fmt: skip
 
     # if response.status_code != 201:
     #     raise Exception(
