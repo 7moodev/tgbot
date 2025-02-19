@@ -11,6 +11,7 @@ from backend.commands.utils.api.entities.token_entities import TokenEntity, Tren
 from backend.commands.utils.api.x_api_service import post_tweet
 from backend.commands.utils.services.log_service import LogService
 from backend.database.trending_token_entities_database import trendingTokenEntityDatabase
+from backend.database.utils.db_string import upper_first_letter
 from backend.xBot.x_bot_utils import exists_json, extract_json, get_amount_of_whales, get_from_json, get_name_symbol_address, save_to_json
 from .x_openrouter_api import generate_x_message
 import backend.xBot.x_bot_utils as x_bot_utils
@@ -250,9 +251,9 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
                 symbol_symybol = '#'
             closing = ''
             if len(closing_list) == len(tokens):
-                closing += ', '
-                closing += closing_list[i]
-            message = f"{holders_message} have aped {symbol_symybol}{symbol}. The current MC is {mc}{closing}"
+                closing += ' ' + closing_list[i]
+                closing = upper_first_letter(closing)
+            message = f"{holders_message} have aped {symbol_symybol}{symbol}, the current MC is {mc}.{closing}"
             message += "\n\n Munki"
             messages.append((message, True))
 

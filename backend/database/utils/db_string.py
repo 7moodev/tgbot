@@ -33,4 +33,19 @@ def pluralize(noun):
         return noun + "s"
 
 def lower_first_letter(s):
+    if not s:
+        return s
+    if not s[:1].isalpha():
+        return s
+    if s[0].islower():
+        return s
     return s[:1].lower() + s[1:]
+
+def upper_first_letter(s):
+    if not s:
+        return s
+    if not s[:1].isalpha():
+        return s
+    if s[0].isupper():
+        return s
+    return s[:1].upper() + s[1:]
