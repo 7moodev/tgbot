@@ -224,7 +224,6 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
         await log_to_client("Engaging ROBOT MUNKI")
         ai_response = await generate_x_message(symbols)
         response_content = ai_response["choices"][0]['message']['content']
-        console.log('>>>> _ >>>> ~ file: x_bot.py:227 ~ response_content:', response_content)  # fmt: skip
 
         closing_list: list[str] = []
         try:
