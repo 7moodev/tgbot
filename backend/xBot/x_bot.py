@@ -181,17 +181,22 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
     # 2. Call /top on tokens from (1.)
     console.log(" ----- 1.2 Get top holders for tokens from (1.) ----------------------------------------------------------------------------------------------")  # fmt: skip
     trending_tokens_with_holders: list[TrendingTokenForX] = []
-    if False and local and exists_json("x_bot/1_2_tokens_for_with_holders"):
-        trending_tokens = get_from_json("x_bot/1_2_tokens_for_with_holders")
+    if local and exists_json("x_bot/1_2_2_tokens_for_with_holders"):
+        trending_tokens_with_holders = get_from_json("x_bot/1_2_2_tokens_for_with_holders")
     else:
         for token in trending_tokens:
-            top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=TOP_HOLDER_AMOUNT)
-            # top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=0) # =0 for debugging, returns json
-            save_to_json(top_holders_holdings, "x_bot/1_2_1_top_holders_holdings")
+            top_holders_holdings = []
+            if local and exists_json("x_bot/1_2_1_top_holders_holdings"):
+                top_holders_holdings = get_from_json("x_bot/1_2_1_top_holders_holdings")
+            else:
+                top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=TOP_HOLDER_AMOUNT)
+                # top_holders_holdings = await get_top_holders_holdings(token=token["address"], limit=0) # =0 for debugging, returns json
+                save_to_json(top_holders_holdings, "x_bot/1_2_1_top_holders_holdings")
+
             if top_holders_holdings == None:
                 continue
-            amount_of_whales = get_amount_of_whales(top_holders_holdings)
 
+            amount_of_whales = get_amount_of_whales(top_holders_holdings)
             if amount_of_whales >= THRESHOLD['whales']:
                 potential = {
                     "address": token["address"],
@@ -217,7 +222,7 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
     elif len(tokens):
         symbols = [t["symbol"] for t in tokens]
         await log_to_client("Engaging ROBOT MUNKI")
-        ai_response = await generate_x_message(symbols, local)
+        ai_response = await generate_x_message(symbols)
         response_content = ai_response["choices"][0]['message']['content']
         as_json = extract_json(response_content)
 
@@ -266,7 +271,7 @@ async def process_ca_and_post_to_x(address: str = None, local = False, log_to_cl
 
 
 if __name__ == "__main__":
-    asyncio.run(process_ca_and_post_to_x("DAqeqPJtH4WQESxgkShuU3cHXB1ZUz9iKSzTUFKPpump", local = True))
+    asyncio.run(process_ca_and_post_to_x("9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump", local = True))
     # asyncio.run(process_ca_and_post_to_x())
 
 # python -m backend.xBot.x_bot
