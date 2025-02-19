@@ -132,7 +132,7 @@ async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def get_top_holders_and_formulate_x_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
     if check_access(user_id):
-        message = ''
+        messages = ''
         if len(context.args) != 1:
             await update.message.reply_text("Please send me a token address.")
             context.user_data['awaiting_token_address'] = True
@@ -156,7 +156,7 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
                     , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
             try: 
-                message = await process_ca_and_post_to_x(token_address, limit=limit, log_to_client=custom_log)
+                messages = await process_ca_and_post_to_x(token_address, limit=limit, log_to_client=custom_log)
                 # message = ['36 whales have aped $DOGE state. The current MC is $1267.2m, barking mad gains soon!.\n\n Munki', '50 whales have aped $SafeMoon. The current MC is $8212.4m, safely mooning soon!.\n\n Munki']
             except Exception as e:
                 await custom_log("Oopsies happened.. Please don\'t get scared about the bananas, Munki is on it!")
@@ -165,29 +165,24 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
                 pass
 
             log_message = 'n/a'
-            if type(message) == str:
-                log_message = message
-            elif message and len(message) > 0:
-                log_message = message[0]
+            if type(messages) == str:
+                log_message = messages
+            elif messages and len(messages) > 0:
+                log_message = messages[0]
 
-            if message == None or len(message) == 0:
+            if messages == None or len(messages) == 0:
                 await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
                 await custom_log("No bananas found, this ca is boring, try another?")
                 return
 
             try: 
-                for parts in message:
-                
-                    if parts == message[0]:
-                        await custom_log(parts)
-                        # await context.bot.edit_message_text(
-                        #     chat_id=update.effective_chat.id,
-                        #     message_id=wait_message.message_id,
-                        #     text=escape_markdown(parts)
-                        # , parse_mode='MarkdownV2', disable_web_page_preview=True)
-                    else:
-                        await update.message.reply_text(escape_markdown(parts) , parse_mode='MarkdownV2', disable_web_page_preview=True)
-                    await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
+                for message, can_tweet in messages:
+                    reply_markup = None
+                    if can_tweet:
+                        keyboard = [[InlineKeyboardButton("Tweet", callback_data='tweet_ca')]]
+                        reply_markup = InlineKeyboardMarkup(keyboard)
+                    await update.message.reply_text(message, reply_markup = reply_markup)
+                    await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
                     exc.exc_type = exc.exc_value = exc.exc_traceback = None
             except Exception as e:
                     exc.exc_type = type(e).__name__

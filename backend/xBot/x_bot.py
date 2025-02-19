@@ -1,6 +1,6 @@
 import asyncio
 import time
-from typing import Any
+from typing import Any, Tuple
 
 from dotenv import load_dotenv
 import httpx
@@ -214,7 +214,7 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
     # trending_tokens_with_holders=[{'address': '4MpXgiYj9nEvN1xZYZ4qgB6zq5r2JMRy54WaQu5fpump', 'symbol': 'BATCAT', 'marketcap': 3271345.920505294, 'num_of_whales': 0}, {'address': '6g5SypqztRMcsre1xdaKiLogcAzQ9ihfFUGndaAnos3W', 'symbol': 'Starbase', 'marketcap': 6084888.951087737, 'num_of_whales': 0}]
     return trending_tokens_with_holders
 
-async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_client: Any = None) -> TrendingTokenForXAnlysis:
+async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_client: Any = None) -> list[Tuple[str, bool]]:
     console.log(" ----- 2. Mix in AI formulation ----------------------------------------------------------------------------------------------")  # fmt: skip
     messages = []
     if local and exists_json("x_bot/2_mix_in_ai"):
@@ -224,16 +224,19 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
         await log_to_client("Engaging ROBOT MUNKI")
         ai_response = await generate_x_message(symbols)
         response_content = ai_response["choices"][0]['message']['content']
+        console.log('>>>> _ >>>> ~ file: x_bot.py:227 ~ response_content:', response_content)  # fmt: skip
 
         closing_list: list[str] = []
         try:
             as_json = extract_json(response_content)
             closing_list = as_json["closings"]
-        except:
-            messages.append("[[vvvvvvvvvvvvv]]")
-            messages.append("[[Sorry, there was an error parsing the AI response. Here is the raw text:]]")
-            messages.append(response_content)
-            messages.append("[[^^^^^^^^^^^^^]]")
+        except Exception as exception:
+            closing_list = ["" for _ in tokens]
+            console.log('>>>> _ >>>> ~ file: x_bot.py:233 ~ exception:', exception)  # fmt: skip
+            console.log(("[[vvvvvvvvvvvvvvvvvvvvvvvvvvv]]", False))
+            console.log(("[[Sorry, there was an error parsing the AI response. Here is the raw text:]]", False))
+            console.log((response_content, False))
+            console.log(("[[^^^^^^^^^^^^^^^^^^^^^^^^^^^]]", False))
 
         """
         X whales just aped $BONK. The current MC is $XYZ
@@ -250,9 +253,9 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
             if len(closing_list) == len(tokens):
                 closing += ', '
                 closing += closing_list[i]
-            message = f"{holders_message} have aped {symbol_symybol}{symbol}. The current MC is {mc}{closing}."
+            message = f"{holders_message} have aped {symbol_symybol}{symbol}. The current MC is {mc}{closing}"
             message += "\n\n Munki"
-            messages.append(message)
+            messages.append((message, True))
 
         save_to_json(messages, "x_bot/2_mix_in_ai")
 
@@ -269,7 +272,7 @@ async def process_ca_and_post_to_x(address: str = None, limit = None, local = Fa
     - If address is provided, get token info.
     """
     # 1. Get trending tokens
-    trending_tokens_with_holders = await get_trending_tokens_with_holders(address, local, log_to_client)
+    trending_tokens_with_holders = await get_trending_tokens_with_holders(address, log_to_client = log_to_client, local = local)
 
 
     # 2. Mix in AI formulation

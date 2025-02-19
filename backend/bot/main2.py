@@ -1,7 +1,10 @@
 import asyncio
 from typing import Final
 from telegram import Bot, Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext 
+from telegram.ext import Application, ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler, CallbackContext
+
+from backend.commands.utils.api.x_api_service import post_tweet
+from backend.commands.utils.services.log_service import LogService 
 from .tg_commands import *
 from telegram import Update, BotCommand
 from db.chat.log import log_chat
@@ -23,13 +26,24 @@ if not TOKEN:
 PORT = int(os.environ.get('PORT', 8443))
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
 
+console = LogService("XBOT")
+
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
     query = update.callback_query
     await query.answer()  # Note: Use 'await' if your bot uses 'async' methods
 
+    text = ''
     if query.data == "/check":  # Make sure this matches your callback_data
         text = await check_renew(update, context) 
+    if query.data == "tweet_ca":  # Make sure this matches your callback_data
+        message_text = query.message.text  # Get the original message text
+        try:
+            await post_tweet(message_text)
+            text = "Tweeted!"
+        except Exception as e:
+            console.log("Error posting tweet: ", e)
+            text = "Error posting tweet: " + str(e)
     # Make sure this matches your callback_data
 
     else:
