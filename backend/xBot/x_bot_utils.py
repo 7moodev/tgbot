@@ -30,25 +30,26 @@ def extract_json(input: str):
     return as_json
 
 # keep track of file_names, I want to aggregate all the data into one file, when I execute the program. After every restart reset the json to []
-save_map = {}
+log_tracker_map = {}
 def save_to_json(data: list[Any], file_name: str = ''):
     # timestamp = datetime.now().replace(microsecond=0)
     # file_path = f"backend/commands/outputs/{file_name}_{timestamp}.json"
     file_path = f"backend/commands/outputs/{file_name}.json"
     # Reset file content on first call
-    if not file_name in save_map:
+    if not file_name in log_tracker_map:
         with open(file_path, "w") as f:
             json.dump([], f, indent=4) # fmt: skip
-        save_map[file_name] = 0
+        log_tracker_map[file_name] = 0
     else:
         # Counter for tracking
-        if save_map[file_name] == 0:
-            save_map[file_name] += 1
+        if log_tracker_map[file_name] == 0:
+            log_tracker_map[file_name] += 1
         else:
-            save_map[file_name] = 0
+            log_tracker_map[file_name] = 0
         with open(file_path, "r") as f:
             as_json = json.load(f)
-        data = as_json + data
+        if isinstance(as_json, list) and isinstance(data, list):
+            data = as_json + data
     with open(file_path, "w") as f:
         json.dump(data, f, indent=4) # fmt: skip
 

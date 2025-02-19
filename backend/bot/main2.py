@@ -157,6 +157,21 @@ async def handle_token_address(update: Update, context: ContextTypes.DEFAULT_TYP
                 await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
                 exc.exc_value = exc.exc_type = exc.exc_traceback = None
                 await update.message.reply_text("Something went wrong, please contact support.")
+        elif context.user_data.get('formulate_x_post_started', False):
+            command = 'avg'
+            try:
+                wait_message = await update.message.reply_text("Munki is scratching his butt, please wait...")
+                context.user_data['formulate_x_post_started'] = False
+                holder_message = await holders_avg_entry_price_parsed(token_address, max(limit-20, 0)) 
+            except Exception as e:
+                print(e)
+                exc.exc_type = type(e).__name__
+                exc.exc_value = str(e)
+                exc.exc_traceback = str(e.__traceback__)
+                await log_chat(update.message.chat.id, update.message.chat.username, command, token_address, update.message.__str__(), holder_message, float(time.time()) - timenow, exc.exc_type, exc.exc_value, exc.exc_traceback)
+                exc.exc_value = exc.exc_type = exc.exc_traceback = None
+                await update.message.reply_text("Something went wrong, please contact support.")
+
 
         elif context.user_data.get('wallets_age_started', False):
             wait_message = await update.message.reply_text("Checking experience of top holdersplease chill...")
@@ -274,6 +289,7 @@ def main():
     app.add_handler(CommandHandler('exp', wallets_age_command))
     app.add_handler(CommandHandler('map', top_net_worth_map_command))
     app.add_handler(CommandHandler('avg', avg_entry_command))
+    app.add_handler(CommandHandler('ca', get_top_holders_and_formulate_x_post))
     app.add_handler(CommandHandler('userid', userid_command))
     app.add_handler(CommandHandler('renew', renew_command))
     app.add_handler(CommandHandler('start', start_command))
