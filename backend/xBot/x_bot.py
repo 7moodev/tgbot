@@ -244,7 +244,7 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
 async def default_log_to_client(message: str):
     console.log(message)
 
-async def process_ca_and_post_to_x(address: str = None, local = False, log_to_client: Any = default_log_to_client):
+async def process_ca_and_post_to_x(address: str = None, limit = None, local = False, log_to_client: Any = default_log_to_client):
     x_bot_utils.log_tracker_map = {}
     """
     Process tokens and post to X.

@@ -132,6 +132,7 @@ async def avg_entry_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def get_top_holders_and_formulate_x_post(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id 
     if check_access(user_id):
+        message = ''
         if len(context.args) != 1:
             await update.message.reply_text("Please send me a token address.")
             context.user_data['awaiting_token_address'] = True
@@ -146,7 +147,6 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
             async def custom_log(message):
                 if SHOULD_ADD_NEW_MESSAGES:
                     await update.message.reply_text(message)
-                    pass
                 else:
                     await context.bot.edit_message_text(
                         chat_id=update.effective_chat.id,
@@ -155,11 +155,11 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
                     , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
             try: 
-                message = await process_ca_and_post_to_x(token_address, limit, log_to_client=custom_log)
+                message = await process_ca_and_post_to_x(token_address, limit=limit, log_to_client=custom_log)
                 # message = ['36 whales have aped $DOGE state. The current MC is $1267.2m, barking mad gains soon!.\n\n Munki', '50 whales have aped $SafeMoon. The current MC is $8212.4m, safely mooning soon!.\n\n Munki']
             except Exception as e:
                 await custom_log("Oopsies happened.. Please don\'t get scared about the bananas, Munki is on it!")
-                await custom_log(e)
+                await custom_log(">>> [ERROR]: ",str(e))
                 await custom_log("Please share the debug info with your alpha male")
                 pass
 
@@ -178,11 +178,12 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
                 for parts in message:
                 
                     if parts == message[0]:
-                        await context.bot.edit_message_text(
-                            chat_id=update.effective_chat.id,
-                            message_id=wait_message.message_id,
-                            text=escape_markdown(parts)
-                        , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                        await custom_log(escape_markdown(parts))
+                        # await context.bot.edit_message_text(
+                        #     chat_id=update.effective_chat.id,
+                        #     message_id=wait_message.message_id,
+                        #     text=escape_markdown(parts)
+                        # , parse_mode='MarkdownV2', disable_web_page_preview=True)
                     else:
                         await update.message.reply_text(escape_markdown(parts) , parse_mode='MarkdownV2', disable_web_page_preview=True)
                     await log_chat(user_id, update.message.chat.username, "ca", token_address,update.message.__str__(),log_message, float(time.time())-time_now, exc_type=exc.exc_type, exc_value=exc.exc_value, exc_traceback=exc.exc_traceback)
