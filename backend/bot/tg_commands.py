@@ -142,15 +142,26 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
             wait_message = await update.message.reply_text("Munki is scratching his butt, please wait...")
             time_now = float(time.time())
 
+            SHOULD_ADD_NEW_MESSAGES = True
             async def custom_log(message):
-                await context.bot.edit_message_text(
-                    chat_id=update.effective_chat.id,
-                    message_id=wait_message.message_id,
-                    text=escape_markdown(message)
-                , parse_mode='MarkdownV2', disable_web_page_preview=True)
+                if SHOULD_ADD_NEW_MESSAGES:
+                    await update.message.reply_text(message)
+                    pass
+                else:
+                    await context.bot.edit_message_text(
+                        chat_id=update.effective_chat.id,
+                        message_id=wait_message.message_id,
+                        text=escape_markdown(message)
+                    , parse_mode='MarkdownV2', disable_web_page_preview=True)
 
-            message = await process_ca_and_post_to_x(token_address, limit, log_to_client=custom_log)
-            # message = ['36 whales have aped $DOGE state. The current MC is $1267.2m, barking mad gains soon!.\n\n Munki', '50 whales have aped $SafeMoon. The current MC is $8212.4m, safely mooning soon!.\n\n Munki']
+            try: 
+                message = await process_ca_and_post_to_x(token_address, limit, log_to_client=custom_log)
+                # message = ['36 whales have aped $DOGE state. The current MC is $1267.2m, barking mad gains soon!.\n\n Munki', '50 whales have aped $SafeMoon. The current MC is $8212.4m, safely mooning soon!.\n\n Munki']
+            except Exception as e:
+                await custom_log("Oopsies happened.. Please don\'t get scared about the bananas, Munki is on it!")
+                await custom_log(e)
+                await custom_log("Please share the debug info with your alpha male")
+                pass
 
             log_message = 'n/a'
             if type(message) == str:
