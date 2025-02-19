@@ -14,6 +14,7 @@ def extract_json(input: str):
     while index != -1 and input[index] != "{":
         index = input[:index].rfind("{")
 
+    as_json = {}
     end_index = input.rfind("}")
     if end_index != -1:
         input = input[:end_index + 1]
