@@ -1,6 +1,7 @@
 
 from datetime import datetime
 import json
+import re
 from typing import Any
 
 from backend.bot.parser import check_noteworthy
@@ -9,26 +10,16 @@ from backend.commands.utils.services.log_service import LogService
 
 console = LogService("XBOT")
 
-def extract_json(input: str):
-    index = input.find("\"symbols\"")
-    while index != -1 and input[index] != "{":
-        index = input[:index].rfind("{")
-
-    as_json = {}
-    end_index = input.rfind("}")
-    if end_index != -1:
-        input = input[:end_index + 1]
-    if index != -1 and end_index != -1:
-        json_str = input[index:end_index+1]
+def extract_json(input: str) -> dict | None:
+    json_pattern = r'\{(?:[^{}]|(?:\{[^{}]*\}))*\}'
+    matches = re.findall(json_pattern, input, re.DOTALL)
+    for json_str in reversed(matches):
         try:
-            as_json = json.loads(json_str)
-            console.log("as_json: ", as_json)
-        except json.JSONDecodeError as e:
-            console.log("JSONDecodeError: ", e)
-    else:
-        console.log("No JSON found")
-
-    return as_json
+            parsed_json = json.loads(json_str)
+            if "symbols" in parsed_json and "closings" in parsed_json:
+                return parsed_json
+        except json.JSONDecodeError:
+            continue
 
 # keep track of file_names, I want to aggregate all the data into one file, when I execute the program. After every restart reset the json to []
 log_tracker_map = {}
