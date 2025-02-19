@@ -160,7 +160,7 @@ async def get_filtered_by_holders(tokens: list[TrendingTokenEntity]) -> list[Tre
 
 async def get_trending_tokens_with_holders(address: str, local = False, log_to_client: Any = None) -> TrendingTokenForXAnlysis:
     console.log(" ----- 1.1 Get trending tokens with holders ----------------------------------------------------------------------------------------------")  # fmt: skip
-    console.log('>>>> _ >>>> ~ file: x_bot.py:195 ~ address:', address)  # fmt: skip
+    console.log('>>>> _ >>>> ~ file: x_bot.py:164 ~ address:', address)  # fmt: skip
     trending_tokens: list[Any] = []
     if local and exists_json("x_bot/1_1_trending_tokens_with_holders"):
         trending_tokens = get_from_json("x_bot/1_1_trending_tokens_with_holders")
@@ -170,7 +170,7 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
             converted = TrendingTokenForXAnlysis().convert_from_overview(token_overview_response['data'])
             if converted:
                 trending_tokens = [converted]
-                await log_to_client(f"Checking on {converted['symbol']} for ya...")
+                await log_to_client(f"Checking on {converted['symbol'].strip()} for ya...")
     else:
         trending_tokens = await get_trending_tokens()
     if trending_tokens == None:
@@ -224,16 +224,33 @@ async def mix_in_ai(tokens: TrendingTokenForXAnlysis, local = False, log_to_clie
         await log_to_client("Engaging ROBOT MUNKI")
         ai_response = await generate_x_message(symbols)
         response_content = ai_response["choices"][0]['message']['content']
-        as_json = extract_json(response_content)
 
-        closing = as_json["closings"]
+        closing_list: list[str] = []
+        try:
+            as_json = extract_json(response_content)
+            closing_list = as_json["closings"]
+        except:
+            messages.append("[[vvvvvvvvvvvvv]]")
+            messages.append("[[Sorry, there was an error parsing the AI response. Here is the raw text:]]")
+            messages.append(response_content)
+            messages.append("[[^^^^^^^^^^^^^]]")
+
         """
         X whales just aped $BONK. The current MC is $XYZ
         """
         for i, token in enumerate(tokens):
             holders_message = f"{token['num_of_whales']} whales"
             mc = format_number(token['marketcap'], escape=False)
-            message = f"{holders_message} have aped ${token['symbol']}. The current MC is {mc}, {closing[i]}."
+            symbol = token['symbol'].strip()
+            symbol_symybol = '$'
+            console.log('len symbol:', len(symbol))  # fmt: skip
+            if len(symbol) > 6:
+                symbol_symybol = '#'
+            closing = ''
+            if len(closing_list) == len(tokens):
+                closing += ', '
+                closing += closing_list[i]
+            message = f"{holders_message} have aped {symbol_symybol}{symbol}. The current MC is {mc}{closing}."
             message += "\n\n Munki"
             messages.append(message)
 

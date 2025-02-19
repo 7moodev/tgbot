@@ -146,6 +146,7 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
             SHOULD_ADD_NEW_MESSAGES = True
             async def custom_log(message):
                 if SHOULD_ADD_NEW_MESSAGES:
+                    # await update.message.reply_text(escape_markdown(message))
                     await update.message.reply_text(message)
                 else:
                     await context.bot.edit_message_text(
@@ -178,7 +179,7 @@ async def get_top_holders_and_formulate_x_post(update: Update, context: ContextT
                 for parts in message:
                 
                     if parts == message[0]:
-                        await custom_log(escape_markdown(parts))
+                        await custom_log(parts)
                         # await context.bot.edit_message_text(
                         #     chat_id=update.effective_chat.id,
                         #     message_id=wait_message.message_id,
