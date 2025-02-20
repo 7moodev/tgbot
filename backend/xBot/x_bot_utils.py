@@ -58,14 +58,9 @@ def exists_json(file_name: str = ''):
         return False
 
 def get_amount_of_whales(top_holder_holdings: list[Any]) -> int:
-    amount_of_whales = 0
     top_holders= top_holder_holdings['items']
     noteworthy = check_noteworthy(top_holders)
-    for holder in noteworthy:
-        dollar_token_share = holder['net_worth']- holder['net_worth_excluding']
-        if dollar_token_share > 100_000:
-            amount_of_whales += 1
-    return amount_of_whales
+    return len(noteworthy)
 
 def get_name_symbol_address(tokens: list[TokenEntity]) -> list[str]:
     converted = [f"{t['name']} ({t['symbol']}) - {t['address']}" for t in tokens]
