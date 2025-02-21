@@ -92,7 +92,7 @@ async def generate_x_message(symbols: list[str], local = False) -> OpenRouterRes
             ]
         }
     ]
-    response = await openRouterApiClient.chat(messages)
+    response = await openRouterApiClient.chat(messages, response_format=response_format)
     console.log('>>>> _ >>>> ~ file: x_openrouter_api.py:73 ~ response:', response)  # fmt: skip
 
     timestamp = datetime.now().replace(microsecond=0)
