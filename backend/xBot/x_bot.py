@@ -169,9 +169,12 @@ async def get_trending_tokens_with_holders(address: str, local = False, log_to_c
         token_overview_response = await birdeyeApiService.get_token_overview(address)
         if token_overview_response:
             converted = TrendingTokenForXAnlysis().convert_from_overview(token_overview_response['data'])
+            symbol = "N/A"
+            if converted["symbol"]:
+                symbol = converted["symbol"]
             if converted:
                 trending_tokens = [converted]
-                await log_to_client(f"Checking on {converted['symbol'].strip()} for ya...")
+                await log_to_client(f"Checking on {symbol.strip()} for ya...")
     else:
         trending_tokens = await get_trending_tokens()
     if trending_tokens == None:
