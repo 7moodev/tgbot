@@ -13,7 +13,7 @@ console = LogService("XOPENROUTER")
 response_format = {
     "type": "json_schema",
     "json_schema": {
-        "name": "weather",
+        "name": "token_closings",
         "strict": True,
         "schema": {
             "type": "object",
@@ -74,7 +74,7 @@ async def generate_x_message(symbols: list[str], local = False) -> OpenRouterRes
                 },
                 {
                     "type": "text",
-                    "text": f"You should ONLY respond with the later provided array like json. DONT ADD ANYTHING comment other than data based on the json: '{response_format}'. The JSON should contain {len(symbols)} closings for the given symbols."
+                    "text": f"Please make sure to only include the symbols I provide to you. Don't come up with any other. Please adhere to the json schema: '{response_format}'. The JSON should contain exactly {len(symbols)} closings for the {len(symbols)} symbols."
                 },
                 {
                     "type": "text",
