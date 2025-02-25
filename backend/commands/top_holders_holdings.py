@@ -150,7 +150,7 @@ async def get_top_holders_holdings(
             'price': token_overview['price'],
             'symbol': token_overview['symbol'],
             'name': token_overview['name'],
-            'logoURI': token_overview['logoURI'],
+            'logoURI': token_overview.get('logoURI', None),
             'liquidity': token_overview['liquidity'],
             'market_cap': token_overview['mc'],
             'supply': total_supply,
