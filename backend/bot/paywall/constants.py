@@ -1,0 +1,2 @@
+REF_PREFIX = "ref_"
+REF_PREFIX_LENGTH = len(REF_PREFIX)

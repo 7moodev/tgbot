@@ -4,6 +4,7 @@ import pandas as pd
 import os
 from functools import wraps
 from urllib.parse import urlparse
+import json
 
 # datebase connection decorator
 if os.getenv('DATABASE_URL'):
@@ -75,9 +76,9 @@ else:
         return wrapper
 
 @db_connection
-def insert_user(cursor, user_id, referral, reffered_by):
-    insert_query = sql.SQL('INSERT INTO users (user_id, referrals, referred_by  ) VALUES (%s, %s, %s)')
-    cursor.execute(insert_query, (user_id, referral, reffered_by))
+def insert_user(cursor, user_id, referral, reffered_by, tg_username):
+    insert_query = sql.SQL('INSERT INTO users (user_id, referrals, referred_by, tg_username ) VALUES (%s, %s, %s, %s)')
+    cursor.execute(insert_query, (user_id, referral, reffered_by, tg_username))
     print("Inserted data successfully")
 
 @db_connection
@@ -102,9 +103,11 @@ def fetch_userspd(cursor):
     
     # Create a DataFrame with the data
     df = pd.DataFrame(records, columns=column_names)
-    
+
+    df['refcodes'] = df['refcodes'].apply(lambda x: json.loads(x) if x else [])
+
     # Display the DataFrame
-    print(df)
+    #print(df)
     
     return df 
 
@@ -116,7 +119,7 @@ def fetch_user_by_id(cursor, user_id):
     
     # Fetch the records
     records = cursor.fetchall()
-    print(records)
+    
     # Safely get column names (if cursor.description is None when return empty)
     column_names = (
     [desc[0].lower() for desc in cursor.description] 
@@ -126,9 +129,12 @@ def fetch_user_by_id(cursor, user_id):
     
     # Create a DataFrame with the data
     df = pd.DataFrame(records, columns=column_names)
-    print(df)
+    
+
+    df['refcodes'] = df['refcodes'].apply(lambda x: json.loads(x) if x else [])
+
     # Display the DataFrame
-    print(df)
+    #print(df)
     
     return df 
 
@@ -152,3 +158,45 @@ def add_column(cursor, column_name, data_type):
     
     cursor.execute(add_column_query)
     print("Column added successfully")
+
+@db_connection
+def add_new_refcode(cursor, refcode: str, referrals: int = 0):
+    insert_query = sql.SQL('INSERT INTO refcodes (refcode, referrals  ) VALUES (%s, %s)')
+    cursor.execute(insert_query, (refcode, referrals))
+    print("Inserted data successfully")
+
+@db_connection
+def fetch_refcode_info(cursor, refcode):
+    '''Get refcode information and return a dictionary'''
+    # Execute the query for a specific refuser
+    query = sql.SQL("SELECT * FROM refcodes WHERE refcode = %s")
+    cursor.execute(query, (refcode,))
+    
+    # Fetch the records
+    records = cursor.fetchall()
+    #print(records)
+    # Safely get column names (if cursor.description is None when return empty)
+    column_names = (
+    [desc[0].lower() for desc in cursor.description] 
+    if cursor.description 
+    else []
+    )
+    
+    # Create a DataFrame with the data
+    df = pd.DataFrame(records, columns=column_names)
+      # Display the DataFrame
+    #print(df)
+    df = df.set_index('refcode')
+
+    row_as_dict = df.loc[refcode].to_dict()
+    row_as_dict ["refcode"] = refcode
+    return row_as_dict
+
+
+@db_connection
+def update_refcode(cursor, column_name, new_value, refcode):
+    update_query = sql.SQL("UPDATE refcodes SET {} = %s WHERE refcode = %s").format(
+        sql.Identifier(column_name)
+    )
+    cursor.execute(update_query, (new_value, refcode))
+    print("Data updated successfully")
