@@ -1,6 +1,12 @@
 {
     "python.envFile": "${workspaceFolder}/.env",
     "python.terminal.executeInFileDir": false,
-    "python.testing.cwd": "${workspaceFolder}"
-  }
-  
+    "python.testing.cwd": "${workspaceFolder}",
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "python.testing.pytestArgs": [
+        "tgbot"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

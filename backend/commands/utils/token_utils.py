@@ -1,10 +1,13 @@
 import os
+from dotenv import load_dotenv
 import requests
 import time
 import asyncio
 import json
 import random
 import itertools
+
+load_dotenv()
 
 #heliusrpc = os.environ.get('heliusrpc')
 quicknoderpc = os.environ.get('solrpc')

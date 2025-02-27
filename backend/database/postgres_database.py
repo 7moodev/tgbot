@@ -57,6 +57,7 @@ def db_connection(func):
 class PostgresDatabase:
     def __init__(self, database_url: str = DATABASE_URL, table_name: str = None):
         self.database_url = database_url
+        self.table_name = table_name
         self.conn = None
 
     def connect_db(self):
@@ -83,7 +84,7 @@ class PostgresDatabase:
             return self.conn
 
         except (Exception, psycopg2.Error) as error:
-            logger.log("Error:", error)
+            logger.error("db_connection:", error)
             if self.conn:
                 self.conn.rollback()
 
@@ -97,7 +98,7 @@ class PostgresDatabase:
                 cursor.execute(query, params)
                 return cursor.lastrowid
         except Exception as e:
-            logger.error(e)
+            logger.error("execute_query", e)
         finally:
             if self.conn:
                 cursor.close()
@@ -110,8 +111,12 @@ class PostgresDatabase:
             "INSERT INTO test (id, v1, v2) VALUES %s",
             [(1, 2, 3), (4, 5, 6), (7, 8, 9)])
 
+        Note: Only supports up to 10 entries in params
         """
-        execute_values(cursor, query, params)
+        try:
+            execute_values(cursor, query, params)
+        except Exception as e:
+            logger.error("batch_execute_query", e)
 
     def create_table(self, create_table_sql: str):
         try:
@@ -119,7 +124,7 @@ class PostgresDatabase:
                 cursor = conn.cursor()
                 cursor.execute(create_table_sql)
         except Exception as e:
-            logger.error(e)
+            logger.error("batch_execute_query", e)
         finally:
             if self.conn:
                 cursor.close()
@@ -133,7 +138,7 @@ class PostgresDatabase:
                 rows = cursor.fetchall()
                 return rows
         except Exception as e:
-            logger.error(e)
+            logger.error("fetch_all", e)
 
     def fetch_one(self, query: str, params: tuple = ()) -> tuple:
         try:
@@ -143,7 +148,7 @@ class PostgresDatabase:
                 row = cursor.fetchone()
                 return row
         except Exception as e:
-            logger.error(e)
+            logger.error("fetch_one", e)
         finally:
             if self.conn:
                 cursor.close()
@@ -157,7 +162,7 @@ class PostgresDatabase:
                     f"ALTER TABLE {table_name} ADD COLUMN {column_definition}"
                 )
         except Exception as e:
-            logger.error(e)
+            logger.error("add_column", e)
         finally:
             if self.conn:
                 cursor.close()
@@ -165,5 +170,5 @@ class PostgresDatabase:
 
     @db_connection
     def dangerousely_drop_table(self, cursor):
-        cursor.execute(f"DROP TABLE {self.table_name}")
+        cursor.execute(f"DROP TABLE IF EXISTS {self.table_name}")
         logger.log(f"Dropped table {self.table_name}")

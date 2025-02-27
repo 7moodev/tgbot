@@ -1,12 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, TypedDict
 
 
 @dataclass
 class TokenEntity:
     address: str
-    decimals: int
     name: str
     symbol: str
 
@@ -138,6 +137,7 @@ Mock_TokenHolderItems = [
 
 @dataclass
 class TokenOverviewEntityFocus:
+    address: str
     symbol: str
     name: str
     price: float
@@ -150,7 +150,6 @@ class TokenOverviewEntityFocus:
     realMc: float
     extensions: dict
     logoURI: str
-    creationTime: Optional[str]
 
 
 @dataclass
@@ -566,18 +565,22 @@ Mock_TokenOverviewItems = {}
 
 
 @dataclass
-class TrendingTokenEntity:
+class TrendingTokenEntity(TokenEntity):
     """
     {
-        "address": "HJXh1XULVe2Mdp6mTKd5K7of1uFqBTbmcWzvBv6cpump",
+        "address": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
         "decimals": 6,
-        "liquidity": 34641.80933146691,
-        "logoURI": "https://img.fotofolio.xyz/?w=30&h=30&url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmR7QnPaYcfwoG8oymK5JRDsB9GSgHr71mJmL2MuJ7Qk3x",
-        "name": "AVOCATO",
-        "symbol": "ATO",
-        "volume24hUSD": 1202872.3148187269,
-        "rank": 1,
-        "price": 0.00010551649518689046
+        "liquidity": 23812612.41500791,
+        "logoURI": "https://static.jup.ag/jup/icon.png",
+        "name": "Jupiter",
+        "symbol": "JUP",
+        "volume24hUSD": 86976936.050854,
+        "volume24hChangePercent": 46.46922326872917,
+        "fdv": 5679270939.324086,
+        "marketcap": 2556176295.2462373,
+        "rank": 4,
+        "price": 0.8113268787559548,
+        "price24hChangePercent": -6.198208768404809
     },
     """
 
@@ -588,8 +591,50 @@ class TrendingTokenEntity:
     name: str
     symbol: str
     volume24hUSD: float
+    volume24hChangePercent: float
+    fdv: float
+    marketcap: float
     rank: int
     price: float
+    price24hChangePercent: float
+
+class TrendingTokenForX(TypedDict):
+    address: Optional[str]
+    symbol: Optional[str]
+    marketcap: Optional[float]
+    num_of_holders: Optional[int]
+    num_of_whales: Optional[int]
+
+@dataclass
+class TrendingTokenForXAnlysis():
+    address: Optional[str]
+    symbol: Optional[str]
+    marketcap: Optional[float]
+    volume24hUSD: Optional[float]
+
+    def __init__(self):
+        self.address = None
+        self.symbol = None
+        self.marketcap = None
+        self.volume24hUSD = None
+
+    def convert_from_trending(self, token: TrendingTokenEntity):
+        payload: TrendingTokenForXAnlysis = {
+            "address": token.get("address", None),
+            "symbol": token.get("symbol", None),
+            "marketcap": token.get("marketcap", None),
+            "volume24hUSD": token.get("volume24hUSD", None),
+        }
+        return payload
+
+    def convert_from_overview(self, token: TokenOverviewEntity):
+        payload: TrendingTokenForXAnlysis = {
+            "address": token.get("address", None),
+            "symbol": token.get("symbol", None),
+            "marketcap": token.get("mc", None),
+            "volume24hUSD": token.get("v24hUSD", None),
+        }
+        return payload
 
 
 @dataclass
@@ -600,15 +645,19 @@ class TokenTrendingList:
         "updateTime": "2024-09-18T17:48:53",
         "tokens": [
             {
-                "address": "HJXh1XULVe2Mdp6mTKd5K7of1uFqBTbmcWzvBv6cpump",
+                "address": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
                 "decimals": 6,
-                "liquidity": 34641.80933146691,
-                "logoURI": "https://img.fotofolio.xyz/?w=30&h=30&url=https%3A%2F%2Fipfs.io%2Fipfs%2FQmR7QnPaYcfwoG8oymK5JRDsB9GSgHr71mJmL2MuJ7Qk3x",
-                "name": "AVOCATO",
-                "symbol": "ATO",
-                "volume24hUSD": 1202872.3148187269,
-                "rank": 1,
-                "price": 0.00010551649518689046
+                "liquidity": 23812612.41500791,
+                "logoURI": "https://static.jup.ag/jup/icon.png",
+                "name": "Jupiter",
+                "symbol": "JUP",
+                "volume24hUSD": 86976936.050854,
+                "volume24hChangePercent": 46.46922326872917,
+                "fdv": 5679270939.324086,
+                "marketcap": 2556176295.2462373,
+                "rank": 4,
+                "price": 0.8113268787559548,
+                "price24hChangePercent": -6.198208768404809
             },
         ],
         "total": 1000
@@ -619,3 +668,21 @@ class TokenTrendingList:
     updateTime: str
     tokens: List[TrendingTokenEntity]
     total: int
+
+def convert_token_overview_to_focus(data: TokenOverviewEntity) -> TokenOverviewEntityFocus:
+    converted: TokenOverviewEntityFocus = {
+        "address": data.get("address", None),
+        "symbol": data.get("symbol", None),
+        "name": data.get("name", None),
+        "price": data.get("price", None),
+        "supply": data.get("supply", None),
+        "mc": data.get("mc", None),
+        "holder": data.get("holder", None),
+        "liquidity": data.get("liquidity", None),
+        "priceChange1hPercent": data.get("priceChange1hPercent", None),
+        "circulatingSupply": data.get("circulatingSupply", None),
+        "realMc": data.get("realMc", None),
+        "extensions": data.get("extensions", None),
+        "logoURI": data.get("logoURI", None),
+    }
+    return converted
