@@ -135,26 +135,33 @@ async def get_holding_distribution(token):
         print("Token not provided.")
         return None
     
-    token_overview = await get_token_overview(token) 
- 
+    total_supply = await get_token_supply(token)
+    token_creation_info = await get_token_creation_info(token)
+    token_overview = await get_token_overview(token)
     if token_overview:
-        token_data = token_overview.get('data', {})
-        holder_count = token_data.get('holder', 0)
-        total_supply = token_data.get('mc', 0)
-        symbol = token_data.get('symbol', '')
-        name = token_data.get('name', '')
-        logo_url = token_data.get('logoURI', '')
-        liquidity = token_data.get('liquidity', 0)
-        market_cap = token_data.get('mc', 0)
+        print(token_overview)
+        token_overview = token_overview['data']
+        token_info = {
+            'price': token_overview['price'],
+            'symbol': token_overview['symbol'],
+            'name': token_overview['name'],
+            'logoURI': token_overview.get('logoURI', None),
+            'liquidity': token_overview['liquidity'],
+            'market_cap': token_overview['marketCap'],
+            'supply': total_supply,
+            'circulatingSupply': token_overview['circulatingSupply'],
+            'fdv': token_overview['fdv'],
+            'holder': token_overview['holder'],
+            'extensions': token_overview['extensions'],
+            'priceChange1hPercent': token_overview['priceChange1hPercent'],
+        }
+        if token_creation_info:
+            token_info['creationTime'] = token_creation_info['blockUnixTime']
     else:
-        print("Failed to fetch token overview.")
-    token_info = {
-        'symbol': symbol,
-        'name': name,
-        'logo_url': logo_url,
-        'liquidity': liquidity,
-        'market_cap': market_cap,
-    }
+        token_info = {}
+    holder_count = token_info.get('holder', 0)
+    symbol = token_info.get('symbol', 'Unknown')
+    name = token_info.get('name', 'Unknown')
     top_holders = await get_top_holders(token, TOP_HOLDERS_TO_CONSIDER)  # Fetch top holders *****************************************************************
     if not top_holders:
         print("Failed to fetch top holders.")

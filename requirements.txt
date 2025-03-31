@@ -60,3 +60,5 @@ solana==0.36.2
 solders==0.23.0
 python-telegram-bot[webhooks]
 python-dotenv
+fastapi
+uvicorn

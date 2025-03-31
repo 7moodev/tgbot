@@ -52,3 +52,7 @@ def user_log(ctx):
 @task
 def main(ctx):
     ctx.run('python -m backend.bot.main')
+
+@task
+def api(ctx):
+    ctx.run('uvicorn backend.api.main:app --reload')
