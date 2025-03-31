@@ -1,2 +1,1 @@
-web: uvicorn backend.api.main:app --host=0.0.0.0 --port=${PORT}
-worker: python3 -m backend.bot.main2
+web: web: uvicorn app.main:app --host=0.0.0.0 --port=$PORT & python -m backend.bot.main2
