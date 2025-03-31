@@ -1,1 +1,6 @@
-web: uvicorn backend.api.main:app --host=0.0.0.0 --port=${PORT}
+web: uvicorn backend.api.main:app --host=0.0.0.0 --port=${PORT} 
+worker: python3 -m backend.bot.main2
+
+
+
+uvicorn backend.api.main:app --reload
