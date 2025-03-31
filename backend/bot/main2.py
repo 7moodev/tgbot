@@ -290,27 +290,16 @@ async def initialize_bot(app):
     await app.bot.delete_my_commands()
     await set_bot_commands(app)
 async def main():
-    global application
     print("🚀 Starting Telegram bot...")
 
+    # App is globally defined now
+    global application
     application = Application.builder().token(TOKEN).build()
 
-    # Register handlers
-    application.add_handler(CommandHandler('top', topholders_command))
-    application.add_handler(CommandHandler('fresh', fresh_wallets_command))
-    application.add_handler(CommandHandler('exp', wallets_age_command))
-    application.add_handler(CommandHandler('map', top_net_worth_map_command))
-    application.add_handler(CommandHandler('avg', avg_entry_command))
-    application.add_handler(CommandHandler('userid', userid_command))
-    application.add_handler(CommandHandler('renew', renew_command))
+    # Register handlers...
     application.add_handler(CommandHandler('start', start_command))
-    application.add_handler(CommandHandler('referral', referrallink_command))
-    application.add_handler(CommandHandler('sub', check_subscription))
-    application.add_handler(CommandHandler('trial', free_trial_command))
-    application.add_handler(CommandHandler('help', help))
+    # add other handlers here...
 
-    application.add_handler(CallbackQueryHandler(handle_buttons))
-    application.add_handler(MessageHandler(filters.TEXT, handle_message))
     application.add_error_handler(error)
 
     await application.initialize()
@@ -318,10 +307,22 @@ async def main():
 
     if HEROKU_APP_NAME:
         webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
-        print(f"📡 Setting webhook to: {webhook_url}")
-        await application.bot.set_webhook(webhook_url)
+        print(f"📡 Setting webhook: {webhook_url}")
+
+        retry_attempts = 3
+        for i in range(retry_attempts):
+            try:
+                await application.bot.set_webhook(webhook_url)
+                print("✅ Webhook set successfully.")
+                break
+            except RetryAfter as e:
+                wait_time = e.retry_after + 1
+                print(f"⚠️ Flood control hit. Retrying in {wait_time} seconds...")
+                await asyncio.sleep(wait_time)
+        else:
+            print("❌ Failed to set webhook after retries.")
     else:
-        print("🌀 Running in local polling mode")
+        print("🌀 Polling mode")
         await delete_webhook(TOKEN)
         await application.updater.start_polling()
 if __name__ == "__main__":
