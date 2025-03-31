@@ -24,7 +24,9 @@ if not TOKEN:
     TOKEN = os.environ.get('tgbot')
 PORT = int(os.environ.get('PORT', 8443))
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
-application = None
+
+application = Application.builder().token(TOKEN).build()
+
 
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
@@ -295,8 +297,6 @@ async def main():
     print("🚀 Starting Telegram bot...")
 
         # App is globally defined now
-    global application
-    application = Application.builder().token(TOKEN).build()
 
 
     # Register handlers...

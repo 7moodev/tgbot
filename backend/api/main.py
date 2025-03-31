@@ -26,10 +26,8 @@ app.include_router(router)
 
 @app.post(f"/{TOKEN}")
 async def telegram_webhook(request: Request):
-    if application is None:
-        return {"status": "bot not ready"}
-
     raw_data = await request.body()
     update = Update.de_json(json.loads(raw_data), application.bot)
     await application.process_update(update)
     return {"status": "ok"}
+
