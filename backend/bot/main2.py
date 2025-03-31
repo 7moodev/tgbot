@@ -291,8 +291,7 @@ async def initialize_bot(app):
 
 async def main():
     print("Starting bot...")
-    
-    # Initialize the bot application
+
     app = Application.builder().token(TOKEN).build()
 
     # Register command handlers
@@ -313,24 +312,29 @@ async def main():
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
     app.add_error_handler(error)
 
-    # Ensure bot initialization before running
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(initialize_bot(app))
+    print("Initializing bot commands...")
+    await set_bot_commands(app)
 
     if HEROKU_APP_NAME:
         webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
         print(f"Webhook set to: {webhook_url}")
-        app.run_webhook(
-            listen="0.0.0.0",
-            port=PORT,
-            url_path=TOKEN,
-            webhook_url=webhook_url,
-        )
+        await app.initialize()
+        await app.bot.set_webhook(webhook_url)
+        await app.start()
+
+        # Keep the bot running
+        await asyncio.Event().wait()
     else:
         print("Polling locally (webhook removed)")
-        delete_webhook(TOKEN)  # Ensure this function is properly defined elsewhere
-        app.run_polling(poll_interval=3)
+        await delete_webhook(TOKEN)
+        await app.initialize()
+        await app.start()
+        await app.updater.start_polling()
+
+        # ✅ Prevent script from exiting
+        await asyncio.Event().wait()
+
+
 
 if __name__ == "__main__":
     import asyncio
