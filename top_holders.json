@@ -1,35 +1,35 @@
 [
     {
-        "amount": "80704361161643",
+        "amount": "80202053905493",
         "decimals": 6,
         "mint": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
         "owner": "A77HErqtfN1hLLpvZ9pCtu66FEtM8BveoaKbbMoZ4RiR",
         "token_account": "BRFq2ttHwr8p67n5DieoEyczF3GpuSZHb59KVm3hLGLM",
-        "ui_amount": 80704361.161643
+        "ui_amount": 80202053.905493
     },
     {
-        "amount": "52785701891251",
+        "amount": "52434511191251",
         "decimals": 6,
         "mint": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
         "owner": "u6PJ8DtQuPFnfmwHbGFULQ4u4EgjDiyYKjVEsynXq2w",
         "token_account": "DD4aVn3yEPHxwMPAV6BEhg4XJSGJEuEh2fNzDwzFSp3L",
-        "ui_amount": 52785701.891251
+        "ui_amount": 52434511.191251
     },
     {
-        "amount": "45929729556564",
+        "amount": "44394270942227",
         "decimals": 6,
         "mint": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
         "owner": "ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ",
         "token_account": "TdK4YAV8rP86Uyd1mV9vNEovT1MZGErWBim6mr4cY5f",
-        "ui_amount": 45929729.556564
+        "ui_amount": 44394270.942227
     },
     {
-        "amount": "34463579501464",
+        "amount": "33461381317993",
         "decimals": 6,
         "mint": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
         "owner": "H9d3XHfvMGfoohydEpqh4w3mopnvjCRzE9VqaiHKdqs7",
         "token_account": "4vDmqnKLN2jdPGR2DMf5L6C93AG4XbHdfRAXJuironK8",
-        "ui_amount": 34463579.501464
+        "ui_amount": 33461381.317993
     },
     {
         "amount": "28371592248252",
@@ -56,12 +56,12 @@
         "ui_amount": 15000189.107028
     },
     {
-        "amount": "14764433476014",
+        "amount": "14966157610270",
         "decimals": 6,
         "mint": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
         "owner": "BY4StcU9Y2BpgH8quZzorg31EGE4L1rjomN8FNsCBEcx",
         "token_account": "G8zQ8iipKcE2ga8brkHk6NVkW1nZ4LfR29qFdQAYHfvm",
-        "ui_amount": 14764433.476014
+        "ui_amount": 14966157.61027
     },
     {
         "amount": "14195865963574",

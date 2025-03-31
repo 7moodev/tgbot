@@ -22,6 +22,7 @@ if not TOKEN:
     TOKEN = os.environ.get('tgbot')
 PORT = int(os.environ.get('PORT', 8443))
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
+application: Application = None  # Global reference
 
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
@@ -289,48 +290,39 @@ async def initialize_bot(app):
     await app.bot.delete_my_commands()
     await set_bot_commands(app)
 async def main():
+    global application
     print("🚀 Starting Telegram bot...")
-    app = Application.builder().token(TOKEN).build()
 
-    # Register all handlers
-    app.add_handler(CommandHandler('top', topholders_command))
-    app.add_handler(CommandHandler('fresh', fresh_wallets_command))
-    app.add_handler(CommandHandler('exp', wallets_age_command))
-    app.add_handler(CommandHandler('map', top_net_worth_map_command))
-    app.add_handler(CommandHandler('avg', avg_entry_command))
-    app.add_handler(CommandHandler('userid', userid_command))
-    app.add_handler(CommandHandler('renew', renew_command))
-    app.add_handler(CommandHandler('start', start_command))
-    app.add_handler(CommandHandler('referral', referrallink_command))
-    app.add_handler(CommandHandler('sub', check_subscription))
-    app.add_handler(CommandHandler('trial', free_trial_command))
-    app.add_handler(CommandHandler('help', help))
+    application = Application.builder().token(TOKEN).build()
 
-    app.add_handler(CallbackQueryHandler(handle_buttons))
-    app.add_handler(MessageHandler(filters.TEXT, handle_message))
-    app.add_error_handler(error)
+    # Register handlers
+    application.add_handler(CommandHandler('top', topholders_command))
+    application.add_handler(CommandHandler('fresh', fresh_wallets_command))
+    application.add_handler(CommandHandler('exp', wallets_age_command))
+    application.add_handler(CommandHandler('map', top_net_worth_map_command))
+    application.add_handler(CommandHandler('avg', avg_entry_command))
+    application.add_handler(CommandHandler('userid', userid_command))
+    application.add_handler(CommandHandler('renew', renew_command))
+    application.add_handler(CommandHandler('start', start_command))
+    application.add_handler(CommandHandler('referral', referrallink_command))
+    application.add_handler(CommandHandler('sub', check_subscription))
+    application.add_handler(CommandHandler('trial', free_trial_command))
+    application.add_handler(CommandHandler('help', help))
 
-    # Setup commands and start
-    await set_bot_commands(app)
-    await app.initialize()
-    await app.start()
+    application.add_handler(CallbackQueryHandler(handle_buttons))
+    application.add_handler(MessageHandler(filters.TEXT, handle_message))
+    application.add_error_handler(error)
+
+    await application.initialize()
+    await application.start()
 
     if HEROKU_APP_NAME:
         webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
         print(f"📡 Setting webhook to: {webhook_url}")
-        await app.bot.set_webhook(webhook_url)
-        await app.updater.start_webhook(
-            listen="0.0.0.0",
-            port=PORT,
-            url_path=TOKEN,
-            webhook_url=webhook_url,
-        )
+        await application.bot.set_webhook(webhook_url)
     else:
-        print("🌀 Running with polling (local mode)")
-        await delete_webhook(TOKEN)  # Optional cleanup
-        await app.updater.start_polling()
-
-    print("✅ Telegram bot is now running.")
-
+        print("🌀 Running in local polling mode")
+        await delete_webhook(TOKEN)
+        await application.updater.start_polling()
 if __name__ == "__main__":
     main()
