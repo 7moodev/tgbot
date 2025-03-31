@@ -267,29 +267,32 @@ async def delete_webhook(TOKEN):
     await bot.delete_webhook()
 
 
-async def set_bot_commands(app: Application):
+async def set_bot_commands(application: Application):
     commands = [
         BotCommand("start", "Start interacting with the bot."),
         BotCommand("top", "Get a list of the top noteworthy holders."),
         BotCommand("fresh", "Get a list of fresh wallets."),
-        BotCommand("exp", "Get age estimate of wallets."),
-        BotCommand("map", "Map of net worth."),
-        BotCommand("avg", "Average entry price."),
+        BotCommand("exp", "Get an estimate of the age of the top holders' wallets."),
+        BotCommand("map", "Get a map of the net worth of the top holders."),
+        BotCommand("avg", "Get the average entry price of the top holders."),
         BotCommand("renew", "Renew your subscription."),
-        BotCommand("referral", "Get referral link."),
-        BotCommand("sub", "Check subscription status."),
-        BotCommand("userid", "Get your user ID."),
+        BotCommand("referral", "Get your referral link."),
+        BotCommand("sub", "Check your subscription status."),
+        BotCommand("userid", "Get your user id."),
         BotCommand("trial", "Get a free trial."),
-        BotCommand("help", "Display commands."),
+        BotCommand("help", "Display available commands."),
     ]
-    await app.bot.set_my_commands(commands)
+    await application.bot.set_my_commands(commands)
 
+async def initialize_bot(app):
+    print("Initializing bot commands...")
+    await app.bot.delete_my_commands()
+    await set_bot_commands(app)
 async def main():
-    print("Starting Telegram bot...")
-
+    print("🚀 Starting Telegram bot...")
     app = Application.builder().token(TOKEN).build()
 
-    # Register handlers
+    # Register all handlers
     app.add_handler(CommandHandler('top', topholders_command))
     app.add_handler(CommandHandler('fresh', fresh_wallets_command))
     app.add_handler(CommandHandler('exp', wallets_age_command))
@@ -302,27 +305,32 @@ async def main():
     app.add_handler(CommandHandler('sub', check_subscription))
     app.add_handler(CommandHandler('trial', free_trial_command))
     app.add_handler(CommandHandler('help', help))
+
     app.add_handler(CallbackQueryHandler(handle_buttons))
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
     app.add_error_handler(error)
 
+    # Setup commands and start
     await set_bot_commands(app)
     await app.initialize()
     await app.start()
 
     if HEROKU_APP_NAME:
         webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
-        print(f"Setting webhook to: {webhook_url}")
+        print(f"📡 Setting webhook to: {webhook_url}")
         await app.bot.set_webhook(webhook_url)
+        await app.updater.start_webhook(
+            listen="0.0.0.0",
+            port=PORT,
+            url_path=TOKEN,
+            webhook_url=webhook_url,
+        )
     else:
-        print("Running locally with polling")
+        print("🌀 Running with polling (local mode)")
+        await delete_webhook(TOKEN)  # Optional cleanup
         await app.updater.start_polling()
 
-    # 👇 Keeps the bot running inside FastAPI
-    import asyncio
-    await asyncio.Event().wait()
-
-
+    print("✅ Telegram bot is now running.")
 
 if __name__ == "__main__":
     main()

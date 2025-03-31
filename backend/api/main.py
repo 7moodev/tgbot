@@ -6,11 +6,10 @@ from contextlib import asynccontextmanager
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
-    asyncio.create_task(telegram_main())
+    print("Launching Telegram bot...")
+    asyncio.create_task(telegram_main())  # don't await here!
     yield
-    # Shutdown (optional cleanup)
-    # e.g., bot.stop() or database.close()
+    print("Shutting down...")
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(router)

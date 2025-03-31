@@ -1,55 +1,55 @@
 {
     "token_info": {
-        "price": 0.006827037815234523,
+        "price": 0.007472442524237838,
         "symbol": "Ghibli",
         "name": "Ghiblification",
         "logoURI": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
-        "liquidity": 960412.8583946358,
-        "market_cap": 6826425.871817597,
-        "supply": 999910364.724279,
-        "circulatingSupply": 999910364.724279,
-        "fdv": 6826425.871817597,
-        "holder": 19412,
+        "liquidity": 958952.4200451974,
+        "market_cap": 7471772.696319586,
+        "supply": 999910360.244849,
+        "circulatingSupply": 999910360.244849,
+        "fdv": 7471772.696319586,
+        "holder": 19502,
         "extensions": {
             "twitter": "https://x.com/search?q=ghibli",
             "description": "Ghiblify everyone"
         },
-        "priceChange1hPercent": -0.8292206405072431,
+        "priceChange1hPercent": 9.982864263584712,
         "creationTime": 1742982326
     },
     "items": [
         {
             "count": 1,
             "wallet": "A77HErqtfN1hLLpvZ9pCtu66FEtM8BveoaKbbMoZ4RiR",
-            "amount": 81189135.153759,
-            "share_in_percent": 8.12,
-            "net_worth": 179681550.971352,
-            "net_worth_excluding": 179127269.6754711,
+            "amount": 80704361.161643,
+            "share_in_percent": 8.071,
+            "net_worth": 179546586.17965657,
+            "net_worth_excluding": 178943527.47942084,
             "first_top_holding": {
                 "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
                 "decimals": 6,
-                "balance": 22079652811630,
-                "uiAmount": 22079652.81163,
+                "balance": 22046154314729,
+                "uiAmount": 22046154.314729,
                 "chainId": "solana",
                 "name": "USDT",
                 "symbol": "USDT",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "priceUsd": 0.99983933,
-                "valueUsd": 22076105.273812756
+                "priceUsd": 0.99996,
+                "valueUsd": 22045272.46855641
             },
             "second_top_holding": {
                 "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
                 "decimals": 6,
-                "balance": 1753463124553,
-                "uiAmount": 1753463.124553,
+                "balance": 1753453477433,
+                "uiAmount": 1753453.477433,
                 "chainId": "solana",
                 "name": "OFFICIAL TRUMP",
                 "symbol": "TRUMP",
                 "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
                 "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 10.155517293148227,
-                "valueUsd": 17807325.084295716
+                "priceUsd": 10.1931329927735,
+                "valueUsd": 17873184.492115736
             },
             "third_top_holding": {
                 "address": "bgSoLfRx1wRPehwC9TyG568AGjnf1sQG1MYa8s3FbfY",
@@ -64,128 +64,128 @@
         {
             "count": 2,
             "wallet": "u6PJ8DtQuPFnfmwHbGFULQ4u4EgjDiyYKjVEsynXq2w",
-            "amount": 54373981.011251,
-            "share_in_percent": 5.438,
-            "net_worth": 235137465.13211724,
-            "net_worth_excluding": 234766251.9075886,
+            "amount": 52785701.891251,
+            "share_in_percent": 5.279,
+            "net_worth": 234679977.0070997,
+            "net_worth_excluding": 234285538.88361576,
             "first_top_holding": {
                 "address": "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
                 "decimals": 6,
-                "balance": 2915741925632,
-                "uiAmount": 2915741.925632,
+                "balance": 2915210200528,
+                "uiAmount": 2915210.200528,
                 "chainId": "solana",
                 "name": "OFFICIAL TRUMP",
                 "symbol": "TRUMP",
                 "icon": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
                 "logoURI": "https://arweave.net/VQrPjACwnQRmxdKBTqNwPiyo65x7LAT773t8Kd7YBzw",
-                "priceUsd": 10.155517293148227,
-                "valueUsd": 29610867.54811309
+                "priceUsd": 10.1931329927735,
+                "valueUsd": 29715125.275871806
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
                 "decimals": 9,
-                "balance": 111779638819889,
-                "uiAmount": 111779.638819889,
+                "balance": 109522853351197,
+                "uiAmount": 109522.853351197,
                 "chainId": "solana",
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 126.48468002871877,
-                "valueUsd": 14138411.849859413
+                "priceUsd": 127.0941675488405,
+                "valueUsd": 13919715.87424412
             },
             "third_top_holding": {
                 "address": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
                 "decimals": 6,
-                "balance": 27150694136302,
-                "uiAmount": 27150694.136302,
+                "balance": 26935596626665,
+                "uiAmount": 26935596.626665,
                 "chainId": "solana",
                 "name": "Fartcoin ",
                 "symbol": "Fartcoin ",
                 "icon": "https://ipfs.io/ipfs/QmQr3Fz4h1etNsF7oLGMRHiCzhB5y9a7GjyodnF7zLHK1g",
                 "logoURI": "https://ipfs.io/ipfs/QmQr3Fz4h1etNsF7oLGMRHiCzhB5y9a7GjyodnF7zLHK1g",
-                "priceUsd": 0.42738563942495955,
-                "valueUsd": 11603816.77427493
+                "priceUsd": 0.43791415535688694,
+                "valueUsd": 11795479.045799816
             }
         },
         {
             "count": 3,
             "wallet": "ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ",
-            "amount": 48268617.737649,
-            "share_in_percent": 4.827,
-            "net_worth": 72883676.96643491,
-            "net_worth_excluding": 72554145.28785089,
+            "amount": 45929729.556564,
+            "share_in_percent": 4.593,
+            "net_worth": 72210193.84851724,
+            "net_worth_excluding": 71866986.58425203,
             "first_top_holding": {
                 "address": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump",
                 "decimals": 6,
-                "balance": 15636373964419,
-                "uiAmount": 15636373.964419,
+                "balance": 15418433384419,
+                "uiAmount": 15418433.384419,
                 "chainId": "solana",
                 "name": "Fartcoin ",
                 "symbol": "Fartcoin ",
                 "icon": "https://ipfs.io/ipfs/QmQr3Fz4h1etNsF7oLGMRHiCzhB5y9a7GjyodnF7zLHK1g",
                 "logoURI": "https://ipfs.io/ipfs/QmQr3Fz4h1etNsF7oLGMRHiCzhB5y9a7GjyodnF7zLHK1g",
-                "priceUsd": 0.42738563942495955,
-                "valueUsd": 6682761.685071004
+                "priceUsd": 0.43791415535688694,
+                "valueUsd": 6751950.232464273
             },
             "second_top_holding": {
                 "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
                 "decimals": 6,
-                "balance": 4648299671669,
-                "uiAmount": 4648299.671669,
+                "balance": 3774122912555,
+                "uiAmount": 3774122.912555,
                 "chainId": "solana",
                 "name": "USDT",
                 "symbol": "USDT",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "priceUsd": 0.99983933,
-                "valueUsd": 4647552.829360753
+                "priceUsd": 0.99996,
+                "valueUsd": 3773971.9476384977
             },
             "third_top_holding": {
                 "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                 "decimals": 6,
-                "balance": 3687392016553,
-                "uiAmount": 3687392.016553,
+                "balance": 3643542849405,
+                "uiAmount": 3643542.849405,
                 "chainId": "solana",
                 "name": "USD Coin",
                 "symbol": "USDC",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "priceUsd": 1.0000006,
-                "valueUsd": 3687394.2289882097
+                "priceUsd": 1.00000948,
+                "valueUsd": 3643577.390191212
             }
         },
         {
             "count": 4,
             "wallet": "H9d3XHfvMGfoohydEpqh4w3mopnvjCRzE9VqaiHKdqs7",
-            "amount": 35846538.168297,
-            "share_in_percent": 3.585,
-            "net_worth": 490107.57814052096,
-            "net_worth_excluding": 245381.90652030965,
+            "amount": 34463579.501464,
+            "share_in_percent": 3.447,
+            "net_worth": 514435.97954876674,
+            "net_worth_excluding": 256781.83111950778,
             "first_top_holding": {
-                "address": "So11111111111111111111111111111111111111112",
-                "decimals": 9,
-                "balance": 1939785158925,
-                "uiAmount": 1939.785158925,
-                "chainId": "solana",
-                "name": "Wrapped SOL",
-                "symbol": "SOL",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 126.48468002871877,
-                "valueUsd": 245353.105151086
-            },
-            "second_top_holding": {
                 "address": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
                 "decimals": 6,
-                "balance": 35846538168297,
-                "uiAmount": 35846538.168297,
+                "balance": 34480579488370,
+                "uiAmount": 34480579.48837,
                 "chainId": "solana",
                 "name": "Ghiblification",
                 "symbol": "Ghibli",
                 "icon": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
                 "logoURI": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
-                "priceUsd": 0.006827037815234523,
-                "valueUsd": 244725.6716202113
+                "priceUsd": 0.007472442524237838,
+                "valueUsd": 257654.14842925896
+            },
+            "second_top_holding": {
+                "address": "So11111111111111111111111111111111111111112",
+                "decimals": 9,
+                "balance": 2020180563778,
+                "uiAmount": 2020.180563778,
+                "chainId": "solana",
+                "name": "Wrapped SOL",
+                "symbol": "SOL",
+                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+                "priceUsd": 127.0941675488405,
+                "valueUsd": 256753.1670517122
             },
             "third_top_holding": {
                 "address": "6uAufXPdvenEVxCRayMj8qSPG8xA386ZLuoVr9tvHZqx",
@@ -197,54 +197,54 @@
                 "symbol": "BBTKN",
                 "icon": "https://ipfs.io/ipfs/QmRFXhGF6ZakPMGUU3zmV9n3xgyQKJViNi2eqhMSfhifU3",
                 "logoURI": "https://ipfs.io/ipfs/QmRFXhGF6ZakPMGUU3zmV9n3xgyQKJViNi2eqhMSfhifU3",
-                "priceUsd": 0.0007326286192267162,
-                "valueUsd": 10.989429288400743
+                "priceUsd": 0.0007231798500843612,
+                "valueUsd": 10.847697751265418
             }
         },
         {
             "count": 5,
             "wallet": "FWznbcNXWQuHTawe9RxvQ2LdCENssh12dsznf4RiouN5",
-            "amount": 28365804.341131,
+            "amount": 28371592.248252,
             "share_in_percent": 2.837,
-            "net_worth": 389282143.9481374,
-            "net_worth_excluding": 389088489.52924097,
+            "net_worth": 390522107.8959258,
+            "net_worth_excluding": 390310102.8035296,
             "first_top_holding": {
                 "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
                 "decimals": 6,
-                "balance": 178518460233647,
-                "uiAmount": 178518460.233647,
+                "balance": 178147347030253,
+                "uiAmount": 178147347.030253,
                 "chainId": "solana",
                 "name": "USD Coin",
                 "symbol": "USDC",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "priceUsd": 1.0000006,
-                "valueUsd": 178518567.3447231
+                "priceUsd": 1.00000948,
+                "valueUsd": 178149035.86710283
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
                 "decimals": 9,
-                "balance": 578959295765372,
-                "uiAmount": 578959.295765372,
+                "balance": 581108340762850,
+                "uiAmount": 581108.34076285,
                 "chainId": "solana",
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 126.48468002871877,
-                "valueUsd": 73229481.27453543
+                "priceUsd": 127.0941675488405,
+                "valueUsd": 73855480.82494237
             },
             "third_top_holding": {
                 "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
                 "decimals": 6,
-                "balance": 24806379374927,
-                "uiAmount": 24806379.374927,
+                "balance": 24857054125770,
+                "uiAmount": 24857054.12577,
                 "chainId": "solana",
                 "name": "USDT",
                 "symbol": "USDT",
                 "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "priceUsd": 0.99983933,
-                "valueUsd": 24802393.73395283
+                "priceUsd": 0.99996,
+                "valueUsd": 24856059.843604967
             }
         },
         {
@@ -252,8 +252,8 @@
             "wallet": "CtDAdfuagH7hLfotVPokFLG4GKTcpanm1WHQDauZb9aB",
             "amount": 17554090.521718,
             "share_in_percent": 1.756,
-            "net_worth": 258076.73832923672,
-            "net_worth_excluding": 138234.298525418,
+            "net_worth": 313564.5943217908,
+            "net_worth_excluding": 182392.66183298483,
             "first_top_holding": {
                 "address": "C3DwDjT17gDvvCYC2nsdGHxDHVmQRdhKfpAdqQ29pump",
                 "decimals": 6,
@@ -264,8 +264,8 @@
                 "symbol": "RFC",
                 "icon": "https://ipfs.io/ipfs/Qmbi9jsNn718gvh85C2vuj4CSsu5JmuYq1W7B1vk2ys88W",
                 "logoURI": "https://ipfs.io/ipfs/Qmbi9jsNn718gvh85C2vuj4CSsu5JmuYq1W7B1vk2ys88W",
-                "priceUsd": 0.008716234547866896,
-                "valueUsd": 135070.5569149622
+                "priceUsd": 0.0115783377799681,
+                "valueUsd": 179422.9519067458
             },
             "second_top_holding": {
                 "address": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
@@ -277,8 +277,8 @@
                 "symbol": "Ghibli",
                 "icon": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
                 "logoURI": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
-                "priceUsd": 0.006827037815234523,
-                "valueUsd": 119842.4398038187
+                "priceUsd": 0.007472442524237838,
+                "valueUsd": 131171.93248880596
             },
             "third_top_holding": {
                 "address": "tmF5B7xSXFjR9UBX3p6f72zQqoFUqDkFcq6cXpSpump",
@@ -290,63 +290,17 @@
                 "symbol": "SNED",
                 "icon": "https://ipfs.io/ipfs/QmUpNMdJjWRYA29AxZjFiXxaADvKjx3vbzv5FGzojHstxL",
                 "logoURI": "https://ipfs.io/ipfs/QmUpNMdJjWRYA29AxZjFiXxaADvKjx3vbzv5FGzojHstxL",
-                "priceUsd": 0.00011387897939576698,
-                "valueUsd": 1342.512410636975
+                "priceUsd": 0.00010896498375324475,
+                "valueUsd": 1284.5816127767744
             }
         },
         {
             "count": 7,
-            "wallet": "BY4StcU9Y2BpgH8quZzorg31EGE4L1rjomN8FNsCBEcx",
-            "amount": 15101663.385734,
-            "share_in_percent": 1.51,
-            "net_worth": 7373423.977334992,
-            "net_worth_excluding": 7270324.350327644,
-            "first_top_holding": {
-                "address": "So11111111111111111111111111111111111111111",
-                "decimals": 9,
-                "balance": 12381899000563,
-                "uiAmount": 12381.899000563,
-                "chainId": "solana",
-                "name": "SOL",
-                "symbol": "SOL",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 126.48468002871877,
-                "valueUsd": 1566120.5332341238
-            },
-            "second_top_holding": {
-                "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-                "decimals": 6,
-                "balance": 631416675190,
-                "uiAmount": 631416.67519,
-                "chainId": "solana",
-                "name": "USD Coin",
-                "symbol": "USDC",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-                "priceUsd": 1.0000006,
-                "valueUsd": 631417.0540400051
-            },
-            "third_top_holding": {
-                "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
-                "decimals": 6,
-                "balance": 530877060322,
-                "uiAmount": 530877.060322,
-                "chainId": "solana",
-                "name": "USDT",
-                "symbol": "USDT",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
-                "priceUsd": 0.99983933,
-                "valueUsd": 530791.764304718
-            }
-        },
-        {
-            "count": 8,
             "wallet": "CJnprtiUJbopxenjx8e9Dc98Gy4yc3yMsGXZV1sP2R7Y",
             "amount": 15000189.107028,
             "share_in_percent": 1.5,
-            "net_worth": 102637.66307612999,
-            "net_worth_excluding": 230.80480678085587,
+            "net_worth": 112319.96793319077,
+            "net_worth_excluding": 231.91697822553397,
             "first_top_holding": {
                 "address": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
                 "decimals": 6,
@@ -357,8 +311,8 @@
                 "symbol": "Ghibli",
                 "icon": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
                 "logoURI": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
-                "priceUsd": 0.006827037815234523,
-                "valueUsd": 102406.85826934913
+                "priceUsd": 0.007472442524237838,
+                "valueUsd": 112088.05095496523
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -369,18 +323,65 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 126.48468002871877,
-                "valueUsd": 230.80480678086124
+                "priceUsd": 127.0941675488405,
+                "valueUsd": 231.9169782255382
             },
             "third_top_holding": 0
+        },
+        {
+            "count": 8,
+            "wallet": "BY4StcU9Y2BpgH8quZzorg31EGE4L1rjomN8FNsCBEcx",
+            "amount": 14764433.476014,
+            "share_in_percent": 1.477,
+            "net_worth": 6419722.663843247,
+            "net_worth_excluding": 6309396.2832908,
+            "first_top_holding": {
+                "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+                "decimals": 6,
+                "balance": 689881651991,
+                "uiAmount": 689881.651991,
+                "chainId": "solana",
+                "name": "USDT",
+                "symbol": "USDT",
+                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
+                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB/logo.svg",
+                "priceUsd": 0.99996,
+                "valueUsd": 689854.0567249204
+            },
+            "second_top_holding": {
+                "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+                "decimals": 6,
+                "balance": 665909878317,
+                "uiAmount": 665909.878317,
+                "chainId": "solana",
+                "name": "USD Coin",
+                "symbol": "USDC",
+                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+                "priceUsd": 1.00000948,
+                "valueUsd": 665916.1911426464
+            },
+            "third_top_holding": {
+                "address": "GbbesPbaYh5uiAZSYNXTc7w9jty1rpg3P9L4JeN4LkKc",
+                "decimals": 6,
+                "balance": 2511639457358,
+                "uiAmount": 2511639.457358,
+                "chainId": "solana",
+                "name": "TRON",
+                "symbol": "TRX",
+                "icon": "https://arweave.net/aO9owy2SUH92KGJ2CH3BFowep6XFAoYjjpRyDKObkww",
+                "logoURI": "https://arweave.net/aO9owy2SUH92KGJ2CH3BFowep6XFAoYjjpRyDKObkww",
+                "priceUsd": 0.23752773419419995,
+                "valueUsd": 596584.0294189956
+            }
         },
         {
             "count": 9,
             "wallet": "8NiMeCrz9FwGGpmyuBuMrvb1hFg8V74hmxcJcWtaynR",
             "amount": 14195865.963574,
             "share_in_percent": 1.42,
-            "net_worth": 104340.02177864368,
-            "net_worth_excluding": 7424.30802532332,
+            "net_worth": 113537.98472772627,
+            "net_worth_excluding": 7460.192233135371,
             "first_top_holding": {
                 "address": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
                 "decimals": 6,
@@ -391,8 +392,8 @@
                 "symbol": "Ghibli",
                 "icon": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
                 "logoURI": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
-                "priceUsd": 0.006827037815234523,
-                "valueUsd": 96915.71375332036
+                "priceUsd": 0.007472442524237838,
+                "valueUsd": 106077.7924945909
             },
             "second_top_holding": {
                 "address": "So11111111111111111111111111111111111111111",
@@ -403,8 +404,8 @@
                 "name": "SOL",
                 "symbol": "SOL",
                 "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 126.48468002871877,
-                "valueUsd": 7369.899731372815
+                "priceUsd": 127.0941675488405,
+                "valueUsd": 7405.412822047514
             },
             "third_top_holding": {
                 "address": "MZtYjk1ZK2ukFqQ9XTnDWaxBmNt8677z4F65YHRmYoJ",
@@ -422,49 +423,49 @@
         },
         {
             "count": 10,
-            "wallet": "4LqbPmPsF1nDVgCsxaPFiT6wE5HrnP7NjuxNyXj3yLTx",
-            "amount": 12270609.742763,
-            "share_in_percent": 1.227,
-            "net_worth": 181953.89269235768,
-            "net_worth_excluding": 98181.97596252951,
+            "wallet": "ZBrbp9G8hkX1AiGq665nqcf1rCKp3SQubbJempg9P7i",
+            "amount": 11000000.316222,
+            "share_in_percent": 1.1,
+            "net_worth": 124836.43797879036,
+            "net_worth_excluding": 42639.567849223415,
             "first_top_holding": {
-                "address": "So11111111111111111111111111111111111111112",
-                "decimals": 9,
-                "balance": 775938913442,
-                "uiAmount": 775.938913442,
-                "chainId": "solana",
-                "name": "Wrapped SOL",
-                "symbol": "SOL",
-                "icon": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-                "priceUsd": 126.48468002871877,
-                "valueUsd": 98144.38518854308
-            },
-            "second_top_holding": {
                 "address": "4TBi66vi32S7J8X1A6eWfaLHYmUXu7CStcEmsJQdpump",
                 "decimals": 6,
-                "balance": 12270609742763,
-                "uiAmount": 12270609.742763,
+                "balance": 11000000316222,
+                "uiAmount": 11000000.316222,
                 "chainId": "solana",
                 "name": "Ghiblification",
                 "symbol": "Ghibli",
                 "icon": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
                 "logoURI": "https://ipfs.io/ipfs/QmT7pkJ1aTLRqWEVY8jY33k2YxacHYeiMb76iUGf6F6PuX",
-                "priceUsd": 0.006827037815234523,
-                "valueUsd": 83771.91672982817
+                "priceUsd": 0.007472442524237838,
+                "valueUsd": 82196.87012956695
+            },
+            "second_top_holding": {
+                "address": "2qEHjDLDLbuBgRYvsxhc5D6uDWAivNFZGan56P1tpump",
+                "decimals": 6,
+                "balance": 104004643932,
+                "uiAmount": 104004.643932,
+                "chainId": "solana",
+                "name": "Peanut the Squirrel ",
+                "symbol": "Pnut ",
+                "icon": "https://ipfs.io/ipfs/QmNdTtJauw39u4DzGyTaZ35rRx4VgAxqb91wE89zjyHWd2",
+                "logoURI": "https://ipfs.io/ipfs/QmNdTtJauw39u4DzGyTaZ35rRx4VgAxqb91wE89zjyHWd2",
+                "priceUsd": 0.1858787081213195,
+                "valueUsd": 19332.248852697994
             },
             "third_top_holding": {
-                "address": "6uAufXPdvenEVxCRayMj8qSPG8xA386ZLuoVr9tvHZqx",
-                "decimals": 6,
-                "balance": 30000000000,
-                "uiAmount": 30000,
+                "address": "8wXtPeU6557ETkp9WHFY1n1EcU6NxDvbAggHGsMYiHsB",
+                "decimals": 9,
+                "balance": 10175000304859512,
+                "uiAmount": 10175000.304859512,
                 "chainId": "solana",
-                "name": "Battle Buddy Token",
-                "symbol": "BBTKN",
-                "icon": "https://ipfs.io/ipfs/QmRFXhGF6ZakPMGUU3zmV9n3xgyQKJViNi2eqhMSfhifU3",
-                "logoURI": "https://ipfs.io/ipfs/QmRFXhGF6ZakPMGUU3zmV9n3xgyQKJViNi2eqhMSfhifU3",
-                "priceUsd": 0.0007326286192267162,
-                "valueUsd": 21.978858576801485
+                "name": "GameStop",
+                "symbol": "GME",
+                "icon": "https://nftstorage.link/ipfs/bafybeiddrzeyne4n2hi7qkhyhqorc4jbs4565pset7fc3ifwvhvxfdrt7q/gamestop-logo.jpeg",
+                "logoURI": "https://nftstorage.link/ipfs/bafybeiddrzeyne4n2hi7qkhyhqorc4jbs4565pset7fc3ifwvhvxfdrt7q/gamestop-logo.jpeg",
+                "priceUsd": 0.0018940813923262424,
+                "valueUsd": 19272.278744348245
             }
         }
     ]
