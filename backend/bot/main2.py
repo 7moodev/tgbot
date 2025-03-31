@@ -314,6 +314,7 @@ async def main():
 
     print("Initializing bot commands...")
     await set_bot_commands(app)
+    await initialize_bot(app)
 
     if HEROKU_APP_NAME:
         webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
