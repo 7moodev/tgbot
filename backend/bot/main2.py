@@ -6,6 +6,8 @@ from .tg_commands import *
 from telegram import Update, BotCommand
 from db.chat.log import log_chat
 import time
+from telegram.error import RetryAfter
+
 # from ...db.user.log import log_user
 import os 
 import json
@@ -22,7 +24,7 @@ if not TOKEN:
     TOKEN = os.environ.get('tgbot')
 PORT = int(os.environ.get('PORT', 8443))
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
-application: Application = None  # Global reference
+application = None
 
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text"""
@@ -292,9 +294,10 @@ async def initialize_bot(app):
 async def main():
     print("🚀 Starting Telegram bot...")
 
-    # App is globally defined now
+        # App is globally defined now
     global application
     application = Application.builder().token(TOKEN).build()
+
 
     # Register handlers...
     application.add_handler(CommandHandler('start', start_command))
