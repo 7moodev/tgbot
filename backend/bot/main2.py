@@ -327,6 +327,8 @@ def main():
             url_path=TOKEN,
             webhook_url=webhook_url,
         )
+        delete_webhook(TOKEN)  # or ensure the webhook is removed
+        app.run_polling()
     else:
         print("Polling locally (webhook removed)")
         delete_webhook(TOKEN)  # Ensure this function is properly defined elsewhere
