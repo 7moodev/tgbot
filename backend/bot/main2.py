@@ -289,7 +289,7 @@ async def initialize_bot(app):
     await app.bot.delete_my_commands()
     await set_bot_commands(app)
 
-def main():
+async def main():
     print("Starting bot...")
     
     # Initialize the bot application
