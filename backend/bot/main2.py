@@ -321,7 +321,12 @@ def main():
     if HEROKU_APP_NAME:
         webhook_url = f'https://{HEROKU_APP_NAME}.herokuapp.com/{TOKEN}'
         print(f"Webhook set to: {webhook_url}")
-        app.run_polling()
+        app.run_webhook(
+            listen="0.0.0.0",
+            port=PORT,
+            url_path=TOKEN,
+            webhook_url=webhook_url,
+        )
     else:
         print("Polling locally (webhook removed)")
         delete_webhook(TOKEN)  # Ensure this function is properly defined elsewhere
